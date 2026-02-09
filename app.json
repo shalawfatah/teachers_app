@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "teacher_app",
-    "slug": "teacher_app",
+    "slug": "teachers-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,6 +43,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "1a6b9430-c01f-4960-8021-bb427516a2cc"
+      }
+    },
+    "owner": "shashankafs-organization"
   }
 }
