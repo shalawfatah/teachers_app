@@ -12,6 +12,9 @@ import {
   Card,
   HelperText,
   SegmentedButtons,
+  Dialog,
+  Portal,
+  Paragraph,
 } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
@@ -23,9 +26,25 @@ export default function SignupScreen() {
   const [role, setRole] = useState<"teacher" | "student">("student");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [successDialogVisible, setSuccessDialogVisible] = useState(false);
 
   const handleSignup = async () => {
     setError("");
+
+    // Validation
+    if (!fullName.trim()) {
+      setError("Please enter your full name");
+      return;
+    }
+    if (!email.trim()) {
+      setError("Please enter your email");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setLoading(true);
 
     const { data, error: signUpError } = await supabase.auth.signUp({
@@ -58,10 +77,23 @@ export default function SignupScreen() {
         setLoading(false);
         return;
       }
-    }
 
-    setLoading(false);
-    // Navigation handled by root layout
+      // Check if email confirmation is required
+      if (data.session) {
+        // Auto-confirmed, user is logged in
+        setLoading(false);
+        // Navigation handled by root layout
+      } else {
+        // Email confirmation required
+        setLoading(false);
+        setSuccessDialogVisible(true);
+      }
+    }
+  };
+
+  const handleDialogDismiss = () => {
+    setSuccessDialogVisible(false);
+    router.replace("/(auth)/login");
   };
 
   return (
@@ -82,6 +114,7 @@ export default function SignupScreen() {
               onChangeText={setFullName}
               style={styles.input}
               mode="outlined"
+              disabled={loading}
             />
 
             <TextInput
@@ -92,6 +125,7 @@ export default function SignupScreen() {
               keyboardType="email-address"
               style={styles.input}
               mode="outlined"
+              disabled={loading}
             />
 
             <TextInput
@@ -101,6 +135,7 @@ export default function SignupScreen() {
               secureTextEntry
               style={styles.input}
               mode="outlined"
+              disabled={loading}
             />
 
             <Text variant="labelLarge" style={styles.roleLabel}>
@@ -114,6 +149,7 @@ export default function SignupScreen() {
                 { value: "teacher", label: "Teacher" },
               ]}
               style={styles.segmented}
+              disabled={loading}
             />
 
             {error ? (
@@ -142,6 +178,21 @@ export default function SignupScreen() {
           </Card.Content>
         </Card>
       </ScrollView>
+
+      <Portal>
+        <Dialog visible={successDialogVisible} onDismiss={handleDialogDismiss}>
+          <Dialog.Title>Check Your Email</Dialog.Title>
+          <Dialog.Content>
+            <Paragraph>
+              We've sent a confirmation email to {email}. Please check your
+              inbox and click the confirmation link to activate your account.
+            </Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={handleDialogDismiss}>Got it</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </KeyboardAvoidingView>
   );
 }
