@@ -10,7 +10,6 @@ import {
   Chip,
 } from "react-native-paper";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
 
 interface Student {
   id: string;
@@ -24,7 +23,6 @@ interface Student {
 export default function StudentsScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const [students, setStudents] = useState<Student[]>([]);
   const [menuVisible, setMenuVisible] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,14 +30,11 @@ export default function StudentsScreen() {
   }, []);
 
   const fetchStudents = async () => {
-    // TODO: Fetch students from Supabase
-    // For now using placeholder data
     setTimeout(() => {
       setLoading(false);
     }, 500);
   };
 
-  // Placeholder students
   const placeholderStudents = [
     {
       id: "1",

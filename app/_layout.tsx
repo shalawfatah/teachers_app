@@ -2,8 +2,7 @@ import { Stack, useRouter, useSegments, SplashScreen } from "expo-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
-import { PaperProvider, ActivityIndicator } from "react-native-paper";
-import { View, StyleSheet } from "react-native";
+import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 
 SplashScreen.preventAutoHideAsync();

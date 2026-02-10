@@ -10,7 +10,6 @@ import {
   Menu,
 } from "react-native-paper";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
 
 interface Video {
   id: string;
@@ -25,17 +24,14 @@ interface Video {
 export default function VideosScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const [videos, setVideos] = useState<Video[]>([]);
   const [menuVisible, setMenuVisible] = useState<string | null>(null);
 
   useEffect(() => {
-    // TODO: Fetch videos from Supabase
     setTimeout(() => {
       setLoading(false);
     }, 500);
   }, []);
 
-  // Placeholder videos
   const placeholderVideos = [
     {
       id: "1",
