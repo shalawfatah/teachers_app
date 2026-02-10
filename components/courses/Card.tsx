@@ -1,7 +1,7 @@
 import { courses_styles } from "@/styles/courses";
 import { Course } from "@/types/courses";
 import { Card, Chip, Text } from "react-native-paper";
-import { View } from "react-native-reanimated/lib/typescript/Animated";
+import { View } from "react-native";
 
 export const renderCourse = ({ item }: { item: Course }) => (
   <Card

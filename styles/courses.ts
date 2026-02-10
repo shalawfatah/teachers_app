@@ -5,16 +5,19 @@ export const courses_styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   header: {
     backgroundColor: "#fff",
     padding: 20,
     paddingTop: 60,
     paddingBottom: 16,
+  },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  headerTextContainer: {
+    flex: 1,
   },
   headerTitle: {
     fontWeight: "bold",
@@ -22,6 +25,19 @@ export const courses_styles = StyleSheet.create({
   },
   headerSubtitle: {
     color: "#666",
+  },
+  filterButtonContainer: {
+    position: "relative",
+    marginLeft: 12,
+  },
+  filterButton: {
+    margin: 0,
+  },
+  filterBadge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    backgroundColor: "#6200ee",
   },
   searchContainer: {
     backgroundColor: "#fff",
@@ -35,29 +51,5 @@ export const courses_styles = StyleSheet.create({
   listContent: {
     padding: 16,
   },
-  courseCard: {
-    marginBottom: 16,
-    elevation: 2,
-  },
-  thumbnail: {
-    height: 180,
-  },
-  cardContent: {
-    paddingTop: 12,
-  },
-  courseTitle: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  courseDescription: {
-    color: "#666",
-    marginBottom: 12,
-  },
-  courseFooter: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  chip: {
-    alignSelf: "flex-start",
-  },
+  // ... rest of your existing styles
 });
