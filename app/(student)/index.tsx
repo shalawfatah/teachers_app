@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import {
   Text,
-  Button,
   Avatar,
   ActivityIndicator,
   IconButton,
@@ -24,7 +23,7 @@ interface Profile {
   role: string;
 }
 
-export default function HomeScreen() {
+export default function StudentDashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -60,11 +59,9 @@ export default function HomeScreen() {
     );
   }
 
-  const isTeacher = profile?.role === "teacher";
-
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Full Screen Teacher Hero */}
+      {/* Teacher Profile Hero */}
       <ImageBackground
         source={{
           uri: "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=1200",
@@ -76,7 +73,7 @@ export default function HomeScreen() {
           colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.7)"]}
           style={styles.gradient}
         >
-          {/* Header with User Info */}
+          {/* Header */}
           <View style={styles.header}>
             <View style={styles.userInfo}>
               <Avatar.Text
@@ -85,7 +82,7 @@ export default function HomeScreen() {
               />
               <View style={styles.userText}>
                 <Text variant="bodySmall" style={styles.welcomeText}>
-                  Welcome back,
+                  Welcome,
                 </Text>
                 <Text variant="titleMedium" style={styles.userName}>
                   {profile?.full_name}
@@ -100,7 +97,7 @@ export default function HomeScreen() {
             />
           </View>
 
-          {/* Teacher Profile - Centered */}
+          {/* Teacher Info */}
           <View style={styles.teacherInfo}>
             <Avatar.Image
               size={140}
@@ -117,6 +114,7 @@ export default function HomeScreen() {
             </Text>
           </View>
 
+          {/* Stats */}
           <View style={styles.statsContainer}>
             <View style={styles.stat}>
               <Text variant="headlineMedium" style={styles.statNumber}>
@@ -152,32 +150,19 @@ export default function HomeScreen() {
       <View style={styles.content}>
         <View style={styles.section}>
           <Text variant="headlineSmall" style={styles.sectionTitle}>
-            {isTeacher ? "Your Courses" : "Available Courses"}
+            Available Courses
           </Text>
           <Text variant="bodyMedium" style={styles.sectionSubtitle}>
-            Start learning from the best
+            Start your learning journey
           </Text>
         </View>
 
-        {/* Placeholder for carousel */}
+        {/* Placeholder */}
         <View style={styles.carouselPlaceholder}>
           <Text variant="bodyLarge" style={styles.placeholderText}>
-            📚 Course carousel coming soon...
+            📚 Browse available courses...
           </Text>
         </View>
-
-        {isTeacher && (
-          <View style={styles.section}>
-            <Button
-              mode="contained"
-              icon="plus"
-              style={styles.addButton}
-              contentStyle={styles.addButtonContent}
-            >
-              Add New Course
-            </Button>
-          </View>
-        )}
       </View>
     </ScrollView>
   );
@@ -259,12 +244,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.15)",
     marginHorizontal: 20,
     borderRadius: 16,
-    backdropFilter: "blur(10px)",
   },
   stat: {
     alignItems: "center",
     flex: 1,
-    marginBottom: 20,
   },
   statDivider: {
     width: 1,
@@ -303,11 +286,5 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     color: "#999",
-  },
-  addButton: {
-    marginTop: 8,
-  },
-  addButtonContent: {
-    paddingVertical: 6,
   },
 });
