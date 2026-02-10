@@ -12,7 +12,7 @@ interface Course {
 
 export const renderCourse = ({ item }: { item: Course }) => {
   return (
-    <Link href={`/(student)/course/${item.id}`} asChild>
+    <Link href={`/course/${item.id}`} asChild>
       <Card style={styles.courseCard}>
         <Card.Cover source={{ uri: item.thumbnail }} style={styles.thumbnail} />
 
