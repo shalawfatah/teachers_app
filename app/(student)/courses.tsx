@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import {
   Text,
   Card,
@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from "react-native-paper";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
 
 interface Course {
   id: string;
@@ -20,7 +19,6 @@ interface Course {
 export default function CoursesScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     // TODO: Fetch courses from Supabase
