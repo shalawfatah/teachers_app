@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  ImageBackground,
-} from "react-native";
+import { View, ScrollView, FlatList, ImageBackground } from "react-native";
 import {
   Text,
   Card,
@@ -16,25 +10,12 @@ import {
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-
-interface Video {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  thumbnail: string;
-  order: number;
-}
-
-interface Course {
-  id: string;
-  title: string;
-  description: string;
-  thumbnail: string;
-  video_count: number;
-  grade: string;
-  subject: string;
-}
+import { Course, Video } from "@/types/courses";
+import {
+  placeholder_video,
+  placeholder_videos,
+} from "@/utils/place_holder_videos";
+import { styles } from "@/styles/singlecourse";
 
 export default function CourseDetailScreen() {
   const { id } = useLocalSearchParams();
@@ -48,59 +29,10 @@ export default function CourseDetailScreen() {
   }, [id]);
 
   const fetchCourseData = async () => {
-    // TODO: Fetch from Supabase
-    // For now, using placeholder data
     setTimeout(() => {
-      setCourse({
-        id: id as string,
-        title: "Introduction to Web Development",
-        description:
-          "Learn the fundamentals of HTML, CSS, and JavaScript. This comprehensive course will take you from beginner to confident web developer.",
-        thumbnail:
-          "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
-        video_count: 12,
-        grade: "Grade 10",
-        subject: "Computer Science",
-      });
+      setCourse(placeholder_video);
 
-      setVideos([
-        {
-          id: "1",
-          title: "Introduction to HTML",
-          description: "Learn the basics of HTML structure and tags",
-          duration: "15:30",
-          thumbnail:
-            "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400",
-          order: 1,
-        },
-        {
-          id: "2",
-          title: "CSS Fundamentals",
-          description: "Style your web pages with CSS",
-          duration: "22:45",
-          thumbnail:
-            "https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?w=400",
-          order: 2,
-        },
-        {
-          id: "3",
-          title: "JavaScript Basics",
-          description: "Introduction to programming with JavaScript",
-          duration: "28:15",
-          thumbnail:
-            "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=400",
-          order: 3,
-        },
-        {
-          id: "4",
-          title: "Building Your First Website",
-          description: "Put it all together in a complete project",
-          duration: "35:20",
-          thumbnail:
-            "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400",
-          order: 4,
-        },
-      ]);
+      setVideos(placeholder_videos);
 
       setLoading(false);
     }, 500);
@@ -108,8 +40,6 @@ export default function CourseDetailScreen() {
 
   const handleVideoPress = (videoId: string) => {
     console.log("Play video:", videoId);
-    // TODO: Navigate to video player screen
-    // router.push(`/(student)/video/${videoId}`);
   };
 
   const renderVideo = ({ item, index }: { item: Video; index: number }) => (
@@ -270,146 +200,3 @@ export default function CourseDetailScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  headerImage: {
-    height: 400,
-  },
-  gradient: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  headerTop: {
-    paddingTop: 50,
-    paddingHorizontal: 8,
-  },
-  backButton: {
-    backgroundColor: "rgba(0,0,0,0.3)",
-  },
-  headerContent: {
-    padding: 20,
-    paddingBottom: 30,
-  },
-  tags: {
-    flexDirection: "row",
-    gap: 8,
-    marginBottom: 16,
-  },
-  chip: {
-    backgroundColor: "rgba(255,255,255,0.2)",
-  },
-  chipText: {
-    color: "#fff",
-    fontSize: 12,
-  },
-  courseTitle: {
-    color: "#fff",
-    fontWeight: "bold",
-    marginBottom: 12,
-  },
-  courseDescription: {
-    color: "rgba(255,255,255,0.95)",
-    lineHeight: 22,
-    marginBottom: 20,
-  },
-  courseStats: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: "rgba(255,255,255,0.15)",
-    borderRadius: 12,
-    padding: 16,
-  },
-  stat: {
-    alignItems: "center",
-    flex: 1,
-  },
-  statNumber: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  statLabel: {
-    color: "rgba(255,255,255,0.85)",
-    marginTop: 4,
-  },
-  statDivider: {
-    width: 1,
-    backgroundColor: "rgba(255,255,255,0.3)",
-  },
-  videosSection: {
-    padding: 20,
-  },
-  sectionHeader: {
-    marginBottom: 16,
-  },
-  sectionTitle: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  sectionSubtitle: {
-    color: "#666",
-  },
-  divider: {
-    marginBottom: 16,
-  },
-  videosList: {
-    gap: 12,
-  },
-  videoCard: {
-    elevation: 1,
-  },
-  videoContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 12,
-    gap: 12,
-  },
-  videoNumber: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: "#f5f5f5",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  numberText: {
-    fontWeight: "bold",
-    color: "#666",
-  },
-  videoThumbnail: {
-    width: 80,
-    height: 60,
-    borderRadius: 8,
-  },
-  videoInfo: {
-    flex: 1,
-    gap: 4,
-  },
-  videoTitle: {
-    fontWeight: "600",
-  },
-  videoDescription: {
-    color: "#666",
-  },
-  videoMeta: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 4,
-  },
-  durationChip: {
-    height: 24,
-  },
-});
