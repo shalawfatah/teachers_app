@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import {
   TextInput,
@@ -14,14 +8,8 @@ import {
   Surface,
   Text,
 } from "react-native-paper";
-
-export interface StudentProps {
-  id: string;
-  full_name: string;
-  email: string;
-  enrolled_courses: number;
-  status: "active" | "inactive";
-}
+import { StudentProps } from "@/types/students";
+import { styles } from "@/styles/student_edit_styles";
 
 export default function EditStudent() {
   const { id } = useLocalSearchParams();
@@ -30,9 +18,10 @@ export default function EditStudent() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<StudentProps>({
     id: Array.isArray(id) ? id[0] : id || "",
-    full_name: "John Doe", 
+    full_name: "John Doe",
     email: "john.doe@university.edu",
     enrolled_courses: 4,
+    last_active: "",
     status: "active",
   });
 
@@ -132,20 +121,3 @@ export default function EditStudent() {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f8f9fa" },
-  content: { padding: 16 },
-  formCard: {
-    padding: 20,
-    borderRadius: 12,
-    backgroundColor: "white",
-    marginBottom: 20,
-  },
-  sectionTitle: { marginBottom: 20, color: "#6200ee", fontWeight: "bold" },
-  input: { marginBottom: 16, backgroundColor: "white" },
-  label: { marginTop: 8, marginBottom: 8, color: "#666" },
-  segmented: { marginBottom: 8 },
-  actionContainer: { gap: 8 },
-  saveButton: { borderRadius: 8 },
-});
