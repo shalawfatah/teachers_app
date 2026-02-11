@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, ImageBackground, ScrollView } from "react-native";
-import { Text, Avatar, IconButton, FAB } from "react-native-paper";
+import { Text, Avatar, IconButton } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { LinearGradient } from "expo-linear-gradient";
 import { Profile } from "@/types/profile";

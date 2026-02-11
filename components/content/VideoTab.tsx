@@ -1,5 +1,6 @@
+import React, { useState } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
-import { List, IconButton, Avatar } from "react-native-paper";
+import { List, IconButton, Avatar, Menu, Divider } from "react-native-paper";
 import { Video } from "@/types/videos";
 
 interface VideosTabProps {
@@ -9,6 +10,12 @@ interface VideosTabProps {
 }
 
 export default function VideosTab({ data, onEdit, onDelete }: VideosTabProps) {
+  // Track which video's menu is open
+  const [menuVisibleId, setMenuVisibleId] = useState<string | null>(null);
+
+  const openMenu = (id: string) => setMenuVisibleId(id);
+  const closeMenu = () => setMenuVisibleId(null);
+
   return (
     <FlatList
       data={data}
@@ -29,17 +36,36 @@ export default function VideosTab({ data, onEdit, onDelete }: VideosTabProps) {
           )}
           right={() => (
             <View style={styles.row}>
-              <IconButton
-                icon="pencil-outline"
-                size={20}
-                onPress={() => onEdit(item.id)}
-              />
-              <IconButton
-                icon="trash-can-outline"
-                size={20}
-                iconColor="#ff5252"
-                onPress={() => onDelete(item.id)}
-              />
+              <Menu
+                visible={menuVisibleId === item.id}
+                onDismiss={closeMenu}
+                anchor={
+                  <IconButton
+                    icon="dots-vertical"
+                    size={24}
+                    onPress={() => openMenu(item.id)}
+                  />
+                }
+              >
+                <Menu.Item
+                  onPress={() => {
+                    onEdit(item.id);
+                    closeMenu();
+                  }}
+                  title="Edit Video"
+                  leadingIcon="pencil-outline"
+                />
+                <Divider />
+                <Menu.Item
+                  onPress={() => {
+                    onDelete(item.id);
+                    closeMenu();
+                  }}
+                  title="Delete Video"
+                  leadingIcon="trash-can-outline"
+                  titleStyle={{ color: "#ff5252" }}
+                />
+              </Menu>
             </View>
           )}
         />
@@ -56,5 +82,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     elevation: 1,
   },
-  row: { flexDirection: "row", alignItems: "center" },
+  row: { justifyContent: "center", alignItems: "center" },
 });
