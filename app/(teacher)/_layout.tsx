@@ -32,7 +32,7 @@ export default function TeacherLayout() {
         }}
       />
       <Tabs.Screen
-        name="students"
+        name="students/index"
         options={{
           title: "Students",
           tabBarIcon: ({ color, size }) => (
@@ -57,6 +57,17 @@ export default function TeacherLayout() {
           ),
         }}
       />
-    </Tabs>
+      <Tabs.Screen
+        name="students/view/[id]"
+        options={{
+          href: null,
+        }}
+      />
+    <Tabs.Screen
+        name="students/edit/[id]"
+        options={{
+          href: null,
+        }}
+      /></Tabs>
   );
 }

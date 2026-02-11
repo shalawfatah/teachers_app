@@ -1,5 +1,5 @@
 import { View, FlatList } from "react-native";
-import { Text, Card, Searchbar } from "react-native-paper";
+import { Text, Searchbar } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { placeholderStudents } from "@/utils/placeholder_students";
 import { styles } from "@/styles/teacher_students_styles";
@@ -7,10 +7,13 @@ import Loader from "@/components/Loader";
 import { StudentCard } from "@/components/teachers/StudentCard"; // Import the new component
 import { StudentProps } from "@/types/students";
 import StudentChip from "@/components/teachers/StudentChip";
+import { useRouter } from "expo-router";
 
 export default function StudentsScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     fetchStudents();
@@ -23,11 +26,11 @@ export default function StudentsScreen() {
   };
 
   const handleView = (studentId: string) => {
-    console.log("View student:", studentId);
+    router.push(`/(teacher)/students/view/${studentId}`);
   };
 
   const handleEdit = (studentId: string) => {
-    console.log("Edit student:", studentId);
+    router.push(`/(teacher)/students/edit/${studentId}`);
   };
 
   const handleDelete = (studentId: string) => {

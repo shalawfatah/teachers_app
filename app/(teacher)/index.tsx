@@ -1,28 +1,11 @@
 import { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  Dimensions,
-  ScrollView,
-} from "react-native";
-import {
-  Text,
-  Avatar,
-  ActivityIndicator,
-  IconButton,
-  FAB,
-} from "react-native-paper";
+import { View, ImageBackground, ScrollView } from "react-native";
+import { Text, Avatar, IconButton, FAB } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { LinearGradient } from "expo-linear-gradient";
-
-const { height: SCREEN_HEIGHT } = Dimensions.get("window");
-
-interface Profile {
-  id: string;
-  full_name: string;
-  role: string;
-}
+import { Profile } from "@/types/profile";
+import { styles } from "@/styles/teacher_home_styles";
+import Loader from "@/components/Loader";
 
 export default function TeacherDashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -52,18 +35,11 @@ export default function TeacherDashboard() {
     await supabase.auth.signOut();
   };
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  if (loading) return <Loader />;
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Full Screen Teacher Hero */}
         <ImageBackground
           source={{
             uri: "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=1200",
@@ -75,7 +51,6 @@ export default function TeacherDashboard() {
             colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.7)"]}
             style={styles.gradient}
           >
-            {/* Header with User Info */}
             <View style={styles.header}>
               <View style={styles.userInfo}>
                 <Avatar.Text
@@ -99,7 +74,6 @@ export default function TeacherDashboard() {
               />
             </View>
 
-            {/* Teacher Profile - Centered */}
             <View style={styles.teacherInfo}>
               <Avatar.Image
                 size={140}
@@ -115,8 +89,6 @@ export default function TeacherDashboard() {
                 Computer Science & Web Development
               </Text>
             </View>
-
-            {/* Stats at Bottom */}
             <View style={styles.statsContainer}>
               <View style={styles.stat}>
                 <Text variant="headlineMedium" style={styles.statNumber}>
@@ -147,28 +119,8 @@ export default function TeacherDashboard() {
             </View>
           </LinearGradient>
         </ImageBackground>
-
-        {/* Courses Management Section */}
-        <View style={styles.content}>
-          <View style={styles.section}>
-            <Text variant="headlineSmall" style={styles.sectionTitle}>
-              Your Courses
-            </Text>
-            <Text variant="bodyMedium" style={styles.sectionSubtitle}>
-              Manage your courses and videos
-            </Text>
-          </View>
-
-          {/* Placeholder for courses */}
-          <View style={styles.carouselPlaceholder}>
-            <Text variant="bodyLarge" style={styles.placeholderText}>
-              📚 Your courses will appear here...
-            </Text>
-          </View>
-        </View>
       </ScrollView>
 
-      {/* Floating Action Button */}
       <FAB
         icon="plus"
         style={styles.fab}
@@ -178,130 +130,3 @@ export default function TeacherDashboard() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  heroSection: {
-    height: SCREEN_HEIGHT,
-    width: "100%",
-  },
-  gradient: {
-    flex: 1,
-    justifyContent: "space-between",
-    paddingTop: 50,
-    paddingBottom: 40,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  userInfo: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  userText: {
-    gap: 2,
-  },
-  welcomeText: {
-    color: "rgba(255,255,255,0.85)",
-    fontSize: 13,
-  },
-  userName: {
-    color: "#fff",
-    fontWeight: "600",
-  },
-  teacherInfo: {
-    alignItems: "center",
-    gap: 12,
-    paddingHorizontal: 20,
-  },
-  teacherAvatar: {
-    marginBottom: 12,
-    borderWidth: 4,
-    borderColor: "#fff",
-    elevation: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-  },
-  teacherName: {
-    color: "#fff",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  teacherBio: {
-    color: "rgba(255,255,255,0.95)",
-    textAlign: "center",
-    fontWeight: "400",
-  },
-  statsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingHorizontal: 40,
-    paddingVertical: 24,
-    backgroundColor: "rgba(255,255,255,0.15)",
-    marginHorizontal: 20,
-    borderRadius: 16,
-  },
-  stat: {
-    alignItems: "center",
-    flex: 1,
-  },
-  statDivider: {
-    width: 1,
-    height: 40,
-    backgroundColor: "rgba(255,255,255,0.3)",
-  },
-  statNumber: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 28,
-  },
-  statLabel: {
-    color: "rgba(255,255,255,0.9)",
-    marginTop: 4,
-    fontSize: 14,
-  },
-  content: {
-    backgroundColor: "#fff",
-  },
-  section: {
-    padding: 20,
-  },
-  sectionTitle: {
-    fontWeight: "bold",
-    marginBottom: 4,
-    color: "#1a1a1a",
-  },
-  sectionSubtitle: {
-    color: "#666",
-    marginBottom: 16,
-  },
-  carouselPlaceholder: {
-    paddingHorizontal: 20,
-    paddingVertical: 60,
-    alignItems: "center",
-  },
-  placeholderText: {
-    color: "#999",
-  },
-  fab: {
-    position: "absolute",
-    margin: 16,
-    right: 0,
-    bottom: 0,
-  },
-});
