@@ -16,3 +16,11 @@ export interface Course {
   grade: string;
   subject: string;
 }
+
+export interface SingleCourse {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+  video_count: number;
+}

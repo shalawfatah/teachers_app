@@ -1,3 +1,5 @@
+import { Course } from "@/types/courses";
+
 export const placeholder_videos = [
   {
     id: "1",
@@ -37,14 +39,13 @@ export const placeholder_videos = [
   },
 ];
 
-export const placeholder_video = {
-  id: id as string,
+export const getPlaceholderCourse = (id: string): Course => ({
+  id: id, // Now id comes from the function argument
   title: "Introduction to Web Development",
-  description:
-    "Learn the fundamentals of HTML, CSS, and JavaScript. This comprehensive course will take you from beginner to confident web developer.",
+  description: "Learn the fundamentals of HTML, CSS, and JavaScript...",
   thumbnail:
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
   video_count: 12,
   grade: "Grade 10",
   subject: "Computer Science",
-};
+});

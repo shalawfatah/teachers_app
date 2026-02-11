@@ -18,8 +18,10 @@ export default function StudentLayout() {
           ),
         }}
       />
+
+      {/* 1. This handles the 'courses' folder (the list) */}
       <Tabs.Screen
-        name="courses"
+        name="courses/index"
         options={{
           title: "Courses",
           tabBarIcon: ({ color, size }) => (
@@ -31,6 +33,15 @@ export default function StudentLayout() {
           ),
         }}
       />
+
+      {/* 2. HIDE THE DETAIL SCREEN FROM THE TAB BAR */}
+      <Tabs.Screen
+        name="courses/[id]"
+        options={{
+          href: null, // This removes it from the bottom bar entirely
+        }}
+      />
+
       <Tabs.Screen
         name="account"
         options={{

@@ -1,18 +1,12 @@
 import { Card, Text, Chip } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 import { Link } from "expo-router";
+import { SingleCourse } from "@/types/courses";
 
-interface Course {
-  id: string;
-  title: string;
-  description: string;
-  thumbnail: string;
-  video_count: number;
-}
-
-export const renderCourse = ({ item }: { item: Course }) => {
+export const renderCourse = ({ item }: { item: SingleCourse }) => {
+  console.log("item ", item);
   return (
-    <Link href={`/course/${item.id}`} asChild>
+    <Link href={`/courses/${item.id}`} asChild>
       <Card style={styles.courseCard}>
         <Card.Cover source={{ uri: item.thumbnail }} style={styles.thumbnail} />
 

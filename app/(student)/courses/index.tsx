@@ -22,7 +22,7 @@ export default function CoursesScreen() {
   const handleApplyFilters = (newFilters: FilterState) => {
     setFilters(newFilters);
     // TODO: Filter courses based on newFilters
-    console.log('Applied filters:', newFilters);
+    console.log("Applied filters:", newFilters);
   };
 
   const getActiveFilterCount = () => {
@@ -43,7 +43,7 @@ export default function CoursesScreen() {
               Explore and learn from available courses
             </Text>
           </View>
-          
+
           {/* Filter Button */}
           <View style={courses_styles.filterButtonContainer}>
             <IconButton
