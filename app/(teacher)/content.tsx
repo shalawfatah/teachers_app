@@ -40,6 +40,7 @@ export default function ContentManagementScreen() {
         <VideosTab
           data={placeholderVideos}
           onEdit={(id) => console.log("Edit Video", id)}
+          onView={(id) => console.log("Watch Video", id)}
           onDelete={(id) => console.log("Delete Video", id)}
         />
       )}

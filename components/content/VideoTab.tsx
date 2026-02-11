@@ -7,10 +7,10 @@ interface VideosTabProps {
   data: Video[];
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
+  onView: (id: string) => void;
 }
 
-export default function VideosTab({ data, onEdit, onDelete }: VideosTabProps) {
-  // Track which video's menu is open
+export default function VideosTab({ data, onEdit, onDelete, onView}: VideosTabProps) {
   const [menuVisibleId, setMenuVisibleId] = useState<string | null>(null);
 
   const openMenu = (id: string) => setMenuVisibleId(id);
@@ -47,6 +47,15 @@ export default function VideosTab({ data, onEdit, onDelete }: VideosTabProps) {
                   />
                 }
               >
+                <Menu.Item
+                  onPress={() => {
+                    onView(item.id);
+                    closeMenu();
+                  }}
+                  title="Watch Video"
+                  leadingIcon="eye"
+                />
+                <Divider />
                 <Menu.Item
                   onPress={() => {
                     onEdit(item.id);

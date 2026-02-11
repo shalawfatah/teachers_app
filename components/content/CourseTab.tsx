@@ -28,6 +28,15 @@ export default function CoursesTab() {
           >
             <Menu.Item
               onPress={() => {
+                console.log("View ", item.id);
+                closeMenu();
+              }}
+              title="View"
+              leadingIcon="eye"
+            />
+            <Divider />
+            <Menu.Item
+              onPress={() => {
                 console.log("Edit", item.id);
                 closeMenu();
               }}

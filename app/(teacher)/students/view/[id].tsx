@@ -3,15 +3,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Avatar, Card, Text, Divider, Button, Chip } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-export interface StudentProps {
-  id: string;
-  full_name: string;
-  email: string;
-  enrolled_courses: number;
-  last_active: string;
-  status: "active" | "inactive";
-}
+import { StudentProps } from "@/types/students";
 
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
@@ -31,7 +23,6 @@ export default function ViewStudent() {
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: "Student Profile" }} />
 
-      {/* Hero Section */}
       <View style={styles.hero}>
         <Avatar.Text
           size={80}
