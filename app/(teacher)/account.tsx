@@ -1,13 +1,10 @@
-import { View, StyleSheet, ScrollView } from "react-native";
-import { Text, List, Avatar, Button, Divider, Card } from "react-native-paper";
+import { View, ScrollView } from "react-native";
+import { Text, List, Avatar, Button, Divider } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-
-interface Profile {
-  id: string;
-  full_name: string;
-  role: string;
-}
+import { styles } from "@/styles/teacher_account_styles";
+import { Profile } from "@/types/profile";
+import StatsCard from "@/components/account/StatsCard";
 
 export default function AccountScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -40,7 +37,6 @@ export default function AccountScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Profile Header */}
       <View style={styles.profileHeader}>
         <Avatar.Text
           size={80}
@@ -55,45 +51,10 @@ export default function AccountScreen() {
         </Text>
       </View>
 
-      {/* Stats Card */}
-      <Card style={styles.statsCard}>
-        <Card.Content>
-          <View style={styles.statsRow}>
-            <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={styles.statNumber}>
-                156
-              </Text>
-              <Text variant="bodySmall" style={styles.statLabel}>
-                Videos
-              </Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={styles.statNumber}>
-                12
-              </Text>
-              <Text variant="bodySmall" style={styles.statLabel}>
-                Courses
-              </Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={styles.statNumber}>
-                1.2K
-              </Text>
-              <Text variant="bodySmall" style={styles.statLabel}>
-                Students
-              </Text>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
-
-      {/* Settings List */}
+      <StatsCard courseNumber={12} videoNumber={49} studentNumber={1.5} />
       <View style={styles.settingsContainer}>
         <List.Section>
           <List.Subheader>Account Settings</List.Subheader>
-
           <List.Item
             title="Edit Profile"
             description="Update your personal information"
@@ -101,9 +62,7 @@ export default function AccountScreen() {
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => console.log("Edit profile")}
           />
-
           <Divider />
-
           <List.Item
             title="Course Settings"
             description="Manage course preferences"
@@ -111,9 +70,7 @@ export default function AccountScreen() {
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => console.log("Course settings")}
           />
-
           <Divider />
-
           <List.Item
             title="Notifications"
             description="Manage notification preferences"
@@ -122,10 +79,8 @@ export default function AccountScreen() {
             onPress={() => console.log("Notifications")}
           />
         </List.Section>
-
         <List.Section>
           <List.Subheader>Analytics</List.Subheader>
-
           <List.Item
             title="View Analytics"
             description="See your performance metrics"
@@ -133,9 +88,7 @@ export default function AccountScreen() {
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => console.log("Analytics")}
           />
-
           <Divider />
-
           <List.Item
             title="Revenue"
             description="Track your earnings"
@@ -144,10 +97,8 @@ export default function AccountScreen() {
             onPress={() => console.log("Revenue")}
           />
         </List.Section>
-
         <List.Section>
           <List.Subheader>Support</List.Subheader>
-
           <List.Item
             title="Help Center"
             description="Get help and support"
@@ -155,9 +106,7 @@ export default function AccountScreen() {
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => console.log("Help")}
           />
-
           <Divider />
-
           <List.Item
             title="About"
             description="App version and info"
@@ -167,8 +116,6 @@ export default function AccountScreen() {
           />
         </List.Section>
       </View>
-
-      {/* Sign Out Button */}
       <View style={styles.signOutContainer}>
         <Button
           mode="outlined"
@@ -184,64 +131,3 @@ export default function AccountScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  profileHeader: {
-    backgroundColor: "#fff",
-    alignItems: "center",
-    paddingTop: 60,
-    paddingBottom: 24,
-  },
-  avatar: {
-    marginBottom: 16,
-    backgroundColor: "#6200ee",
-  },
-  name: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  role: {
-    color: "#666",
-  },
-  statsCard: {
-    margin: 16,
-    marginBottom: 8,
-  },
-  statsRow: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  statItem: {
-    alignItems: "center",
-    flex: 1,
-  },
-  statDivider: {
-    width: 1,
-    height: 40,
-    backgroundColor: "#e0e0e0",
-  },
-  statNumber: {
-    fontWeight: "bold",
-    color: "#6200ee",
-  },
-  statLabel: {
-    color: "#666",
-    marginTop: 4,
-  },
-  settingsContainer: {
-    backgroundColor: "#fff",
-    marginTop: 8,
-  },
-  signOutContainer: {
-    padding: 16,
-    paddingBottom: 32,
-  },
-  signOutButton: {
-    borderColor: "#d32f2f",
-  },
-});

@@ -1,7 +1,7 @@
 import { styles } from "@/styles/single_course_styles";
 import { useRouter } from "expo-router";
 import { Button, Text } from "react-native-paper";
-import { View } from "react-native-reanimated/lib/typescript/Animated";
+import { View } from "react-native";
 
 export default function NoCourse() {
   const router = useRouter();

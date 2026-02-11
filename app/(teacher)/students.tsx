@@ -1,29 +1,15 @@
-import { View, StyleSheet, FlatList } from "react-native";
-import {
-  Text,
-  Card,
-  Searchbar,
-  ActivityIndicator,
-  Avatar,
-  IconButton,
-  Menu,
-  Chip,
-} from "react-native-paper";
+import { View, FlatList } from "react-native";
+import { Text, Card, Searchbar } from "react-native-paper";
 import { useState, useEffect } from "react";
-
-interface Student {
-  id: string;
-  full_name: string;
-  email: string;
-  enrolled_courses: number;
-  last_active: string;
-  status: "active" | "inactive";
-}
+import { placeholderStudents } from "@/utils/placeholder_students";
+import { styles } from "@/styles/teacher_students_styles";
+import Loader from "@/components/Loader";
+import { StudentCard } from "@/components/teachers/StudentCard"; // Import the new component
+import { StudentProps } from "@/types/students";
 
 export default function StudentsScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const [menuVisible, setMenuVisible] = useState<string | null>(null);
 
   useEffect(() => {
     fetchStudents();
@@ -35,142 +21,28 @@ export default function StudentsScreen() {
     }, 500);
   };
 
-  const placeholderStudents = [
-    {
-      id: "1",
-      full_name: "Sarah Johnson",
-      email: "sarah.j@email.com",
-      enrolled_courses: 5,
-      last_active: "2024-02-10",
-      status: "active" as const,
-    },
-    {
-      id: "2",
-      full_name: "Michael Chen",
-      email: "michael.c@email.com",
-      enrolled_courses: 3,
-      last_active: "2024-02-09",
-      status: "active" as const,
-    },
-    {
-      id: "3",
-      full_name: "Emily Davis",
-      email: "emily.d@email.com",
-      enrolled_courses: 8,
-      last_active: "2024-01-25",
-      status: "inactive" as const,
-    },
-    {
-      id: "4",
-      full_name: "James Wilson",
-      email: "james.w@email.com",
-      enrolled_courses: 2,
-      last_active: "2024-02-10",
-      status: "active" as const,
-    },
-  ];
-
-  const openMenu = (studentId: string) => setMenuVisible(studentId);
-  const closeMenu = () => setMenuVisible(null);
-
   const handleView = (studentId: string) => {
-    closeMenu();
     console.log("View student:", studentId);
   };
 
   const handleEdit = (studentId: string) => {
-    closeMenu();
     console.log("Edit student:", studentId);
   };
 
   const handleDelete = (studentId: string) => {
-    closeMenu();
     console.log("Delete student:", studentId);
   };
 
-  const renderStudent = ({ item }: { item: Student }) => (
-    <Card style={styles.studentCard}>
-      <Card.Content>
-        <View style={styles.studentRow}>
-          <View style={styles.studentInfo}>
-            <Avatar.Text
-              size={50}
-              label={item.full_name.charAt(0)}
-              style={styles.avatar}
-            />
-            <View style={styles.studentDetails}>
-              <Text variant="titleMedium" style={styles.studentName}>
-                {item.full_name}
-              </Text>
-              <Text variant="bodySmall" style={styles.studentEmail}>
-                {item.email}
-              </Text>
-              <View style={styles.studentMeta}>
-                <Chip
-                  icon="book-open"
-                  compact
-                  style={styles.courseChip}
-                  textStyle={styles.chipText}
-                >
-                  {item.enrolled_courses} courses
-                </Chip>
-                <Chip
-                  compact
-                  style={[
-                    styles.statusChip,
-                    item.status === "active"
-                      ? styles.activeChip
-                      : styles.inactiveChip,
-                  ]}
-                  textStyle={styles.chipText}
-                >
-                  {item.status}
-                </Chip>
-              </View>
-            </View>
-          </View>
-          <Menu
-            visible={menuVisible === item.id}
-            onDismiss={closeMenu}
-            anchor={
-              <IconButton
-                icon="dots-vertical"
-                size={24}
-                onPress={() => openMenu(item.id)}
-              />
-            }
-          >
-            <Menu.Item
-              onPress={() => handleView(item.id)}
-              title="View Details"
-              leadingIcon="eye"
-            />
-            <Menu.Item
-              onPress={() => handleEdit(item.id)}
-              title="Edit"
-              leadingIcon="pencil"
-            />
-            <Menu.Item
-              onPress={() => handleDelete(item.id)}
-              title="Remove"
-              leadingIcon="delete"
-            />
-          </Menu>
-        </View>
-        <Text variant="bodySmall" style={styles.lastActive}>
-          Last active: {new Date(item.last_active).toLocaleDateString()}
-        </Text>
-      </Card.Content>
-    </Card>
+  const renderStudent = ({ item }: { item: StudentProps }) => (
+    <StudentCard
+      student={item}
+      onView={handleView}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
+    />
   );
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  if (loading) return <Loader />;
 
   return (
     <View style={styles.container}>
@@ -218,7 +90,6 @@ export default function StudentsScreen() {
         </Card>
       </View>
 
-      {/* Search */}
       <View style={styles.searchContainer}>
         <Searchbar
           placeholder="Search students..."
@@ -228,7 +99,6 @@ export default function StudentsScreen() {
         />
       </View>
 
-      {/* Students List */}
       <FlatList
         data={placeholderStudents}
         renderItem={renderStudent}
@@ -239,114 +109,3 @@ export default function StudentsScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  header: {
-    backgroundColor: "#fff",
-    padding: 20,
-    paddingTop: 60,
-    paddingBottom: 16,
-  },
-  headerTitle: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  headerSubtitle: {
-    color: "#666",
-  },
-  statsContainer: {
-    flexDirection: "row",
-    gap: 12,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: "#fff",
-  },
-  statCard: {
-    flex: 1,
-  },
-  statContent: {
-    alignItems: "center",
-  },
-  statNumber: {
-    fontWeight: "bold",
-    color: "#6200ee",
-  },
-  statLabel: {
-    color: "#666",
-    marginTop: 4,
-  },
-  searchContainer: {
-    backgroundColor: "#fff",
-    paddingHorizontal: 20,
-    paddingBottom: 16,
-  },
-  searchbar: {
-    elevation: 0,
-    backgroundColor: "#f5f5f5",
-  },
-  listContent: {
-    padding: 16,
-  },
-  studentCard: {
-    marginBottom: 12,
-    elevation: 2,
-  },
-  studentRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  studentInfo: {
-    flexDirection: "row",
-    flex: 1,
-    gap: 12,
-  },
-  avatar: {
-    backgroundColor: "#6200ee",
-  },
-  studentDetails: {
-    flex: 1,
-  },
-  studentName: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  studentEmail: {
-    color: "#666",
-    marginBottom: 8,
-  },
-  studentMeta: {
-    flexDirection: "row",
-    gap: 8,
-  },
-  courseChip: {
-    alignSelf: "flex-start",
-    height: 24,
-  },
-  statusChip: {
-    alignSelf: "flex-start",
-    height: 24,
-  },
-  activeChip: {
-    backgroundColor: "#4caf50",
-  },
-  inactiveChip: {
-    backgroundColor: "#9e9e9e",
-  },
-  chipText: {
-    fontSize: 11,
-  },
-  lastActive: {
-    color: "#999",
-    marginTop: 8,
-  },
-});
