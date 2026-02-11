@@ -5,8 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "@/styles/home_styles";
 import Loader from "@/components/Loader";
-
-
+import { Profile } from "@/types/profile";
 
 export default function StudentDashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
