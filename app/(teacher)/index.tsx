@@ -120,13 +120,6 @@ export default function TeacherDashboard() {
           </LinearGradient>
         </ImageBackground>
       </ScrollView>
-
-      <FAB
-        icon="plus"
-        style={styles.fab}
-        label="Add Course"
-        onPress={() => console.log("Add course")}
-      />
     </View>
   );
 }

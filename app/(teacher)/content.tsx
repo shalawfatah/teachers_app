@@ -49,6 +49,7 @@ export default function ContentManagementScreen() {
         label={tab === "courses" ? "New Course" : "Upload"}
         style={styles.fab}
         onPress={() => console.log(`Creating ${tab}`)}
+        color="#FFF"
       />
     </View>
   );
