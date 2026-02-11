@@ -44,7 +44,6 @@ export default function CoursesScreen() {
             </Text>
           </View>
 
-          {/* Filter Button */}
           <View style={courses_styles.filterButtonContainer}>
             <IconButton
               icon="filter-variant"
@@ -79,7 +78,6 @@ export default function CoursesScreen() {
         showsVerticalScrollIndicator={false}
       />
 
-      {/* Filter Modal */}
       <FilterModal
         visible={filterVisible}
         onDismiss={() => setFilterVisible(false)}

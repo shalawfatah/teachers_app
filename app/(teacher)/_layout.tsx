@@ -19,7 +19,7 @@ export default function TeacherLayout() {
         }}
       />
       <Tabs.Screen
-        name="content"
+        name="content/index"
         options={{
           title: "Content",
           tabBarIcon: ({ color, size }) => (
@@ -63,11 +63,36 @@ export default function TeacherLayout() {
           href: null,
         }}
       />
-    <Tabs.Screen
+      <Tabs.Screen
         name="students/edit/[id]"
         options={{
           href: null,
         }}
-      /></Tabs>
+      />
+      <Tabs.Screen
+        name="content/(course)/view/[id]"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="content/(course)/edit/[id]"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="content/(video)/edit/[id]"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="content/(video)/view/[id]"
+        options={{
+          href: null,
+        }}
+      />
+    </Tabs>
   );
 }
