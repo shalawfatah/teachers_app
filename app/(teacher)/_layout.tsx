@@ -19,9 +19,9 @@ export default function TeacherLayout() {
         }}
       />
       <Tabs.Screen
-        name="videos"
+        name="content"
         options={{
-          title: "Videos",
+          title: "Content",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="video-box"
