@@ -4,10 +4,12 @@ import { Text, FAB, Searchbar, SegmentedButtons } from "react-native-paper";
 import { placeholderVideos } from "@/utils/placeholder_videos";
 import CoursesTab from "@/components/content/CourseTab";
 import VideosTab from "@/components/content/VideoTab";
+import CreateCourseModal from "@/components/courses/CreateCourseModal";
 
 export default function ContentManagementScreen() {
   const [tab, setTab] = useState("courses");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -49,8 +51,17 @@ export default function ContentManagementScreen() {
         icon={tab === "courses" ? "plus" : "video-plus"}
         label={tab === "courses" ? "New Course" : "Upload"}
         style={styles.fab}
-        onPress={() => console.log(`Creating ${tab}`)}
+        onPress={() => setModalVisible(true)}
         color="#FFF"
+      />
+
+      <CreateCourseModal
+        visible={isModalVisible}
+        onDismiss={() => setModalVisible(false)}
+        onSuccess={() => {
+          // Refresh your course list here
+          console.log("Course added successfully!");
+        }}
       />
     </View>
   );
