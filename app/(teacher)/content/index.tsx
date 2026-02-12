@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { Text, FAB, Searchbar, SegmentedButtons } from "react-native-paper";
 import CoursesTab from "@/components/content/CourseTab";
 import VideosTab from "@/components/content/VideoTab";
@@ -7,6 +7,8 @@ import CreateCourseModal from "@/components/courses/CreateCourseModal";
 import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import UploadVideoModal from "@/components/content/UploadVideoModal";
+import { deleteVideo } from "@/lib/videoService";
+import VideoPlayerModal from "@/components/content/VideoPlayerModal";
 
 export default function ContentManagementScreen() {
   const [tab, setTab] = useState("courses");
@@ -14,6 +16,33 @@ export default function ContentManagementScreen() {
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+
+  const [videoRefreshKey, setVideoRefreshKey] = useState(0);
+  const [playerVisible, setPlayerVisible] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+
+  const handleDeleteVideo = (id: string) => {
+    Alert.alert(
+      "Delete Video",
+      "Are you sure you want to permanently delete this video?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await deleteVideo(id);
+              // Trigger the refresh key we discussed earlier
+              setVideoRefreshKey((prev) => prev + 1);
+            } catch (error: any) {
+              Alert.alert("Error", error.message);
+            }
+          },
+        },
+      ],
+    );
+  };
 
   const onFabPress = () => {
     if (tab === "courses") {
@@ -66,8 +95,11 @@ export default function ContentManagementScreen() {
       ) : (
         <VideosTab
           onEdit={(id) => console.log("Edit Video", id)}
-          onView={(id) => console.log("Watch Video", id)}
-          onDelete={(id) => console.log("Delete Video", id)}
+          onView={(video) => {
+            setSelectedVideo(video);
+            setPlayerVisible(true);
+          }}
+          onDelete={(id) => handleDeleteVideo(id)}
         />
       )}
 
@@ -89,6 +121,14 @@ export default function ContentManagementScreen() {
         onSuccess={() => {
           setCourseModalVisible(false);
           console.log("Course added successfully!");
+        }}
+      />
+      <VideoPlayerModal
+        visible={playerVisible}
+        video={selectedVideo}
+        onDismiss={() => {
+          setPlayerVisible(false);
+          setSelectedVideo(null);
         }}
       />
     </View>
