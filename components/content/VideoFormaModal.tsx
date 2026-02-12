@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import {
   Modal,
   Portal,
@@ -71,7 +71,15 @@ export default function VideoFormModal({
   };
 
   const handleSave = async () => {
-    if (!title || !link || !courseId) return;
+    // 1. Check if we are blocked by validation
+    if (!title || !link || !courseId) {
+      Alert.alert(
+        "Missing Fields",
+        `Please fill: ${!title ? "Title " : ""}${!link ? "Link " : ""}${!courseId ? "Course" : ""}`,
+      );
+      return;
+    }
+
     setLoading(true);
 
     const payload = {
@@ -79,27 +87,36 @@ export default function VideoFormModal({
       link,
       course_id: courseId,
       thumbnail: video?.thumbnail || "https://via.placeholder.com/150",
-      duration: video?.duration || "10:00",
     };
 
-    let error;
-    if (video) {
-      // UPDATE EXISTING
-      const result = await supabase
-        .from("videos")
-        .update(payload)
-        .eq("id", video.id);
-      error = result.error;
-    } else {
-      // INSERT NEW
-      const result = await supabase.from("videos").insert([payload]);
-      error = result.error;
-    }
+    try {
+      let result;
+      if (video?.id) {
+        // UPDATE
+        console.log("Updating video:", video.id, payload);
+        result = await supabase
+          .from("videos")
+          .update(payload)
+          .eq("id", video.id);
+      } else {
+        // INSERT
+        console.log("Inserting new video:", payload);
+        result = await supabase.from("videos").insert([payload]);
+      }
 
-    setLoading(false);
-    if (!error) {
-      onSuccess();
-      onDismiss();
+      if (result.error) {
+        console.error("Supabase Error:", result.error);
+        Alert.alert("Database Error", result.error.message);
+      } else {
+        console.log("Save successful!");
+        onSuccess();
+        onDismiss();
+      }
+    } catch (err) {
+      console.error("Unexpected Error:", err);
+    } finally {
+      setLoading(true); // Should be false, typo fix below
+      setLoading(false);
     }
   };
 
