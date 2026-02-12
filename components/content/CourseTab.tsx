@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  RefreshControl,
+  Alert,
+} from "react-native";
 import {
   Card,
   IconButton,
@@ -9,10 +15,21 @@ import {
   Chip,
   ActivityIndicator,
 } from "react-native-paper";
-import { supabase } from "@/lib/supabase"; // Import your supabase client
+import { supabase } from "@/lib/supabase";
 import { Course } from "@/types/courses";
 
-export default function CoursesTab() {
+// 1. Define the Props interface to match your VideosTab style
+interface CoursesTabProps {
+  onEdit?: (id: string) => void;
+  onView?: (id: string) => void;
+  onDelete?: (id: string) => void;
+}
+
+export default function CoursesTab({
+  onEdit,
+  onView,
+  onDelete,
+}: CoursesTabProps) {
   const [visibleId, setVisibleId] = useState<string | null>(null);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +38,6 @@ export default function CoursesTab() {
   const openMenu = (id: string) => setVisibleId(id);
   const closeMenu = () => setVisibleId(null);
 
-  // 1. Fetch logic: Get courses belonging to THIS teacher
   const fetchMyCourses = useCallback(async () => {
     try {
       const {
@@ -32,7 +48,7 @@ export default function CoursesTab() {
       const { data, error } = await supabase
         .from("courses")
         .select("*")
-        .eq("teacher_id", user.id) // Only get YOUR courses
+        .eq("teacher_id", user.id)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -54,8 +70,24 @@ export default function CoursesTab() {
     fetchMyCourses();
   };
 
+  // Helper for deletion with confirmation
+  const handleDeletePress = (id: string) => {
+    closeMenu();
+    Alert.alert(
+      "Delete Course",
+      "Are you sure? This will remove the course and all linked data.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => onDelete?.(id),
+        },
+      ],
+    );
+  };
+
   const renderCourse = ({ item }: { item: Course }) => {
-    // 2. Conditional Thumbnail Logic
     const hasThumbnail = item.thumbnail && item.thumbnail.trim().length > 0;
 
     return (
@@ -82,8 +114,8 @@ export default function CoursesTab() {
             >
               <Menu.Item
                 onPress={() => {
-                  console.log("View", item.id);
                   closeMenu();
+                  onView?.(item.id); // Trigger prop function
                 }}
                 title="View"
                 leadingIcon="eye"
@@ -91,18 +123,15 @@ export default function CoursesTab() {
               <Divider />
               <Menu.Item
                 onPress={() => {
-                  console.log("Edit", item.id);
                   closeMenu();
+                  onEdit?.(item.id); // Trigger prop function
                 }}
                 title="Edit"
                 leadingIcon="pencil"
               />
               <Divider />
               <Menu.Item
-                onPress={() => {
-                  console.log("Delete", item.id);
-                  closeMenu();
-                }}
+                onPress={() => handleDeletePress(item.id)}
                 title="Delete"
                 leadingIcon="delete"
                 titleStyle={{ color: "red" }}
@@ -138,12 +167,12 @@ export default function CoursesTab() {
   };
 
   if (loading && !refreshing) {
-    return <ActivityIndicator style={{ flex: 1 }} />;
+    return <ActivityIndicator style={{ flex: 1 }} size="large" />;
   }
 
   return (
     <FlatList
-      data={courses} // Changed from placeholderCourses
+      data={courses}
       renderItem={renderCourse}
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.listContent}

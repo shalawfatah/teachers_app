@@ -5,11 +5,14 @@ import { placeholderVideos } from "@/utils/placeholder_videos";
 import CoursesTab from "@/components/content/CourseTab";
 import VideosTab from "@/components/content/VideoTab";
 import CreateCourseModal from "@/components/courses/CreateCourseModal";
+import { useRouter } from "expo-router";
+import { supabase } from "@/lib/supabase";
 
 export default function ContentManagementScreen() {
   const [tab, setTab] = useState("courses");
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
@@ -37,7 +40,20 @@ export default function ContentManagementScreen() {
       </View>
 
       {tab === "courses" ? (
-        <CoursesTab />
+        <CoursesTab
+          onView={(id) => router.push(`/content/view/${id}`)}
+          onEdit={(id) => router.push(`/content/edit/${id}`)}
+          onDelete={async (id) => {
+            const { error } = await supabase
+              .from("courses")
+              .delete()
+              .eq("id", id);
+            if (!error) {
+              // You might want to trigger a refresh here via a state update
+              // or by passing a ref to CoursesTab
+            }
+          }}
+        />
       ) : (
         <VideosTab
           data={placeholderVideos}
