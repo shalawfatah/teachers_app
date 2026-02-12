@@ -1,18 +1,27 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, FAB, Searchbar, SegmentedButtons } from "react-native-paper";
-import { placeholderVideos } from "@/utils/placeholder_videos";
 import CoursesTab from "@/components/content/CourseTab";
 import VideosTab from "@/components/content/VideoTab";
 import CreateCourseModal from "@/components/courses/CreateCourseModal";
 import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
+import UploadVideoModal from "@/components/content/UploadVideoModal";
 
 export default function ContentManagementScreen() {
   const [tab, setTab] = useState("courses");
+  const [courseModalVisible, setCourseModalVisible] = useState(false);
+  const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isModalVisible, setModalVisible] = useState(false);
   const router = useRouter();
+
+  const onFabPress = () => {
+    if (tab === "courses") {
+      setCourseModalVisible(true);
+    } else {
+      setVideoModalVisible(true);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -56,7 +65,6 @@ export default function ContentManagementScreen() {
         />
       ) : (
         <VideosTab
-          data={placeholderVideos}
           onEdit={(id) => console.log("Edit Video", id)}
           onView={(id) => console.log("Watch Video", id)}
           onDelete={(id) => console.log("Delete Video", id)}
@@ -67,15 +75,19 @@ export default function ContentManagementScreen() {
         icon={tab === "courses" ? "plus" : "video-plus"}
         label={tab === "courses" ? "New Course" : "Upload"}
         style={styles.fab}
-        onPress={() => setModalVisible(true)}
+        onPress={onFabPress} // Uses the helper function above
         color="#FFF"
       />
-
+      <UploadVideoModal
+        visible={videoModalVisible}
+        onDismiss={() => setVideoModalVisible(false)}
+        onSuccess={() => setVideoModalVisible(false)}
+      />
       <CreateCourseModal
-        visible={isModalVisible}
-        onDismiss={() => setModalVisible(false)}
+        visible={courseModalVisible}
+        onDismiss={() => setCourseModalVisible(false)}
         onSuccess={() => {
-          // Refresh your course list here
+          setCourseModalVisible(false);
           console.log("Course added successfully!");
         }}
       />
