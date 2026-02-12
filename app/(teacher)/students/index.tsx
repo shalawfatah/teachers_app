@@ -1,17 +1,18 @@
-import { View, FlatList } from "react-native";
+import { View, FlatList, Alert } from "react-native";
 import { Text, Searchbar } from "react-native-paper";
 import { useState, useEffect } from "react";
-import { placeholderStudents } from "@/utils/placeholder_students";
 import { styles } from "@/styles/teacher_students_styles";
 import Loader from "@/components/Loader";
-import { StudentCard } from "@/components/teachers/StudentCard"; // Import the new component
+import { StudentCard } from "@/components/teachers/StudentCard";
 import { StudentProps } from "@/types/students";
 import StudentChip from "@/components/teachers/StudentChip";
 import { useRouter } from "expo-router";
+import { supabase } from "@/lib/supabase"; // Ensure this is imported
 
 export default function StudentsScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [students, setStudents] = useState<StudentProps[]>([]);
 
   const router = useRouter();
 
@@ -20,10 +21,40 @@ export default function StudentsScreen() {
   }, []);
 
   const fetchStudents = async () => {
-    setTimeout(() => {
+    try {
+      setLoading(true);
+
+      // 1. Get current logged-in teacher
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+
+      // 2. Fetch students assigned to this teacher
+      const { data, error } = await supabase
+        .from("students")
+        .select("*")
+        .eq("teacher_id", user?.id) // Filtering by current teacher
+        .order("name", { ascending: true });
+
+      if (error) throw error;
+
+      setStudents(data || []);
+    } catch (err: any) {
+      console.error("Error fetching students:", err.message);
+      Alert.alert("Error", "Could not load students.");
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
+
+  // Filter students based on search query
+  const filteredStudents = students.filter(
+    (student) =>
+      student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      student.email?.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   const handleView = (studentId: string) => {
     router.push(`/(teacher)/students/view/${studentId}`);
@@ -33,18 +64,22 @@ export default function StudentsScreen() {
     router.push(`/(teacher)/students/edit/${studentId}`);
   };
 
-  const handleDelete = (studentId: string) => {
-    console.log("Delete student:", studentId);
+  const handleDelete = async (studentId: string) => {
+    Alert.alert("Delete", "Are you sure?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          const { error } = await supabase
+            .from("students")
+            .delete()
+            .eq("id", studentId);
+          if (!error) fetchStudents(); // Refresh list
+        },
+      },
+    ]);
   };
-
-  const renderStudent = ({ item }: { item: StudentProps }) => (
-    <StudentCard
-      student={item}
-      onView={handleView}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-    />
-  );
 
   if (loading) return <Loader />;
 
@@ -58,7 +93,9 @@ export default function StudentsScreen() {
           Manage your enrolled students
         </Text>
       </View>
+
       <StudentChip />
+
       <View style={styles.searchContainer}>
         <Searchbar
           placeholder="Search students..."
@@ -69,11 +106,23 @@ export default function StudentsScreen() {
       </View>
 
       <FlatList
-        data={placeholderStudents}
-        renderItem={renderStudent}
+        data={filteredStudents} // Using real filtered data
+        renderItem={({ item }) => (
+          <StudentCard
+            student={item}
+            onView={handleView}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            No students found.
+          </Text>
+        }
       />
     </View>
   );
