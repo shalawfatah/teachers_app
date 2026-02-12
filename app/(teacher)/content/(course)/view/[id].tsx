@@ -8,6 +8,7 @@ import {
   Divider,
   Button,
   IconButton,
+  List,
 } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
@@ -16,7 +17,7 @@ import { Course } from "@/types/courses";
 export default function ViewCourse() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-
+  const [videos, setVideos] = useState<any[]>([]);
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -30,17 +31,20 @@ export default function ViewCourse() {
         .from("courses")
         .select(
           `
-          *,
-          teachers (name)
-        `,
-        )
+        *,
+        teachers (name),
+        videos (*) 
+      `,
+        ) // This grabs all videos where course_id matches
         .eq("id", id)
         .single();
 
       if (error) throw error;
+
       setCourse(data);
+      setVideos(data.videos || []); // Store the videos separately for easy mapping
     } catch (err) {
-      console.error("Error fetching course:", err);
+      console.error("Error fetching course details:", err);
     } finally {
       setLoading(false);
     }
@@ -117,19 +121,39 @@ export default function ViewCourse() {
         </View>
 
         {/* Placeholder for Video List */}
-        <Card style={styles.emptyLessons}>
-          <Card.Content>
-            <IconButton
-              icon="play-box-multiple"
-              size={40}
-              style={styles.centerIcon}
+        {videos.length > 0 ? (
+          videos.map((item, index) => (
+            <List.Item
+              key={item.id}
+              title={`${index + 1}. ${item.title}`}
+              description={item.duration || "Duration unknown"}
+              left={(props) => (
+                <List.Icon {...props} icon="play-circle-outline" />
+              )}
+              right={(props) => (
+                <IconButton
+                  {...props}
+                  icon="chevron-right"
+                  onPress={() => {
+                    // You can link to your VideoPlayerModal here!
+                  }}
+                />
+              )}
+              style={styles.videoItem}
             />
-            <Text style={styles.centerText}>No lessons uploaded yet.</Text>
-            <Button mode="outlined" style={styles.addBtn}>
-              Add First Lesson
-            </Button>
-          </Card.Content>
-        </Card>
+          ))
+        ) : (
+          <Card style={styles.emptyLessons}>
+            <Card.Content>
+              <IconButton
+                icon="play-box-multiple"
+                size={40}
+                style={styles.centerIcon}
+              />
+              <Text style={styles.centerText}>No lessons uploaded yet.</Text>
+            </Card.Content>
+          </Card>
+        )}
       </View>
     </ScrollView>
   );
@@ -144,6 +168,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+  },
+  videoItem: {
+    backgroundColor: "#f9f9f9",
+    borderRadius: 8,
+    marginBottom: 8,
   },
   headerImage: { width: "100%", height: 220 },
   content: { padding: 20 },
