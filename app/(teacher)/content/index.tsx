@@ -6,9 +6,9 @@ import VideosTab from "@/components/content/VideoTab";
 import CreateCourseModal from "@/components/courses/CreateCourseModal";
 import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
-import UploadVideoModal from "@/components/content/UploadVideoModal";
 import { deleteVideo } from "@/lib/videoService";
 import VideoPlayerModal from "@/components/content/VideoPlayerModal";
+import VideoFormModal from "@/components/content/VideoFormaModal";
 
 export default function ContentManagementScreen() {
   const [tab, setTab] = useState("courses");
@@ -16,6 +16,11 @@ export default function ContentManagementScreen() {
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+
+  const handleEditPress = (video: any) => {
+    setSelectedVideo(video); // Pass the existing data
+    setVideoModalVisible(true);
+  };
 
   const [videoRefreshKey, setVideoRefreshKey] = useState(0);
   const [playerVisible, setPlayerVisible] = useState(false);
@@ -48,6 +53,7 @@ export default function ContentManagementScreen() {
     if (tab === "courses") {
       setCourseModalVisible(true);
     } else {
+      setSelectedVideo(null); // CRITICAL: Reset for a clean "Upload" form
       setVideoModalVisible(true);
     }
   };
@@ -94,7 +100,7 @@ export default function ContentManagementScreen() {
         />
       ) : (
         <VideosTab
-          onEdit={(id) => console.log("Edit Video", id)}
+          onEdit={handleEditPress}
           onView={(video) => {
             setSelectedVideo(video);
             setPlayerVisible(true);
@@ -102,18 +108,20 @@ export default function ContentManagementScreen() {
           onDelete={(id) => handleDeleteVideo(id)}
         />
       )}
-
+      <VideoFormModal
+        visible={videoModalVisible}
+        video={selectedVideo}
+        onDismiss={() => setVideoModalVisible(false)}
+        onSuccess={() => {
+          setVideoRefreshKey((k) => k + 1); // Refresh the list
+        }}
+      />
       <FAB
         icon={tab === "courses" ? "plus" : "video-plus"}
         label={tab === "courses" ? "New Course" : "Upload"}
         style={styles.fab}
         onPress={onFabPress} // Uses the helper function above
         color="#FFF"
-      />
-      <UploadVideoModal
-        visible={videoModalVisible}
-        onDismiss={() => setVideoModalVisible(false)}
-        onSuccess={() => setVideoModalVisible(false)}
       />
       <CreateCourseModal
         visible={courseModalVisible}
