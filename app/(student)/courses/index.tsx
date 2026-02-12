@@ -1,35 +1,67 @@
-import { View, FlatList } from "react-native";
+import { View, FlatList, RefreshControl } from "react-native";
 import { Text, Searchbar, IconButton, Badge } from "react-native-paper";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { courses_styles } from "@/styles/courses";
-import { placeholderCourses } from "@/utils/placeholder_courses";
+import { supabase } from "@/lib/supabase"; // Import your supabase client
 import Loader from "@/components/Loader";
 import { renderCourse } from "@/components/courses/Card";
 import FilterModal, { FilterState } from "@/components/courses/FilterModal";
 
 export default function CoursesScreen() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [filters, setFilters] = useState<FilterState>({ grades: [] });
 
-  useEffect(() => {
-    setTimeout(() => {
+  const fetchCourses = useCallback(async () => {
+    try {
+      setLoading(true);
+      let query = supabase
+        .from("courses")
+        .select(
+          `
+          *,
+          teachers (name)
+        `,
+        )
+        .order("created_at", { ascending: false });
+
+      // Apply Grade Filters if any are selected
+      if (filters.grades.length > 0) {
+        query = query.in("grade", filters.grades);
+      }
+
+      // Apply Search Filter
+      if (searchQuery) {
+        query = query.ilike("title", `%${searchQuery}%`);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+      setCourses(data || []);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
       setLoading(false);
-    }, 500);
-  }, []);
+      setRefreshing(false);
+    }
+  }, [filters, searchQuery]);
 
-  const handleApplyFilters = (newFilters: FilterState) => {
-    setFilters(newFilters);
-    // TODO: Filter courses based on newFilters
-    console.log("Applied filters:", newFilters);
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchCourses();
   };
 
-  const getActiveFilterCount = () => {
-    return filters.grades.length;
-  };
+  const getActiveFilterCount = () => filters.grades.length;
 
-  if (loading) return <Loader />;
+  if (loading && !refreshing) return <Loader />;
 
   return (
     <View style={courses_styles.container}>
@@ -40,7 +72,7 @@ export default function CoursesScreen() {
               All Courses
             </Text>
             <Text variant="bodyMedium" style={courses_styles.headerSubtitle}>
-              Explore and learn from available courses
+              {courses.length} courses available
             </Text>
           </View>
 
@@ -71,17 +103,25 @@ export default function CoursesScreen() {
       </View>
 
       <FlatList
-        data={placeholderCourses}
+        data={courses}
         renderItem={renderCourse}
         keyExtractor={(item) => item.id}
         contentContainerStyle={courses_styles.listContent}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        ListEmptyComponent={
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            No courses found.
+          </Text>
+        }
       />
 
       <FilterModal
         visible={filterVisible}
         onDismiss={() => setFilterVisible(false)}
-        onApply={handleApplyFilters}
+        onApply={setFilters}
         currentFilters={filters}
       />
     </View>
