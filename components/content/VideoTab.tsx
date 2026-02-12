@@ -1,30 +1,80 @@
-import React, { useState } from "react";
-import { FlatList, View, StyleSheet } from "react-native";
-import { List, IconButton, Avatar, Menu, Divider } from "react-native-paper";
-import { Video } from "@/types/videos";
+import React, { useState, useEffect, useCallback } from "react";
+import { FlatList, View, StyleSheet, RefreshControl } from "react-native";
+import {
+  List,
+  IconButton,
+  Avatar,
+  Menu,
+  Divider,
+  ActivityIndicator,
+} from "react-native-paper";
+import { supabase } from "@/lib/supabase"; // Ensure this path is correct
 
 interface VideosTabProps {
-  data: Video[];
-  onEdit: (id: string) => void;
+  onEdit: (video: any) => void; // Changed to object to make editing easier later
   onDelete: (id: string) => void;
-  onView: (id: string) => void;
+  onView: (video: any) => void;
 }
 
-export default function VideosTab({ data, onEdit, onDelete, onView}: VideosTabProps) {
+export default function VideosTab({
+  onEdit,
+  onDelete,
+  onView,
+}: VideosTabProps) {
+  const [videos, setVideos] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [menuVisibleId, setMenuVisibleId] = useState<string | null>(null);
+
+  const fetchVideos = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from("videos")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setVideos(data || []);
+    } catch (err) {
+      console.error("Error fetching videos:", err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchVideos();
+  }, [fetchVideos]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchVideos();
+  };
 
   const openMenu = (id: string) => setMenuVisibleId(id);
   const closeMenu = () => setMenuVisibleId(null);
 
+  if (loading && !refreshing) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <FlatList
-      data={data}
+      data={videos}
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.listContent}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
       renderItem={({ item }) => (
         <List.Item
           title={item.title}
-          description={`${item.duration} • ${item.views ?? 0} views`}
+          description={`${item.duration || "0:00"} • ${item.views ?? 0} views`}
           style={styles.listItem}
           left={() => (
             <Avatar.Image
@@ -49,7 +99,7 @@ export default function VideosTab({ data, onEdit, onDelete, onView}: VideosTabPr
               >
                 <Menu.Item
                   onPress={() => {
-                    onView(item.id);
+                    onView(item);
                     closeMenu();
                   }}
                   title="Watch Video"
@@ -58,7 +108,7 @@ export default function VideosTab({ data, onEdit, onDelete, onView}: VideosTabPr
                 <Divider />
                 <Menu.Item
                   onPress={() => {
-                    onEdit(item.id);
+                    onEdit(item);
                     closeMenu();
                   }}
                   title="Edit Video"
@@ -92,4 +142,5 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   row: { justifyContent: "center", alignItems: "center" },
+  center: { flex: 1, justifyContent: "center", alignItems: "center" },
 });
