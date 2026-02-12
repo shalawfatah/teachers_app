@@ -23,7 +23,7 @@ export default function SignupScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState<"teacher" | "student">("student");
+  const [grade, setGrade] = useState("9");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [successDialogVisible, setSuccessDialogVisible] = useState(false);
@@ -31,63 +31,53 @@ export default function SignupScreen() {
   const handleSignup = async () => {
     setError("");
 
-    // Validation
-    if (!fullName.trim()) {
-      setError("Please enter your full name");
-      return;
-    }
-    if (!email.trim()) {
-      setError("Please enter your email");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
+    // Basic Validation
+    if (!fullName.trim()) return setError("Please enter your full name");
+    if (!email.trim()) return setError("Please enter your email");
+    if (password.length < 6)
+      return setError("Password must be at least 6 characters");
 
     setLoading(true);
 
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-          role: role,
+    try {
+      console.log("Starting signup for:", email);
+
+      // We pass 'name' and 'grade' inside the options.data object.
+      // The Postgres Trigger reads this from 'raw_user_meta_data'.
+      const { data: authData, error: signUpError } = await supabase.auth.signUp(
+        {
+          email,
+          password,
+          options: {
+            data: {
+              name: fullName,
+              grade: grade,
+            },
+          },
         },
-      },
-    });
+      );
 
-    if (signUpError) {
-      setError(signUpError.message);
-      setLoading(false);
-      return;
-    }
-
-    if (data.user) {
-      // Create profile
-      const { error: profileError } = await supabase.from("profiles").insert({
-        id: data.user.id,
-        full_name: fullName,
-        role: role,
-      });
-
-      if (profileError) {
-        setError(profileError.message);
+      if (signUpError) {
+        // If the trigger fails, the error will pop up here.
+        console.error("Signup error:", signUpError);
+        setError(signUpError.message);
         setLoading(false);
         return;
       }
 
-      // Check if email confirmation is required
-      if (data.session) {
-        // Auto-confirmed, user is logged in
-        setLoading(false);
-        // Navigation handled by root layout
+      console.log("Auth success. Student record created via DB Trigger.");
+
+      // Check if user is automatically signed in (depends on Supabase "Confirm Email" setting)
+      if (authData.session) {
+        router.replace("/(tabs)");
       } else {
-        // Email confirmation required
-        setLoading(false);
         setSuccessDialogVisible(true);
       }
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      setError("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,7 +95,7 @@ export default function SignupScreen() {
         <Card style={styles.card}>
           <Card.Content>
             <Text variant="headlineMedium" style={styles.title}>
-              Create Account
+              Create Student Account
             </Text>
 
             <TextInput
@@ -138,22 +128,39 @@ export default function SignupScreen() {
               disabled={loading}
             />
 
-            <Text variant="labelLarge" style={styles.roleLabel}>
-              I am a:
+            <Text variant="labelLarge" style={styles.gradeLabel}>
+              Grade Level
             </Text>
+
             <SegmentedButtons
-              value={role}
-              onValueChange={(value) => setRole(value as "teacher" | "student")}
+              value={grade}
+              onValueChange={setGrade}
               buttons={[
-                { value: "student", label: "Student" },
-                { value: "teacher", label: "Teacher" },
+                { value: "7", label: "7" },
+                { value: "8", label: "8" },
+                { value: "9", label: "9" },
+              ]}
+              style={styles.segmented}
+              disabled={loading}
+            />
+            <SegmentedButtons
+              value={grade}
+              onValueChange={setGrade}
+              buttons={[
+                { value: "10", label: "10" },
+                { value: "11", label: "11" },
+                { value: "12", label: "12" },
               ]}
               style={styles.segmented}
               disabled={loading}
             />
 
             {error ? (
-              <HelperText type="error" visible={!!error}>
+              <HelperText
+                type="error"
+                visible={!!error}
+                style={styles.errorText}
+              >
                 {error}
               </HelperText>
             ) : null}
@@ -184,8 +191,8 @@ export default function SignupScreen() {
           <Dialog.Title>Check Your Email</Dialog.Title>
           <Dialog.Content>
             <Paragraph>
-              We've sent a confirmation email to {email}. Please check your
-              inbox and click the confirmation link to activate your account.
+              We've sent a confirmation email to {email}. Please verify your
+              email to log in.
             </Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
@@ -198,33 +205,13 @@ export default function SignupScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: "center",
-    padding: 16,
-  },
-  card: {
-    padding: 16,
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: 24,
-  },
-  input: {
-    marginBottom: 12,
-  },
-  roleLabel: {
-    marginTop: 8,
-    marginBottom: 8,
-  },
-  segmented: {
-    marginBottom: 16,
-  },
-  button: {
-    marginTop: 8,
-    marginBottom: 8,
-  },
+  container: { flex: 1 },
+  scrollContent: { flexGrow: 1, justifyContent: "center", padding: 16 },
+  card: { padding: 16 },
+  title: { textAlign: "center", marginBottom: 24 },
+  input: { marginBottom: 12 },
+  gradeLabel: { marginTop: 8, marginBottom: 8 },
+  segmented: { marginBottom: 12 },
+  button: { marginTop: 8, marginBottom: 8 },
+  errorText: { fontSize: 12 },
 });
