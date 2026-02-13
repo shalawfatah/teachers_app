@@ -19,7 +19,7 @@ export default function AccountScreen() {
     } = await supabase.auth.getUser();
     if (user) {
       const { data } = await supabase
-        .from("profiles")
+        .from("students")
         .select("*")
         .eq("id", user.id)
         .single();
@@ -49,38 +49,6 @@ export default function AccountScreen() {
           Student
         </Text>
       </View>
-      <Card style={styles.statsCard}>
-        <Card.Content>
-          <View style={styles.statsRow}>
-            <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={styles.statNumber}>
-                12
-              </Text>
-              <Text variant="bodySmall" style={styles.statLabel}>
-                Enrolled
-              </Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={styles.statNumber}>
-                8
-              </Text>
-              <Text variant="bodySmall" style={styles.statLabel}>
-                In Progress
-              </Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={styles.statNumber}>
-                4
-              </Text>
-              <Text variant="bodySmall" style={styles.statLabel}>
-                Completed
-              </Text>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
       <View style={styles.settingsContainer}>
         <List.Section>
           <List.Subheader>Account Settings</List.Subheader>
