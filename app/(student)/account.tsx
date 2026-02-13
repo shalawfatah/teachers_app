@@ -3,10 +3,10 @@ import { Text, List, Avatar, Button, Divider, Card } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/account_styles";
-import { Profile } from "@/types/profile";
+import { Student } from "@/types/profile";
 
 export default function AccountScreen() {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Student | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -39,14 +39,14 @@ export default function AccountScreen() {
       <View style={styles.profileHeader}>
         <Avatar.Text
           size={80}
-          label={profile?.full_name?.charAt(0) || "U"}
+          label={profile?.name?.charAt(0) || "U"}
           style={styles.avatar}
         />
         <Text variant="headlineSmall" style={styles.name}>
-          {profile?.full_name}
+          {profile?.name}
         </Text>
         <Text variant="bodyMedium" style={styles.role}>
-          {profile?.role === "student" ? "Student" : "Teacher"}
+          Student
         </Text>
       </View>
       <Card style={styles.statsCard}>

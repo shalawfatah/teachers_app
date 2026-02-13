@@ -10,7 +10,7 @@ export default function ViewStudent() {
 
   const student: StudentProps = {
     id: Array.isArray(id) ? id[0] : id,
-    full_name: "John Doe",
+    name: "John Doe",
     email: "john.doe@university.edu",
     enrolled_courses: 4,
     last_active: "2024-05-20",
@@ -26,14 +26,14 @@ export default function ViewStudent() {
       <View style={styles.hero}>
         <Avatar.Text
           size={80}
-          label={student.full_name
+          label={student.name
             .split(" ")
             .map((n) => n[0])
             .join("")}
           style={{ backgroundColor: "#6200ee" }}
         />
         <Text variant="headlineMedium" style={styles.name}>
-          {student.full_name}
+          {student.name}
         </Text>
         <Chip
           icon="circle"

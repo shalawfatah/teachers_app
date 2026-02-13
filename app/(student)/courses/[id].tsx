@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView, ImageBackground, StatusBar } from "react-native";
 import { Text, IconButton, Card, Chip, Button, List } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { placeholderCourses } from "@/utils/placeholder_courses";
 import { styles } from "@/styles/single_course_styles";
 import NoCourse from "@/components/courses/NoCourse";
+import { supabase } from "@/lib/supabase";
+import Loader from "@/components/Loader";
 
 export default function SingleCourse() {
   const { id } = useLocalSearchParams();
-  const course = placeholderCourses.find((c) => c.id === id);
-
+  const [course, setCourse] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  useEffect(() => {
+    async function fetchCourseDetails() {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from("courses")
+          .select("*")
+          .eq("id", id)
+          .single();
+
+        if (error) throw error;
+        setCourse(data);
+      } catch (error) {
+        console.error("Error fetching course:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (id) fetchCourseDetails();
+  }, [id]);
+
+  if (loading) return <Loader />;
   if (!course) return <NoCourse />;
 
   return (

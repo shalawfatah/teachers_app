@@ -4,11 +4,9 @@ import { Link } from "expo-router";
 import { SingleCourse } from "@/types/courses";
 
 export const renderCourse = ({ item }: { item: SingleCourse }) => {
-  // Check if thumbnail exists and is a valid string
   const hasThumbnail = item.thumbnail && item.thumbnail.trim().length > 0;
-
   return (
-    <Link href={`/courses/${item.id}`} asChild>
+    <Link href={`/(student)/courses/${item.id}`} asChild>
       <Card style={styles.courseCard}>
         {/* Only render the photo part if a thumbnail is provided */}
         {hasThumbnail && (

@@ -3,7 +3,6 @@ import { View, ImageBackground, ScrollView } from "react-native";
 import { Text, Avatar, IconButton } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { LinearGradient } from "expo-linear-gradient";
-import { Profile } from "@/types/profile";
 import { styles } from "@/styles/teacher_home_styles";
 import Loader from "@/components/Loader";
 
@@ -55,14 +54,14 @@ export default function TeacherDashboard() {
               <View style={styles.userInfo}>
                 <Avatar.Text
                   size={45}
-                  label={profile?.full_name?.charAt(0) || "U"}
+                  label={profile?.name?.charAt(0) || "U"}
                 />
                 <View style={styles.userText}>
                   <Text variant="bodySmall" style={styles.welcomeText}>
                     Welcome back,
                   </Text>
                   <Text variant="titleMedium" style={styles.userName}>
-                    {profile?.full_name}
+                    {profile?.name}
                   </Text>
                 </View>
               </View>
@@ -83,7 +82,7 @@ export default function TeacherDashboard() {
                 style={styles.teacherAvatar}
               />
               <Text variant="headlineLarge" style={styles.teacherName}>
-                {profile?.full_name}
+                {profile?.name}
               </Text>
               <Text variant="titleMedium" style={styles.teacherBio}>
                 Computer Science & Web Development

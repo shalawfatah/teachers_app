@@ -18,7 +18,7 @@ export default function EditStudent() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<StudentProps>({
     id: Array.isArray(id) ? id[0] : id || "",
-    full_name: "John Doe",
+    name: "John Doe",
     email: "john.doe@university.edu",
     enrolled_courses: 4,
     last_active: "",
@@ -56,8 +56,8 @@ export default function EditStudent() {
 
           <TextInput
             label="Full Name"
-            value={form.full_name}
-            onChangeText={(text) => setForm({ ...form, full_name: text })}
+            value={form.name}
+            onChangeText={(text) => setForm({ ...form, name: text })}
             mode="outlined"
             style={styles.input}
             left={<TextInput.Icon icon="account" />}

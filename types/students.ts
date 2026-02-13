@@ -1,6 +1,6 @@
 export interface StudentProps {
   id: string;
-  full_name: string;
+  name: string;
   email: string;
   enrolled_courses: number;
   last_active: string;

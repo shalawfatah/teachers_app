@@ -37,12 +37,12 @@ export const StudentCard: React.FC<StudentCardProps> = ({
           <View style={styles.studentInfo}>
             <Avatar.Text
               size={50}
-              label={student.full_name.charAt(0)}
+              label={student.name.charAt(0)}
               style={styles.avatar}
             />
             <View style={styles.studentDetails}>
               <Text variant="titleMedium" style={styles.studentName}>
-                {student.full_name}
+                {student.name}
               </Text>
               <Text variant="bodySmall" style={styles.studentEmail}>
                 {student.email}
