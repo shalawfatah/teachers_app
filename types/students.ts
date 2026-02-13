@@ -2,9 +2,9 @@ export interface StudentProps {
   id: string;
   name: string;
   email: string;
-  enrolled_courses: number;
-  last_active: string;
   status: "active" | "inactive";
+  grade: number;
+  verified: boolean;
 }
 
 export interface StudentCardProps {

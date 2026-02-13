@@ -54,19 +54,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
                   style={styles.courseChip}
                   textStyle={styles.chipText}
                 >
-                  {student.enrolled_courses} courses
-                </Chip>
-                <Chip
-                  compact
-                  style={[
-                    styles.statusChip,
-                    student.status === "active"
-                      ? styles.activeChip
-                      : styles.inactiveChip,
-                  ]}
-                  textStyle={styles.chipText}
-                >
-                  {student.status}
+                  {student.verified ? "Verified" : "Not Verified"}
                 </Chip>
               </View>
             </View>
