@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/teacher_account_styles";
 import { Teacher } from "@/types/profile";
 import StatsCard from "@/components/account/StatsCard";
+import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 
 type TeacherStats = {
   students_count: number;
@@ -16,6 +17,7 @@ export default function AccountScreen() {
   const [profile, setProfile] = useState<Teacher | null>(null);
   const [stats, setStats] = useState<TeacherStats | null>(null);
   const [loading, setLoading] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
   console.log("stats ", stats);
 
   useEffect(() => {
@@ -52,6 +54,7 @@ export default function AccountScreen() {
     }
     setStats(data[0]);
   };
+
   const handleSignOut = async () => {
     setLoading(true);
     await supabase.auth.signOut();
@@ -87,7 +90,7 @@ export default function AccountScreen() {
             description="Update your personal information"
             left={(props) => <List.Icon {...props} icon="account-edit" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => console.log("Edit profile")}
+            onPress={() => setEditModalVisible(true)}
           />
           <Divider />
           <List.Item
@@ -155,6 +158,13 @@ export default function AccountScreen() {
           Sign Out
         </Button>
       </View>
+
+      <EditProfileModal
+        visible={editModalVisible}
+        onDismiss={() => setEditModalVisible(false)}
+        profile={profile}
+        onProfileUpdate={getProfile}
+      />
     </ScrollView>
   );
 }

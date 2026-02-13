@@ -5,10 +5,13 @@ import { supabase } from "@/lib/supabase";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "@/styles/teacher_home_styles";
 import Loader from "@/components/Loader";
+import { Teacher } from "@/types/profile";
+import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 
 export default function TeacherDashboard() {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Teacher | null>(null);
   const [loading, setLoading] = useState(true);
+  const [editModalVisible, setEditModalVisible] = useState(false);
 
   useEffect(() => {
     getProfile();
@@ -20,11 +23,10 @@ export default function TeacherDashboard() {
     } = await supabase.auth.getUser();
     if (user) {
       const { data } = await supabase
-        .from("profiles")
+        .from("teachers")
         .select("*")
         .eq("id", user.id)
         .single();
-
       setProfile(data);
     }
     setLoading(false);
@@ -65,14 +67,21 @@ export default function TeacherDashboard() {
                   </Text>
                 </View>
               </View>
-              <IconButton
-                icon="logout"
-                iconColor="#fff"
-                size={24}
-                onPress={handleSignOut}
-              />
+              <View style={{ flexDirection: "row" }}>
+                <IconButton
+                  icon="pencil"
+                  iconColor="#fff"
+                  size={24}
+                  onPress={() => setEditModalVisible(true)}
+                />
+                <IconButton
+                  icon="logout"
+                  iconColor="#fff"
+                  size={24}
+                  onPress={handleSignOut}
+                />
+              </View>
             </View>
-
             <View style={styles.teacherInfo}>
               <Avatar.Image
                 size={140}
@@ -85,7 +94,7 @@ export default function TeacherDashboard() {
                 {profile?.name}
               </Text>
               <Text variant="titleMedium" style={styles.teacherBio}>
-                Computer Science & Web Development
+                {profile?.expertise || "Computer Science & Web Development"}
               </Text>
             </View>
             <View style={styles.statsContainer}>
@@ -119,6 +128,13 @@ export default function TeacherDashboard() {
           </LinearGradient>
         </ImageBackground>
       </ScrollView>
+
+      <EditProfileModal
+        visible={editModalVisible}
+        onDismiss={() => setEditModalVisible(false)}
+        profile={profile}
+        onProfileUpdate={getProfile}
+      />
     </View>
   );
 }
