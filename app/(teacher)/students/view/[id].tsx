@@ -55,28 +55,14 @@ export default function ViewStudent() {
           <Divider style={styles.divider} />
           <DetailItem
             icon="book-open-variant"
-            label="Enrolled Courses"
-            value={`${student.enrolled_courses} Courses`}
-          />
-          <Divider style={styles.divider} />
-          <DetailItem
-            icon="clock-outline"
-            label="Last Active"
-            value={student.last_active}
+            label="Verification"
+            value={`${student.verified ? "Verified" : "Not Verified"}`}
           />
         </Card.Content>
       </Card>
 
       {/* Action Buttons */}
       <View style={styles.actions}>
-        <Button
-          mode="contained"
-          onPress={() => console.log("Edit", student.id)}
-          style={styles.button}
-          icon="pencil"
-        >
-          Edit Student
-        </Button>
         <Button
           mode="outlined"
           onPress={() => console.log("Delete", student.id)}

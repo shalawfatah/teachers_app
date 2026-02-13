@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   heroSection: {
-    height: SCREEN_HEIGHT,
+    height: SCREEN_HEIGHT - 50,
     width: "100%",
   },
   gradient: {
