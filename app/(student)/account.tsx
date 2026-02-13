@@ -5,10 +5,15 @@ import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/account_styles";
 import { Student } from "@/types/profile";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
+import SettingsModal, {
+  SettingsType,
+} from "@/components/students/account/SettingsModal";
 
 export default function AccountScreen() {
   const [profile, setProfile] = useState<Student | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [activeSettingsType, setActiveSettingsType] =
+    useState<SettingsType>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -69,7 +74,7 @@ export default function AccountScreen() {
               description="Manage notification preferences"
               left={(props) => <List.Icon {...props} icon="bell" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => console.log("Notifications")}
+              onPress={() => setActiveSettingsType("notifications")}
             />
             <Divider />
             <List.Item
@@ -77,7 +82,7 @@ export default function AccountScreen() {
               description="Privacy and security settings"
               left={(props) => <List.Icon {...props} icon="shield-account" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => console.log("Privacy")}
+              onPress={() => setActiveSettingsType("privacy")}
             />
           </List.Section>
           <List.Section>
@@ -87,7 +92,7 @@ export default function AccountScreen() {
               description="Get help and support"
               left={(props) => <List.Icon {...props} icon="help-circle" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => console.log("Help")}
+              onPress={() => setActiveSettingsType("help")}
             />
             <Divider />
             <List.Item
@@ -95,7 +100,7 @@ export default function AccountScreen() {
               description="App version and info"
               left={(props) => <List.Icon {...props} icon="information" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => console.log("About")}
+              onPress={() => setActiveSettingsType("about")}
             />
           </List.Section>
         </View>
@@ -117,6 +122,11 @@ export default function AccountScreen() {
         onDismiss={() => setIsModalVisible(false)}
         profile={profile}
         onProfileUpdate={getProfile}
+      />
+      <SettingsModal
+        type={activeSettingsType}
+        visible={activeSettingsType !== null}
+        onDismiss={() => setActiveSettingsType(null)}
       />
     </>
   );
