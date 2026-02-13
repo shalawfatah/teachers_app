@@ -94,8 +94,6 @@ export default function StudentsScreen() {
         </Text>
       </View>
 
-      <StudentChip />
-
       <View style={styles.searchContainer}>
         <Searchbar
           placeholder="Search students..."

@@ -1,40 +1,79 @@
-import React, { useState } from "react";
-import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
-import { useLocalSearchParams, Stack, useRouter } from "expo-router";
+import React, { useState, useEffect } from "react";
 import {
-  TextInput,
-  Button,
-  SegmentedButtons,
-  Surface,
-  Text,
-} from "react-native-paper";
-import { StudentProps } from "@/types/students";
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+} from "react-native";
+import { useLocalSearchParams, Stack, useRouter } from "expo-router";
+import { Button, SegmentedButtons, Surface, Text } from "react-native-paper";
+import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/student_edit_styles";
+import Loader from "@/components/Loader";
 
 export default function EditStudent() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [student, setStudent] = useState<any>(null);
+  const [verified, setVerified] = useState<boolean>(false);
 
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState<StudentProps>({
-    id: Array.isArray(id) ? id[0] : id || "",
-    name: "John Doe",
-    email: "john.doe@university.edu",
-    enrolled_courses: 4,
-    last_active: "",
-    status: "active",
-  });
+  const studentId = Array.isArray(id) ? id[0] : id || "";
+
+  useEffect(() => {
+    if (studentId) {
+      fetchStudent();
+    }
+  }, [studentId]); // Added studentId as dependency
+
+  const fetchStudent = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("students")
+        .select("*")
+        .eq("id", studentId)
+        .single();
+
+      if (error) throw error;
+
+      setStudent(data);
+      setVerified(data.verified || false);
+    } catch (err: any) {
+      console.error("Error fetching student:", err.message);
+      Alert.alert("Error", "Could not load student data.");
+      router.back();
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSave = async () => {
-    setLoading(true);
+    try {
+      setSaving(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+      const { error } = await supabase
+        .from("students")
+        .update({ verified })
+        .eq("id", studentId);
 
-    console.log("Saving to Supabase:", form);
+      if (error) throw error;
 
-    setLoading(false);
-    router.back();
+      Alert.alert("Success", "Student status updated successfully!");
+      router.back();
+    } catch (err: any) {
+      console.error("Error updating student:", err.message);
+      Alert.alert("Error", "Could not update student status.");
+    } finally {
+      setSaving(false);
+    }
   };
+
+  if (loading) return <Loader />;
+
+  if (!student) return null;
 
   return (
     <KeyboardAvoidingView
@@ -42,60 +81,59 @@ export default function EditStudent() {
       style={{ flex: 1 }}
     >
       <Stack.Screen
-        options={{ title: "Edit Student", headerRight: () => null }}
+        options={{ title: "Manage Student", headerRight: () => null }}
       />
-
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.content}
       >
         <Surface style={styles.formCard} elevation={1}>
           <Text variant="titleMedium" style={styles.sectionTitle}>
-            General Information
+            Student Information
           </Text>
 
-          <TextInput
-            label="Full Name"
-            value={form.name}
-            onChangeText={(text) => setForm({ ...form, name: text })}
-            mode="outlined"
-            style={styles.input}
-            left={<TextInput.Icon icon="account" />}
-          />
+          <View style={{ marginBottom: 16 }}>
+            <Text variant="labelLarge" style={{ marginBottom: 4 }}>
+              Full Name
+            </Text>
+            <Text variant="bodyLarge">{student.name}</Text>
+          </View>
 
-          <TextInput
-            label="Email Address"
-            value={form.email}
-            onChangeText={(text) => setForm({ ...form, email: text })}
-            mode="outlined"
-            keyboardType="email-address"
-            style={styles.input}
-            left={<TextInput.Icon icon="email" />}
-          />
+          <View style={{ marginBottom: 16 }}>
+            <Text variant="labelLarge" style={{ marginBottom: 4 }}>
+              Email Address
+            </Text>
+            <Text variant="bodyLarge">{student.email}</Text>
+          </View>
 
-          <TextInput
-            label="Enrolled Courses"
-            value={form.enrolled_courses.toString()}
-            onChangeText={(text) =>
-              setForm({ ...form, enrolled_courses: parseInt(text) || 0 })
-            }
-            mode="outlined"
-            keyboardType="numeric"
-            style={styles.input}
-            left={<TextInput.Icon icon="book-open-variant" />}
-          />
+          <View style={{ marginBottom: 16 }}>
+            <Text variant="labelLarge" style={{ marginBottom: 4 }}>
+              Grade
+            </Text>
+            <Text variant="bodyLarge">{student.grade || "N/A"}</Text>
+          </View>
 
-          <Text variant="labelLarge" style={styles.label}>
-            Student Status
+          <Text variant="labelLarge" style={[styles.label, { marginTop: 20 }]}>
+            Account Status
           </Text>
+          <Text variant="bodySmall" style={{ marginBottom: 12, color: "#666" }}>
+            Control whether this student can access the platform
+          </Text>
+
           <SegmentedButtons
-            value={form.status}
-            onValueChange={(value) =>
-              setForm({ ...form, status: value as "active" | "inactive" })
-            }
+            value={verified ? "active" : "inactive"}
+            onValueChange={(value) => setVerified(value === "active")}
             buttons={[
-              { value: "active", label: "Active", icon: "check-circle" },
-              { value: "inactive", label: "Inactive", icon: "close-circle" },
+              {
+                value: "active",
+                label: "Verified",
+                icon: "check-circle",
+              },
+              {
+                value: "inactive",
+                label: "Unverified",
+                icon: "close-circle",
+              },
             ]}
             style={styles.segmented}
           />
@@ -105,15 +143,14 @@ export default function EditStudent() {
           <Button
             mode="contained"
             onPress={handleSave}
-            loading={loading}
-            disabled={loading}
+            loading={saving}
+            disabled={saving}
             style={styles.saveButton}
             contentStyle={{ height: 48 }}
           >
-            {loading ? "Saving Changes..." : "Save Student"}
+            {saving ? "Updating..." : "Update Status"}
           </Button>
-
-          <Button mode="text" onPress={() => router.back()} disabled={loading}>
+          <Button mode="text" onPress={() => router.back()} disabled={saving}>
             Cancel
           </Button>
         </View>

@@ -6,19 +6,13 @@ import { styles } from "@/styles/teacher_account_styles";
 import { Teacher } from "@/types/profile";
 import StatsCard from "@/components/account/StatsCard";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
-
-type TeacherStats = {
-  students_count: number;
-  courses_count: number;
-  videos_count: number;
-};
+import { TeacherStats } from "@/types/teacher";
 
 export default function AccountScreen() {
   const [profile, setProfile] = useState<Teacher | null>(null);
-  const [stats, setStats] = useState<TeacherStats | null>(null);
+  const [stats, setStats] = useState<TeacherStats>();
   const [loading, setLoading] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
-  console.log("stats ", stats);
 
   useEffect(() => {
     getProfile();
@@ -28,7 +22,7 @@ export default function AccountScreen() {
     if (profile?.id) {
       getStats();
     }
-  }, [profile]); // Call getStats when profile changes
+  }, [profile]);
 
   const getProfile = async () => {
     const {
@@ -77,11 +71,13 @@ export default function AccountScreen() {
         </Text>
       </View>
 
-      <StatsCard
-        courseNumber={stats?.courses_count}
-        videoNumber={stats?.videos_count}
-        studentNumber={stats?.students_count}
-      />
+      {stats !== undefined ? (
+        <StatsCard
+          courseNumber={stats.courses_count}
+          videoNumber={stats.videos_count}
+          studentNumber={stats.students_count}
+        />
+      ) : null}
       <View style={styles.settingsContainer}>
         <List.Section>
           <List.Subheader>Account Settings</List.Subheader>
