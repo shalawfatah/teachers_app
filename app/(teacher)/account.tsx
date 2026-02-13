@@ -3,16 +3,30 @@ import { Text, List, Avatar, Button, Divider } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/teacher_account_styles";
+import { Teacher } from "@/types/profile";
 import StatsCard from "@/components/account/StatsCard";
-import { Student } from "@/types/profile";
+
+type TeacherStats = {
+  students_count: number;
+  courses_count: number;
+  videos_count: number;
+};
 
 export default function AccountScreen() {
-  const [profile, setProfile] = useState<Student | null>(null);
+  const [profile, setProfile] = useState<Teacher | null>(null);
+  const [stats, setStats] = useState<TeacherStats | null>(null);
   const [loading, setLoading] = useState(false);
+  console.log("stats ", stats);
 
   useEffect(() => {
     getProfile();
   }, []);
+
+  useEffect(() => {
+    if (profile?.id) {
+      getStats();
+    }
+  }, [profile]); // Call getStats when profile changes
 
   const getProfile = async () => {
     const {
@@ -20,7 +34,7 @@ export default function AccountScreen() {
     } = await supabase.auth.getUser();
     if (user) {
       const { data } = await supabase
-        .from("profiles")
+        .from("teachers")
         .select("*")
         .eq("id", user.id)
         .single();
@@ -29,6 +43,15 @@ export default function AccountScreen() {
     }
   };
 
+  const getStats = async () => {
+    const { data, error } = await supabase.rpc("get_teacher_stats", {
+      teacher_uuid: profile?.id,
+    });
+    if (error) {
+      console.log(error);
+    }
+    setStats(data[0]);
+  };
   const handleSignOut = async () => {
     setLoading(true);
     await supabase.auth.signOut();
@@ -51,7 +74,11 @@ export default function AccountScreen() {
         </Text>
       </View>
 
-      <StatsCard courseNumber={12} videoNumber={49} studentNumber={1.5} />
+      <StatsCard
+        courseNumber={stats?.courses_count}
+        videoNumber={stats?.videos_count}
+        studentNumber={stats?.students_count}
+      />
       <View style={styles.settingsContainer}>
         <List.Section>
           <List.Subheader>Account Settings</List.Subheader>
