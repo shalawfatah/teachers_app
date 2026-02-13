@@ -8,14 +8,27 @@ import Loader from "@/components/Loader";
 import { Teacher } from "@/types/profile";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 
+type TeacherStats = {
+  students_count: number;
+  courses_count: number;
+  videos_count: number;
+};
+
 export default function TeacherDashboard() {
   const [profile, setProfile] = useState<Teacher | null>(null);
+  const [stats, setStats] = useState<TeacherStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [editModalVisible, setEditModalVisible] = useState(false);
 
   useEffect(() => {
     getProfile();
   }, []);
+
+  useEffect(() => {
+    if (profile?.id) {
+      getStats();
+    }
+  }, [profile]);
 
   const getProfile = async () => {
     const {
@@ -30,6 +43,17 @@ export default function TeacherDashboard() {
       setProfile(data);
     }
     setLoading(false);
+  };
+
+  const getStats = async () => {
+    const { data, error } = await supabase.rpc("get_teacher_stats", {
+      teacher_uuid: profile?.id,
+    });
+    if (error) {
+      console.log(error);
+    } else {
+      setStats(data[0]);
+    }
   };
 
   const handleSignOut = async () => {
@@ -100,7 +124,7 @@ export default function TeacherDashboard() {
             <View style={styles.statsContainer}>
               <View style={styles.stat}>
                 <Text variant="headlineMedium" style={styles.statNumber}>
-                  156
+                  {stats?.videos_count || 0}
                 </Text>
                 <Text variant="bodyMedium" style={styles.statLabel}>
                   Videos
@@ -109,7 +133,7 @@ export default function TeacherDashboard() {
               <View style={styles.statDivider} />
               <View style={styles.stat}>
                 <Text variant="headlineMedium" style={styles.statNumber}>
-                  12
+                  {stats?.courses_count || 0}
                 </Text>
                 <Text variant="bodyMedium" style={styles.statLabel}>
                   Courses
@@ -118,7 +142,7 @@ export default function TeacherDashboard() {
               <View style={styles.statDivider} />
               <View style={styles.stat}>
                 <Text variant="headlineMedium" style={styles.statNumber}>
-                  1.2K
+                  {stats?.students_count || 0}
                 </Text>
                 <Text variant="bodyMedium" style={styles.statLabel}>
                   Students
