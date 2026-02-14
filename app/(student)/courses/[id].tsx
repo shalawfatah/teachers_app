@@ -9,33 +9,86 @@ import NoCourse from "@/components/courses/NoCourse";
 import { supabase } from "@/lib/supabase";
 import Loader from "@/components/Loader";
 
+type Video = {
+  id: string;
+  title: string;
+  free: boolean;
+  thumbnail: string;
+};
+
 export default function SingleCourse() {
   const { id } = useLocalSearchParams();
   const [course, setCourse] = useState<any>(null);
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [isVerified, setIsVerified] = useState(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    async function fetchCourseDetails() {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from("courses")
-          .select("*")
-          .eq("id", id)
+    if (id) {
+      fetchCourseData();
+    }
+  }, [id]);
+
+  const fetchCourseData = async () => {
+    try {
+      setLoading(true);
+
+      // Get current user's verification status
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        const { data: studentData } = await supabase
+          .from("students")
+          .select("verified")
+          .eq("id", user.id)
           .single();
 
-        if (error) throw error;
-        setCourse(data);
-      } catch (error) {
-        console.error("Error fetching course:", error);
-      } finally {
-        setLoading(false);
+        setIsVerified(studentData?.verified || false);
       }
-    }
 
-    if (id) fetchCourseDetails();
-  }, [id]);
+      // Fetch course details
+      const { data: courseData, error: courseError } = await supabase
+        .from("courses")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (courseError) throw courseError;
+      setCourse(courseData);
+
+      // Fetch videos for this course
+      const { data: videosData, error: videosError } = await supabase
+        .from("videos")
+        .select("id, title, free, thumbnail")
+        .eq("course_id", id)
+        .order("created_at", { ascending: true });
+
+      if (videosError) throw videosError;
+      setVideos(videosData || []);
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const canPlayVideo = (video: Video) => {
+    // Can play if video is free OR student is verified
+    return video.free || isVerified;
+  };
+
+  const handleVideoPress = (video: Video) => {
+    if (canPlayVideo(video)) {
+      // Navigate to video player
+      router.push(`/video/${video.id}`);
+    } else {
+      // Show message or prompt to verify
+      console.log("Video locked - verification required");
+    }
+  };
 
   if (loading) return <Loader />;
   if (!course) return <NoCourse />;
@@ -62,7 +115,7 @@ export default function SingleCourse() {
             <View style={styles.heroContent}>
               <View style={styles.badgeRow}>
                 <Chip textStyle={styles.chipText} style={styles.categoryChip}>
-                  COURSE ID: {course.id}
+                  {isVerified ? "VERIFIED ACCESS" : "LIMITED ACCESS"}
                 </Chip>
               </View>
               <Text variant="headlineMedium" style={styles.title}>
@@ -76,53 +129,107 @@ export default function SingleCourse() {
                   style={{ margin: 0 }}
                 />
                 <Text style={styles.metaText}>
-                  {course.video_count} Lessons
+                  {videos.length} Lesson{videos.length !== 1 ? "s" : ""}
                 </Text>
               </View>
             </View>
           </LinearGradient>
         </ImageBackground>
+
         <View style={styles.contentBody}>
           <Text variant="titleLarge" style={styles.sectionTitle}>
             About this course
           </Text>
           <Text variant="bodyMedium" style={styles.descriptionText}>
-            {course.description}. This comprehensive program covers everything
-            you need to master the subject with hands-on projects and expert
-            guidance.
+            {course.description}
           </Text>
+
+          {!isVerified && (
+            <Card style={[styles.lessonCard, { backgroundColor: "#fff3e0" }]}>
+              <Card.Content>
+                <Text variant="titleMedium" style={{ color: "#e65100" }}>
+                  🔒 Get Full Access
+                </Text>
+                <Text variant="bodyMedium" style={{ marginTop: 8 }}>
+                  Verify your account to unlock all videos in this course.
+                  Currently showing free videos only.
+                </Text>
+              </Card.Content>
+            </Card>
+          )}
+
           <View style={styles.curriculumHeader}>
             <Text variant="titleLarge" style={styles.sectionTitle}>
               Curriculum
             </Text>
-            <Text style={styles.lessonCount}>{course.video_count} videos</Text>
+            <Text style={styles.lessonCount}>
+              {videos.length} video{videos.length !== 1 ? "s" : ""}
+            </Text>
           </View>
-          {[1, 2, 3].map((_, index) => (
-            <Card key={index} style={styles.lessonCard}>
-              <List.Item
-                title={`Module ${index + 1}: Getting Started`}
-                description="12:45 • High Definition"
-                titleStyle={styles.lessonTitle}
-                left={() => (
-                  <View style={styles.lessonNumber}>
-                    <Text style={styles.lessonNumberText}>{index + 1}</Text>
-                  </View>
-                )}
-                right={() => (
-                  <IconButton icon="play-circle" iconColor="#6200ee" />
-                )}
-              />
+
+          {videos.length === 0 ? (
+            <Card style={styles.lessonCard}>
+              <Card.Content>
+                <Text variant="bodyMedium" style={{ textAlign: "center" }}>
+                  No videos available for this course yet.
+                </Text>
+              </Card.Content>
             </Card>
-          ))}
+          ) : (
+            videos.map((video, index) => {
+              const isLocked = !canPlayVideo(video);
+              return (
+                <Card key={video.id} style={styles.lessonCard}>
+                  <List.Item
+                    title={video.title}
+                    description={
+                      video.free ? "Free" : isVerified ? "Premium" : "Locked"
+                    }
+                    titleStyle={[
+                      styles.lessonTitle,
+                      isLocked && { color: "#999" },
+                    ]}
+                    descriptionStyle={isLocked && { color: "#999" }}
+                    left={() => (
+                      <View style={styles.lessonNumber}>
+                        <Text style={styles.lessonNumberText}>{index + 1}</Text>
+                      </View>
+                    )}
+                    right={() =>
+                      isLocked ? (
+                        <IconButton icon="lock" iconColor="#999" />
+                      ) : (
+                        <IconButton
+                          icon="play-circle"
+                          iconColor="#6200ee"
+                          onPress={() => handleVideoPress(video)}
+                        />
+                      )
+                    }
+                    onPress={() => !isLocked && handleVideoPress(video)}
+                    disabled={isLocked}
+                  />
+                </Card>
+              );
+            })
+          )}
         </View>
       </ScrollView>
+
       <View style={styles.footer}>
         <Button
           mode="contained"
           style={styles.primaryButton}
           contentStyle={{ height: 56 }}
           labelStyle={styles.buttonLabel}
-          onPress={() => console.log("Starting course:", course.id)}
+          onPress={() => {
+            // Find first playable video
+            const firstPlayableVideo = videos.find((v) => canPlayVideo(v));
+            if (firstPlayableVideo) {
+              handleVideoPress(firstPlayableVideo);
+            }
+          }}
+          disabled={videos.length === 0 || !videos.some((v) => canPlayVideo(v))}
         >
           Start Learning
         </Button>
