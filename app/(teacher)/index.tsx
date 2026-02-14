@@ -67,7 +67,9 @@ export default function TeacherDashboard() {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <ImageBackground
           source={{
-            uri: "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=1200",
+            uri:
+              profile?.cover_img ||
+              "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=1200",
           }}
           style={styles.heroSection}
           resizeMode="cover"
@@ -107,13 +109,19 @@ export default function TeacherDashboard() {
               </View>
             </View>
             <View style={styles.teacherInfo}>
-              <Avatar.Image
-                size={140}
-                source={{
-                  uri: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
-                }}
-                style={styles.teacherAvatar}
-              />
+              {profile?.thumbnail ? (
+                <Avatar.Image
+                  size={140}
+                  source={{ uri: profile.thumbnail }}
+                  style={styles.teacherAvatar}
+                />
+              ) : (
+                <Avatar.Text
+                  size={140}
+                  label={profile?.name?.charAt(0) || "U"}
+                  style={styles.teacherAvatar}
+                />
+              )}
               <Text variant="headlineLarge" style={styles.teacherName}>
                 {profile?.name}
               </Text>
