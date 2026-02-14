@@ -18,7 +18,8 @@ import {
 import { supabase } from "@/lib/supabase";
 import { Teacher } from "@/types/profile";
 import * as ImagePicker from "expo-image-picker";
-import * as FileSystem from "expo-file-system";
+import * as FileSystem from "expo-file-system/legacy";
+import { decode } from "base64-arraybuffer";
 
 interface EditProfileModalProps {
   visible: boolean;
@@ -64,7 +65,7 @@ export default function EditProfileModal({
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ["images"],
         allowsEditing: true,
         aspect: type === "thumbnail" ? [1, 1] : [16, 9],
         quality: 0.8,
@@ -96,20 +97,18 @@ export default function EditProfileModal({
       });
 
       // Generate unique filename
-      const fileExt = uri.split(".").pop();
+      const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
       const fileName = `${user.id}_${type}_${Date.now()}.${fileExt}`;
       const filePath = `${type === "thumbnail" ? "thumbnails" : "covers"}/${fileName}`;
 
-      // Convert base64 to blob for upload
-      const blob = await fetch(`data:image/${fileExt};base64,${base64}`).then(
-        (res) => res.blob(),
-      );
+      // Determine content type
+      const contentType = `image/${fileExt === "jpg" ? "jpeg" : fileExt}`;
 
-      // Upload to Supabase Storage
+      // Upload to Supabase Storage using base64-arraybuffer
       const { error: uploadError } = await supabase.storage
         .from("teacher-images")
-        .upload(filePath, blob, {
-          contentType: `image/${fileExt}`,
+        .upload(filePath, decode(base64), {
+          contentType: contentType,
           upsert: false,
         });
 
