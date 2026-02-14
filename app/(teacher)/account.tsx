@@ -7,12 +7,15 @@ import { Teacher } from "@/types/profile";
 import StatsCard from "@/components/account/StatsCard";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 import { TeacherStats } from "@/types/teacher";
+import SettingsModal, {SettingsType} from "@/components/teachers/account/SettingsModal";
 
 export default function AccountScreen() {
   const [profile, setProfile] = useState<Teacher | null>(null);
   const [stats, setStats] = useState<TeacherStats>();
   const [loading, setLoading] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [activeSettingsType, setActiveSettingsType] =
+    useState<SettingsType>(null);
 
   useEffect(() => {
     getProfile();
@@ -90,37 +93,11 @@ export default function AccountScreen() {
           />
           <Divider />
           <List.Item
-            title="Course Settings"
-            description="Manage course preferences"
-            left={(props) => <List.Icon {...props} icon="cog" />}
-            right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => console.log("Course settings")}
-          />
-          <Divider />
-          <List.Item
             title="Notifications"
             description="Manage notification preferences"
             left={(props) => <List.Icon {...props} icon="bell" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => console.log("Notifications")}
-          />
-        </List.Section>
-        <List.Section>
-          <List.Subheader>Analytics</List.Subheader>
-          <List.Item
-            title="View Analytics"
-            description="See your performance metrics"
-            left={(props) => <List.Icon {...props} icon="chart-line" />}
-            right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => console.log("Analytics")}
-          />
-          <Divider />
-          <List.Item
-            title="Revenue"
-            description="Track your earnings"
-            left={(props) => <List.Icon {...props} icon="currency-usd" />}
-            right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => console.log("Revenue")}
+            onPress={() => setActiveSettingsType("notifications")}
           />
         </List.Section>
         <List.Section>
@@ -130,7 +107,7 @@ export default function AccountScreen() {
             description="Get help and support"
             left={(props) => <List.Icon {...props} icon="help-circle" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => console.log("Help")}
+            onPress={() => setActiveSettingsType("help")}
           />
           <Divider />
           <List.Item
@@ -138,7 +115,7 @@ export default function AccountScreen() {
             description="App version and info"
             left={(props) => <List.Icon {...props} icon="information" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => console.log("About")}
+            onPress={() => setActiveSettingsType("about")}
           />
         </List.Section>
       </View>
@@ -160,6 +137,11 @@ export default function AccountScreen() {
         onDismiss={() => setEditModalVisible(false)}
         profile={profile}
         onProfileUpdate={getProfile}
+      />
+      <SettingsModal
+        type={activeSettingsType}
+        visible={activeSettingsType !== null}
+        onDismiss={() => setActiveSettingsType(null)}
       />
     </ScrollView>
   );

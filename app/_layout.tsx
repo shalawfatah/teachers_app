@@ -9,30 +9,50 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [session, setSession] = useState<Session | null>(null);
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const [isTeacher, setIsTeacher] = useState<boolean>(false);
+  const [isStudent, setIsStudent] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const segments = useSegments();
   const router = useRouter();
 
+  // Helper function to check user tables
+  const checkUserTables = async (userId: string) => {
+    // Check both tables in parallel
+    const [teacherResult, studentResult] = await Promise.all([
+      supabase.from("teachers").select("id").eq("id", userId).single(),
+      supabase.from("students").select("id").eq("id", userId).single(),
+    ]);
+
+    return {
+      isTeacher: !!teacherResult.data,
+      isStudent: !!studentResult.data,
+    };
+  };
+
   useEffect(() => {
-    // Get initial session and role
+    // Get initial session and check tables
     const initAuth = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setSession(session);
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-      if (session) {
-        const { data } = await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id", session.user.id)
-          .single();
+        console.log("Session loaded:", session ? "exists" : "null");
 
-        setUserRole(data?.role || null);
+        setSession(session);
+
+        if (session) {
+          const { isTeacher, isStudent } = await checkUserTables(
+            session.user.id,
+          );
+          setIsTeacher(isTeacher);
+          setIsStudent(isStudent);
+        }
+      } catch (error) {
+        console.error("Error loading session:", error);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     initAuth();
@@ -44,15 +64,12 @@ export default function RootLayout() {
       setSession(session);
 
       if (session) {
-        const { data } = await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id", session.user.id)
-          .single();
-
-        setUserRole(data?.role || null);
+        const { isTeacher, isStudent } = await checkUserTables(session.user.id);
+        setIsTeacher(isTeacher);
+        setIsStudent(isStudent);
       } else {
-        setUserRole(null);
+        setIsTeacher(false);
+        setIsStudent(false);
       }
     });
 
@@ -69,24 +86,26 @@ export default function RootLayout() {
     if (!session && !inAuthGroup) {
       // Not authenticated - redirect to login
       router.replace("/(auth)/login");
-    } else if (session && userRole && inAuthGroup) {
-      // Authenticated - redirect based on role
-      if (userRole === "teacher") {
+    } else if (session && (isTeacher || isStudent) && inAuthGroup) {
+      // Authenticated - redirect based on role (teachers take priority)
+      if (isTeacher) {
         router.replace("/(teacher)");
-      } else {
+      } else if (isStudent) {
         router.replace("/(student)");
       }
-    } else if (session && userRole) {
-      // Ensure user is in correct role group
-      if (userRole === "teacher" && !inTeacherGroup) {
+    } else if (session && (isTeacher || isStudent)) {
+      // Ensure user is in correct role group (teachers take priority)
+      if (isTeacher && !inTeacherGroup) {
         router.replace("/(teacher)");
-      } else if (userRole === "student" && !inStudentGroup) {
+      } else if (!isTeacher && isStudent && !inStudentGroup) {
         router.replace("/(student)");
       }
     }
 
-    SplashScreen.hideAsync();
-  }, [session, userRole, segments, loading]);
+    if (!loading) {
+      SplashScreen.hideAsync();
+    }
+  }, [session, isTeacher, isStudent, loading]);
 
   return (
     <PaperProvider>
