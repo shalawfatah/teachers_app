@@ -82,7 +82,9 @@ export default function StudentDashboard() {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <ImageBackground
         source={{
-          uri: "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=1200",
+          uri:
+            profile?.teachers?.cover_img ||
+            "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=1200",
         }}
         style={styles.heroSection}
         resizeMode="cover"
@@ -112,15 +114,19 @@ export default function StudentDashboard() {
           </View>
 
           <View style={styles.teacherInfo}>
-            <Avatar.Image
-              size={140}
-              source={{
-                uri:
-                  profile?.teachers?.avatar_url ||
-                  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
-              }}
-              style={styles.teacherAvatar}
-            />
+            {profile?.teachers?.thumbnail ? (
+              <Avatar.Image
+                size={140}
+                source={{ uri: profile.teachers.thumbnail }}
+                style={styles.teacherAvatar}
+              />
+            ) : (
+              <Avatar.Text
+                size={140}
+                label={profile?.teachers?.name?.charAt(0) || "T"}
+                style={styles.teacherAvatar}
+              />
+            )}
             <Text variant="headlineLarge" style={styles.teacherName}>
               {profile?.teachers?.name}
             </Text>
