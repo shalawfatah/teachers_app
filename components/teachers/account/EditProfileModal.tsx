@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from "react-native";
 import {
   Modal,
   Portal,
@@ -164,82 +171,89 @@ export default function EditProfileModal({
       <Modal
         visible={visible}
         onDismiss={onDismiss}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={styles.modalContainer}
       >
-        <Text variant="headlineSmall" style={styles.title}>
-          Edit Profile
-        </Text>
+        <View style={styles.container}>
+          <Text variant="headlineSmall" style={styles.title}>
+            Edit Profile
+          </Text>
 
-        <TextInput
-          label="Full Name"
-          value={name}
-          onChangeText={setName}
-          mode="outlined"
-          style={styles.input}
-        />
-
-        <TextInput
-          label="Expertise"
-          value={expertise}
-          onChangeText={setExpertise}
-          mode="outlined"
-          placeholder="e.g., Mathematics, Physics, Computer Science"
-          style={styles.input}
-        />
-
-        {/* Thumbnail Upload */}
-        <Text variant="labelLarge" style={styles.label}>
-          Profile Thumbnail
-        </Text>
-        <TouchableOpacity
-          style={styles.imageContainer}
-          onPress={() => pickImage("thumbnail")}
-          disabled={uploadingThumbnail}
-        >
-          {uploadingThumbnail ? (
-            <ActivityIndicator size="large" />
-          ) : thumbnail ? (
-            <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
-          ) : (
-            <View style={styles.placeholder}>
-              <Text>Tap to upload thumbnail</Text>
-            </View>
-          )}
-        </TouchableOpacity>
-
-        {/* Cover Image Upload */}
-        <Text variant="labelLarge" style={styles.label}>
-          Cover Image
-        </Text>
-        <TouchableOpacity
-          style={styles.coverContainer}
-          onPress={() => pickImage("cover")}
-          disabled={uploadingCover}
-        >
-          {uploadingCover ? (
-            <ActivityIndicator size="large" />
-          ) : coverImg ? (
-            <Image source={{ uri: coverImg }} style={styles.coverImage} />
-          ) : (
-            <View style={styles.placeholder}>
-              <Text>Tap to upload cover image</Text>
-            </View>
-          )}
-        </TouchableOpacity>
-
-        <View style={styles.buttonRow}>
-          <Button mode="text" onPress={onDismiss} style={styles.button}>
-            Cancel
-          </Button>
-          <Button
-            mode="contained"
-            onPress={handleUpdate}
-            loading={updating}
-            disabled={updating || !name}
-            style={styles.button}
+          <ScrollView
+            style={styles.scrollView}
+            showsVerticalScrollIndicator={false}
           >
-            Save Changes
-          </Button>
+            <TextInput
+              label="Full Name"
+              value={name}
+              onChangeText={setName}
+              mode="outlined"
+              style={styles.input}
+            />
+
+            <TextInput
+              label="Expertise"
+              value={expertise}
+              onChangeText={setExpertise}
+              mode="outlined"
+              placeholder="e.g., Mathematics, Physics, Computer Science"
+              style={styles.input}
+            />
+
+            {/* Thumbnail Upload */}
+            <Text variant="labelLarge" style={styles.label}>
+              Profile Thumbnail
+            </Text>
+            <TouchableOpacity
+              style={styles.imageContainer}
+              onPress={() => pickImage("thumbnail")}
+              disabled={uploadingThumbnail}
+            >
+              {uploadingThumbnail ? (
+                <ActivityIndicator size="large" />
+              ) : thumbnail ? (
+                <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
+              ) : (
+                <View style={styles.placeholder}>
+                  <Text>Tap to upload thumbnail</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+
+            {/* Cover Image Upload */}
+            <Text variant="labelLarge" style={styles.label}>
+              Cover Image
+            </Text>
+            <TouchableOpacity
+              style={styles.coverContainer}
+              onPress={() => pickImage("cover")}
+              disabled={uploadingCover}
+            >
+              {uploadingCover ? (
+                <ActivityIndicator size="large" />
+              ) : coverImg ? (
+                <Image source={{ uri: coverImg }} style={styles.coverImage} />
+              ) : (
+                <View style={styles.placeholder}>
+                  <Text>Tap to upload cover image</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </ScrollView>
+
+          <View style={styles.buttonRow}>
+            <Button mode="text" onPress={onDismiss} style={styles.button}>
+              Cancel
+            </Button>
+            <Button
+              mode="contained"
+              onPress={handleUpdate}
+              loading={updating}
+              disabled={updating || !name}
+              style={styles.button}
+            >
+              Save Changes
+            </Button>
+          </View>
         </View>
       </Modal>
     </Portal>
@@ -247,16 +261,25 @@ export default function EditProfileModal({
 }
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    margin: 20,
+    maxHeight: "85%",
+  },
   container: {
     backgroundColor: "white",
-    padding: 20,
-    margin: 20,
-    borderRadius: 8,
-    maxHeight: "90%",
+    borderRadius: 12,
+    overflow: "hidden",
   },
   title: {
-    marginBottom: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 16,
     fontWeight: "bold",
+    backgroundColor: "white",
+  },
+  scrollView: {
+    paddingHorizontal: 20,
+    maxHeight: 500,
   },
   input: {
     marginBottom: 16,
@@ -274,6 +297,8 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     marginBottom: 16,
     alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   thumbnail: {
     width: "100%",
@@ -286,7 +311,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderWidth: 2,
     borderColor: "#ddd",
-    marginBottom: 16,
+    marginBottom: 24,
+    justifyContent: "center",
+    alignItems: "center",
   },
   coverImage: {
     width: "100%",
@@ -297,11 +324,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f5f5f5",
+    width: "100%",
+    height: "100%",
   },
   buttonRow: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginTop: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    backgroundColor: "white",
+    borderTopWidth: 1,
+    borderTopColor: "#e0e0e0",
   },
   button: {
     marginLeft: 10,
