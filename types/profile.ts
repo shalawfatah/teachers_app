@@ -3,6 +3,8 @@ export interface Teacher {
   name: string;
   email: string;
   expertise: string | null;
+  thumbnail: string;
+  cover_img: string;
   created_at: string;
   updated_at: string;
 }
