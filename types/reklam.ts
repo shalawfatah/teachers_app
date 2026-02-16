@@ -42,3 +42,7 @@ export interface ReklamFormData {
   background_color?: string;
   text_color?: string;
 }
+
+export interface ReklamCarouselProps {
+  teacherId: string;
+}

@@ -13,24 +13,37 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import PagerView from "react-native-pager-view";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Reklam, ReklamCarouselProps } from "@/types/reklam";
+import Svg, {
+  Path,
+  Defs,
+  LinearGradient as SvgGradient,
+  Stop,
+} from "react-native-svg";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-type Reklam = {
-  id: string;
-  title: string;
-  description: string | null;
-  image_url: string | null;
-  video_url: string | null;
-  link_type: "course" | "video" | "external" | "none";
-  link_target: string | null;
-  background_color: string;
-  text_color: string;
-};
-
-interface ReklamCarouselProps {
-  teacherId: string;
-}
+const BrushBackground = ({ colors = ["#3b3f46", "#DECA57"] }) => (
+  <View style={StyleSheet.absoluteFill}>
+    <Svg
+      height="100%"
+      width="100%"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+    >
+      <Defs>
+        <SvgGradient id="brushGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <Stop offset="0%" stopColor={colors[0]} />
+          <Stop offset="100%" stopColor={colors[1]} />
+        </SvgGradient>
+      </Defs>
+      <Path
+        d="M0,15 Q10,2 50,8 T100,12 L98,85 Q90,98 50,92 T2,82 Z"
+        fill="url(#brushGradient)"
+      />
+    </Svg>
+  </View>
+);
 
 export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   const [reklams, setReklams] = useState<Reklam[]>([]);
@@ -173,17 +186,22 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
                   locations={[0, 0.5, 1]}
                   style={styles.gradient}
                 >
-                  {/* Content */}
                   <View style={styles.content}>
                     <Text variant="displaySmall" style={styles.title}>
                       {reklam.title}
                     </Text>
                     {reklam.description && (
-                      <Text variant="titleMedium" style={styles.description}>
-                        {reklam.description}
-                      </Text>
-                    )}
-
+                      /* This Wrapper is the key. It must be position: 'relative' */
+                      <View style={styles.descriptionWrapper}>
+                        <BrushBackground colors={["#FFFF00", "#737000"]} />
+                        <Text
+                          variant="titleMedium"
+                          style={styles.descriptionText}
+                        >
+                          {reklam.description}
+                        </Text>
+                      </View>
+                    )}{" "}
                     {/* Call to action */}
                     {reklam.link_type !== "none" && (
                       <View style={styles.ctaContainer}>
@@ -287,22 +305,32 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   content: {
-    gap: 16,
+    gap: 12,
+    alignItems: "flex-end", // Aligns everything to the right for RTL
   },
   title: {
     color: "#fff",
     fontWeight: "bold",
     fontFamily: "NRT-Bold",
     textAlign: "right",
-    textShadowColor: "rgba(0, 0, 0, 0.5)",
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    marginBottom: 4,
+    zIndex: 2, // Keeps title physically above anything else
   },
-  description: {
-    color: "rgba(255, 255, 255, 0.95)",
+  descriptionWrapper: {
+    alignSelf: "flex-end",
+    position: "relative", // THIS TRAPS THE SVG
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 8,
+    maxWidth: "85%",
+    overflow: "visible",
+  },
+  descriptionText: {
+    color: "black",
     fontFamily: "Goran",
     textAlign: "right",
     lineHeight: 24,
+    zIndex: 1, // Ensures text sits on top of the SVG
   },
   ctaContainer: {
     marginTop: 12,
