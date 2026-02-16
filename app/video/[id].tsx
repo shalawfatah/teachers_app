@@ -3,9 +3,10 @@ import { View, StyleSheet, ActivityIndicator, Dimensions } from "react-native";
 import { Text, IconButton, Appbar } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { WebView } from "react-native-webview";
+import * as ScreenOrientation from "expo-screen-orientation";
 import { supabase } from "@/lib/supabase";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function VideoPlayer() {
   const { id } = useLocalSearchParams();
@@ -18,6 +19,11 @@ export default function VideoPlayer() {
     if (id) {
       fetchVideoData();
     }
+
+    return () => {
+      // Reset orientation when leaving
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    };
   }, [id]);
 
   const fetchVideoData = async () => {
@@ -30,6 +36,10 @@ export default function VideoPlayer() {
         .single();
 
       if (error) throw error;
+
+      console.log("Video data:", data);
+      console.log("Video link:", data.link);
+
       setVideo(data);
     } catch (err) {
       console.error("Error fetching video:", err);
