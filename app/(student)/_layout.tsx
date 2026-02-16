@@ -12,7 +12,7 @@ export default function StudentLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "ماڵەوە",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" size={size} color={color} />
           ),
@@ -23,7 +23,7 @@ export default function StudentLayout() {
       <Tabs.Screen
         name="courses/index"
         options={{
-          title: "Courses",
+          title: "خولەکان",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="book-open-variant"
@@ -45,7 +45,7 @@ export default function StudentLayout() {
       <Tabs.Screen
         name="account"
         options={{
-          title: "Account",
+          title: "هەژمار",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-circle"

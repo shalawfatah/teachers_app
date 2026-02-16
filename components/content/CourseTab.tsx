@@ -47,7 +47,7 @@ export default function CoursesTab({
 
       const { data, error } = await supabase
         .from("courses")
-        .select("*")
+        .select("*, videos(*)")
         .eq("teacher_id", user.id)
         .order("created_at", { ascending: false });
 
@@ -99,7 +99,7 @@ export default function CoursesTab({
         <Card.Title
           title={item.title}
           titleVariant="titleLarge"
-          subtitle={`${item.video_count || 0} Videos • ${item.subject}`}
+          subtitle={`${item.videos.length || 0} Videos • ${item.subject}`}
           right={(props) => (
             <Menu
               visible={visibleId === item.id}
@@ -182,7 +182,7 @@ export default function CoursesTab({
       }
       ListEmptyComponent={
         <View style={styles.emptyContainer}>
-          <Text variant="bodyLarge">You haven't created any courses yet.</Text>
+          <Text variant="bodyLarge">هیچ خولێک دانەنراوە</Text>
         </View>
       }
     />

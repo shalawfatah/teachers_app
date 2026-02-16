@@ -69,10 +69,10 @@ export default function CoursesScreen() {
         <View style={courses_styles.headerRow}>
           <View style={courses_styles.headerTextContainer}>
             <Text variant="headlineMedium" style={courses_styles.headerTitle}>
-              All Courses
+              هەموو خولەکان
             </Text>
             <Text variant="bodyMedium" style={courses_styles.headerSubtitle}>
-              {courses.length} courses available
+              خول بەردەستە {courses.length}
             </Text>
           </View>
 
@@ -95,7 +95,7 @@ export default function CoursesScreen() {
 
       <View style={courses_styles.searchContainer}>
         <Searchbar
-          placeholder="Search courses..."
+          placeholder="گەڕان بۆ خول..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           style={courses_styles.searchbar}
@@ -113,7 +113,7 @@ export default function CoursesScreen() {
         }
         ListEmptyComponent={
           <Text style={{ textAlign: "center", marginTop: 20 }}>
-            No courses found.
+            هیچ خولێک دانەنراوە
           </Text>
         }
       />

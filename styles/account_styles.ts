@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    direction: "rtl",
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
@@ -15,6 +16,7 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
   name: {
+    fontFamily: "NRT-Bold",
     fontWeight: "bold",
     marginBottom: 4,
   },
@@ -51,6 +53,7 @@ export const styles = StyleSheet.create({
   settingsContainer: {
     backgroundColor: "#fff",
     marginTop: 8,
+    fontFamily: "NRT-Bold",
   },
   signOutContainer: {
     padding: 16,
@@ -58,5 +61,6 @@ export const styles = StyleSheet.create({
   },
   signOutButton: {
     borderColor: "#d32f2f",
+    fontFamily: "NRT-Bold",
   },
 });

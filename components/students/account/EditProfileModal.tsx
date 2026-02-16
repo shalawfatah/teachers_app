@@ -57,17 +57,17 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
         onDismiss={onDismiss} 
         contentContainerStyle={styles.container}
       >
-        <Text variant="headlineSmall" style={styles.title}>Edit Profile</Text>
+        <Text variant="headlineSmall" style={styles.title}>نوێکردنەوەی هەژمار</Text>
         
         <TextInput
-          label="Full Name"
+          label="ناو"
           value={name}
           onChangeText={setName}
           mode="outlined"
           style={styles.input}
         />
 
-        <Text variant="bodyMedium" style={styles.label}>Grade</Text>
+        <Text variant="bodyMedium" style={styles.label}>پۆل</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.gradeScroll}>
             <SegmentedButtons
                 value={grade}
@@ -85,7 +85,7 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
         </ScrollView>
 
         <View style={styles.buttonRow}>
-          <Button mode="text" onPress={onDismiss} style={styles.button}>Cancel</Button>
+          <Button mode="text" onPress={onDismiss} style={styles.button}>رەتکردنەوە</Button>
           <Button 
             mode="contained" 
             onPress={handleUpdate} 
@@ -93,7 +93,7 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
             disabled={updating || !name}
             style={styles.button}
           >
-            Save Changes
+            خەزنکردن
           </Button>
         </View>
       </Modal>
@@ -103,6 +103,7 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
 
 const styles = StyleSheet.create({
   container: {
+    direction: "rtl",
     backgroundColor: 'white',
     padding: 20,
     margin: 20,

@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const courses_styles = StyleSheet.create({
   container: {
     flex: 1,
+    direction: "rtl",
     backgroundColor: "#f5f5f5",
   },
   header: {
@@ -21,6 +22,7 @@ export const courses_styles = StyleSheet.create({
   },
   headerTitle: {
     fontWeight: "bold",
+    fontFamily: "NRT-Bold",
     marginBottom: 4,
   },
   headerSubtitle: {
@@ -40,6 +42,7 @@ export const courses_styles = StyleSheet.create({
     backgroundColor: "#6200ee",
   },
   searchContainer: {
+    direction: "rtl",
     backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingBottom: 16,

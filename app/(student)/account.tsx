@@ -54,32 +54,32 @@ export default function AccountScreen() {
             {profile?.name}
           </Text>
           <Text variant="bodyMedium" style={styles.role}>
-            Student
+            خوێندکار
           </Text>
         </View>
         <View style={styles.settingsContainer}>
           <List.Section>
-            <List.Subheader>Account Settings</List.Subheader>
+            <List.Subheader>سازاندنی هەژمار</List.Subheader>
 
             <List.Item
-              title="Edit Profile"
-              description="Update your personal information"
+              title="نوێکردنەوەی هەژمار"
+              description="زانیارییەکانت نوێبکەرەوە"
               left={(props) => <List.Icon {...props} icon="account-edit" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
               onPress={() => setIsModalVisible(true)}
             />
             <Divider />
             <List.Item
-              title="Notifications"
-              description="Manage notification preferences"
+              title="نۆتیفیکەیشن"
+              description="سازاندنی نۆتیفیکەیشن"
               left={(props) => <List.Icon {...props} icon="bell" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
               onPress={() => setActiveSettingsType("notifications")}
             />
             <Divider />
             <List.Item
-              title="Privacy"
-              description="Privacy and security settings"
+              title="پاراستنی زانیاری"
+              description="پاراستنی زانیاریی و اسایشی ئەپ"
               left={(props) => <List.Icon {...props} icon="shield-account" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
               onPress={() => setActiveSettingsType("privacy")}
@@ -88,16 +88,16 @@ export default function AccountScreen() {
           <List.Section>
             <List.Subheader>Support</List.Subheader>
             <List.Item
-              title="Help Center"
-              description="Get help and support"
+              title="یارمەتی"
+              description="پشتیوانی و یارمەتی"
               left={(props) => <List.Icon {...props} icon="help-circle" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
               onPress={() => setActiveSettingsType("help")}
             />
             <Divider />
             <List.Item
-              title="About"
-              description="App version and info"
+              title="دەربارە"
+              description="زانیاری و ڤێرژنی ئەپ"
               left={(props) => <List.Icon {...props} icon="information" />}
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
               onPress={() => setActiveSettingsType("about")}
@@ -113,7 +113,7 @@ export default function AccountScreen() {
             style={styles.signOutButton}
             textColor="#d32f2f"
           >
-            Sign Out
+            دەرچوون لە ئەپ
           </Button>
         </View>
       </ScrollView>

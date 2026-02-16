@@ -1,49 +1,80 @@
 import { Card, Text, Chip } from "react-native-paper";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import { Link } from "expo-router";
-import { SingleCourse } from "@/types/courses";
+import { LinearGradient } from "expo-linear-gradient";
+import { BlurView } from "expo-blur";
 
-export const renderCourse = ({ item }: { item: SingleCourse }) => {
+export const renderCourse = ({ item }: { item: any }) => {
   const hasThumbnail = item.thumbnail && item.thumbnail.trim().length > 0;
+
   return (
     <Link href={`/(student)/courses/${item.id}`} asChild>
       <Card style={styles.courseCard}>
-        {/* Only render the photo part if a thumbnail is provided */}
-        {hasThumbnail && (
-          <Card.Cover
+        {hasThumbnail ? (
+          <ImageBackground
             source={{ uri: item.thumbnail }}
-            style={styles.thumbnail}
-          />
-        )}
-
-        <Card.Content style={styles.cardContent}>
-          <Text
-            variant="titleMedium"
-            style={styles.courseTitle}
-            numberOfLines={2}
+            style={styles.backgroundImage}
+            imageStyle={styles.imageStyle}
           >
-            {item.title}
-          </Text>
+            {/* Subtle gradient overlay */}
+            <LinearGradient
+              colors={["transparent", "rgba(0,0,0,0.4)"]}
+              style={styles.gradient}
+            >
+              {/* Badge at top */}
+              <View style={styles.absoluteBadge}>
+                <Chip textStyle={styles.chipText} style={styles.chip}>
+                  پۆلی {item.grade}
+                </Chip>
+              </View>
 
-          <Text
-            variant="bodyMedium"
-            style={styles.courseDescription}
-            numberOfLines={2}
-          >
-            {item.description}
-          </Text>
-
-          <View style={styles.courseFooter}>
-            <Chip icon="play-circle" style={styles.chip}>
-              {item.video_count ?? 0} videos
-            </Chip>
-
-            {/* Optional: Add Grade badge since you have it in the DB */}
-            <Chip style={[styles.chip, { marginLeft: 8 }]}>
-              Grade {item.grade}
-            </Chip>
+              {/* Glassmorphism content overlay at bottom */}
+              <BlurView intensity={60} tint="dark" style={styles.blurOverlay}>
+                <View style={styles.contentOverlay}>
+                  <Text
+                    variant="titleLarge"
+                    style={styles.courseTitle}
+                    numberOfLines={2}
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    variant="bodyMedium"
+                    style={styles.courseDescription}
+                    numberOfLines={2}
+                  >
+                    {item.description}
+                  </Text>
+                </View>
+              </BlurView>
+            </LinearGradient>
+          </ImageBackground>
+        ) : (
+          // Fallback for cards without thumbnail
+          <View style={styles.fallbackContainer}>
+            <View style={styles.absoluteBadge}>
+              <Chip textStyle={styles.chipTextDark} style={styles.chipDark}>
+                پۆلی {item.grade}
+              </Chip>
+            </View>
+            <Card.Content style={styles.cardContent}>
+              <Text
+                variant="titleMedium"
+                style={styles.courseTitleDark}
+                numberOfLines={1}
+              >
+                {item.title}
+              </Text>
+              <Text
+                variant="bodyMedium"
+                style={styles.courseDescriptionDark}
+                numberOfLines={2}
+              >
+                {item.description}
+              </Text>
+            </Card.Content>
           </View>
-        </Card.Content>
+        )}
       </Card>
     </Link>
   );
@@ -52,32 +83,95 @@ export const renderCourse = ({ item }: { item: SingleCourse }) => {
 const styles = StyleSheet.create({
   courseCard: {
     marginBottom: 16,
-    elevation: 2,
-    backgroundColor: "white", // Ensures card is visible against background
-    overflow: "hidden", // Clips children to border radius
+    elevation: 4,
+    backgroundColor: "white",
+    borderRadius: 16,
+    overflow: "hidden",
+    direction: "rtl",
   },
-  thumbnail: {
-    height: 180,
-    borderRadius: 0, // Optional: keeps top square if you prefer that look
+  backgroundImage: {
+    width: "100%",
+    height: 240,
   },
-  cardContent: {
+  imageStyle: {
+    borderRadius: 16,
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: "space-between",
     paddingTop: 12,
-    paddingBottom: 12,
+    paddingBottom: 0,
+  },
+  absoluteBadge: {
+    alignSelf: "flex-start",
+    right: 8,
+  },
+  blurOverlay: {
+    borderRadius: 12,
+    overflow: "hidden",
+    marginTop: "auto",
+  },
+  contentOverlay: {
+    padding: 16,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
   },
   courseTitle: {
-    fontWeight: "bold",
-    marginBottom: 4,
+    fontFamily: "NRT-Bold",
+    fontSize: 18,
+    width: "100%",
+    marginBottom: 6,
+    color: "#ffffff",
   },
   courseDescription: {
-    color: "#666",
-    marginBottom: 12,
-  },
-  courseFooter: {
-    flexDirection: "row",
-    alignItems: "center",
+    fontFamily: "Goran",
+    width: "100%",
+    color: "#f5f5f5",
+    lineHeight: 20,
   },
   chip: {
-    alignSelf: "flex-start",
-    height: 32,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    height: 30,
+    justifyContent: "center",
+  },
+  chipText: {
+    fontFamily: "Goran",
+    fontSize: 12,
+    color: "#000",
+    fontWeight: "600",
+  },
+  // Fallback styles
+  fallbackContainer: {
+    minHeight: 140,
+    backgroundColor: "#f8f9fa",
+    position: "relative",
+  },
+  cardContent: {
+    paddingTop: 16,
+    paddingBottom: 16,
+    alignItems: "flex-end",
+  },
+  chipDark: {
+    backgroundColor: "#6200ee",
+    height: 30,
+    justifyContent: "center",
+  },
+  chipTextDark: {
+    fontFamily: "Goran",
+    fontSize: 12,
+    color: "#fff",
+    fontWeight: "600",
+  },
+  courseTitleDark: {
+    fontFamily: "NRT-Bold",
+    width: "100%",
+    marginBottom: 4,
+    color: "#000",
+    textAlign: "right",
+  },
+  courseDescriptionDark: {
+    fontFamily: "Goran",
+    width: "100%",
+    color: "#666",
+    textAlign: "right",
   },
 });

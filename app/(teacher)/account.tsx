@@ -7,7 +7,9 @@ import { Teacher } from "@/types/profile";
 import StatsCard from "@/components/account/StatsCard";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 import { TeacherStats } from "@/types/teacher";
-import SettingsModal, {SettingsType} from "@/components/teachers/account/SettingsModal";
+import SettingsModal, {
+  SettingsType,
+} from "@/components/teachers/account/SettingsModal";
 
 export default function AccountScreen() {
   const [profile, setProfile] = useState<Teacher | null>(null);
@@ -70,7 +72,7 @@ export default function AccountScreen() {
           {profile?.name}
         </Text>
         <Text variant="bodyMedium" style={styles.role}>
-          Instructor
+          مامۆستا
         </Text>
       </View>
 
@@ -81,44 +83,47 @@ export default function AccountScreen() {
           studentNumber={stats.students_count}
         />
       ) : null}
+
       <View style={styles.settingsContainer}>
         <List.Section>
-          <List.Subheader>Account Settings</List.Subheader>
+          <List.Subheader>سازاندنی هەژمار</List.Subheader>
           <List.Item
-            title="Edit Profile"
-            description="Update your personal information"
+            title="نوێکردنەوەی هەژمار"
+            description="زانیارییەکانت نوێبکەرەوە"
             left={(props) => <List.Icon {...props} icon="account-edit" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => setEditModalVisible(true)}
           />
           <Divider />
           <List.Item
-            title="Notifications"
-            description="Manage notification preferences"
+            title="نۆتیفیکەیشن"
+            description="سازاندنی نۆتیفیکەیشن"
             left={(props) => <List.Icon {...props} icon="bell" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => setActiveSettingsType("notifications")}
           />
         </List.Section>
+
         <List.Section>
-          <List.Subheader>Support</List.Subheader>
+          <List.Subheader>پشتیوانی</List.Subheader>
           <List.Item
-            title="Help Center"
-            description="Get help and support"
+            title="یارمەتی"
+            description="پشتیوانی و یارمەتی"
             left={(props) => <List.Icon {...props} icon="help-circle" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => setActiveSettingsType("help")}
           />
           <Divider />
           <List.Item
-            title="About"
-            description="App version and info"
+            title="دەربارە"
+            description="زانیاری و ڤێرژنی ئەپ"
             left={(props) => <List.Icon {...props} icon="information" />}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={() => setActiveSettingsType("about")}
           />
         </List.Section>
       </View>
+
       <View style={styles.signOutContainer}>
         <Button
           mode="outlined"
@@ -128,7 +133,7 @@ export default function AccountScreen() {
           style={styles.signOutButton}
           textColor="#d32f2f"
         >
-          Sign Out
+          دەرچوون لە ئەپ
         </Button>
       </View>
 

@@ -23,5 +23,4 @@ export interface SingleCourse {
   description: string;
   thumbnail: string;
   grade: string;
-  video_count?: number;
 }

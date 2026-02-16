@@ -115,7 +115,7 @@ export default function SingleCourse() {
             <View style={styles.heroContent}>
               <View style={styles.badgeRow}>
                 <Chip textStyle={styles.chipText} style={styles.categoryChip}>
-                  {isVerified ? "VERIFIED ACCESS" : "LIMITED ACCESS"}
+                  {isVerified ? "بینینی ڤیدیۆ رێپێدراوە" : "هەژمار رێپێنەدراوە"}
                 </Chip>
               </View>
               <Text variant="headlineMedium" style={styles.title}>
@@ -129,7 +129,7 @@ export default function SingleCourse() {
                   style={{ margin: 0 }}
                 />
                 <Text style={styles.metaText}>
-                  {videos.length} Lesson{videos.length !== 1 ? "s" : ""}
+                  ژمارەی وانە: {videos.length}
                 </Text>
               </View>
             </View>
@@ -138,7 +138,7 @@ export default function SingleCourse() {
 
         <View style={styles.contentBody}>
           <Text variant="titleLarge" style={styles.sectionTitle}>
-            About this course
+            دەربارەی ئەم خولە
           </Text>
           <Text variant="bodyMedium" style={styles.descriptionText}>
             {course.description}
@@ -148,11 +148,11 @@ export default function SingleCourse() {
             <Card style={[styles.lessonCard, { backgroundColor: "#fff3e0" }]}>
               <Card.Content>
                 <Text variant="titleMedium" style={{ color: "#e65100" }}>
-                  🔒 Get Full Access
+                  🔒 مافی بینینی ڤیدیۆکان بەدەستبێنە
                 </Text>
                 <Text variant="bodyMedium" style={{ marginTop: 8 }}>
-                  Verify your account to unlock all videos in this course.
-                  Currently showing free videos only.
+                  پەوەیندی بە مامۆستای ئەپەکەوە بکە بۆ بەدەستهێنانی مافی بیهنینی
+                  تەواوی ڤیدیۆکان
                 </Text>
               </Card.Content>
             </Card>
@@ -160,10 +160,7 @@ export default function SingleCourse() {
 
           <View style={styles.curriculumHeader}>
             <Text variant="titleLarge" style={styles.sectionTitle}>
-              Curriculum
-            </Text>
-            <Text style={styles.lessonCount}>
-              {videos.length} video{videos.length !== 1 ? "s" : ""}
+              لیستی ڤیدیۆکان
             </Text>
           </View>
 
@@ -231,7 +228,7 @@ export default function SingleCourse() {
           }}
           disabled={videos.length === 0 || !videos.some((v) => canPlayVideo(v))}
         >
-          Start Learning
+          دەستپێکی خول
         </Button>
       </View>
     </View>

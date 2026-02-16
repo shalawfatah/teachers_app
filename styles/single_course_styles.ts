@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: "#fff", direction: "rtl"},
   heroImage: { height: 320 },
   gradient: { flex: 1, justifyContent: "space-between", padding: 16 },
   backButton: {
@@ -13,10 +13,11 @@ export const styles = StyleSheet.create({
   badgeRow: { flexDirection: "row", marginBottom: 8 },
   categoryChip: { backgroundColor: "#6200ee" },
   chipText: { color: "white", fontWeight: "bold", fontSize: 10 },
-  title: { color: "white", fontWeight: "bold", letterSpacing: -0.5 },
+  title: { color: "white", fontWeight: "bold", letterSpacing: -0.5, fontFamily: "NRT-Bold" },
   metaRow: { flexDirection: "row", alignItems: "center", marginLeft: -8 },
-  metaText: { color: "white", fontSize: 14, fontWeight: "500" },
+  metaText: { color: "white", fontSize: 14, fontWeight: "500", direction: "rtl"},
   contentBody: {
+    direction: "rtl",
     padding: 24,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
@@ -38,7 +39,7 @@ export const styles = StyleSheet.create({
     color: "#6200ee",
     fontWeight: "600",
   },
-  sectionTitle: { fontWeight: "800", color: "#1a1a1a" },
+  sectionTitle: { fontWeight: "800", color: "#1a1a1a", fontFamily: "NRT-Bold", },
   lessonCard: {
     marginBottom: 12,
     backgroundColor: "#f8f9fa",
@@ -63,6 +64,15 @@ export const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: "#f0f0f0",
   },
-  primaryButton: { borderRadius: 16, backgroundColor: "#6200ee" },
-  buttonLabel: { fontSize: 16, fontWeight: "bold", textTransform: "none" },
+  primaryButton: {
+    borderRadius: 16,
+    backgroundColor: "#6200ee",
+    fontFamily: "NRT-Bold",
+  },
+  buttonLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textTransform: "none",
+    fontFamily: "NRT-Bold",
+  },
 });

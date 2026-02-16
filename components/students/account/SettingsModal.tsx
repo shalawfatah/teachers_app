@@ -37,10 +37,10 @@ export default function SettingsModal({
         return (
           <View>
             <Text variant="titleMedium" style={styles.sectionTitle}>
-              Preferences
+              بژاردە
             </Text>
             <List.Item
-              title="Push Notifications"
+              title="نۆتیفیکەیشن"
               right={() => (
                 <Switch
                   value={isPushEnabled}
@@ -49,7 +49,7 @@ export default function SettingsModal({
               )}
             />
             <List.Item
-              title="Email Updates"
+              title="ئیمەیل"
               right={() => (
                 <Switch
                   value={isEmailEnabled}
@@ -63,8 +63,7 @@ export default function SettingsModal({
         return (
           <View>
             <Text variant="bodyMedium" style={styles.text}>
-              Your data is stored securely using Supabase. We do not share your
-              personal information with third parties.
+              داتای ئەپ پارێزراوە بە بارکەهێنانی سوپابەیس. بەهیچ جۆرێک داتا و زانیاریی کەسیت نادرێتە لایەنێکی دیکە
             </Text>
             <Button
               mode="outlined"
@@ -79,19 +78,19 @@ export default function SettingsModal({
         return (
           <View>
             <List.Item
-              title="FAQ"
+              title="پرسیار"
               left={(p) => (
                 <List.Icon {...p} icon="frequently-asked-questions" />
               )}
             />
             <Divider />
             <List.Item
-              title="Contact Support"
+              title="پەیوەندی"
               left={(p) => <List.Icon {...p} icon="email-outline" />}
             />
             <Divider />
             <List.Item
-              title="Report a Bug"
+              title="راپۆرتدان لە کێشە"
               left={(p) => <List.Icon {...p} icon="bug" />}
             />
           </View>
@@ -99,10 +98,10 @@ export default function SettingsModal({
       case "about":
         return (
           <View style={styles.centerAlign}>
-            <Text variant="headlineSmall">LMS Mobile</Text>
-            <Text variant="bodySmall">Version 1.0.0 (Build 42)</Text>
+            <Text variant="headlineSmall">سۆفتوێری راڤە</Text>
+            <Text variant="bodySmall">ڤێرژن 1.0.0 (Build 42)</Text>
             <Text variant="bodyMedium" style={[styles.text, { marginTop: 15 }]}>
-              Built with Expo and React Native Paper.
+              بە ئیکسپۆ و ریئاکت نەیتڤ دروستکراوە
             </Text>
           </View>
         );

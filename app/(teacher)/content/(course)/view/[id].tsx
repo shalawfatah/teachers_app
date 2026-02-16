@@ -32,8 +32,7 @@ export default function ViewCourse() {
         .select(
           `
         *,
-        teachers (name),
-        videos (*) 
+        teachers ('name'), videos('count')
       `,
         ) // This grabs all videos where course_id matches
         .eq("id", id)
@@ -106,7 +105,7 @@ export default function ViewCourse() {
         <Divider style={styles.divider} />
 
         <Text variant="titleMedium" style={styles.sectionLabel}>
-          About this course
+          دەربارەی ئەم خولە
         </Text>
         <Text variant="bodyMedium" style={styles.description}>
           {course.description}
