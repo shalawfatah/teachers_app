@@ -1,49 +1,189 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   ImageBackground,
   Dimensions,
-  TouchableOpacity,
   StyleSheet,
   Pressable,
+  Linking,
 } from "react-native";
 import { Text, ActivityIndicator } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import PagerView from "react-native-pager-view";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { VideoView, useVideoPlayer } from "expo-video";
+import BrushBackground from "./BrushBackground";
 import { Reklam, ReklamCarouselProps } from "@/types/reklam";
-import Svg, {
-  Path,
-  Defs,
-  LinearGradient as SvgGradient,
-  Stop,
-} from "react-native-svg";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-const BrushBackground = ({ colors = ["#3b3f46", "#DECA57"] }) => (
-  <View style={StyleSheet.absoluteFill}>
-    <Svg
-      height="100%"
-      width="100%"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
+const BUNNY_LIBRARY_ID = process.env.EXPO_PUBLIC_BUNNY_LIBRARY_ID;
+const BUNNY_CDN_HOSTNAME = process.env.EXPO_PUBLIC_BUNNY_CDN_HOSTNAME;
+
+function getBunnyHlsUrl(bunnyId: string): string {
+  if (BUNNY_CDN_HOSTNAME) {
+    return `https://${BUNNY_CDN_HOSTNAME}/${bunnyId}/playlist.m3u8`;
+  }
+  return `https://vz-${BUNNY_LIBRARY_ID}.b-cdn.net/${bunnyId}/playlist.m3u8`;
+}
+
+// ─── CTA label per link type ─────────────────────────────────────────────────
+
+function getCtaLabel(linkType: string): string {
+  switch (linkType) {
+    case "course":
+      return "بینینی خول";
+    case "video":
+      return "سەیرکردنی ڤیدیۆ";
+    case "document":
+      return "داگرتن";
+    case "external":
+      return "کردنەوە";
+    default:
+      return "";
+  }
+}
+
+// ─── Single video slide ───────────────────────────────────────────────────────
+// Isolated component so useVideoPlayer is always called with a stable URL.
+
+interface VideoSlideProps {
+  reklam: Reklam;
+  isActive: boolean;
+  onEnd: () => void;
+  onPress: () => void;
+}
+
+function VideoSlide({ reklam, isActive, onEnd, onPress }: VideoSlideProps) {
+  const hlsUrl = getBunnyHlsUrl(reklam.video_bunny_id!);
+
+  const player = useVideoPlayer(hlsUrl, (p) => {
+    p.loop = false;
+    p.muted = false;
+  });
+
+  // Play/pause based on whether this slide is active
+  useEffect(() => {
+    if (isActive) {
+      player.play();
+    } else {
+      player.pause();
+      player.currentTime = 0;
+    }
+  }, [isActive]);
+
+  // Fire onEnd when video finishes
+  useEffect(() => {
+    const sub = player.addListener("playingChange", (isPlaying) => {
+      // When it stops playing and currentTime is near duration → finished
+      if (
+        !isPlaying &&
+        player.duration &&
+        player.currentTime >= player.duration - 0.5
+      ) {
+        onEnd();
+      }
+    });
+    return () => sub.remove();
+  }, [player, onEnd]);
+
+  return (
+    <Pressable
+      style={styles.slideContainer}
+      onPress={onPress}
+      disabled={reklam.link_type === "none"}
     >
-      <Defs>
-        <SvgGradient id="brushGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <Stop offset="0%" stopColor={colors[0]} />
-          <Stop offset="100%" stopColor={colors[1]} />
-        </SvgGradient>
-      </Defs>
-      <Path
-        d="M0,15 Q10,2 50,8 T100,12 L98,85 Q90,98 50,92 T2,82 Z"
-        fill="url(#brushGradient)"
+      {/* Video fills the slide */}
+      <VideoView
+        player={player}
+        style={StyleSheet.absoluteFill}
+        contentFit="cover"
+        nativeControls={false}
       />
-    </Svg>
-  </View>
-);
+
+      {/* Bottom tint — only bottom 33% */}
+      <LinearGradient
+        colors={["transparent", "transparent", "rgba(0,0,0,0.85)"]}
+        locations={[0, 0.66, 1]}
+        style={StyleSheet.absoluteFill}
+        pointerEvents="none"
+      />
+
+      <SlideContent reklam={reklam} />
+    </Pressable>
+  );
+}
+
+// ─── Single image slide ───────────────────────────────────────────────────────
+
+interface ImageSlideProps {
+  reklam: Reklam;
+  onPress: () => void;
+}
+
+function ImageSlide({ reklam, onPress }: ImageSlideProps) {
+  return (
+    <Pressable
+      style={styles.slideContainer}
+      onPress={onPress}
+      disabled={reklam.link_type === "none"}
+    >
+      <ImageBackground
+        source={{
+          uri:
+            reklam.image_url ||
+            "https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1200",
+        }}
+        style={StyleSheet.absoluteFill}
+        resizeMode="cover"
+      />
+
+      {/* Bottom tint — only bottom 33% */}
+      <LinearGradient
+        colors={["transparent", "transparent", "rgba(0,0,0,0.85)"]}
+        locations={[0, 0.66, 1]}
+        style={StyleSheet.absoluteFill}
+        pointerEvents="none"
+      />
+
+      <SlideContent reklam={reklam} />
+    </Pressable>
+  );
+}
+
+// ─── Shared slide content (title, description, CTA) ─────────────────────────
+
+function SlideContent({ reklam }: { reklam: Reklam }) {
+  const ctaLabel = getCtaLabel(reklam.link_type);
+
+  return (
+    <View style={styles.content}>
+      <Text variant="displaySmall" style={styles.title}>
+        {reklam.title}
+      </Text>
+
+      {reklam.description && (
+        <View style={styles.descriptionWrapper}>
+          <BrushBackground colors={["#FFFF00", "#737000"]} />
+          <Text variant="titleMedium" style={styles.descriptionText}>
+            {reklam.description}
+          </Text>
+        </View>
+      )}
+
+      {reklam.link_type !== "none" && ctaLabel && (
+        <View style={styles.ctaContainer}>
+          <View style={styles.ctaButton}>
+            <Text style={styles.ctaText}>{ctaLabel}</Text>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+}
+
+// ─── Main Carousel ────────────────────────────────────────────────────────────
 
 export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   const [reklams, setReklams] = useState<Reklam[]>([]);
@@ -55,20 +195,8 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
 
   useEffect(() => {
     fetchReklams();
+    return () => clearTimer();
   }, [teacherId]);
-
-  // Auto-advance every 5 seconds
-  useEffect(() => {
-    if (reklams.length <= 1) return; // Don't auto-advance if only one slide
-
-    startAutoAdvance();
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [reklams.length, currentPage]);
 
   const fetchReklams = async () => {
     try {
@@ -81,65 +209,103 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
 
       if (error) throw error;
       setReklams(data || []);
-    } catch (error) {
-      console.error("Error fetching reklams:", error);
+    } catch (err) {
+      console.error("Error fetching reklams:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const startAutoAdvance = () => {
+  // ── Navigation ──────────────────────────────────────────────────────────────
+
+  const clearTimer = () => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-
-    timerRef.current = setInterval(() => {
-      setCurrentPage((prev) => {
-        const nextPage = prev + 1 >= reklams.length ? 0 : prev + 1;
-        pagerRef.current?.setPage(nextPage);
-        return nextPage;
-      });
-    }, 5000); // 5 seconds
   };
+
+  const goToNext = useCallback(() => {
+    setCurrentPage((prev) => {
+      const next = prev + 1 >= reklams.length ? 0 : prev + 1;
+      pagerRef.current?.setPage(next);
+      return next;
+    });
+  }, [reklams.length]);
+
+  // Start 5-second timer for IMAGE slides only
+  const startImageTimer = useCallback(() => {
+    clearTimer();
+    timerRef.current = setTimeout(() => {
+      goToNext();
+    }, 5000);
+  }, [goToNext]);
+
+  // When page changes, start timer only if it's an image slide
+  useEffect(() => {
+    if (reklams.length <= 1) return;
+    const current = reklams[currentPage];
+    if (current && !current.video_bunny_id) {
+      // Image slide → start 5-second timer
+      startImageTimer();
+    } else {
+      // Video slide → timer handled by onVideoEnd
+      clearTimer();
+    }
+    return () => clearTimer();
+  }, [currentPage, reklams]);
 
   const handlePageChange = (e: any) => {
-    const newPage = e.nativeEvent.position;
-    setCurrentPage(newPage);
-    // Restart timer when user manually changes page
-    startAutoAdvance();
+    setCurrentPage(e.nativeEvent.position);
   };
 
-  const handleReklamPress = (reklam: Reklam) => {
-    if (!reklam.link_target) return;
+  // Called when a video finishes playing
+  const handleVideoEnd = useCallback(() => {
+    goToNext();
+  }, [goToNext]);
 
-    switch (reklam.link_type) {
-      case "course":
-        router.push(`/(student)/courses/${reklam.link_target}`);
-        break;
-      case "video":
-        router.push(`/video/${reklam.link_target}`);
-        break;
-      case "external":
-        // Open external link (you might want to use Linking.openURL)
-        console.log("Open external:", reklam.link_target);
-        break;
-      case "none":
-      default:
-        break;
+  // ── Link handling ───────────────────────────────────────────────────────────
+
+  const handlePress = useCallback(
+    (reklam: Reklam) => {
+      if (!reklam.link_target || reklam.link_type === "none") return;
+
+      switch (reklam.link_type) {
+        case "course":
+          router.push(`/(student)/courses/${reklam.link_target}`);
+          break;
+        case "video":
+          router.push(`/video/${reklam.link_target}`);
+          break;
+        case "document":
+          // Fetch document URL from Supabase then open
+          fetchAndOpenDocument(reklam.link_target);
+          break;
+        case "external":
+          Linking.openURL(reklam.link_target).catch(console.error);
+          break;
+      }
+    },
+    [router],
+  );
+
+  const fetchAndOpenDocument = async (documentId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("documents")
+        .select("file_url")
+        .eq("id", documentId)
+        .single();
+      if (error) throw error;
+      if (data?.file_url) {
+        await Linking.openURL(data.file_url);
+      }
+    } catch (err) {
+      console.error("Error opening document:", err);
     }
   };
 
-  const goToPrevious = () => {
-    const prevPage = currentPage - 1 < 0 ? reklams.length - 1 : currentPage - 1;
-    pagerRef.current?.setPage(prevPage);
-    setCurrentPage(prevPage);
-  };
-
-  const goToNext = () => {
-    const nextPage = currentPage + 1 >= reklams.length ? 0 : currentPage + 1;
-    pagerRef.current?.setPage(nextPage);
-    setCurrentPage(nextPage);
-  };
+  // ── Render ──────────────────────────────────────────────────────────────────
 
   if (loading) {
     return (
@@ -149,9 +315,7 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
     );
   }
 
-  if (reklams.length === 0) {
-    return null; // Don't show anything if no ads
-  }
+  if (reklams.length === 0) return null;
 
   return (
     <View style={styles.container}>
@@ -160,105 +324,27 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
         style={styles.pager}
         initialPage={0}
         onPageSelected={handlePageChange}
+        scrollEnabled={true}
       >
-        {reklams.map((reklam) => (
+        {reklams.map((reklam, index) => (
           <View key={reklam.id} style={styles.page}>
-            <Pressable
-              style={styles.slideContainer}
-              onPress={() => handleReklamPress(reklam)}
-              disabled={reklam.link_type === "none"}
-            >
-              <ImageBackground
-                source={{
-                  uri:
-                    reklam.image_url ||
-                    "https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1200",
-                }}
-                style={styles.background}
-                resizeMode="cover"
-              >
-                <LinearGradient
-                  colors={[
-                    "rgba(0,0,0,0.3)",
-                    "rgba(0,0,0,0.6)",
-                    "rgba(0,0,0,0.8)",
-                  ]}
-                  locations={[0, 0.5, 1]}
-                  style={styles.gradient}
-                >
-                  <View style={styles.content}>
-                    <Text variant="displaySmall" style={styles.title}>
-                      {reklam.title}
-                    </Text>
-                    {reklam.description && (
-                      /* This Wrapper is the key. It must be position: 'relative' */
-                      <View style={styles.descriptionWrapper}>
-                        <BrushBackground colors={["#FFFF00", "#737000"]} />
-                        <Text
-                          variant="titleMedium"
-                          style={styles.descriptionText}
-                        >
-                          {reklam.description}
-                        </Text>
-                      </View>
-                    )}{" "}
-                    {/* Call to action */}
-                    {reklam.link_type !== "none" && (
-                      <View style={styles.ctaContainer}>
-                        <View style={styles.ctaButton}>
-                          <Text style={styles.ctaText}>
-                            {reklam.link_type === "course" && "بینینی خول"}
-                            {reklam.link_type === "video" && "سەیرکردنی ڤیدیۆ"}
-                            {reklam.link_type === "external" && "کردنەوە"}
-                          </Text>
-                          <MaterialCommunityIcons
-                            name="arrow-left"
-                            size={20}
-                            color="#fff"
-                          />
-                        </View>
-                      </View>
-                    )}
-                  </View>
-                </LinearGradient>
-              </ImageBackground>
-            </Pressable>
+            {reklam.video_bunny_id ? (
+              <VideoSlide
+                reklam={reklam}
+                isActive={currentPage === index}
+                onEnd={handleVideoEnd}
+                onPress={() => handlePress(reklam)}
+              />
+            ) : (
+              <ImageSlide reklam={reklam} onPress={() => handlePress(reklam)} />
+            )}
           </View>
         ))}
       </PagerView>
 
-      {/* Navigation Arrows */}
+      {/* Dot indicators only */}
       {reklams.length > 1 && (
-        <>
-          <TouchableOpacity
-            style={[styles.arrow, styles.arrowLeft]}
-            onPress={goToPrevious}
-            activeOpacity={0.7}
-          >
-            <MaterialCommunityIcons
-              name="chevron-right"
-              size={32}
-              color="#fff"
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.arrow, styles.arrowRight]}
-            onPress={goToNext}
-            activeOpacity={0.7}
-          >
-            <MaterialCommunityIcons
-              name="chevron-left"
-              size={32}
-              color="#fff"
-            />
-          </TouchableOpacity>
-        </>
-      )}
-
-      {/* Page Indicators */}
-      {reklams.length > 1 && (
-        <View style={styles.indicators}>
+        <View style={styles.indicators} pointerEvents="none">
           {reklams.map((_, index) => (
             <View
               key={index}
@@ -274,54 +360,48 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   );
 }
 
+// ─── Styles ───────────────────────────────────────────────────────────────────
+
 const styles = StyleSheet.create({
   container: {
-    height: SCREEN_HEIGHT - 75, // Full screen height
+    height: SCREEN_HEIGHT - 75,
     position: "relative",
   },
   loadingContainer: {
-    height: SCREEN_HEIGHT,
+    height: SCREEN_HEIGHT - 75,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#111",
   },
   pager: {
     flex: 1,
   },
   page: {
-    width: SCREEN_WIDTH,
+    flex: 1,
   },
   slideContainer: {
     flex: 1,
   },
-  background: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
-  gradient: {
-    flex: 1,
-    justifyContent: "flex-end",
-    padding: 24,
-  },
+  // Content sits at the bottom
   content: {
+    position: "absolute",
+    bottom: 60, // above the indicators
+    left: 24,
+    right: 24,
     gap: 12,
-    alignItems: "flex-end", // Aligns everything to the right for RTL
+    alignItems: "flex-end",
   },
   title: {
     color: "#fff",
     fontWeight: "bold",
     fontFamily: "NRT-Bold",
     textAlign: "right",
-    marginBottom: 4,
-    zIndex: 2, // Keeps title physically above anything else
   },
   descriptionWrapper: {
     alignSelf: "flex-end",
-    position: "relative", // THIS TRAPS THE SVG
+    position: "relative",
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginTop: 8,
     maxWidth: "85%",
     overflow: "visible",
   },
@@ -330,22 +410,21 @@ const styles = StyleSheet.create({
     fontFamily: "Goran",
     textAlign: "right",
     lineHeight: 24,
-    zIndex: 1, // Ensures text sits on top of the SVG
+    zIndex: 1,
   },
   ctaContainer: {
-    marginTop: 12,
     alignItems: "flex-end",
   },
   ctaButton: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    backgroundColor: "rgba(255,255,255,0.25)",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 28,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.4)",
+    borderColor: "rgba(255,255,255,0.4)",
   },
   ctaText: {
     color: "#fff",
@@ -353,27 +432,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Goran",
   },
-  arrow: {
-    position: "absolute",
-    top: "50%",
-    transform: [{ translateY: -24 }],
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 10,
-  },
-  arrowLeft: {
-    right: 16,
-  },
-  arrowRight: {
-    left: 16,
-  },
   indicators: {
     position: "absolute",
-    bottom: 24,
+    bottom: 20,
     left: 0,
     right: 0,
     flexDirection: "row",
@@ -385,7 +446,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    backgroundColor: "rgba(255,255,255,0.4)",
   },
   indicatorActive: {
     width: 24,
