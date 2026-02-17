@@ -1,176 +1,77 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   View,
-  ImageBackground,
   Dimensions,
   StyleSheet,
   Pressable,
   Linking,
+  ImageBackground,
 } from "react-native";
 import { Text, ActivityIndicator } from "react-native-paper";
-import { supabase } from "@/lib/supabase";
+import { WebView } from "react-native-webview"; // Import WebView
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
 import PagerView from "react-native-pager-view";
-import { VideoView, useVideoPlayer } from "expo-video";
 import BrushBackground from "./BrushBackground";
 import { Reklam, ReklamCarouselProps } from "@/types/reklam";
+import { useRouter } from "expo-router";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-// URL is stored directly in video_hls_url — no construction needed
-
-// ─── CTA label per link type ─────────────────────────────────────────────────
-
-function getCtaLabel(linkType: string): string {
-  switch (linkType) {
-    case "course":
-      return "بینینی خول";
-    case "video":
-      return "سەیرکردنی ڤیدیۆ";
-    case "document":
-      return "داگرتن";
-    case "external":
-      return "کردنەوە";
-    default:
-      return "";
-  }
-}
-
-// ─── Single video slide ───────────────────────────────────────────────────────
-// Isolated component so useVideoPlayer is always called with a stable URL.
+// ─── Video Slide using WebView ──────────────────────────────────────────────
 
 interface VideoSlideProps {
   reklam: Reklam;
   isActive: boolean;
-  onEnd: () => void;
   onPress: () => void;
 }
 
-function VideoSlide({ reklam, isActive, onEnd, onPress }: VideoSlideProps) {
-  const hlsUrl = reklam.video_hls_url!; // stored as full HLS URL
-
-  const player = useVideoPlayer(hlsUrl, (p) => {
-    p.loop = false;
-    p.muted = false;
-  });
-
-  // Play/pause based on whether this slide is active
-  useEffect(() => {
-    if (isActive) {
-      player.play();
-    } else {
-      player.pause();
-      player.currentTime = 0;
-    }
-  }, [isActive]);
-
-  // Fire onEnd when video finishes
-  useEffect(() => {
-    const sub = player.addListener("playingChange", (isPlaying) => {
-      // When it stops playing and currentTime is near duration → finished
-      if (
-        !isPlaying &&
-        player.duration &&
-        player.currentTime >= player.duration - 0.5
-      ) {
-        onEnd();
-      }
-    });
-    return () => sub.remove();
-  }, [player, onEnd]);
+function VideoSlide({ reklam, isActive, onPress }: VideoSlideProps) {
+  // We use the same logic as your working VideoPlayer.tsx
+  // Adding autoplay params to the URL if they aren't there
+  const videoUri = reklam.video_url?.includes("?")
+    ? `${reklam.video_url}&autoplay=true&muted=false`
+    : `${reklam.video_url}?autoplay=true&muted=false`;
 
   return (
-    <Pressable
-      style={styles.slideContainer}
-      onPress={onPress}
-      disabled={reklam.link_type === "none"}
-    >
-      {/* Video fills the slide */}
-      <VideoView
-        player={player}
+    <View style={styles.slideContainer}>
+      {/* IMPORTANT: We only render the WebView when the slide is active.
+         WebViews are heavy; rendering many at once will lag the carousel.
+      */}
+      {isActive ? (
+        <WebView
+          source={{ uri: videoUri }}
+          style={styles.webview}
+          allowsInlineMediaPlayback
+          mediaPlaybackRequiresUserAction={false}
+          javaScriptEnabled
+          domStorageEnabled
+          scrollEnabled={false}
+          startInLoadingState
+          renderLoading={() => (
+            <View style={styles.centeredOverlay}>
+              <ActivityIndicator color="white" />
+            </View>
+          )}
+        />
+      ) : (
+        <View style={[styles.webview, { backgroundColor: "#000" }]} />
+      )}
+
+      {/* Transparent overlay so the user can still click the slide to navigate */}
+      <Pressable
         style={StyleSheet.absoluteFill}
-        contentFit="cover"
-        nativeControls={false}
+        onPress={onPress}
+        disabled={reklam.link_type === "none"}
       />
 
-      {/* Bottom tint — only bottom 33% */}
       <LinearGradient
-        colors={["transparent", "transparent", "rgba(0,0,0,0.85)"]}
-        locations={[0, 0.66, 1]}
-        style={StyleSheet.absoluteFill}
+        colors={["transparent", "rgba(0,0,0,0.3)", "rgba(0,0,0,0.85)"]}
+        locations={[0, 0.5, 1]}
+        style={styles.gradientOverlay}
         pointerEvents="none"
       />
 
       <SlideContent reklam={reklam} />
-    </Pressable>
-  );
-}
-
-// ─── Single image slide ───────────────────────────────────────────────────────
-
-interface ImageSlideProps {
-  reklam: Reklam;
-  onPress: () => void;
-}
-
-function ImageSlide({ reklam, onPress }: ImageSlideProps) {
-  return (
-    <Pressable
-      style={styles.slideContainer}
-      onPress={onPress}
-      disabled={reklam.link_type === "none"}
-    >
-      <ImageBackground
-        source={{
-          uri:
-            reklam.image_url ||
-            "https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1200",
-        }}
-        style={StyleSheet.absoluteFill}
-        resizeMode="cover"
-      />
-
-      {/* Bottom tint — only bottom 33% */}
-      <LinearGradient
-        colors={["transparent", "transparent", "rgba(0,0,0,0.85)"]}
-        locations={[0, 0.66, 1]}
-        style={StyleSheet.absoluteFill}
-        pointerEvents="none"
-      />
-
-      <SlideContent reklam={reklam} />
-    </Pressable>
-  );
-}
-
-// ─── Shared slide content (title, description, CTA) ─────────────────────────
-
-function SlideContent({ reklam }: { reklam: Reklam }) {
-  const ctaLabel = getCtaLabel(reklam.link_type);
-
-  return (
-    <View style={styles.content}>
-      <Text variant="displaySmall" style={styles.title}>
-        {reklam.title}
-      </Text>
-
-      {reklam.description && (
-        <View style={styles.descriptionWrapper}>
-          <BrushBackground colors={["#FFFF00", "#737000"]} />
-          <Text variant="titleMedium" style={styles.descriptionText}>
-            {reklam.description}
-          </Text>
-        </View>
-      )}
-
-      {reklam.link_type !== "none" && ctaLabel && (
-        <View style={styles.ctaContainer}>
-          <View style={styles.ctaButton}>
-            <Text style={styles.ctaText}>{ctaLabel}</Text>
-          </View>
-        </View>
-      )}
     </View>
   );
 }
@@ -186,128 +87,88 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   const router = useRouter();
 
   useEffect(() => {
+    const fetchReklams = async () => {
+      try {
+        const { data } = await (
+          reklams.length === 0
+            ? require("@/lib/supabase").supabase
+            : {
+              from: () => ({
+                select: () => ({
+                  eq: () => ({ eq: () => ({ order: () => data }) }),
+                }),
+              }),
+            }
+        )
+          .from("reklam")
+          .select("*")
+          .eq("teacher_id", teacherId)
+          .eq("is_active", true)
+          .order("display_order", { ascending: true });
+        setReklams(data || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchReklams();
-    return () => clearTimer();
   }, [teacherId]);
 
-  const fetchReklams = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("reklam")
-        .select("*")
-        .eq("teacher_id", teacherId)
-        .eq("is_active", true)
-        .order("display_order", { ascending: true });
-
-      if (error) throw error;
-      setReklams(data || []);
-    } catch (err) {
-      console.error("Error fetching reklams:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // ── Navigation ──────────────────────────────────────────────────────────────
-
-  const clearTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  };
-
-  const goToNext = useCallback(() => {
-    setCurrentPage((prev) => {
-      const next = prev + 1 >= reklams.length ? 0 : prev + 1;
-      pagerRef.current?.setPage(next);
-      return next;
-    });
-  }, [reklams.length]);
-
-  // Start 5-second timer for IMAGE slides only
-  const startImageTimer = useCallback(() => {
-    clearTimer();
-    timerRef.current = setTimeout(() => {
-      goToNext();
-    }, 5000);
-  }, [goToNext]);
-
-  // When page changes, start timer only if it's an image slide
+  // Auto-advance for images only
   useEffect(() => {
-    if (reklams.length <= 1) return;
+    if (timerRef.current) clearTimeout(timerRef.current);
     const current = reklams[currentPage];
-    if (current && !current.video_hls_url) {
-      // Image slide → start 5-second timer
-      startImageTimer();
-    } else {
-      // Video slide → timer handled by onVideoEnd
-      clearTimer();
+
+    // If it's an image, set a 5-second timer
+    if (current && !current.video_url && reklams.length > 1) {
+      timerRef.current = setTimeout(() => {
+        const next = (currentPage + 1) % reklams.length;
+        pagerRef.current?.setPage(next);
+      }, 5000);
     }
-    return () => clearTimer();
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [currentPage, reklams]);
 
-  const handlePageChange = (e: any) => {
-    setCurrentPage(e.nativeEvent.position);
-  };
-
-  // Called when a video finishes playing
-  const handleVideoEnd = useCallback(() => {
-    goToNext();
-  }, [goToNext]);
-
-  // ── Link handling ───────────────────────────────────────────────────────────
-
-  const handlePress = useCallback(
-    (reklam: Reklam) => {
-      if (!reklam.link_target || reklam.link_type === "none") return;
-
-      switch (reklam.link_type) {
-        case "course":
-          router.push(`/(student)/courses/${reklam.link_target}`);
-          break;
-        case "video":
-          router.push(`/video/${reklam.link_target}`);
-          break;
-        case "document":
-          // Fetch document URL from Supabase then open
-          fetchAndOpenDocument(reklam.link_target);
-          break;
-        case "external":
-          Linking.openURL(reklam.link_target).catch(console.error);
-          break;
-      }
-    },
-    [router],
-  );
-
-  const fetchAndOpenDocument = async (documentId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from("documents")
-        .select("file_url")
-        .eq("id", documentId)
-        .single();
-      if (error) throw error;
-      if (data?.file_url) {
-        await Linking.openURL(data.file_url);
-      }
-    } catch (err) {
-      console.error("Error opening document:", err);
-    }
-  };
-
-  // ── Render ──────────────────────────────────────────────────────────────────
-
-  if (loading) {
+  if (loading)
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#6200ee" />
+        <ActivityIndicator size="large" />
       </View>
     );
-  }
-
   if (reklams.length === 0) return null;
+
+  const handlePress = (reklam: Reklam) => {
+    if (!reklam.link_target || reklam.link_type === "none") return;
+
+    switch (reklam.link_type) {
+      case "external":
+        // Opens in system browser
+        Linking.openURL(reklam.link_target);
+        break;
+
+      case "document":
+        // Downloads/Opens the PDF/Doc directly via system browser/handler
+        // This uses the file_url we saved in the form earlier
+        Linking.openURL(reklam.link_target);
+        break;
+
+      case "video":
+        // Navigates to your specific video player route
+        router.push(`/video/${reklam.link_target}`);
+        break;
+
+      case "course":
+        // Navigates to the course page
+        router.push(`/(student)/courses/${reklam.link_target}`);
+        break;
+
+      default:
+        console.warn("Unknown link type:", reklam.link_type);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -315,16 +176,14 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
         ref={pagerRef}
         style={styles.pager}
         initialPage={0}
-        onPageSelected={handlePageChange}
-        scrollEnabled={true}
+        onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
       >
         {reklams.map((reklam, index) => (
           <View key={reklam.id} style={styles.page}>
-            {reklam.video_hls_url ? (
+            {reklam.video_url ? (
               <VideoSlide
                 reklam={reklam}
                 isActive={currentPage === index}
-                onEnd={handleVideoEnd}
                 onPress={() => handlePress(reklam)}
               />
             ) : (
@@ -333,115 +192,86 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
           </View>
         ))}
       </PagerView>
+    </View>
+  );
+}
 
-      {/* Dot indicators only */}
-      {reklams.length > 1 && (
-        <View style={styles.indicators} pointerEvents="none">
-          {reklams.map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.indicator,
-                currentPage === index && styles.indicatorActive,
-              ]}
-            />
-          ))}
+// ─── Shared UI ───────────────────────────────────────────────────────────────
+
+function ImageSlide({
+  reklam,
+  onPress,
+}: {
+  reklam: Reklam;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable style={styles.slideContainer} onPress={onPress}>
+      <ImageBackground
+        source={{ uri: reklam.image_url! }}
+        style={StyleSheet.absoluteFill}
+      />
+      <LinearGradient
+        colors={["transparent", "rgba(0,0,0,0.8)"]}
+        style={StyleSheet.absoluteFill}
+      />
+      <SlideContent reklam={reklam} />
+    </Pressable>
+  );
+}
+
+function SlideContent({ reklam }: { reklam: Reklam }) {
+  return (
+    <View style={styles.content}>
+      <Text style={styles.title}>{reklam.title}</Text>
+      {reklam.description && (
+        <View style={styles.descriptionWrapper}>
+          <BrushBackground colors={["#FFFF00", "#737000"]} />
+          <Text style={styles.descriptionText}>{reklam.description}</Text>
         </View>
       )}
     </View>
   );
 }
 
-// ─── Styles ───────────────────────────────────────────────────────────────────
-
 const styles = StyleSheet.create({
-  container: {
-    height: SCREEN_HEIGHT - 75,
-    position: "relative",
-  },
+  container: { height: SCREEN_HEIGHT - 75 },
   loadingContainer: {
-    height: SCREEN_HEIGHT - 75,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#111",
+    backgroundColor: "#000",
   },
-  pager: {
-    flex: 1,
+  pager: { flex: 1 },
+  page: { flex: 1 },
+  slideContainer: { flex: 1, backgroundColor: "#000" },
+  webview: { flex: 1 },
+  centeredOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000",
   },
-  page: {
-    flex: 1,
+  gradientOverlay: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: "40%",
   },
-  slideContainer: {
-    flex: 1,
-  },
-  // Content sits at the bottom
   content: {
     position: "absolute",
-    bottom: 60, // above the indicators
+    bottom: 80,
     left: 24,
     right: 24,
-    gap: 12,
     alignItems: "flex-end",
   },
   title: {
     color: "#fff",
+    fontSize: 28,
     fontWeight: "bold",
-    fontFamily: "NRT-Bold",
     textAlign: "right",
   },
-  descriptionWrapper: {
-    alignSelf: "flex-end",
-    position: "relative",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    maxWidth: "85%",
-    overflow: "visible",
-  },
-  descriptionText: {
-    color: "black",
-    fontFamily: "Goran",
-    textAlign: "right",
-    lineHeight: 24,
-    zIndex: 1,
-  },
-  ctaContainer: {
-    alignItems: "flex-end",
-  },
-  ctaButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    backgroundColor: "rgba(255,255,255,0.25)",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 28,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.4)",
-  },
-  ctaText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-    fontFamily: "Goran",
-  },
-  indicators: {
-    position: "absolute",
-    bottom: 20,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 8,
-  },
-  indicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "rgba(255,255,255,0.4)",
-  },
-  indicatorActive: {
-    width: 24,
-    backgroundColor: "#fff",
-  },
+  descriptionWrapper: { marginTop: 10, padding: 10 },
+  descriptionText: { color: "#000", textAlign: "right" },
 });
