@@ -5,9 +5,8 @@ import { styles } from "@/styles/teacher_students_styles";
 import Loader from "@/components/Loader";
 import { StudentCard } from "@/components/teachers/StudentCard";
 import { StudentProps } from "@/types/students";
-import StudentChip from "@/components/teachers/StudentChip";
 import { useRouter } from "expo-router";
-import { supabase } from "@/lib/supabase"; // Ensure this is imported
+import { supabase } from "@/lib/supabase";
 
 export default function StudentsScreen() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -104,7 +103,7 @@ export default function StudentsScreen() {
       </View>
 
       <FlatList
-        data={filteredStudents} // Using real filtered data
+        data={filteredStudents}
         renderItem={({ item }) => (
           <StudentCard
             student={item}

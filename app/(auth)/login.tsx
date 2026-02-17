@@ -37,12 +37,14 @@ export default function LoginScreen() {
       if (!user) throw new Error("No user found");
 
       // 2. Check if the user exists in the 'teachers' table
-      const { data: teacher, error: tError } = await supabase
+      const { data: teacher, error} = await supabase
         .from("teachers")
         .select("id")
         .eq("id", user.id)
         .single();
-
+      if(error) {
+        console.log('error ', error)
+      }
       if (teacher) {
         console.log("Verified as Teacher. Redirecting...");
         router.replace("/(teacher)");
@@ -50,12 +52,14 @@ export default function LoginScreen() {
       }
 
       // 3. If not a teacher, check if they are in the 'students' table
-      const { data: student, error: sError } = await supabase
+      const { data: student, error: err} = await supabase
         .from("students")
         .select("id")
         .eq("id", user.id)
         .single();
-
+      if(err) {
+        console.log('err ', err)
+      }
       if (student) {
         console.log("Verified as Student. Redirecting...");
         router.replace("/(student)");
@@ -130,7 +134,7 @@ export default function LoginScreen() {
               onPress={() => router.push("/(auth)/signup")}
               disabled={loading}
             >
-              Don't have an account? Sign up
+              No account? Sign up
             </Button>
           </Card.Content>
         </Card>

@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { View, Image, TouchableOpacity, Alert, ScrollView } from "react-native";
 import {
   Modal,
   Portal,
@@ -16,17 +9,11 @@ import {
   ActivityIndicator,
 } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
-import { Teacher } from "@/types/profile";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system/legacy";
 import { decode } from "base64-arraybuffer";
-
-interface EditProfileModalProps {
-  visible: boolean;
-  onDismiss: () => void;
-  profile: Teacher | null;
-  onProfileUpdate: () => void;
-}
+import { styles } from "@/styles/edit_profile_modal_styles";
+import { EditProfileModalProps } from "@/types/modal";
 
 export default function EditProfileModal({
   visible,
@@ -82,9 +69,11 @@ export default function EditProfileModal({
 
   const uploadImage = async (uri: string, type: "thumbnail" | "cover") => {
     try {
-      type === "thumbnail"
-        ? setUploadingThumbnail(true)
-        : setUploadingCover(true);
+      if (type === "thumbnail") {
+        setUploadingThumbnail(true);
+      } else {
+        setUploadingCover(true);
+      }
 
       const {
         data: { user },
@@ -129,9 +118,11 @@ export default function EditProfileModal({
       console.error("Error uploading image:", error);
       Alert.alert("Error", "Failed to upload image");
     } finally {
-      type === "thumbnail"
-        ? setUploadingThumbnail(false)
-        : setUploadingCover(false);
+      if (type === "thumbnail") {
+        setUploadingThumbnail(false);
+      } else {
+        setUploadingCover(false);
+      }
     }
   };
 
@@ -258,84 +249,3 @@ export default function EditProfileModal({
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    margin: 20,
-    maxHeight: "85%",
-  },
-  container: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  title: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 16,
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  scrollView: {
-    paddingHorizontal: 20,
-    maxHeight: 500,
-  },
-  input: {
-    marginBottom: 16,
-  },
-  label: {
-    marginBottom: 8,
-    marginTop: 8,
-  },
-  imageContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    overflow: "hidden",
-    borderWidth: 2,
-    borderColor: "#ddd",
-    marginBottom: 16,
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  thumbnail: {
-    width: "100%",
-    height: "100%",
-  },
-  coverContainer: {
-    width: "100%",
-    height: 150,
-    borderRadius: 8,
-    overflow: "hidden",
-    borderWidth: 2,
-    borderColor: "#ddd",
-    marginBottom: 24,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  coverImage: {
-    width: "100%",
-    height: "100%",
-  },
-  placeholder: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    width: "100%",
-    height: "100%",
-  },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: "white",
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-  },
-  button: {
-    marginLeft: 10,
-  },
-});

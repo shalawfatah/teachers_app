@@ -14,9 +14,9 @@ type TeacherStats = {
 
 export default function StudentDashboard() {
   const [profile, setProfile] = useState<Student | null>(null);
-  const [teacherStats, setTeacherStats] = useState<TeacherStats | null>(null);
+  const [, setTeacherStats] = useState<TeacherStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [statsLoading, setStatsLoading] = useState(false);
+  const [, setStatsLoading] = useState(false);
 
   useEffect(() => {
     getProfile();
@@ -71,19 +71,9 @@ export default function StudentDashboard() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Reklam Carousel - Full page auto-advancing slides */}
       {profile?.teachers?.id && (
         <ReklamCarousel teacherId={profile.teachers.id} />
       )}
-
-      {/* Teacher Hero Section - Existing content 
-      <TeacherHeroSection
-        profile={profile}
-        teacherStats={teacherStats}
-        statsLoading={statsLoading}
-      />
-
-      {/* Rest of your content here */}
     </ScrollView>
   );
 }

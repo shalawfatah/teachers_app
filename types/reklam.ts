@@ -11,10 +11,10 @@ export interface Reklam {
   title: string;
   description: string | null;
   image_url: string | null;
-  video_url: string | null; // Bunny iframe embed (reference/fallback)
-  video_hls_url: string | null; // Full HLS URL: https://vz-600296.b-cdn.net/{guid}/playlist.m3u8
+  video_url: string | null;
+  video_hls_url: string | null;
   link_type: ReklamLinkType;
-  link_target: string | null; // course/video/document UUID or full external URL
+  link_target: string | null;
   display_order: number;
   is_active: boolean;
   created_at: string;

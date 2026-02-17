@@ -96,6 +96,7 @@ export default function SignupScreen() {
         setSuccessDialogVisible(true);
       }
     } catch (err) {
+      console.log('err signup ', err)
       setError("An unexpected error occurred.");
     } finally {
       setLoading(false);

@@ -22,7 +22,7 @@ export default function ContentManagementScreen() {
     setVideoModalVisible(true);
   };
 
-  const [videoRefreshKey, setVideoRefreshKey] = useState(0);
+  const [, setVideoRefreshKey] = useState(0);
   const [playerVisible, setPlayerVisible] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
 
