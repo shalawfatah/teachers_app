@@ -18,15 +18,7 @@ import { Reklam, ReklamCarouselProps } from "@/types/reklam";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-const BUNNY_LIBRARY_ID = process.env.EXPO_PUBLIC_BUNNY_LIBRARY_ID;
-const BUNNY_CDN_HOSTNAME = process.env.EXPO_PUBLIC_BUNNY_CDN_HOSTNAME;
-
-function getBunnyHlsUrl(bunnyId: string): string {
-  if (BUNNY_CDN_HOSTNAME) {
-    return `https://${BUNNY_CDN_HOSTNAME}/${bunnyId}/playlist.m3u8`;
-  }
-  return `https://vz-${BUNNY_LIBRARY_ID}.b-cdn.net/${bunnyId}/playlist.m3u8`;
-}
+// URL is stored directly in video_hls_url — no construction needed
 
 // ─── CTA label per link type ─────────────────────────────────────────────────
 
@@ -56,7 +48,7 @@ interface VideoSlideProps {
 }
 
 function VideoSlide({ reklam, isActive, onEnd, onPress }: VideoSlideProps) {
-  const hlsUrl = getBunnyHlsUrl(reklam.video_bunny_id!);
+  const hlsUrl = reklam.video_hls_url!; // stored as full HLS URL
 
   const player = useVideoPlayer(hlsUrl, (p) => {
     p.loop = false;
@@ -245,7 +237,7 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   useEffect(() => {
     if (reklams.length <= 1) return;
     const current = reklams[currentPage];
-    if (current && !current.video_bunny_id) {
+    if (current && !current.video_hls_url) {
       // Image slide → start 5-second timer
       startImageTimer();
     } else {
@@ -328,7 +320,7 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
       >
         {reklams.map((reklam, index) => (
           <View key={reklam.id} style={styles.page}>
-            {reklam.video_bunny_id ? (
+            {reklam.video_hls_url ? (
               <VideoSlide
                 reklam={reklam}
                 isActive={currentPage === index}

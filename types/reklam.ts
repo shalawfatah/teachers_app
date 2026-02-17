@@ -1,4 +1,9 @@
-export type ReklamLinkType = "course" | "video" | "document" | "external" | "none";
+export type ReklamLinkType =
+  | "course"
+  | "video"
+  | "document"
+  | "external"
+  | "none";
 
 export interface Reklam {
   id: string;
@@ -7,7 +12,7 @@ export interface Reklam {
   description: string | null;
   image_url: string | null;
   video_url: string | null; // Bunny iframe embed (reference/fallback)
-  video_bunny_id: string | null; // Bunny GUID → used to build HLS URL for expo-video
+  video_hls_url: string | null; // Full HLS URL: https://vz-600296.b-cdn.net/{guid}/playlist.m3u8
   link_type: ReklamLinkType;
   link_target: string | null; // course/video/document UUID or full external URL
   display_order: number;
