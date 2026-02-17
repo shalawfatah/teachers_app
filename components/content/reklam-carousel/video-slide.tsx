@@ -19,21 +19,26 @@ export function VideoSlide({
   onPress,
   onEnd,
 }: VideoSlideProps) {
-  // Initialize the player with the HLS URL
-  const player = useVideoPlayer(reklam.video_hls_url, (player) => {
+  
+  // 1. UPDATED: Initialize the player with an object source to include headers
+  const player = useVideoPlayer({
+    uri: reklam.video_hls_url,
+    headers: {
+      // This MUST match the domain you added in Bunny "Allowed Referrers"
+      "Referer": "https://teachers-dash.netlify.app"
+    }
+  }, (player) => {
     player.loop = false;
   });
 
-  // Handle Play/Pause based on whether the slide is active
   useEffect(() => {
     if (isActive) {
       player.play();
     } else {
       player.pause();
-      // Use the currentTime property to reset the video position
       player.currentTime = 0;
     }
-  }, [isActive, player]); // Listen for the video completion
+  }, [isActive, player]);
 
   useEffect(() => {
     const subscription = player.addListener("playToEnd", () => {
@@ -47,16 +52,13 @@ export function VideoSlide({
   return (
     <View style={styles.slideContainer}>
       <VideoView
-        style={styles.webview} // Reusing your existing webview style for sizing
+        style={styles.webview}
         player={player}
         allowsPictureInPicture={false}
         contentFit="cover"
-        nativeControls={false} // Keeping it clean for a carousel
+        nativeControls={false}
       />
 
-      {/* Overlay Pressable: We place this over the video so the user 
-          can click the "ad" even if the video is playing.
-      */}
       <Pressable
         style={StyleSheet.absoluteFill}
         onPress={onPress}

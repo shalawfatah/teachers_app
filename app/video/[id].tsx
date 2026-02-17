@@ -39,8 +39,7 @@ export default function VideoPlayer() {
         uri: video.video_hls_url,
         headers: {
           // Use the domain whitelisted in your Bunny.net dashboard
-          Referer: "https://yourdomain.com",
-          Origin: "https://yourdomain.com",
+          Referer: "https://teachers-dash.netlify.app",
         },
       });
     }
