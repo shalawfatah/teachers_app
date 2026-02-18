@@ -19,17 +19,19 @@ export function VideoSlide({
   onPress,
   onEnd,
 }: VideoSlideProps) {
-  
   // 1. UPDATED: Initialize the player with an object source to include headers
-  const player = useVideoPlayer({
-    uri: reklam.video_hls_url,
-    headers: {
-      // This MUST match the domain you added in Bunny "Allowed Referrers"
-      "Referer": "https://teachers-dash.netlify.app"
-    }
-  }, (player) => {
-    player.loop = false;
-  });
+  const player = useVideoPlayer(
+    {
+      uri: reklam.video_hls_url,
+      headers: {
+        // This MUST match the domain you added in Bunny "Allowed Referrers"
+        Referer: "https://teachers-dash.netlify.app",
+      },
+    },
+    (player) => {
+      player.loop = false;
+    },
+  );
 
   useEffect(() => {
     if (isActive) {
@@ -39,6 +41,12 @@ export function VideoSlide({
       player.currentTime = 0;
     }
   }, [isActive, player]);
+
+  useEffect(() => {
+    return () => {
+      player.release();
+    };
+  }, []);
 
   useEffect(() => {
     const subscription = player.addListener("playToEnd", () => {

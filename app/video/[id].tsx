@@ -27,8 +27,7 @@ export default function VideoPlayer() {
     }
 
     return () => {
-      // Reset orientation when leaving
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
     };
   }, [id]);
 
@@ -44,6 +43,12 @@ export default function VideoPlayer() {
       });
     }
   }, [video, player]);
+
+  useEffect(() => {
+    return () => {
+      player.release();
+    };
+  }, []);
 
   const fetchVideoData = async () => {
     try {

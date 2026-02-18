@@ -14,7 +14,7 @@ export default function VideoPlayerModal({ visible, video, onDismiss }: Props) {
   const videoSource = {
     uri: video?.video_hls_url || video?.link || "",
     headers: {
-      "Referer": "https://teachers-dash.netlify.app",
+      Referer: "https://teachers-dash.netlify.app",
     },
   };
 
@@ -30,6 +30,12 @@ export default function VideoPlayerModal({ visible, video, onDismiss }: Props) {
       player.pause();
     }
   }, [visible, video, player]);
+
+  useEffect(() => {
+    return () => {
+      player.release();
+    };
+  }, []);
 
   if (!video) return null;
 
