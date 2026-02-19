@@ -8,13 +8,14 @@ import { StudentProps } from "@/types/students";
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
 
+  // Strictly adhering to: id, name, email, status, grade, verified
   const student: StudentProps = {
     id: Array.isArray(id) ? id[0] : id,
     name: "John Doe",
     email: "john.doe@university.edu",
-    enrolled_courses: 4,
-    last_active: "2024-05-20",
     status: "active",
+    grade: 12,
+    verified: true,
   };
 
   const statusColor = student.status === "active" ? "#4caf50" : "#f44336";
@@ -53,10 +54,20 @@ export default function ViewStudent() {
             value={student.email}
           />
           <Divider style={styles.divider} />
+
           <DetailItem
-            icon="book-open-variant"
-            label="Verification"
-            value={`${student.verified ? "Verified" : "Not Verified"}`}
+            icon="school-outline"
+            label="Grade Level"
+            value={`Grade ${student.grade}`}
+          />
+          <Divider style={styles.divider} />
+
+          <DetailItem
+            icon={student.verified ? "check-decagram" : "alert-circle-outline"}
+            label="Verification Status"
+            value={
+              student.verified ? "Verified Account" : "Pending Verification"
+            }
           />
         </Card.Content>
       </Card>

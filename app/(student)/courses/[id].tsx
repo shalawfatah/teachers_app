@@ -34,7 +34,6 @@ export default function SingleCourse() {
     try {
       setLoading(true);
 
-      // Get current user's verification status
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -49,7 +48,6 @@ export default function SingleCourse() {
         setIsVerified(studentData?.verified || false);
       }
 
-      // Fetch course details
       const { data: courseData, error: courseError } = await supabase
         .from("courses")
         .select("*")
@@ -59,7 +57,6 @@ export default function SingleCourse() {
       if (courseError) throw courseError;
       setCourse(courseData);
 
-      // Fetch videos for this course
       const { data: videosData, error: videosError } = await supabase
         .from("videos")
         .select("id, title, free, thumbnail")
@@ -76,16 +73,13 @@ export default function SingleCourse() {
   };
 
   const canPlayVideo = (video: Video) => {
-    // Can play if video is free OR student is verified
     return video.free || isVerified;
   };
 
   const handleVideoPress = (video: Video) => {
     if (canPlayVideo(video)) {
-      // Navigate to video player
       router.push(`/video/${video.id}`);
     } else {
-      // Show message or prompt to verify
       console.log("Video locked - verification required");
     }
   };
@@ -220,7 +214,6 @@ export default function SingleCourse() {
           contentStyle={{ height: 56 }}
           labelStyle={styles.buttonLabel}
           onPress={() => {
-            // Find first playable video
             const firstPlayableVideo = videos.find((v) => canPlayVideo(v));
             if (firstPlayableVideo) {
               handleVideoPress(firstPlayableVideo);

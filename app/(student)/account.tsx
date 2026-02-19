@@ -5,9 +5,8 @@ import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/account_styles";
 import { Student } from "@/types/profile";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
-import SettingsModal, {
-  SettingsType,
-} from "@/components/students/account/SettingsModal";
+import SettingsModal from "@/components/students/account/SettingsModal";
+import { SettingsType } from "@/types/modal";
 
 export default function AccountScreen() {
   const [profile, setProfile] = useState<Student | null>(null);

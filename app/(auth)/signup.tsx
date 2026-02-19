@@ -20,7 +20,6 @@ import {
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
 
-// Define a type for our teacher list
 type Teacher = {
   id: string;
   name: string;
