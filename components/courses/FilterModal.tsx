@@ -53,10 +53,10 @@ export default function FilterModal({
       >
         <View style={styles.header}>
           <Text variant="headlineSmall" style={styles.title}>
-            Filter Courses
+            فلتەری خولەکان
           </Text>
           <Button onPress={handleClear} mode="text" compact>
-            Clear All
+            سڕینەوە
           </Button>
         </View>
 
@@ -64,7 +64,7 @@ export default function FilterModal({
 
         <ScrollView style={styles.content}>
           <List.Accordion
-            title="Grade Level"
+            title="خولەکە تایبەت بە چ پۆلێکە"
             titleStyle={styles.accordionTitle}
             expanded={gradeExpanded}
             onPress={() => setGradeExpanded(!gradeExpanded)}
@@ -116,14 +116,14 @@ export default function FilterModal({
             onPress={handleCancel}
             style={styles.actionButton}
           >
-            Cancel
+            پاشگەزبوونەوە
           </Button>
           <Button
             mode="contained"
             onPress={handleApply}
             style={styles.actionButton}
           >
-            Apply ({selectedGrades.length})
+            جێبەجێکردن ({selectedGrades.length})
           </Button>
         </View>
       </Modal>
