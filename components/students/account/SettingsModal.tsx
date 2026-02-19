@@ -1,5 +1,7 @@
+import { styles } from "@/styles/setting_modal";
+import { SettingsModalProps } from "@/types/modal";
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import {
   Modal,
   Portal,
@@ -9,19 +11,6 @@ import {
   List,
   Divider,
 } from "react-native-paper";
-
-export type SettingsType =
-  | "notifications"
-  | "privacy"
-  | "help"
-  | "about"
-  | null;
-
-interface SettingsModalProps {
-  type: SettingsType;
-  visible: boolean;
-  onDismiss: () => void;
-}
 
 export default function SettingsModal({
   type,
@@ -133,20 +122,3 @@ export default function SettingsModal({
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    padding: 20,
-    margin: 20,
-    borderRadius: 12,
-    maxHeight: "80%",
-  },
-  modalTitle: { marginBottom: 15, fontWeight: "bold" },
-  sectionTitle: { marginBottom: 10, marginTop: 10, fontWeight: "600" },
-  scrollBody: { marginBottom: 20 },
-  text: { color: "#666", lineHeight: 20 },
-  actionButton: { marginTop: 20 },
-  closeButton: { marginTop: 10 },
-  centerAlign: { alignItems: "center", paddingVertical: 20 },
-});

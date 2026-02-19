@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { FlatList, View, StyleSheet, RefreshControl } from "react-native";
+import { FlatList, View, RefreshControl } from "react-native";
 import {
   List,
   IconButton,
@@ -8,13 +8,9 @@ import {
   Divider,
   ActivityIndicator,
 } from "react-native-paper";
-import { supabase } from "@/lib/supabase"; // Ensure this path is correct
-
-interface VideosTabProps {
-  onEdit: (video: any) => void; // Changed to object to make editing easier later
-  onDelete: (id: string) => void;
-  onView: (video: any) => void;
-}
+import { supabase } from "@/lib/supabase";
+import { VideosTabProps } from "@/types/videos";
+import { styles } from "@/styles/video_tab_styles";
 
 export default function VideosTab({
   onEdit,
@@ -132,15 +128,3 @@ export default function VideosTab({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  listContent: { padding: 16, paddingBottom: 100 },
-  listItem: {
-    backgroundColor: "white",
-    marginBottom: 8,
-    borderRadius: 12,
-    elevation: 1,
-  },
-  row: { justifyContent: "center", alignItems: "center" },
-  center: { flex: 1, justifyContent: "center", alignItems: "center" },
-});

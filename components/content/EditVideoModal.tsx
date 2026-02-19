@@ -7,7 +7,6 @@ export function EditVideoModal({ visible, video, onDismiss, onSuccess }: any) {
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 1. Sync state when video changes
   useEffect(() => {
     if (video) {
       setTitle(video.title || "");
@@ -15,9 +14,8 @@ export function EditVideoModal({ visible, video, onDismiss, onSuccess }: any) {
     }
   }, [video]);
 
-  // 2. Guard against null video during the save process
   const handleUpdate = async () => {
-    if (!video?.id) return; // Guard clause
+    if (!video?.id) return;
 
     setLoading(true);
     const { error } = await supabase
@@ -32,8 +30,6 @@ export function EditVideoModal({ visible, video, onDismiss, onSuccess }: any) {
     }
   };
 
-  // 3. Render Guard: If not visible or no video, return null
-  // This prevents the "Cannot read property id of null" error
   if (!visible || !video) return null;
 
   return (
@@ -41,7 +37,6 @@ export function EditVideoModal({ visible, video, onDismiss, onSuccess }: any) {
       <Modal
         visible={visible}
         onDismiss={onDismiss}
-        contentContainerStyle={styles.modalStyle}
       >
         <Text variant="headlineSmall">Edit Video</Text>
         <TextInput

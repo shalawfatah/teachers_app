@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import {
   Modal,
   Portal,
@@ -9,32 +9,9 @@ import {
   Checkbox,
 } from "react-native-paper";
 import { useState } from "react";
-
-interface FilterModalProps {
-  visible: boolean;
-  onDismiss: () => void;
-  onApply: (filters: FilterState) => void;
-  currentFilters: FilterState;
-}
-
-export interface FilterState {
-  grades: string[];
-}
-
-const GRADES = [
-  "Grade 1",
-  "Grade 2",
-  "Grade 3",
-  "Grade 4",
-  "Grade 5",
-  "Grade 6",
-  "Grade 7",
-  "Grade 8",
-  "Grade 9",
-  "Grade 10",
-  "Grade 11",
-  "Grade 12",
-];
+import { GRADES } from "@/utils/placeholder_grades";
+import { styles } from "@/styles/filter_modal_styles";
+import { FilterModalProps } from "@/types/modal";
 
 export default function FilterModal({
   visible,
@@ -86,7 +63,6 @@ export default function FilterModal({
         <Divider />
 
         <ScrollView style={styles.content}>
-          {/* Grade Level Accordion */}
           <List.Accordion
             title="Grade Level"
             titleStyle={styles.accordionTitle}
@@ -130,23 +106,10 @@ export default function FilterModal({
               />
             ))}
           </List.Accordion>
-
-          {/* Future filter sections can be added here as more accordions */}
-          {/* Example:
-          <List.Accordion
-            title="Subject"
-            expanded={subjectExpanded}
-            onPress={() => setSubjectExpanded(!subjectExpanded)}
-            left={props => <List.Icon {...props} icon="book" />}
-          >
-            ...
-          </List.Accordion>
-          */}
         </ScrollView>
 
         <Divider />
 
-        {/* Action Buttons */}
         <View style={styles.actions}>
           <Button
             mode="outlined"
@@ -167,53 +130,3 @@ export default function FilterModal({
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    backgroundColor: "white",
-    margin: 20,
-    borderRadius: 12,
-    maxHeight: "80%",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    paddingBottom: 16,
-  },
-  title: {
-    fontWeight: "bold",
-  },
-  content: {
-    maxHeight: 450,
-  },
-  accordion: {
-    backgroundColor: "#fff",
-  },
-  accordionTitle: {
-    fontWeight: "600",
-    fontSize: 16,
-  },
-  accordionRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  selectedCount: {
-    color: "#6200ee",
-    fontWeight: "500",
-  },
-  listItem: {
-    paddingLeft: 16,
-  },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 20,
-    gap: 12,
-  },
-  actionButton: {
-    flex: 1,
-  },
-});

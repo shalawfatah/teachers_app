@@ -24,3 +24,9 @@ export interface SingleCourse {
   thumbnail: string;
   grade: string;
 }
+
+export interface CoursesTabProps {
+  onEdit?: (id: string) => void;
+  onView?: (id: string) => void;
+  onDelete?: (id: string) => void;
+}

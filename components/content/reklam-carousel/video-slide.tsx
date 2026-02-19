@@ -24,7 +24,6 @@ export function VideoSlide({
     {
       uri: reklam.video_hls_url,
       headers: {
-        // This MUST match the domain you added in Bunny "Allowed Referrers"
         Referer: "https://teachers-dash.netlify.app",
       },
     },

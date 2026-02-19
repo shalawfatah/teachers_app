@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     borderRadius: 12,
-    overflow: "hidden",
   },
   title: {
     paddingHorizontal: 20,
@@ -32,7 +31,6 @@ export const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    overflow: "hidden",
     borderWidth: 2,
     borderColor: "#ddd",
     marginBottom: 16,
@@ -48,7 +46,6 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: 150,
     borderRadius: 8,
-    overflow: "hidden",
     borderWidth: 2,
     borderColor: "#ddd",
     marginBottom: 24,

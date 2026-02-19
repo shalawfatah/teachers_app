@@ -64,7 +64,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     maxWidth: "85%",
-    overflow: "visible",
   },
   descriptionText: {
     color: "#000",

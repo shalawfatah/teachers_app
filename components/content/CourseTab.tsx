@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  RefreshControl,
-  Alert,
-} from "react-native";
+import { FlatList, View, RefreshControl, Alert } from "react-native";
 import {
   Card,
   IconButton,
@@ -16,14 +10,8 @@ import {
   ActivityIndicator,
 } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
-import { Course } from "@/types/courses";
-
-// 1. Define the Props interface to match your VideosTab style
-interface CoursesTabProps {
-  onEdit?: (id: string) => void;
-  onView?: (id: string) => void;
-  onDelete?: (id: string) => void;
-}
+import { Course, CoursesTabProps } from "@/types/courses";
+import { styles } from "@/styles/course_tab_styles";
 
 export default function CoursesTab({
   onEdit,
@@ -70,7 +58,6 @@ export default function CoursesTab({
     fetchMyCourses();
   };
 
-  // Helper for deletion with confirmation
   const handleDeletePress = (id: string) => {
     closeMenu();
     Alert.alert(
@@ -188,25 +175,3 @@ export default function CoursesTab({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  listContent: { padding: 16, paddingBottom: 100 },
-  card: {
-    marginBottom: 20,
-    backgroundColor: "white",
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  cover: { height: 160 },
-  description: { color: "#666", marginBottom: 12 },
-  badgeContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
-    marginTop: 4,
-    marginBottom: 8,
-  },
-  chip: { backgroundColor: "#f0f0f0", height: 32 },
-  chipText: { fontSize: 12 },
-  emptyContainer: { padding: 40, alignItems: "center" },
-});

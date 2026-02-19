@@ -36,7 +36,6 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
     fetchReklams();
   }, [teacherId]);
 
-  // Handle auto-advance for images
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
 
@@ -54,7 +53,6 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   }, [currentPage, reklams]);
 
   const handleVideoEnd = useCallback(() => {
-    // CRITICAL: Delay the transition slightly to let native threads finish
     setTimeout(() => {
       const next = (currentPage + 1) % reklams.length;
       pagerRef.current?.setPage(next);
@@ -78,7 +76,6 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
         style={styles.pager}
         initialPage={0}
         onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
-        // Optimization: Reduce the number of views PagerView keeps in memory
         offscreenPageLimit={1} 
       >
         {reklams.map((reklam, index) => (
@@ -96,8 +93,6 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
           </View>
         ))}
       </PagerView>
-
-      {/* Indicator logic remains same */}
     </View>
   );
 }

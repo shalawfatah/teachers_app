@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import {
   Modal,
   Portal,
@@ -11,14 +11,9 @@ import {
   HelperText,
 } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
-
-interface CreateCourseModalProps {
-  visible: boolean;
-  onDismiss: () => void;
-  onSuccess: () => void;
-}
-
-const SUBJECTS = ["math", "science", "art", "english", "history", "other"];
+import { styles } from "@/styles/create_carousel_styles";
+import { CreateCourseModalProps } from "@/types/modal";
+import { SUBJECTS } from "@/utils/placeholder_subjects";
 
 export default function CreateCourseModal({
   visible,
@@ -40,25 +35,22 @@ export default function CreateCourseModal({
     setError("");
 
     try {
-      // 1. Get current teacher's ID
       const {
         data: { user },
       } = await supabase.auth.getUser();
 
       if (!user) throw new Error("No authenticated user found");
 
-      // 2. Insert the course
       const { error: insertError } = await supabase.from("courses").insert({
         title,
         description,
         grade,
         subject,
-        teacher_id: user.id, // Current teacher
+        teacher_id: user.id,
       });
 
       if (insertError) throw insertError;
 
-      // 3. Cleanup and close
       setTitle("");
       setDescription("");
       onSuccess();
@@ -174,38 +166,3 @@ export default function CreateCourseModal({
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    backgroundColor: "white",
-    padding: 20,
-    margin: 20,
-    borderRadius: 8,
-  },
-  modalTitle: {
-    marginBottom: 16,
-    textAlign: "center",
-  },
-  input: {
-    marginBottom: 12,
-  },
-  label: {
-    marginTop: 8,
-    marginBottom: 4,
-  },
-  dropdown: {
-    marginBottom: 12,
-    borderRadius: 4,
-  },
-  segmented: {
-    marginBottom: 8,
-  },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginTop: 16,
-  },
-  flexButton: {
-    marginLeft: 8,
-  },
-});

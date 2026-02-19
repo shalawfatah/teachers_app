@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import {
   Modal,
   Portal,
@@ -9,18 +9,14 @@ import {
   Menu,
 } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
-
-interface Props {
-  visible: boolean;
-  onDismiss: () => void;
-  onSuccess: () => void;
-}
+import { UploadVideoModalProps } from "@/types/modal";
+import { styles } from "@/styles/upload_video_modal_styles";
 
 export default function UploadVideoModal({
   visible,
   onDismiss,
   onSuccess,
-}: Props) {
+}: UploadVideoModalProps) {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [courseId, setCourseId] = useState("");
@@ -139,17 +135,3 @@ export default function UploadVideoModal({
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: "white",
-    padding: 20,
-    margin: 20,
-    borderRadius: 12,
-  },
-  header: { marginBottom: 16, fontWeight: "bold" },
-  input: { marginBottom: 12 },
-  dropdownContainer: { marginBottom: 20 },
-  dropdownBtn: { width: "100%" },
-  actions: { flexDirection: "row", justifyContent: "flex-end", gap: 10 },
-});

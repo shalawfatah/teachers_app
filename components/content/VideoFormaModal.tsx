@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, View } from "react-native";
 import {
   Modal,
   Portal,
@@ -9,20 +9,15 @@ import {
   Menu,
 } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
-
-interface Props {
-  visible: boolean;
-  video: any | null; // null = Create Mode, object = Edit Mode
-  onDismiss: () => void;
-  onSuccess: () => void;
-}
+import { styles } from "@/styles/video_form_modal_styles";
+import { VideoFormModalProps } from "@/types/modal";
 
 export default function VideoFormModal({
   visible,
   video,
   onDismiss,
   onSuccess,
-}: Props) {
+}: VideoFormModalProps) {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [courseId, setCourseId] = useState("");
@@ -32,17 +27,14 @@ export default function VideoFormModal({
   const [menuVisible, setMenuVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Sync state with the video prop whenever the modal opens or video changes
   useEffect(() => {
     if (visible) {
       fetchCourses();
       if (video) {
-        // We are in EDIT mode
         setTitle(video.title || "");
         setLink(video.link || "");
         setCourseId(video.course_id || "");
       } else {
-        // We are in CREATE mode
         setTitle("");
         setLink("");
         setCourseId("");
@@ -180,21 +172,3 @@ export default function VideoFormModal({
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: "white",
-    padding: 20,
-    margin: 20,
-    borderRadius: 12,
-    gap: 12,
-  },
-  header: { marginBottom: 8, fontWeight: "bold" },
-  dropdown: { marginTop: 8 },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 10,
-    marginTop: 10,
-  },
-});

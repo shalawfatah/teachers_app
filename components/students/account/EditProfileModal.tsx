@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet,ScrollView } from "react-native";
-import { Modal, Portal, Text, TextInput, Button, SegmentedButtons } from "react-native-paper";
+import { View, ScrollView } from "react-native";
+import {
+  Modal,
+  Portal,
+  Text,
+  TextInput,
+  Button,
+  SegmentedButtons,
+} from "react-native-paper";
 import { supabase } from "@/lib/supabase";
-import { Student } from "@/types/profile";
+import { EditStudentModalProps } from "@/types/modal";
+import { styles } from "@/styles/edit_profile_student_styles";
 
-interface EditProfileModalProps {
-  visible: boolean;
-  onDismiss: () => void;
-  profile: Student | null;
-  onProfileUpdate: () => void; // To refresh the parent screen
-}
-
-export default function EditProfileModal({ visible, onDismiss, profile, onProfileUpdate }: EditProfileModalProps) {
+export default function EditProfileModal({
+  visible,
+  onDismiss,
+  profile,
+  onProfileUpdate,
+}: EditStudentModalProps) {
   const [name, setName] = useState("");
   const [grade, setGrade] = useState("");
   const [updating, setUpdating] = useState(false);
 
-  // Sync internal state when profile opens
   useEffect(() => {
     if (profile) {
       setName(profile.name || "");
@@ -27,8 +32,10 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
   const handleUpdate = async () => {
     try {
       setUpdating(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) return;
 
       const { error } = await supabase
@@ -40,7 +47,7 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
         .eq("id", user.id);
 
       if (error) throw error;
-      
+
       onProfileUpdate(); // Refresh the account screen
       onDismiss(); // Close modal
     } catch (error) {
@@ -52,13 +59,15 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
 
   return (
     <Portal>
-      <Modal 
-        visible={visible} 
-        onDismiss={onDismiss} 
+      <Modal
+        visible={visible}
+        onDismiss={onDismiss}
         contentContainerStyle={styles.container}
       >
-        <Text variant="headlineSmall" style={styles.title}>نوێکردنەوەی هەژمار</Text>
-        
+        <Text variant="headlineSmall" style={styles.title}>
+          نوێکردنەوەی هەژمار
+        </Text>
+
         <TextInput
           label="ناو"
           value={name}
@@ -67,29 +76,37 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
           style={styles.input}
         />
 
-        <Text variant="bodyMedium" style={styles.label}>پۆل</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.gradeScroll}>
-            <SegmentedButtons
-                value={grade}
-                onValueChange={setGrade}
-                buttons={[
-                    { value: '7', label: '7' },
-                    { value: '8', label: '8' },
-                    { value: '9', label: '9' },
-                    { value: '10', label: '10' },
-                    { value: '11', label: '11' },
-                    { value: '12', label: '12' },
-                ]}
-                style={styles.segment}
-            />
+        <Text variant="bodyMedium" style={styles.label}>
+          پۆل
+        </Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.gradeScroll}
+        >
+          <SegmentedButtons
+            value={grade}
+            onValueChange={setGrade}
+            buttons={[
+              { value: "7", label: "7" },
+              { value: "8", label: "8" },
+              { value: "9", label: "9" },
+              { value: "10", label: "10" },
+              { value: "11", label: "11" },
+              { value: "12", label: "12" },
+            ]}
+            style={styles.segment}
+          />
         </ScrollView>
 
         <View style={styles.buttonRow}>
-          <Button mode="text" onPress={onDismiss} style={styles.button}>رەتکردنەوە</Button>
-          <Button 
-            mode="contained" 
-            onPress={handleUpdate} 
-            loading={updating} 
+          <Button mode="text" onPress={onDismiss} style={styles.button}>
+            رەتکردنەوە
+          </Button>
+          <Button
+            mode="contained"
+            onPress={handleUpdate}
+            loading={updating}
             disabled={updating || !name}
             style={styles.button}
           >
@@ -100,38 +117,3 @@ export default function EditProfileModal({ visible, onDismiss, profile, onProfil
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    direction: "rtl",
-    backgroundColor: 'white',
-    padding: 20,
-    margin: 20,
-    borderRadius: 8,
-  },
-  title: {
-    marginBottom: 20,
-    fontWeight: 'bold',
-  },
-  input: {
-    marginBottom: 20,
-  },
-  label: {
-    marginBottom: 8,
-    color: '#666'
-  },
-  gradeScroll: {
-    marginBottom: 20,
-  },
-  segment: {
-    minWidth: '100%',
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 10,
-  },
-  button: {
-    marginLeft: 10,
-  }
-});
