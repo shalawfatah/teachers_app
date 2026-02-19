@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import {
   TextInput,
   Button,
@@ -19,11 +13,8 @@ import {
 } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
-
-type Teacher = {
-  id: string;
-  name: string;
-};
+import { styles } from "@/styles/signup_styles";
+import { TeacherShort } from "@/types/teacher";
 
 export default function SignupScreen() {
   const [email, setEmail] = useState("");
@@ -31,16 +22,16 @@ export default function SignupScreen() {
   const [fullName, setFullName] = useState("");
   const [grade, setGrade] = useState("9");
 
-  // Teacher selection states
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
-  const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
+  const [teachers, setTeachers] = useState<TeacherShort[]>([]);
+  const [selectedTeacher, setSelectedTeacher] = useState<TeacherShort | null>(
+    null,
+  );
   const [menuVisible, setMenuVisible] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [successDialogVisible, setSuccessDialogVisible] = useState(false);
 
-  // Load teachers from the database when the screen opens
   useEffect(() => {
     fetchTeachers();
   }, []);
@@ -95,7 +86,7 @@ export default function SignupScreen() {
         setSuccessDialogVisible(true);
       }
     } catch (err) {
-      console.log('err signup ', err)
+      console.log("err signup ", err);
       setError("An unexpected error occurred.");
     } finally {
       setLoading(false);
@@ -234,9 +225,7 @@ export default function SignupScreen() {
         >
           <Dialog.Title>Verify Email</Dialog.Title>
           <Dialog.Content>
-            <Text>
-              Check {email} to activate your student account.
-            </Text>
+            <Text>Check {email} to activate your student account.</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => router.replace("/(auth)/login")}>
@@ -248,21 +237,3 @@ export default function SignupScreen() {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollContent: { flexGrow: 1, justifyContent: "center", padding: 16 },
-  card: { padding: 16 },
-  title: { textAlign: "center", marginBottom: 24 },
-  input: { marginBottom: 12 },
-  dropdownContainer: { marginBottom: 12 },
-  dropdownButton: { borderRadius: 4, borderColor: "#79747E" },
-  dropdownButtonContent: {
-    flexDirection: "row-reverse",
-    justifyContent: "space-between",
-    height: 50,
-  },
-  gradeLabel: { marginTop: 8, marginBottom: 8 },
-  segmented: { marginBottom: 8 },
-  button: { marginTop: 16, marginBottom: 8 },
-});
