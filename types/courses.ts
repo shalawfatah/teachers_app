@@ -16,7 +16,23 @@ export interface Course {
   grade: string;
   subject: string;
 }
-
+export interface ExtendedCourse {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail?: string;
+  grade: number;
+  subject: string;
+  // Add these joined fields:
+  teachers: {
+    name: string;
+  } | null;
+  videos: {
+    id: string;
+    title: string;
+    duration?: string;
+  }[];
+}
 export interface SingleCourse {
   id: string;
   title: string;
