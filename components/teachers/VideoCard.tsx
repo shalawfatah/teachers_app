@@ -74,14 +74,6 @@ export const VideoCard: React.FC<VideoCardProps> = ({
         >
           {video.description}
         </Text>
-        <View style={styles.videoFooter}>
-          <Chip icon="eye" style={styles.chip} compact>
-            {video.views} views
-          </Chip>
-          <Text variant="bodySmall" style={styles.uploadDate}>
-            {new Date(video.uploaded_at).toLocaleDateString()}
-          </Text>
-        </View>
       </Card.Content>
     </Card>
   );

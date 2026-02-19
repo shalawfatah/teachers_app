@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 export const courses_styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     direction: "rtl",

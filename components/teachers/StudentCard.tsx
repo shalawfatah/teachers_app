@@ -79,9 +79,6 @@ export const StudentCard: React.FC<StudentCardProps> = ({
             />
           </Menu>
         </View>
-        <Text variant="bodySmall" style={styles.lastActive}>
-          Last active: {new Date(student.last_active).toLocaleDateString()}
-        </Text>
       </Card.Content>
     </Card>
   );
