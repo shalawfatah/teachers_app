@@ -2,10 +2,11 @@ import { View, FlatList, RefreshControl } from "react-native";
 import { Text, Searchbar, IconButton, Badge } from "react-native-paper";
 import { useState, useEffect, useCallback } from "react";
 import { courses_styles } from "@/styles/courses";
-import { supabase } from "@/lib/supabase"; // Import your supabase client
+import { supabase } from "@/lib/supabase";
 import Loader from "@/components/Loader";
 import { renderCourse } from "@/components/courses/Card";
-import FilterModal, { FilterState } from "@/components/courses/FilterModal";
+import FilterModal from "@/components/courses/FilterModal";
+import { FilterState } from "@/types/modal";
 
 export default function CoursesScreen() {
   const [searchQuery, setSearchQuery] = useState("");

@@ -90,7 +90,7 @@ export default function SignupScreen() {
       }
 
       if (authData.session) {
-        router.replace("/(tabs)");
+        router.replace("/(student)");
       } else {
         setSuccessDialogVisible(true);
       }
@@ -192,7 +192,6 @@ export default function SignupScreen() {
                 { value: "9", label: "9" },
               ]}
               style={styles.segmented}
-              disabled={loading}
             />
             <SegmentedButtons
               value={grade}
@@ -203,7 +202,6 @@ export default function SignupScreen() {
                 { value: "12", label: "12" },
               ]}
               style={styles.segmented}
-              disabled={loading}
             />
 
             {error ? <HelperText type="error">{error}</HelperText> : null}
