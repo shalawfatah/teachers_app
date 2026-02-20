@@ -51,7 +51,6 @@ export interface EditStudentModalProps {
 }
 
 export type SettingsType =
-  | "notifications"
   | "privacy"
   | "help"
   | "about"

@@ -5,13 +5,11 @@ import {
   Portal,
   Text,
   Button,
-  Switch,
   List,
   Divider,
 } from "react-native-paper";
 
 export type SettingsType =
-  | "notifications"
   | "help"
   | "about"
   | null;
@@ -27,37 +25,9 @@ export default function SettingsModal({
   visible,
   onDismiss,
 }: SettingsModalProps) {
-  const [isPushEnabled, setIsPushEnabled] = React.useState(true);
-  const [isEmailEnabled, setIsEmailEnabled] = React.useState(false);
 
   const renderContent = () => {
     switch (type) {
-      case "notifications":
-        return (
-          <View>
-            <Text variant="titleMedium" style={styles.sectionTitle}>
-              Preferences
-            </Text>
-            <List.Item
-              title="Push Notifications"
-              right={() => (
-                <Switch
-                  value={isPushEnabled}
-                  onValueChange={setIsPushEnabled}
-                />
-              )}
-            />
-            <List.Item
-              title="Email Updates"
-              right={() => (
-                <Switch
-                  value={isEmailEnabled}
-                  onValueChange={setIsEmailEnabled}
-                />
-              )}
-            />
-          </View>
-        );
       case "help":
         return (
           <View>

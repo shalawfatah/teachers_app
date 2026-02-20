@@ -95,13 +95,6 @@ export default function AccountScreen() {
             onPress={() => setEditModalVisible(true)}
           />
           <Divider />
-          <List.Item
-            title="نۆتیفیکەیشن"
-            description="سازاندنی نۆتیفیکەیشن"
-            left={(props) => <List.Icon {...props} icon="bell" />}
-            right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            onPress={() => setActiveSettingsType("notifications")}
-          />
         </List.Section>
 
         <List.Section>
