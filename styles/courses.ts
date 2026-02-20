@@ -51,7 +51,9 @@ export const courses_styles = StyleSheet.create({
     paddingBottom: 16,
   },
   searchbar: {
+    direction: "rtl",
     elevation: 0,
+    paddingHorizontal: 12,
     backgroundColor: "#f5f5f5",
   },
   listContent: {

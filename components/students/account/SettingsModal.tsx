@@ -59,7 +59,7 @@ export default function SettingsModal({
               onPress={() => { }}
               style={styles.actionButton}
             >
-              Request Data Export
+              داوای داتا و زانیاری
             </Button>
           </View>
         );
@@ -116,7 +116,7 @@ export default function SettingsModal({
         </Text>
         <ScrollView style={styles.scrollBody}>{renderContent()}</ScrollView>
         <Button mode="contained" onPress={onDismiss} style={styles.closeButton}>
-          Close
+          داخستن
         </Button>
       </Modal>
     </Portal>

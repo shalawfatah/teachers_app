@@ -85,7 +85,7 @@ export default function AccountScreen() {
             />
           </List.Section>
           <List.Section>
-            <List.Subheader>Support</List.Subheader>
+            <List.Subheader>یارمەتی</List.Subheader>
             <List.Item
               title="یارمەتی"
               description="پشتیوانی و یارمەتی"

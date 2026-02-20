@@ -73,7 +73,7 @@ export default function CoursesScreen() {
               هەموو خولەکان
             </Text>
             <Text variant="bodyMedium" style={courses_styles.headerSubtitle}>
-              خول بەردەستە {courses.length}
+               خولی بەردەست {courses.length}
             </Text>
           </View>
 
