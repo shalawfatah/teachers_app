@@ -12,7 +12,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.shashankafsorganization.teachersapp",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryUsageDescription": "This app requires access to your photo library so that teachers can upload course documents and students can submit their assignments as images.",
+        "NSCameraUsageDescription": "This app requires access to your camera so teachers and students can take photos of assignments and profile pictures directly within the app.",
+        "NSPhotoLibraryAddUsageDescription": "This app needs permission to save images and documents to your photo library."
       }
     },
     "android": {
@@ -57,6 +60,12 @@
         "projectId": "1a6b9430-c01f-4960-8021-bb427516a2cc"
       }
     },
-    "owner": "shashankafs-organization"
+    "owner": "shashankafs-organization",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1a6b9430-c01f-4960-8021-bb427516a2cc"
+    }
   }
 }

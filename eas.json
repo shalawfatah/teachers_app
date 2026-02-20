@@ -27,12 +27,8 @@
       },
       "ios": {
         "appleId": "shalaw.fatah@gmail.com",
-        "supportsTablet": true,
-        "ascAppId": "6759322582",
-        "appleTeamId": "5M43P2DGVB",
-        "infoPlist": {
-          "NSPhotoLibraryUsageDescription": "This app requires access to your photo library so that teachers can upload course documents and students can submit their assignments as images."
-        }
+        "ascAppId": "6759322582", 
+        "appleTeamId": "5M43P2DGVB"
       }
     }
   }
