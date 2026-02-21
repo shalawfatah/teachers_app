@@ -7,13 +7,12 @@ import {
   MD3LightTheme,
   configureFonts,
 } from "react-native-paper";
-import { useFonts } from "expo-font"; // Add this
+import { useFonts } from "expo-font";
 import "react-native-reanimated";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  // 1. Load your local fonts
   const [fontsLoaded, fontError] = useFonts({
     Goran: require("@/assets/fonts/goran.ttf"),
     "NRT-Bold": require("@/assets/fonts/nrt-bd.ttf"),
@@ -26,7 +25,6 @@ export default function RootLayout() {
   const segments = useSegments();
   const router = useRouter();
 
-  // 2. Configure React Native Paper to use Goran by default
   const fontConfig = {
     fontFamily: "Goran",
   };
@@ -36,7 +34,6 @@ export default function RootLayout() {
     fonts: configureFonts({ config: fontConfig }),
   };
 
-  // Auth logic stays the same...
   const checkUserTables = async (userId: string) => {
     const [teacherResult, studentResult] = await Promise.all([
       supabase.from("teachers").select("id").eq("id", userId).single(),
@@ -84,7 +81,6 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    // 3. Only hide SplashScreen when BOTH Auth and Fonts are ready
     if (loading || !fontsLoaded) return;
 
     const inAuthGroup = segments[0] === "(auth)";
@@ -105,7 +101,6 @@ export default function RootLayout() {
     SplashScreen.hideAsync();
   }, [session, isTeacher, isStudent, loading, fontsLoaded]); // Add fontsLoaded here
 
-  // 4. Handle font loading errors
   if (!fontsLoaded && !fontError) {
     return null;
   }
