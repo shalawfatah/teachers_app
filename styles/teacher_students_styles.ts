@@ -94,17 +94,4 @@ export const styles = StyleSheet.create({
   statusChip: {
     alignSelf: "flex-start",
   },
-  activeChip: {
-    backgroundColor: "#4caf50",
-  },
-  inactiveChip: {
-    backgroundColor: "#9e9e9e",
-  },
-  chipText: {
-    fontSize: 11,
-  },
-  lastActive: {
-    color: "#999",
-    marginTop: 8,
-  },
 });
