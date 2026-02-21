@@ -14,3 +14,10 @@ export interface VideosTabProps {
   onDelete: (id: string) => void;
   onView: (video: any) => void;
 }
+
+export type VideoSingle = {
+  id: string;
+  title: string;
+  free: boolean;
+  thumbnail: string;
+};
