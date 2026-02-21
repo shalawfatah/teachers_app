@@ -13,3 +13,9 @@ export interface StudentCardProps {
   onEdit?: (studentId: string) => void;
   onDelete?: (studentId: string) => void;
 }
+
+export interface AuxProps {
+  icon: string;
+  label: string;
+  value: string;
+}

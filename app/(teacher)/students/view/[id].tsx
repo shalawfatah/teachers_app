@@ -1,14 +1,14 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Avatar, Card, Text, Divider, Button, Chip } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { StudentProps } from "@/types/students";
+import { AuxProps, StudentProps } from "@/types/students";
+import { styles } from "@/styles/single_student_view_styles";
 
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
 
-  // Strictly adhering to: id, name, email, status, grade, verified
   const student: StudentProps = {
     id: Array.isArray(id) ? id[0] : id,
     name: "John Doe",
@@ -23,7 +23,6 @@ export default function ViewStudent() {
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: "Student Profile" }} />
-
       <View style={styles.hero}>
         <Avatar.Text
           size={80}
@@ -44,8 +43,6 @@ export default function ViewStudent() {
           {student.status.toUpperCase()}
         </Chip>
       </View>
-
-      {/* Details Card */}
       <Card style={styles.card}>
         <Card.Content>
           <DetailItem
@@ -54,14 +51,12 @@ export default function ViewStudent() {
             value={student.email}
           />
           <Divider style={styles.divider} />
-
           <DetailItem
             icon="school-outline"
             label="Grade Level"
             value={`Grade ${student.grade}`}
           />
           <Divider style={styles.divider} />
-
           <DetailItem
             icon={student.verified ? "check-decagram" : "alert-circle-outline"}
             label="Verification Status"
@@ -71,8 +66,6 @@ export default function ViewStudent() {
           />
         </Card.Content>
       </Card>
-
-      {/* Action Buttons */}
       <View style={styles.actions}>
         <Button
           mode="outlined"
@@ -88,16 +81,7 @@ export default function ViewStudent() {
   );
 }
 
-// Helper component for layout consistency
-function DetailItem({
-  icon,
-  label,
-  value,
-}: {
-  icon: string;
-  label: string;
-  value: string;
-}) {
+function DetailItem({ icon, label, value }: AuxProps) {
   return (
     <View style={styles.detailRow}>
       <MaterialCommunityIcons name={icon as any} size={24} color="#666" />
@@ -110,26 +94,3 @@ function DetailItem({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f5f5f5" },
-  hero: {
-    alignItems: "center",
-    padding: 30,
-    backgroundColor: "white",
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    elevation: 2,
-  },
-  name: { fontWeight: "bold", marginTop: 15, marginBottom: 8 },
-  card: { margin: 16, borderRadius: 12, backgroundColor: "white" },
-  detailRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 12,
-  },
-  detailText: { marginLeft: 16 },
-  divider: { marginVertical: 4 },
-  actions: { padding: 16, gap: 12 },
-  button: { borderRadius: 8 },
-});
