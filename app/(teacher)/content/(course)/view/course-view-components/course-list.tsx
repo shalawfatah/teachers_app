@@ -7,7 +7,7 @@ interface Props {
   videos: any[];
 }
 
-export const LessonList = ({ videos }: Props) => {
+export default function LessonList({ videos }: Props) {
   if (videos.length === 0) {
     return (
       <Card style={styles.emptyLessons}>

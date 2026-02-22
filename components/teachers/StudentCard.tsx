@@ -4,12 +4,12 @@ import { Text, Card, Avatar, IconButton, Menu, Chip } from "react-native-paper";
 import { StudentCardProps } from "@/types/students";
 import { styles } from "@/styles/teacher_students_styles";
 
-export const StudentCard: React.FC<StudentCardProps> = ({
+export default function StudentCard({
   student,
   onView,
   onEdit,
   onDelete,
-}) => {
+}: StudentCardProps) {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const openMenu = () => setMenuVisible(true);
@@ -82,4 +82,4 @@ export const StudentCard: React.FC<StudentCardProps> = ({
       </Card.Content>
     </Card>
   );
-};
+}

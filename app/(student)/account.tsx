@@ -1,44 +1,19 @@
+import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
-import { Text, List, Avatar, Button, Divider } from "react-native-paper";
-import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { Text, Avatar, Button } from "react-native-paper";
 import { styles } from "@/styles/account_styles";
-import { Student } from "@/types/profile";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
 import SettingsModal from "@/components/students/account/SettingsModal";
 import { SettingsType } from "@/types/modal";
+import StudentSettingsList from "../../components/students/student-account-components/StudentSettingsList";
+import useStudentAccount from "../../components/students/student-account-components/useStudentAccount";
 
 export default function AccountScreen() {
-  const [profile, setProfile] = useState<Student | null>(null);
+  const { profile, loading, handleSignOut, refreshProfile } =
+    useStudentAccount();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [activeSettingsType, setActiveSettingsType] =
     useState<SettingsType>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  const getProfile = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data } = await supabase
-        .from("students")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-
-      setProfile(data);
-    }
-  };
-
-  const handleSignOut = async () => {
-    setLoading(true);
-    await supabase.auth.signOut();
-    setLoading(false);
-  };
 
   return (
     <>
@@ -56,46 +31,12 @@ export default function AccountScreen() {
             خوێندکار
           </Text>
         </View>
-        <View style={styles.settingsContainer}>
-          <List.Section>
-            <List.Subheader>سازاندنی هەژمار</List.Subheader>
 
-            <List.Item
-              title="نوێکردنەوەی هەژمار"
-              description="زانیارییەکانت نوێبکەرەوە"
-              left={(props) => <List.Icon {...props} icon="account-edit" />}
-              right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => setIsModalVisible(true)}
-            />
-            <Divider />
-            <Divider />
-            <List.Item
-              title="پاراستنی زانیاری"
-              description="پاراستنی زانیاریی و اسایشی ئەپ"
-              left={(props) => <List.Icon {...props} icon="shield-account" />}
-              right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => setActiveSettingsType("privacy")}
-            />
-          </List.Section>
-          <List.Section>
-            <List.Subheader>یارمەتی</List.Subheader>
-            <List.Item
-              title="یارمەتی"
-              description="پشتیوانی و یارمەتی"
-              left={(props) => <List.Icon {...props} icon="help-circle" />}
-              right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => setActiveSettingsType("help")}
-            />
-            <Divider />
-            <List.Item
-              title="دەربارە"
-              description="زانیاری و ڤێرژنی ئەپ"
-              left={(props) => <List.Icon {...props} icon="information" />}
-              right={(props) => <List.Icon {...props} icon="chevron-right" />}
-              onPress={() => setActiveSettingsType("about")}
-            />
-          </List.Section>
-        </View>
+        <StudentSettingsList
+          onEditPress={() => setIsModalVisible(true)}
+          onSettingsPress={setActiveSettingsType}
+        />
+
         <View style={styles.signOutContainer}>
           <Button
             mode="outlined"
@@ -109,11 +50,12 @@ export default function AccountScreen() {
           </Button>
         </View>
       </ScrollView>
+
       <EditProfileModal
         visible={isModalVisible}
         onDismiss={() => setIsModalVisible(false)}
         profile={profile}
-        onProfileUpdate={getProfile}
+        onProfileUpdate={refreshProfile}
       />
       <SettingsModal
         type={activeSettingsType}

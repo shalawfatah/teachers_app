@@ -1,55 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import { FlatList, View, RefreshControl } from "react-native";
-import {
-  List,
-  IconButton,
-  Avatar,
-  Menu,
-  Divider,
-  ActivityIndicator,
-} from "react-native-paper";
-import { supabase } from "@/lib/supabase";
+import { ActivityIndicator } from "react-native-paper";
 import { VideosTabProps } from "@/types/videos";
 import { styles } from "@/styles/video_tab_styles";
+import { useVideos } from "./video-tab-components/useVideos";
+import VideoItem from "./video-tab-components/VideoItem";
 
 export default function VideosTab({
   onEdit,
   onDelete,
   onView,
 }: VideosTabProps) {
-  const [videos, setVideos] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [menuVisibleId, setMenuVisibleId] = useState<string | null>(null);
-
-  const fetchVideos = useCallback(async () => {
-    try {
-      const { data, error } = await supabase
-        .from("videos")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      setVideos(data || []);
-    } catch (err) {
-      console.error("Error fetching videos:", err);
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchVideos();
-  }, [fetchVideos]);
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    fetchVideos();
-  };
-
-  const openMenu = (id: string) => setMenuVisibleId(id);
-  const closeMenu = () => setMenuVisibleId(null);
+  const { videos, loading, refreshing, onRefresh } = useVideos();
 
   if (loading && !refreshing) {
     return (
@@ -68,61 +30,11 @@ export default function VideosTab({
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       renderItem={({ item }) => (
-        <List.Item
-          title={item.title}
-          description={`${item.duration || "0:00"} • ${item.views ?? 0} views`}
-          style={styles.listItem}
-          left={() => (
-            <Avatar.Image
-              size={48}
-              source={{
-                uri: item.thumbnail || "https://via.placeholder.com/150",
-              }}
-            />
-          )}
-          right={() => (
-            <View style={styles.row}>
-              <Menu
-                visible={menuVisibleId === item.id}
-                onDismiss={closeMenu}
-                anchor={
-                  <IconButton
-                    icon="dots-vertical"
-                    size={24}
-                    onPress={() => openMenu(item.id)}
-                  />
-                }
-              >
-                <Menu.Item
-                  onPress={() => {
-                    onView(item);
-                    closeMenu();
-                  }}
-                  title="Watch Video"
-                  leadingIcon="eye"
-                />
-                <Divider />
-                <Menu.Item
-                  onPress={() => {
-                    onEdit(item);
-                    closeMenu();
-                  }}
-                  title="Edit Video"
-                  leadingIcon="pencil-outline"
-                />
-                <Divider />
-                <Menu.Item
-                  onPress={() => {
-                    onDelete(item.id);
-                    closeMenu();
-                  }}
-                  title="Delete Video"
-                  leadingIcon="trash-can-outline"
-                  titleStyle={{ color: "#ff5252" }}
-                />
-              </Menu>
-            </View>
-          )}
+        <VideoItem
+          video={item}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onView={onView}
         />
       )}
     />

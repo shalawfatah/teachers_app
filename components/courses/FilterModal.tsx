@@ -1,17 +1,10 @@
+import React from "react";
 import { View, ScrollView } from "react-native";
-import {
-  Modal,
-  Portal,
-  Text,
-  Button,
-  Divider,
-  List,
-  Checkbox,
-} from "react-native-paper";
-import { useState } from "react";
-import { GRADES } from "@/utils/placeholder_grades";
+import { Modal, Portal, Text, Button, Divider } from "react-native-paper";
 import { styles } from "@/styles/filter_modal_styles";
 import { FilterModalProps } from "@/types/modal";
+import { useFilterLogic } from "./filter-modal-components/useFilterLogic";
+import GradeSelector from "./filter-modal-components/GradeSelector";
 
 export default function FilterModal({
   visible,
@@ -19,30 +12,15 @@ export default function FilterModal({
   onApply,
   currentFilters,
 }: FilterModalProps) {
-  const [selectedGrades, setSelectedGrades] = useState<string[]>(
-    currentFilters.grades,
-  );
-  const [gradeExpanded, setGradeExpanded] = useState(true);
-
-  const toggleGrade = (grade: string) => {
-    setSelectedGrades((prev) =>
-      prev.includes(grade) ? prev.filter((g) => g !== grade) : [...prev, grade],
-    );
-  };
-
-  const handleApply = () => {
-    onApply({ grades: selectedGrades });
-    onDismiss();
-  };
-
-  const handleClear = () => {
-    setSelectedGrades([]);
-  };
-
-  const handleCancel = () => {
-    setSelectedGrades(currentFilters.grades);
-    onDismiss();
-  };
+  const {
+    selectedGrades,
+    gradeExpanded,
+    setGradeExpanded,
+    toggleGrade,
+    handleApply,
+    handleClear,
+    handleCancel,
+  } = useFilterLogic(currentFilters, onApply, onDismiss);
 
   return (
     <Portal>
@@ -59,57 +37,18 @@ export default function FilterModal({
             سڕینەوە
           </Button>
         </View>
-
         <Divider />
 
         <ScrollView style={styles.content}>
-          <List.Accordion
-            title="خولەکە تایبەت بە چ پۆلێکە"
-            titleStyle={styles.accordionTitle}
+          <GradeSelector
+            selectedGrades={selectedGrades}
             expanded={gradeExpanded}
-            onPress={() => setGradeExpanded(!gradeExpanded)}
-            left={(props) => <List.Icon {...props} icon="school" />}
-            right={(props) =>
-              selectedGrades.length > 0 ? (
-                <View style={styles.accordionRight}>
-                  <Text variant="bodySmall" style={styles.selectedCount}>
-                    {selectedGrades.length} selected
-                  </Text>
-                  <List.Icon
-                    {...props}
-                    icon={gradeExpanded ? "chevron-up" : "chevron-down"}
-                  />
-                </View>
-              ) : (
-                <List.Icon
-                  {...props}
-                  icon={gradeExpanded ? "chevron-up" : "chevron-down"}
-                />
-              )
-            }
-            style={styles.accordion}
-          >
-            {GRADES.map((grade) => (
-              <List.Item
-                key={grade}
-                title={grade}
-                onPress={() => toggleGrade(grade)}
-                left={() => (
-                  <Checkbox
-                    status={
-                      selectedGrades.includes(grade) ? "checked" : "unchecked"
-                    }
-                    onPress={() => toggleGrade(grade)}
-                  />
-                )}
-                style={styles.listItem}
-              />
-            ))}
-          </List.Accordion>
+            onToggleExpand={() => setGradeExpanded(!gradeExpanded)}
+            onToggleGrade={toggleGrade}
+          />
         </ScrollView>
 
         <Divider />
-
         <View style={styles.actions}>
           <Button
             mode="outlined"

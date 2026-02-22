@@ -3,8 +3,8 @@ import { View, ScrollView } from "react-native";
 import { styles } from "@/styles/teacher_home_styles";
 import Loader from "@/components/Loader";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
-import { useTeacherProfile } from "./dashboard-components/use-teacher-profile";
-import { TeacherHero } from "./dashboard-components/teacher-hero";
+import TeacherHero from "../../components/teachers/teacher-dashboard-components/teacher-hero";
+import useTeacherProfile from "../../components/teachers/teacher-dashboard-components/use-teacher-profile";
 
 export default function TeacherDashboard() {
   const [editModalVisible, setEditModalVisible] = useState(false);

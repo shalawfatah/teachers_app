@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, ScrollView } from "react-native";
 import {
   Modal,
@@ -8,10 +8,10 @@ import {
   Button,
   SegmentedButtons,
 } from "react-native-paper";
-import { supabase } from "@/lib/supabase";
 import { EditStudentModalProps } from "@/types/modal";
 import { styles } from "@/styles/edit_profile_student_styles";
 import { edit_profile_modal_buttons } from "@/utils/edit_profile_modal_buttons";
+import { useEditProfile } from "./student-account-components/useEditProfile";
 
 export default function EditProfileModal({
   visible,
@@ -19,44 +19,13 @@ export default function EditProfileModal({
   profile,
   onProfileUpdate,
 }: EditStudentModalProps) {
-  const [name, setName] = useState("");
-  const [grade, setGrade] = useState("");
-  const [updating, setUpdating] = useState(false);
-
-  useEffect(() => {
-    if (profile) {
-      setName(profile.name || "");
-      setGrade(profile.grade?.toString() || "");
-    }
-  }, [profile, visible]);
-
-  const handleUpdate = async () => {
-    try {
-      setUpdating(true);
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) return;
-
-      const { error } = await supabase
-        .from("students")
-        .update({
-          name: name,
-          grade: parseInt(grade),
-        })
-        .eq("id", user.id);
-
-      if (error) throw error;
-
-      onProfileUpdate(); // Refresh the account screen
-      onDismiss(); // Close modal
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    } finally {
-      setUpdating(false);
-    }
-  };
+  const { name, setName, grade, setGrade, updating, handleUpdate } =
+    useEditProfile({
+      profile,
+      visible,
+      onSuccess: onProfileUpdate,
+      onClose: onDismiss,
+    });
 
   return (
     <Portal>
@@ -80,18 +49,21 @@ export default function EditProfileModal({
         <Text variant="bodyMedium" style={styles.label}>
           پۆل
         </Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.gradeScroll}
-        >
-          <SegmentedButtons
-            value={grade}
-            onValueChange={setGrade}
-            buttons={edit_profile_modal_buttons}
-            style={styles.segment}
-          />
-        </ScrollView>
+
+        <View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.gradeScroll}
+          >
+            <SegmentedButtons
+              value={grade}
+              onValueChange={setGrade}
+              buttons={edit_profile_modal_buttons}
+              style={styles.segment}
+            />
+          </ScrollView>
+        </View>
 
         <View style={styles.buttonRow}>
           <Button mode="text" onPress={onDismiss} style={styles.button}>

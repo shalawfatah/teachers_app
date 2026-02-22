@@ -5,9 +5,9 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { ExtendedCourse } from "@/types/courses";
 import { styles } from "@/styles/content_single_styles";
-import { LessonList } from "./course-view-components/course-list";
-import { CourseDetails } from "./course-view-components/course-details";
-import { CourseHeader } from "./course-view-components/course-header";
+import LessonList from "./course-view-components/course-list";
+import CourseHeader from "./course-view-components/course-header";
+import CourseDetails from "./course-view-components/course-details";
 
 export default function ViewCourse() {
   const { id } = useLocalSearchParams();

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { CourseFormData } from "@/types/courses";
 
-export function useCourseEdit(courseId: string) {
+export default function useCourseEdit(courseId: string) {
   const [formData, setFormData] = useState<CourseFormData>({
     title: "",
     description: "",

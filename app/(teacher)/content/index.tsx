@@ -5,8 +5,8 @@ import { useRouter } from "expo-router";
 import CoursesTab from "@/components/content/CourseTab";
 import VideosTab from "@/components/content/VideoTab";
 import { styles } from "@/styles/teacher_content_styles";
-import { useContentManagement } from "./edit-course-components/useContentManagement";
-import { ManagementModals } from "./edit-course-components/ManagementModals";
+import useContentManagement from "@/components/content/edit-course-components/useContentManagement";
+import ManagementModals from "@/components/content/edit-course-components/ManagementModals";
 
 export default function ContentManagementScreen() {
   const router = useRouter();

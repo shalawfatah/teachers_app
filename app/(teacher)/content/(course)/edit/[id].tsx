@@ -1,11 +1,11 @@
 import { View } from "react-native";
 import { TextInput, Text, HelperText } from "react-native-paper";
 import { styles } from "@/styles/edit_course_content_styles";
-import { SubjectDropdown } from "./subject-dropdown";
-import { GradeSelector } from "./grade-selector";
 import { EditCourseFormProps } from "@/types/courses";
+import SubjectDropdown from "./subject-dropdown";
+import GradeSelector from "./grade-selector";
 
-export function EditCourseForm({
+export default function EditCourseForm({
   formData,
   onFieldChange,
   error,

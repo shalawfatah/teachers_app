@@ -5,7 +5,7 @@ import { styles } from "@/styles/edit_course_content_styles";
 import { SubjectDropdownProps } from "@/types/courses";
 import { SUBJECTS } from "@/utils/placeholder_subjects";
 
-export function SubjectDropdown({
+export default function SubjectDropdown({
   value,
   onSelect,
   disabled = false,

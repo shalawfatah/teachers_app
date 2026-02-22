@@ -11,23 +11,25 @@ interface Props {
   };
 }
 
-export const StudentInfo = ({ student }: Props) => (
-  <View>
-    <Text variant="titleMedium" style={styles.sectionTitle}>
-      Student Information
-    </Text>
+export default function StudentInfo({ student }: Props) {
+  return (
+    <View>
+      <Text variant="titleMedium" style={styles.sectionTitle}>
+        Student Information
+      </Text>
 
-    {[
-      { label: "Full Name", value: student.name },
-      { label: "Email Address", value: student.email },
-      { label: "Grade", value: student.grade || "N/A" },
-    ].map((item, index) => (
-      <View key={index} style={{ marginBottom: 16 }}>
-        <Text variant="labelLarge" style={{ marginBottom: 4 }}>
-          {item.label}
-        </Text>
-        <Text variant="bodyLarge">{item.value}</Text>
-      </View>
-    ))}
-  </View>
-);
+      {[
+        { label: "Full Name", value: student.name },
+        { label: "Email Address", value: student.email },
+        { label: "Grade", value: student.grade || "N/A" },
+      ].map((item, index) => (
+        <View key={index} style={{ marginBottom: 16 }}>
+          <Text variant="labelLarge" style={{ marginBottom: 4 }}>
+            {item.label}
+          </Text>
+          <Text variant="bodyLarge">{item.value}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}

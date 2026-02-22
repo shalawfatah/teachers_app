@@ -8,7 +8,7 @@ interface Props {
   thumbnail?: string | null;
 }
 
-export const CourseHeader = ({ title, thumbnail }: Props) => {
+export default function CourseHeader({ title, thumbnail }: Props) {
   const hasThumbnail = thumbnail && thumbnail.trim().length > 0;
 
   return (

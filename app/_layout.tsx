@@ -1,14 +1,9 @@
-import { Stack, useRouter, useSegments, SplashScreen } from "expo-router";
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
-import { Session } from "@supabase/supabase-js";
-import {
-  PaperProvider,
-  MD3LightTheme,
-  configureFonts,
-} from "react-native-paper";
+import { Stack, SplashScreen } from "expo-router";
+import { useEffect } from "react";
+import { PaperProvider } from "react-native-paper";
 import { useFonts } from "expo-font";
-import "react-native-reanimated";
+import { theme } from "@/constants/theme";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,99 +13,22 @@ export default function RootLayout() {
     "NRT-Bold": require("@/assets/fonts/nrt-bd.ttf"),
   });
 
-  const [session, setSession] = useState<Session | null>(null);
-  const [isTeacher, setIsTeacher] = useState<boolean>(false);
-  const [isStudent, setIsStudent] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
-  const segments = useSegments();
-  const router = useRouter();
-
-  const fontConfig = {
-    fontFamily: "Goran",
-  };
-
-  const theme = {
-    ...MD3LightTheme,
-    fonts: configureFonts({ config: fontConfig }),
-  };
-
-  const checkUserTables = async (userId: string) => {
-    const [teacherResult, studentResult] = await Promise.all([
-      supabase.from("teachers").select("id").eq("id", userId).single(),
-      supabase.from("students").select("id").eq("id", userId).single(),
-    ]);
-    return { isTeacher: !!teacherResult.data, isStudent: !!studentResult.data };
-  };
+  const { loading } = useAuthGuard(fontsLoaded);
 
   useEffect(() => {
-    const initAuth = async () => {
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        setSession(session);
-        if (session) {
-          const { isTeacher, isStudent } = await checkUserTables(
-            session.user.id,
-          );
-          setIsTeacher(isTeacher);
-          setIsStudent(isStudent);
-        }
-      } catch (error) {
-        console.error("Error loading session:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    initAuth();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
-      if (session) {
-        const { isTeacher, isStudent } = await checkUserTables(session.user.id);
-        setIsTeacher(isTeacher);
-        setIsStudent(isStudent);
-      } else {
-        setIsTeacher(false);
-        setIsStudent(false);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    if (loading || !fontsLoaded) return;
-
-    const inAuthGroup = segments[0] === "(auth)";
-    const inTeacherGroup = segments[0] === "(teacher)";
-    const inStudentGroup = segments[0] === "(student)";
-
-    if (!session && !inAuthGroup) {
-      router.replace("/(auth)/login");
-    } else if (session && (isTeacher || isStudent) && inAuthGroup) {
-      if (isTeacher) router.replace("/(teacher)");
-      else if (isStudent) router.replace("/(student)");
-    } else if (session && (isTeacher || isStudent)) {
-      if (isTeacher && !inTeacherGroup) router.replace("/(teacher)");
-      else if (!isTeacher && isStudent && !inStudentGroup)
-        router.replace("/(student)");
+    if (fontsLoaded && !loading) {
+      SplashScreen.hideAsync();
     }
+  }, [fontsLoaded, loading]);
 
-    SplashScreen.hideAsync();
-  }, [session, isTeacher, isStudent, loading, fontsLoaded]); // Add fontsLoaded here
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
+  if (!fontsLoaded && !fontError) return null;
 
   return (
     <PaperProvider theme={theme}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(teacher)" options={{ headerShown: false }} />
-        <Stack.Screen name="(student)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(teacher)" />
+        <Stack.Screen name="(student)" />
         <Stack.Screen name="+not-found" />
       </Stack>
     </PaperProvider>

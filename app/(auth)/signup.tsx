@@ -3,9 +3,9 @@ import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { Card, Text, Dialog, Portal, Button } from "react-native-paper";
 import { router } from "expo-router";
 import { styles } from "@/styles/signup_styles";
-import { SignupForm } from "./signup/signup-form";
-import { useSignup } from "./signup/use-signup";
-import { useTeachers } from "./signup/use-teachers";
+import useTeachers from "@/components/account/signup-components/use-teachers";
+import useSignup from "@/components/account/signup-components/use-signup";
+import SignupForm from "@/components/account/signup-components/signup-form";
 
 export default function SignupScreen() {
   const [email, setEmail] = useState("");

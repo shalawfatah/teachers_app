@@ -5,9 +5,9 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { styles } from "@/styles/single_course_styles";
 import NoCourse from "@/components/courses/NoCourse";
 import Loader from "@/components/Loader";
-import { useCourseData } from "./single-course-components/use-course-data";
-import { CourseHero } from "./single-course-components/course-hero";
-import { CourseContent } from "./single-course-components/course-content";
+import CourseContent from "../../../components/courses/single-course-components/course-content";
+import CourseHero from "../../../components/courses/single-course-components/course-hero";
+import useCourseData from "../../../components/courses/single-course-components/use-course-data";
 
 export default function SingleCourse() {
   const { id } = useLocalSearchParams();

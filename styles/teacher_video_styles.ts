@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { videoCardStyles } from "./video_card_styles";
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,6 +11,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  // Header section
   header: {
     backgroundColor: "#fff",
     padding: 20,
@@ -23,6 +25,7 @@ export const styles = StyleSheet.create({
   headerSubtitle: {
     color: "#666",
   },
+  // Horizontal Stats section
   statsScroll: {
     backgroundColor: "#fff",
     paddingBottom: 16,
@@ -42,6 +45,7 @@ export const styles = StyleSheet.create({
     color: "#666",
     marginTop: 4,
   },
+  // Search and List Layout
   searchContainer: {
     backgroundColor: "#fff",
     paddingHorizontal: 20,
@@ -54,57 +58,7 @@ export const styles = StyleSheet.create({
   listContent: {
     padding: 16,
   },
-  videoCard: {
-    marginBottom: 16,
-    elevation: 2,
-  },
-  cardHeader: {
-    position: "relative",
-  },
-  thumbnail: {
-    height: 180,
-  },
-  durationBadge: {
-    position: "absolute",
-    bottom: 8,
-    right: 8,
-    backgroundColor: "rgba(0,0,0,0.8)",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-  },
-  durationText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  cardContent: {
-    paddingTop: 12,
-  },
-  titleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  videoTitle: {
-    fontWeight: "bold",
-    flex: 1,
-    marginBottom: 4,
-  },
-  videoDescription: {
-    color: "#666",
-    marginBottom: 12,
-  },
-  videoFooter: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  chip: {
-    alignSelf: "flex-start",
-  },
-  uploadDate: {
-    color: "#999",
-  },
+  // Floating Action Buttons
   fab: {
     position: "absolute",
     margin: 16,
@@ -117,4 +71,7 @@ export const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
   },
+
+  // Spread imported video card styles
+  ...videoCardStyles,
 });

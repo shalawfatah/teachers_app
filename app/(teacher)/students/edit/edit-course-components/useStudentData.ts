@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 
-export const useStudentData = (studentId: string) => {
+export default function useStudentData(studentId: string) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
