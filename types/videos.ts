@@ -21,3 +21,15 @@ export type VideoSingle = {
   free: boolean;
   thumbnail: string;
 };
+
+export interface VideoFormData {
+  title: string;
+  link: string;
+  courseId: string;
+  courseName: string;
+}
+
+export interface Course {
+  id: string;
+  title: string;
+}
