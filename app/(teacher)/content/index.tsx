@@ -1,60 +1,22 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { Text, FAB, Searchbar, SegmentedButtons } from "react-native-paper";
+import { useRouter } from "expo-router";
 import CoursesTab from "@/components/content/CourseTab";
 import VideosTab from "@/components/content/VideoTab";
-import CreateCourseModal from "@/components/courses/CreateCourseModal";
-import { useRouter } from "expo-router";
-import { supabase } from "@/lib/supabase";
-import { deleteVideo } from "@/lib/videoService";
-import VideoPlayerModal from "@/components/content/VideoPlayerModal";
-import VideoFormModal from "@/components/content/VideoFormaModal";
+import { styles } from "@/styles/teacher_content_styles";
+import { useContentManagement } from "./edit-course-components/useContentManagement";
+import { ManagementModals } from "./edit-course-components/ManagementModals";
 
 export default function ContentManagementScreen() {
-  const [tab, setTab] = useState("courses");
-  const [courseModalVisible, setCourseModalVisible] = useState(false);
-  const [videoModalVisible, setVideoModalVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
-
-  const handleEditPress = (video: any) => {
-    setSelectedVideo(video); // Pass the existing data
-    setVideoModalVisible(true);
-  };
-
-  const [, setVideoRefreshKey] = useState(0);
-  const [playerVisible, setPlayerVisible] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState<any>(null);
-
-  const handleDeleteVideo = (id: string) => {
-    Alert.alert(
-      "Delete Video",
-      "Are you sure you want to permanently delete this video?",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await deleteVideo(id);
-              // Trigger the refresh key we discussed earlier
-              setVideoRefreshKey((prev) => prev + 1);
-            } catch (error: any) {
-              Alert.alert("Error", error.message);
-            }
-          },
-        },
-      ],
-    );
-  };
+  const m = useContentManagement();
 
   const onFabPress = () => {
-    if (tab === "courses") {
-      setCourseModalVisible(true);
-    } else {
-      setSelectedVideo(null); // CRITICAL: Reset for a clean "Upload" form
-      setVideoModalVisible(true);
+    if (m.tab === "courses") m.setCourseModalVisible(true);
+    else {
+      m.setSelectedVideo(null);
+      m.setVideoModalVisible(true);
     }
   };
 
@@ -65,8 +27,8 @@ export default function ContentManagementScreen() {
           Manager
         </Text>
         <SegmentedButtons
-          value={tab}
-          onValueChange={setTab}
+          value={m.tab}
+          onValueChange={m.setTab}
           buttons={[
             { value: "courses", label: "Courses", icon: "book" },
             { value: "videos", label: "Videos", icon: "play-circle" },
@@ -74,86 +36,44 @@ export default function ContentManagementScreen() {
         />
       </View>
 
-      <View style={styles.searchBox}>
-        <Searchbar
-          placeholder={`Search ${tab}...`}
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-          style={styles.searchbar}
-        />
-      </View>
+      <Searchbar
+        placeholder={`Search ${m.tab}...`}
+        onChangeText={m.setSearchQuery}
+        value={m.searchQuery}
+        style={styles.searchbar}
+      />
 
-      {tab === "courses" ? (
+      {m.tab === "courses" ? (
         <CoursesTab
+          key={`courses-${m.refreshKey}`}
           onView={(id) => router.push(`/content/view/${id}`)}
           onEdit={(id) => router.push(`/content/edit/${id}`)}
-          onDelete={async (id) => {
-            const { error } = await supabase
-              .from("courses")
-              .delete()
-              .eq("id", id);
-            if (!error) {
-              // You might want to trigger a refresh here via a state update
-              // or by passing a ref to CoursesTab
-            }
-          }}
+          onDelete={m.handleDeleteCourse}
         />
       ) : (
         <VideosTab
-          onEdit={handleEditPress}
-          onView={(video) => {
-            setSelectedVideo(video);
-            setPlayerVisible(true);
+          key={`videos-${m.refreshKey}`}
+          onEdit={(v) => {
+            m.setSelectedVideo(v);
+            m.setVideoModalVisible(true);
           }}
-          onDelete={(id) => handleDeleteVideo(id)}
+          onView={(v) => {
+            m.setSelectedVideo(v);
+            m.setPlayerVisible(true);
+          }}
+          onDelete={m.handleDeleteVideo}
         />
       )}
-      <VideoFormModal
-        visible={videoModalVisible}
-        video={selectedVideo}
-        onDismiss={() => setVideoModalVisible(false)}
-        onSuccess={() => {
-          setVideoRefreshKey((k) => k + 1); // Refresh the list
-        }}
-      />
+
+      <ManagementModals state={m} onRefresh={m.triggerRefresh} />
+
       <FAB
-        icon={tab === "courses" ? "plus" : "video-plus"}
-        label={tab === "courses" ? "New Course" : "Upload"}
+        icon={m.tab === "courses" ? "plus" : "video-plus"}
+        label={m.tab === "courses" ? "New Course" : "Upload"}
         style={styles.fab}
-        onPress={onFabPress} // Uses the helper function above
+        onPress={onFabPress}
         color="#FFF"
-      />
-      <CreateCourseModal
-        visible={courseModalVisible}
-        onDismiss={() => setCourseModalVisible(false)}
-        onSuccess={() => {
-          setCourseModalVisible(false);
-          console.log("Course added successfully!");
-        }}
-      />
-      <VideoPlayerModal
-        visible={playerVisible}
-        video={selectedVideo}
-        onDismiss={() => {
-          setPlayerVisible(false);
-          setSelectedVideo(null);
-        }}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f8f9fa" },
-  header: { padding: 20, backgroundColor: "white", gap: 10 },
-  title: { fontWeight: "bold", color: "#1a1a1a" },
-  searchBox: { padding: 16, paddingBottom: 8 },
-  searchbar: { backgroundColor: "#fff", elevation: 2, borderRadius: 10 },
-  fab: {
-    position: "absolute",
-    margin: 16,
-    right: 0,
-    bottom: 20,
-    backgroundColor: "#6200ee",
-  },
-});
