@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-
-interface CourseFormData {
-  title: string;
-  description: string;
-  grade: string;
-  subject: string;
-  thumbnail: string;
-}
+import { CourseFormData } from "@/types/courses";
 
 export function useCourseEdit(courseId: string) {
   const [formData, setFormData] = useState<CourseFormData>({
@@ -25,7 +18,6 @@ export function useCourseEdit(courseId: string) {
     if (courseId) {
       fetchCourseData();
     }
-
   }, [courseId]);
 
   const fetchCourseData = async () => {

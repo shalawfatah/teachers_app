@@ -62,4 +62,26 @@ export interface EditCourseFormProps {
   disabled: boolean;
 }
 
+export interface EditCourseFormChangeProps {
+  formData: {
+    title: string;
+    description: string;
+    grade: string;
+    subject: string;
+    thumbnail: string;
+  };
+  onFieldChange: (field: string, value: string) => void;
+  error: string;
+  disabled: boolean;
+}
 
+export interface GradeSelectorProps {
+  value: string;
+  onValueChange: (grade: string) => void;
+}
+
+export interface SubjectDropdownProps {
+  value: string;
+  onSelect: (subject: string) => void;
+  disabled?: boolean;
+}

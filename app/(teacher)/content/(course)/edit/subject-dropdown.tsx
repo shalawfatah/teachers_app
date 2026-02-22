@@ -2,14 +2,8 @@ import { useState } from "react";
 import { View } from "react-native";
 import { Button, Menu } from "react-native-paper";
 import { styles } from "@/styles/edit_course_content_styles";
-
-const SUBJECTS = ["math", "science", "art", "english", "history", "other"];
-
-interface SubjectDropdownProps {
-  value: string;
-  onSelect: (subject: string) => void;
-  disabled?: boolean;
-}
+import { SubjectDropdownProps } from "@/types/courses";
+import { SUBJECTS } from "@/utils/placeholder_subjects";
 
 export function SubjectDropdown({
   value,

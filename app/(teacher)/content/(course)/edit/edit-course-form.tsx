@@ -3,26 +3,14 @@ import { TextInput, Text, HelperText } from "react-native-paper";
 import { styles } from "@/styles/edit_course_content_styles";
 import { SubjectDropdown } from "./subject-dropdown";
 import { GradeSelector } from "./grade-selector";
-
-interface EditCourseFormProps {
-  formData: {
-    title: string;
-    description: string;
-    grade: string;
-    subject: string;
-    thumbnail: string;
-  };
-  onFieldChange: (field: string, value: string) => void;
-  error: string;
-  disabled: boolean;
-}
+import { EditCourseFormChangeProps } from "@/types/courses";
 
 export function EditCourseForm({
   formData,
   onFieldChange,
   error,
   disabled,
-}: EditCourseFormProps) {
+}: EditCourseFormChangeProps) {
   return (
     <View>
       <TextInput

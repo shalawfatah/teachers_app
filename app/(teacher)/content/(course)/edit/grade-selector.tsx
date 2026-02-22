@@ -2,11 +2,7 @@ import { SegmentedButtons } from "react-native-paper";
 import { styles } from "@/styles/edit_course_content_styles";
 import { edit_course_content_buttons } from "@/utils/edit_course_content_buttons";
 import { edit_course_content_grades } from "@/utils/edit_course_content_grades";
-
-interface GradeSelectorProps {
-  value: string;
-  onValueChange: (grade: string) => void;
-}
+import { GradeSelectorProps } from "@/types/courses";
 
 export function GradeSelector({ value, onValueChange }: GradeSelectorProps) {
   return (
