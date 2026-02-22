@@ -46,3 +46,20 @@ export interface CoursesTabProps {
   onView?: (id: string) => void;
   onDelete?: (id: string) => void;
 }
+
+export interface CourseFormData {
+  title: string;
+  description: string;
+  grade: string;
+  subject: string;
+  thumbnail: string;
+}
+
+export interface EditCourseFormProps {
+  formData: CourseFormData;
+  onFieldChange: (field: keyof CourseFormData, value: string) => void;
+  error: string;
+  disabled: boolean;
+}
+
+

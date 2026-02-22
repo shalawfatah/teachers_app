@@ -11,6 +11,7 @@ import {
 import { supabase } from "@/lib/supabase";
 import { EditStudentModalProps } from "@/types/modal";
 import { styles } from "@/styles/edit_profile_student_styles";
+import { edit_profile_modal_buttons } from "@/utils/edit_profile_modal_buttons";
 
 export default function EditProfileModal({
   visible,
@@ -87,14 +88,7 @@ export default function EditProfileModal({
           <SegmentedButtons
             value={grade}
             onValueChange={setGrade}
-            buttons={[
-              { value: "7", label: "7" },
-              { value: "8", label: "8" },
-              { value: "9", label: "9" },
-              { value: "10", label: "10" },
-              { value: "11", label: "11" },
-              { value: "12", label: "12" },
-            ]}
+            buttons={edit_profile_modal_buttons}
             style={styles.segment}
           />
         </ScrollView>
