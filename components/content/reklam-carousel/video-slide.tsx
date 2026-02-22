@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { styles } from "@/styles/reklam_carousel";
 import { Reklam } from "@/types/reklam";
@@ -19,34 +19,39 @@ export function VideoSlide({
   onPress,
   onEnd,
 }: VideoSlideProps) {
-  // 1. UPDATED: Initialize the player with an object source to include headers
-  const player = useVideoPlayer(
-    {
+  // 1. Memoize the source so the player doesn't reset on every render
+  const source = useMemo(() => {
+    if (!reklam.video_hls_url) return null;
+    return {
       uri: reklam.video_hls_url,
       headers: {
         Referer: "https://teachers-dash.netlify.app",
       },
-    },
-    (player) => {
-      player.loop = false;
-    },
-  );
+    };
+  }, [reklam.video_hls_url]);
 
+  // 2. Initialize the player
+  const player = useVideoPlayer(source, (p) => {
+    p.loop = false;
+    // Muting by default often helps auto-play stability in simulators
+    p.muted = false;
+  });
+
+  // 3. Handle Play/Pause logic based on carousel focus
   useEffect(() => {
     if (isActive) {
       player.play();
     } else {
       player.pause();
-      player.currentTime = 0;
+      // Only seek to 0 if the video has loaded enough to have a duration
+      // This prevents the 'pointer authentication' crash on track metadata
+      if (player.status === "readyToPlay") {
+        player.currentTime = 0;
+      }
     }
   }, [isActive, player]);
 
-  useEffect(() => {
-    return () => {
-      player.release();
-    };
-  }, []);
-
+  // 4. Handle the "Video Ended" event
   useEffect(() => {
     const subscription = player.addListener("playToEnd", () => {
       onEnd();
@@ -63,9 +68,10 @@ export function VideoSlide({
         player={player}
         allowsPictureInPicture={false}
         contentFit="cover"
-        nativeControls={false}
+        nativeControls={false} // Keeps it clean for a carousel
       />
 
+      {/* Transparent overlay for the link click */}
       <Pressable
         style={StyleSheet.absoluteFill}
         onPress={onPress}
@@ -83,3 +89,5 @@ export function VideoSlide({
     </View>
   );
 }
+
+export default VideoSlide;

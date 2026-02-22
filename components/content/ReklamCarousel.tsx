@@ -4,9 +4,9 @@ import { ActivityIndicator } from "react-native-paper";
 import PagerView from "react-native-pager-view";
 import { Reklam, ReklamCarouselProps } from "@/types/reklam";
 import { styles } from "@/styles/reklam_carousel";
-import { VideoSlide } from "./reklam-carousel/video-slide";
 import ImageSlide from "./reklam-carousel/image-slide";
 import { supabase } from "@/lib/supabase";
+import VideoSlide from "./reklam-carousel/video-slide";
 
 export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   const [reklams, setReklams] = useState<Reklam[]>([]);
@@ -76,7 +76,7 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
         style={styles.pager}
         initialPage={0}
         onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
-        offscreenPageLimit={1} 
+        offscreenPageLimit={1}
       >
         {reklams.map((reklam, index) => (
           <View key={reklam.id} style={styles.page}>
@@ -84,11 +84,18 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
               <VideoSlide
                 reklam={reklam}
                 isActive={currentPage === index}
-                onPress={() => {/* keep your handlePress logic here */}}
+                onPress={() => {
+                  /* keep your handlePress logic here */
+                }}
                 onEnd={handleVideoEnd}
               />
             ) : (
-              <ImageSlide reklam={reklam} onPress={() => {/* keep your handlePress logic here */}} />
+              <ImageSlide
+                reklam={reklam}
+                onPress={() => {
+                  /* keep your handlePress logic here */
+                }}
+              />
             )}
           </View>
         ))}
