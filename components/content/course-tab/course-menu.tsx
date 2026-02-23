@@ -26,13 +26,13 @@ export function CourseMenu({
         <IconButton {...iconProps} icon="dots-vertical" onPress={onOpen} />
       }
     >
-      <Menu.Item onPress={onView} title="View" leadingIcon="eye" />
+      <Menu.Item onPress={onView} title="بینین" leadingIcon="eye" />
       <Divider />
-      <Menu.Item onPress={onEdit} title="Edit" leadingIcon="pencil" />
+      <Menu.Item onPress={onEdit} title="نوێکردنەوە" leadingIcon="pencil" />
       <Divider />
       <Menu.Item
         onPress={onDelete}
-        title="Delete"
+        title="سڕینەوە"
         leadingIcon="delete"
         titleStyle={{ color: "red" }}
       />

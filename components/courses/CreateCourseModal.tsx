@@ -23,7 +23,7 @@ export default function CreateCourseModal({
       >
         <ScrollView>
           <Text variant="headlineSmall" style={styles.modalTitle}>
-            Create New Course
+            تۆمارکردنی خولی نوێ
           </Text>
 
           <CourseFormInputs formData={formData} onFieldChange={updateField} />

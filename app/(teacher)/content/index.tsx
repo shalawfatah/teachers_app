@@ -67,7 +67,7 @@ export default function ContentManagementScreen() {
 
       <FAB
         icon={m.tab === "courses" ? "plus" : "video-plus"}
-        label={m.tab === "courses" ? "New Course" : "Upload"}
+        label={m.tab === "courses" ? "خولی نوێ" : "ئەپلۆدکردن"}
         style={styles.fab}
         onPress={onFabPress}
         color="#FFF"
