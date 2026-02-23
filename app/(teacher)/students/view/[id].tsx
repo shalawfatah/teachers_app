@@ -47,13 +47,13 @@ export default function ViewStudent() {
         <Card.Content>
           <DetailItem
             icon="email-outline"
-            label="Email Address"
+            label="ئیمەیل"
             value={student.email}
           />
           <Divider style={styles.divider} />
           <DetailItem
             icon="school-outline"
-            label="Grade Level"
+            label="پۆل"
             value={`Grade ${student.grade}`}
           />
           <Divider style={styles.divider} />

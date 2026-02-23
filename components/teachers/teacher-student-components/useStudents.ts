@@ -46,10 +46,10 @@ export default function useStudents() {
   }, [students, searchQuery]);
 
   const handleDelete = (studentId: string) => {
-    Alert.alert("Delete", "Are you sure?", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("سڕینەوە", "دڵنیای دەتەوێت ئەم خوێندکارە بسڕیتەوە؟", [
+      { text: "رەتکردەوە", style: "cancel" },
       {
-        text: "Delete",
+        text: "سڕینەوە",
         style: "destructive",
         onPress: async () => {
           const { error } = await supabase

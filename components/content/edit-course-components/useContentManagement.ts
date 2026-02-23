@@ -15,10 +15,10 @@ export default function useContentManagement() {
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
   const handleDeleteVideo = (id: string) => {
-    Alert.alert("Delete Video", "Are you sure you want to delete this video?", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("سڕینەوەی ڤیدیۆ", "دڵنیای دەتەوێ ئەم ڤیدیۆیە بسڕیتەوە؟", [
+      { text: "پاشگەزبوونەوە", style: "cancel" },
       {
-        text: "Delete",
+        text: "سڕینەوە",
         style: "destructive",
         onPress: async () => {
           try {

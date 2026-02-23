@@ -28,7 +28,7 @@ export default function VideoFormModal({
         contentContainerStyle={styles.modal}
       >
         <Text variant="headlineSmall" style={styles.header}>
-          {video ? "Edit Video" : "Upload Video"}
+          {video ? "نوێکردنەوی ڤیدیۆ" : "ئەپۆلدکردنی ڤیدیۆ"}
         </Text>
 
         <VideoFormFields
@@ -46,9 +46,9 @@ export default function VideoFormModal({
         />
 
         <View style={styles.actions}>
-          <Button onPress={onDismiss}>Cancel</Button>
+          <Button onPress={onDismiss}>رەتکردنەوە</Button>
           <Button mode="contained" onPress={handleSave} loading={loading}>
-            {video ? "Update" : "Upload"}
+            {video ? "نوێکردنەوە" : "ئەپلۆد"}
           </Button>
         </View>
       </Modal>

@@ -15,13 +15,13 @@ export default function StudentInfo({ student }: Props) {
   return (
     <View>
       <Text variant="titleMedium" style={styles.sectionTitle}>
-        Student Information
+        زانیاری خوێندکار
       </Text>
 
       {[
-        { label: "Full Name", value: student.name },
-        { label: "Email Address", value: student.email },
-        { label: "Grade", value: student.grade || "N/A" },
+        { label: "ناو", value: student.name },
+        { label: "ئیمەیل", value: student.email },
+        { label: "پۆل", value: student.grade || "N/A" },
       ].map((item, index) => (
         <View key={index} style={{ marginBottom: 16 }}>
           <Text variant="labelLarge" style={{ marginBottom: 4 }}>
