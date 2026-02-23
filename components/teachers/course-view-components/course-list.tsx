@@ -1,13 +1,15 @@
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { List, Text, Card, IconButton } from "react-native-paper";
 import { styles } from "@/styles/content_single_styles";
+import { useRouter } from "expo-router";
 
 interface Props {
   videos: any[];
 }
 
 export default function LessonList({ videos }: Props) {
+  const router = useRouter();
   if (videos.length === 0) {
     return (
       <Card style={styles.emptyLessons}>
@@ -24,22 +26,24 @@ export default function LessonList({ videos }: Props) {
   }
 
   return (
-    <View>
+    <View style={{ direction: "rtl" }}>
       <View style={styles.lessonsHeader}>
-        <Text variant="titleLarge">Course Content</Text>
+        <Text variant="titleLarge">ناوەرۆکی خول</Text>
       </View>
       {videos.map((item, index) => (
-        <List.Item
+        <Pressable
           key={item.id}
-          title={`${index + 1}. ${item.title}`}
-          description={item.duration || "Duration unknown"}
-          left={(p) => <List.Icon {...p} icon="play-circle-outline" />}
-          right={(p) => (
-            <IconButton {...p} icon="chevron-right" onPress={() => { }} />
-          )}
-          style={styles.videoItem}
-        />
+          onPress={() => {
+            router.push(`/video/${item.id}`);
+          }}
+        >
+          <List.Item
+            title={`${index + 1}. ${item.title}`}
+            left={(p) => <List.Icon {...p} icon="play-circle-outline" />}
+            style={styles.videoItem}
+          />
+        </Pressable>
       ))}
     </View>
   );
-};
+}

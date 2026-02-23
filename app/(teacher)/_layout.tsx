@@ -1,3 +1,4 @@
+import React from "react";
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -9,6 +10,7 @@ export default function TeacherLayout() {
         tabBarActiveTintColor: "#6200ee",
       }}
     >
+      {/* Primary Tab Navigation */}
       <Tabs.Screen
         name="index"
         options={{
@@ -57,42 +59,23 @@ export default function TeacherLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="students/view/[id]"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="students/edit/[id]"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="content/(course)/view/[id]"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="content/(course)/edit/[id]"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="content/(video)/edit/[id]"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="content/(video)/view/[id]"
-        options={{
-          href: null,
-        }}
-      />
+
+      {/* Secondary / Detail Screens 
+          'href: null' hides them from the bottom bar while allowing navigation.
+      */}
+
+      {/* Student Detail Routes */}
+      <Tabs.Screen name="students/view/[id]" options={{ href: null }} />
+      <Tabs.Screen name="students/edit/[id]" options={{ href: null }} />
+      <Tabs.Screen name="video/[id]" options={{ href: null }} />
+
+      {/* Course Detail Routes (Matches (course) folder in your tree) */}
+      <Tabs.Screen name="content/(course)/view/[id]" options={{ href: null }} />
+      <Tabs.Screen name="content/(course)/edit/[id]" options={{ href: null }} />
+
+      {/* NOTE: Removed content/(video) entries because that folder 
+          does not exist in your file system according to your tree. 
+      */}
     </Tabs>
   );
 }

@@ -17,10 +17,10 @@ export default function CourseDetails({
   description,
 }: Props) {
   return (
-    <View>
+    <View style={{ direction: "rtl" }}>
       <View style={styles.metaRow}>
         <Chip icon="school" style={styles.chip}>
-          Grade {grade}
+          پۆل {grade}
         </Chip>
         <Chip icon="book" style={styles.chip}>
           {subject}
@@ -28,7 +28,7 @@ export default function CourseDetails({
       </View>
 
       <Text variant="titleMedium" style={styles.sectionLabel}>
-        Instructor
+        مامۆستا
       </Text>
       <Text variant="bodyLarge" style={styles.teacherName}>
         {instructor}

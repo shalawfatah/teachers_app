@@ -1,12 +1,13 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, FAB, Searchbar, SegmentedButtons } from "react-native-paper";
+import { FAB, Searchbar, SegmentedButtons } from "react-native-paper";
 import { useRouter } from "expo-router";
 import CoursesTab from "@/components/content/CourseTab";
 import VideosTab from "@/components/content/VideoTab";
 import { styles } from "@/styles/teacher_content_styles";
 import useContentManagement from "@/components/content/edit-course-components/useContentManagement";
 import ManagementModals from "@/components/content/edit-course-components/ManagementModals";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ContentManagementScreen() {
   const router = useRouter();
@@ -21,23 +22,20 @@ export default function ContentManagementScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text variant="headlineMedium" style={styles.title}>
-          Manager
-        </Text>
         <SegmentedButtons
           value={m.tab}
           onValueChange={m.setTab}
           buttons={[
-            { value: "courses", label: "Courses", icon: "book" },
-            { value: "videos", label: "Videos", icon: "play-circle" },
+            { value: "courses", label: "خول", icon: "book" },
+            { value: "videos", label: "ڤیدیۆ", icon: "play-circle" },
           ]}
         />
       </View>
 
       <Searchbar
-        placeholder={`Search ${m.tab}...`}
+        placeholder={`گەڕان`}
         onChangeText={m.setSearchQuery}
         value={m.searchQuery}
         style={styles.searchbar}
@@ -74,6 +72,6 @@ export default function ContentManagementScreen() {
         onPress={onFabPress}
         color="#FFF"
       />
-    </View>
+    </SafeAreaView>
   );
 }

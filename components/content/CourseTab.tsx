@@ -37,6 +37,7 @@ export default function CoursesTab({
   return (
     <FlatList
       data={courses}
+      style={{ direction: "rtl" }}
       renderItem={({ item }) => (
         <CourseCard
           course={item}

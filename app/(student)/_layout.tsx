@@ -42,6 +42,7 @@ export default function StudentLayout() {
         }}
       />
 
+      <Tabs.Screen name="video/[id]" options={{ href: null }} />
       <Tabs.Screen
         name="account"
         options={{
