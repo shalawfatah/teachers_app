@@ -17,7 +17,7 @@ export default function StatsCard({
               {courseNumber}
             </Text>
             <Text variant="bodySmall" style={styles.statLabel}>
-              Videos
+              ڤیدیۆ
             </Text>
           </View>
           <View style={styles.statDivider} />
@@ -26,7 +26,7 @@ export default function StatsCard({
               {videoNumber}
             </Text>
             <Text variant="bodySmall" style={styles.statLabel}>
-              Courses
+              خول
             </Text>
           </View>
           <View style={styles.statDivider} />
@@ -35,7 +35,7 @@ export default function StatsCard({
               {studentNumber}
             </Text>
             <Text variant="bodySmall" style={styles.statLabel}>
-              Students
+               خوێندکار
             </Text>
           </View>
         </View>

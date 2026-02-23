@@ -50,7 +50,7 @@ export function ProfileForm({
 
       {/* Thumbnail */}
       <Text variant="labelLarge" style={styles.label}>
-        Profile Thumbnail
+        وێنەی پرۆفایل
       </Text>
       <ImageUploader
         imageUri={thumbnail}
@@ -62,7 +62,7 @@ export function ProfileForm({
 
       {/* Cover */}
       <Text variant="labelLarge" style={styles.label}>
-        Cover Image
+        کەڤەری پرۆفایل
       </Text>
       <ImageUploader
         imageUri={coverImg}

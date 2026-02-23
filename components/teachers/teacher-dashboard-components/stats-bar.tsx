@@ -15,7 +15,7 @@ export default function StatsBar({ stats }: StatsBarProps) {
           {stats?.videos_count || 0}
         </Text>
         <Text variant="bodyMedium" style={styles.statLabel}>
-          Videos
+          ڤیدیۆ
         </Text>
       </View>
 
@@ -26,7 +26,7 @@ export default function StatsBar({ stats }: StatsBarProps) {
           {stats?.courses_count || 0}
         </Text>
         <Text variant="bodyMedium" style={styles.statLabel}>
-          Courses
+          خول
         </Text>
       </View>
 
@@ -37,7 +37,7 @@ export default function StatsBar({ stats }: StatsBarProps) {
           {stats?.students_count || 0}
         </Text>
         <Text variant="bodyMedium" style={styles.statLabel}>
-          Students
+          خوێندکار
         </Text>
       </View>
     </View>

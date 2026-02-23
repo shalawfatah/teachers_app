@@ -51,7 +51,7 @@ export default function EditProfileModal({
       >
         <View style={styles.container}>
           <Text variant="headlineSmall" style={styles.title}>
-            Edit Profile
+            نوێکردنەوەی پرۆفایل
           </Text>
 
           <ScrollView
@@ -74,7 +74,7 @@ export default function EditProfileModal({
 
           <View style={styles.buttonRow}>
             <Button mode="text" onPress={onDismiss} style={styles.button}>
-              Cancel
+              پاشگەزبوونەوە
             </Button>
             <Button
               mode="contained"
@@ -83,7 +83,7 @@ export default function EditProfileModal({
               disabled={updating || !name}
               style={styles.button}
             >
-              Save Changes
+              پاراستن
             </Button>
           </View>
         </View>

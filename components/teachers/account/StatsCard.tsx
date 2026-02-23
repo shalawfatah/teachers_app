@@ -42,9 +42,9 @@ export default function StatsCard({
 
   return (
     <View style={styles.container}>
-      <StatItem icon="book-open-variant" label="Courses" value={courseCount} />
-      <StatItem icon="play-circle" label="Videos" value={videoCount} />
-      <StatItem icon="account-group" label="Students" value={studentCount} />
+      <StatItem icon="book-open-variant" label="خول" value={courseCount} />
+      <StatItem icon="play-circle" label="ڤیدیۆ" value={videoCount} />
+      <StatItem icon="account-group" label="خوێندکار" value={studentCount} />
     </View>
   );
 }

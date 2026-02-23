@@ -39,7 +39,7 @@ export default function TeacherHero({
             <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />
             <View style={styles.userText}>
               <Text variant="bodySmall" style={styles.welcomeText}>
-                Welcome back,
+                بەخێربێیت
               </Text>
               <Text variant="titleMedium" style={styles.userName}>
                 {profile?.name}
@@ -62,7 +62,6 @@ export default function TeacherHero({
           </View>
         </View>
 
-        {/* Teacher profile */}
         <View style={styles.teacherInfo}>
           {profile?.thumbnail ? (
             <Avatar.Image
@@ -84,8 +83,6 @@ export default function TeacherHero({
             {profile?.expertise || "Computer Science & Web Development"}
           </Text>
         </View>
-
-        {/* Stats */}
         <StatsBar stats={stats} />
       </LinearGradient>
     </ImageBackground>

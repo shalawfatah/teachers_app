@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
   },
   // User Header (Top Left)
   header: {
+    direction: "rtl",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
