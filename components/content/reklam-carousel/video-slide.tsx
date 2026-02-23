@@ -13,7 +13,7 @@ interface VideoSlideProps {
   onEnd: () => void;
 }
 
-export function VideoSlide({
+export default function VideoSlide({
   reklam,
   isActive,
   onPress,
@@ -89,5 +89,3 @@ export function VideoSlide({
     </View>
   );
 }
-
-export default VideoSlide;
