@@ -49,7 +49,7 @@ export default function TeacherLayout() {
       <Tabs.Screen
         name="account"
         options={{
-          title: "هەژما",
+          title: "هەژمار",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-circle"
