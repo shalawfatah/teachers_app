@@ -13,16 +13,16 @@ export default function StudentHeader({ searchQuery, onSearchChange }: Props) {
     <>
       <View style={styles.header}>
         <Text variant="headlineMedium" style={styles.headerTitle}>
-          Students
+          خوێندکاران
         </Text>
         <Text variant="bodyMedium" style={styles.headerSubtitle}>
-          Manage your enrolled students
+          بەڕێوەبردنی خوێندکاران
         </Text>
       </View>
 
       <View style={styles.searchContainer}>
         <Searchbar
-          placeholder="Search students..."
+          placeholder="گەڕان"
           onChangeText={onSearchChange}
           value={searchQuery}
           style={styles.searchbar}
