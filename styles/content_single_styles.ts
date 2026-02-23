@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: "#fff", direction: "rtl"},
   scrollContent: { paddingBottom: 40 },
   loader: { flex: 1, justifyContent: "center" },
   errorContainer: {
@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
   content: { padding: 20 },
   titleRow: {
     flexDirection: "row",
+    padding: 10,
     justifyContent: "space-between",
     alignItems: "center",
   },

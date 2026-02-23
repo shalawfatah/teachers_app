@@ -17,12 +17,12 @@ export default function CoursesTab({
   const handleDeletePress = (id: string) => {
     setVisibleMenuId(null);
     Alert.alert(
-      "Delete Course",
-      "Are you sure? This will remove the course and all linked data.",
+      "سڕینەوەی خول",
+      "دڵنیای دەتەوێت ئەم خولە بسڕیتەوە، تەواوی زانیارییەکان نامێنێت",
       [
-        { text: "Cancel", style: "cancel" },
+        { text: "پاشگەزبوونەوە", style: "cancel" },
         {
-          text: "Delete",
+          text: "سڕینەوە",
           style: "destructive",
           onPress: () => onDelete?.(id),
         },

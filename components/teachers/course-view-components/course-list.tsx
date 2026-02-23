@@ -19,7 +19,7 @@ export default function LessonList({ videos }: Props) {
             size={40}
             style={styles.centerIcon}
           />
-          <Text style={styles.centerText}>No lessons uploaded yet.</Text>
+          <Text style={styles.centerText}>هیچ وانەیەک داخڵنەکراوە</Text>
         </Card.Content>
       </Card>
     );

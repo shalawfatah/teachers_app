@@ -25,7 +25,7 @@ export default function SubjectDropdown({
             icon="chevron-down"
             disabled={disabled}
           >
-            {value ? value.toUpperCase() : "Select Subject"}
+            {value ? value.toUpperCase() : "بابەت هەڵبژێرە"}
           </Button>
         }
       >

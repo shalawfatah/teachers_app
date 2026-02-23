@@ -4,6 +4,7 @@ import { styles } from "@/styles/edit_course_content_styles";
 import { EditCourseFormProps } from "@/types/courses";
 import SubjectDropdown from "@/components/teachers/edit-course-content/subject-dropdown";
 import { GradeSelector } from "@/components/courses/grade-selector";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function EditCourseForm({
   formData,
@@ -12,10 +13,10 @@ export default function EditCourseForm({
   disabled,
 }: EditCourseFormProps) {
   return (
-    <View>
+    <SafeAreaView style={{padding:12}}>
       <TextInput
-        label="Course Title"
-        value={formData.title}
+        label="ناونیشانی خول"
+        value={formData?.title}
         onChangeText={(text) => onFieldChange("title", text)}
         mode="outlined"
         style={styles.input}
@@ -23,8 +24,8 @@ export default function EditCourseForm({
       />
 
       <TextInput
-        label="Description"
-        value={formData.description}
+        label="وەسف"
+        value={formData?.description}
         onChangeText={(text) => onFieldChange("description", text)}
         mode="outlined"
         multiline
@@ -34,8 +35,8 @@ export default function EditCourseForm({
       />
 
       <TextInput
-        label="Thumbnail URL"
-        value={formData.thumbnail}
+        label="لینکی وێنە"
+        value={formData?.thumbnail}
         onChangeText={(text) => onFieldChange("thumbnail", text)}
         placeholder="https://image-link.com"
         mode="outlined"
@@ -44,19 +45,19 @@ export default function EditCourseForm({
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        Subject
+        بابەت
       </Text>
       <SubjectDropdown
-        value={formData.subject}
+        value={formData?.subject}
         onSelect={(subject) => onFieldChange("subject", subject)}
         disabled={disabled}
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        Grade Level
+        پۆل
       </Text>
       <GradeSelector
-        value={formData.grade}
+        value={formData?.grade}
         onValueChange={(grade) => onFieldChange("grade", grade)}
       />
 
@@ -65,6 +66,6 @@ export default function EditCourseForm({
           {error}
         </HelperText>
       ) : null}
-    </View>
+    </SafeAreaView>
   );
 }
