@@ -6,8 +6,8 @@ import StatsCard from "@/components/account/StatsCard";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 import SettingsModal from "@/components/teachers/account/SettingsModal";
 import { SettingsType } from "@/types/modal";
-import useTeacherAccount from "../../components/teachers/teacher-account-components/useTeacherAccount";
-import AccountSettingsList from "../../components/teachers/teacher-account-components/AccountSettingsList";
+import useTeacherAccount from "@/components/teachers/teacher-account-components/useTeacherAccount";
+import AccountSettingsList from "@/components/teachers/teacher-account-components/AccountSettingsList";
 
 export default function AccountScreen() {
   const { profile, stats, loading, handleSignOut, refreshProfile } =

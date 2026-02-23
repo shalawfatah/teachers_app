@@ -4,9 +4,9 @@ import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { Button, Surface } from "react-native-paper";
 import { styles } from "@/styles/student_edit_styles";
 import Loader from "@/components/Loader";
-import useStudentData from "./edit-course-components/useStudentData";
-import StatusToggle from "./edit-course-components/StatusToggle";
-import StudentInfo from "./edit-course-components/StudentInfo";
+import useStudentData from "../../../../components/teachers/edit-course-components/useStudentData";
+import StatusToggle from "../../../../components/teachers/edit-course-components/StatusToggle";
+import StudentInfo from "../../../../components/teachers/edit-course-components/StudentInfo";
 
 export default function EditStudent() {
   const { id } = useLocalSearchParams();

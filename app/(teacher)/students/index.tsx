@@ -3,8 +3,8 @@ import { View, FlatList } from "react-native";
 import { Text } from "react-native-paper";
 import { styles } from "@/styles/teacher_students_styles";
 import Loader from "@/components/Loader";
-import useStudents from "../../../components/teachers/teacher-student-components/useStudents";
-import StudentHeader from "../../../components/teachers/teacher-student-components/StudentHeader";
+import useStudents from "@/components/teachers/teacher-student-components/useStudents";
+import StudentHeader from "@/components/teachers/teacher-student-components/StudentHeader";
 import StudentCard from "@/components/teachers/StudentCard";
 
 export default function StudentsScreen() {
