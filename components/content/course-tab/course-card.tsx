@@ -1,4 +1,5 @@
-import { View } from "react-native";
+import React from "react";
+import { View, Pressable } from "react-native";
 import { Card, Text, Chip } from "react-native-paper";
 import { Course } from "@/types/courses";
 import { styles } from "@/styles/course_tab_styles";
@@ -27,45 +28,55 @@ export function CourseCard({
 
   return (
     <Card style={styles.card} mode="elevated">
-      {hasThumbnail && (
-        <Card.Cover source={{ uri: course.thumbnail }} style={styles.cover} />
-      )}
-
-      <Card.Title
-        title={course.title}
-        titleVariant="titleLarge"
-        subtitle={`${course.videos.length || 0} Videos • ${course.subject}`}
-        right={(props) => (
-          <CourseMenu
-            {...props}
-            visible={menuVisible}
-            onOpen={onOpenMenu}
-            onClose={onCloseMenu}
-            onView={onView}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
+      <Pressable
+        onPress={onView}
+        android_ripple={{ color: "rgba(0,0,0,0.1)" }}
+        style={({ pressed }) => [{ opacity: pressed ? 0.8 : 1 }]}
+      >
+        {hasThumbnail && (
+          <Card.Cover source={{ uri: course.thumbnail }} style={styles.cover} />
         )}
-      />
 
-      <Card.Content>
-        <Text variant="bodyMedium" numberOfLines={2} style={styles.description}>
-          {course.description}
-        </Text>
+        <Card.Title
+          title={course.title}
+          titleVariant="titleLarge"
+          subtitle={`${(course as any).videos?.length || 0} Videos • ${course.subject}`}
+          right={(props) => (
+            <CourseMenu
+              {...props}
+              visible={menuVisible}
+              onOpen={onOpenMenu}
+              onClose={onCloseMenu}
+              onView={onView}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          )}
+        />
 
-        <View style={styles.badgeContainer}>
-          <Chip icon="school" style={styles.chip} textStyle={styles.chipText}>
-            Grade: {course.grade}
-          </Chip>
-          <Chip
-            icon="book-outline"
-            style={styles.chip}
-            textStyle={styles.chipText}
+        <Card.Content>
+          <Text
+            variant="bodyMedium"
+            numberOfLines={2}
+            style={styles.description}
           >
-            {course.subject}
-          </Chip>
-        </View>
-      </Card.Content>
+            {course.description}
+          </Text>
+
+          <View style={styles.badgeContainer}>
+            <Chip icon="school" style={styles.chip} textStyle={styles.chipText}>
+              Grade: {course.grade}
+            </Chip>
+            <Chip
+              icon="book-outline"
+              style={styles.chip}
+              textStyle={styles.chipText}
+            >
+              {course.subject}
+            </Chip>
+          </View>
+        </Card.Content>
+      </Pressable>
     </Card>
   );
 }
