@@ -52,7 +52,6 @@ export default function StudentCard({
                   icon="book-open"
                   compact
                   style={styles.courseChip}
-                  textStyle={styles.chipText}
                 >
                   {student.verified ? "Verified" : "Not Verified"}
                 </Chip>
@@ -68,13 +67,13 @@ export default function StudentCard({
           >
             <Menu.Item
               onPress={handleView}
-              title="View Details"
+              title="بینینی پرۆفایل"
               leadingIcon="eye"
             />
-            <Menu.Item onPress={handleEdit} title="Edit" leadingIcon="pencil" />
+            <Menu.Item onPress={handleEdit} title="نوێکردنەوە" leadingIcon="pencil" />
             <Menu.Item
               onPress={handleDelete}
-              title="Remove"
+              title="سڕینەوە"
               leadingIcon="delete"
             />
           </Menu>
