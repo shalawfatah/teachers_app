@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { View } from "react-native";
+import { View, Linking } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import PagerView from "react-native-pager-view";
 import { Reklam, ReklamCarouselProps } from "@/types/reklam";
@@ -7,6 +7,7 @@ import { styles } from "@/styles/reklam_carousel";
 import ImageSlide from "./reklam-carousel/image-slide";
 import { supabase } from "@/lib/supabase";
 import VideoSlide from "./reklam-carousel/video-slide";
+import { useRouter } from "expo-router";
 
 export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   const [reklams, setReklams] = useState<Reklam[]>([]);
@@ -14,6 +15,7 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef<PagerView>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchReklams = async () => {
@@ -69,6 +71,37 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
 
   if (reklams.length === 0) return null;
 
+  const handlePress = async (reklam: Reklam) => {
+    if (!reklam.link_target || reklam.link_type === "none") return;
+
+    switch (reklam.link_type) {
+      case "course":
+        router.push(`/(student)/courses/${reklam.link_target}`);
+        break;
+
+      case "video":
+        router.push(`/(student)/video/${reklam.link_target}`);
+        break;
+
+      case "document":
+        if (reklam.link_target) {
+          Linking.openURL(reklam.link_target);
+        }
+        break;
+
+      case "external":
+        try {
+          await Linking.openURL(reklam.link_target);
+        } catch (err) {
+          console.error("Error opening external link:", err);
+        }
+        break;
+
+      default:
+        console.warn("Unknown link type:", reklam.link_type);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <PagerView
@@ -84,18 +117,11 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
               <VideoSlide
                 reklam={reklam}
                 isActive={currentPage === index}
-                onPress={() => {
-                  /* keep your handlePress logic here */
-                }}
+                onPress={() => handlePress(reklam)}
                 onEnd={handleVideoEnd}
               />
             ) : (
-              <ImageSlide
-                reklam={reklam}
-                onPress={() => {
-                  /* keep your handlePress logic here */
-                }}
-              />
+              <ImageSlide reklam={reklam} onPress={() => handlePress(reklam)} />
             )}
           </View>
         ))}
