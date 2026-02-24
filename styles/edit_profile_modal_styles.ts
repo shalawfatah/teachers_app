@@ -8,19 +8,19 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     borderRadius: 12,
+    direction: "rtl",
+    padding: 24,
   },
   title: {
     paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 16,
     fontWeight: "bold",
     backgroundColor: "white",
   },
   scrollView: {
-    paddingHorizontal: 20,
     maxHeight: 500,
   },
   input: {
+    direction: "rtl",
     marginBottom: 16,
   },
   label: {

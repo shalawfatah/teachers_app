@@ -23,14 +23,14 @@ export default function SettingsModal({
         return (
           <View>
             <List.Item
-              title="FAQ"
+              title="پرسیاری باو"
               left={(p) => (
                 <List.Icon {...p} icon="frequently-asked-questions" />
               )}
             />
             <Divider />
             <List.Item
-              title="Contact Support"
+              title="داوای یارمەتی"
               left={(p) => <List.Icon {...p} icon="email-outline" />}
             />
             <Divider />
@@ -43,10 +43,10 @@ export default function SettingsModal({
       case "about":
         return (
           <View style={styles.centerAlign}>
-            <Text variant="headlineSmall">LMS Mobile</Text>
-            <Text variant="bodySmall">Version 1.0.0 (Build 42)</Text>
+            <Text variant="headlineSmall">ئەپی راڤە</Text>
+            <Text variant="bodySmall">ڤێرژن ١.٠.٢</Text>
             <Text variant="bodyMedium" style={[styles.text, { marginTop: 15 }]}>
-              Built with Expo and React Native Paper.
+              بە ئێکسپۆ و ریئاکت نەیتڤ دروستکراوە
             </Text>
           </View>
         );
@@ -72,7 +72,7 @@ export default function SettingsModal({
         </Text>
         <ScrollView style={styles.scrollBody}>{renderContent()}</ScrollView>
         <Button mode="contained" onPress={onDismiss} style={styles.closeButton}>
-          Close
+          داخستن
         </Button>
       </Modal>
     </Portal>

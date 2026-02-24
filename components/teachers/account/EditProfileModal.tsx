@@ -73,9 +73,6 @@ export default function EditProfileModal({
           </ScrollView>
 
           <View style={styles.buttonRow}>
-            <Button mode="text" onPress={onDismiss} style={styles.button}>
-              پاشگەزبوونەوە
-            </Button>
             <Button
               mode="contained"
               onPress={handleUpdate}
@@ -84,6 +81,9 @@ export default function EditProfileModal({
               style={styles.button}
             >
               پاراستن
+            </Button>
+            <Button mode="text" onPress={onDismiss} style={styles.button}>
+              پاشگەزبوونەوە
             </Button>
           </View>
         </View>
