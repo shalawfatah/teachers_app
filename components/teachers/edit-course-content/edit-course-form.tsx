@@ -14,7 +14,7 @@ export default function EditCourseForm({
   return (
     <View>
       <TextInput
-        label="Course Title"
+        label="ناونیشانی خول"
         value={formData.title}
         onChangeText={(text) => onFieldChange("title", text)}
         mode="outlined"
@@ -23,7 +23,7 @@ export default function EditCourseForm({
       />
 
       <TextInput
-        label="Description"
+        label="وەسف"
         value={formData.description}
         onChangeText={(text) => onFieldChange("description", text)}
         mode="outlined"
@@ -34,7 +34,7 @@ export default function EditCourseForm({
       />
 
       <TextInput
-        label="Thumbnail URL"
+        label="لینکی وێنە"
         value={formData.thumbnail}
         onChangeText={(text) => onFieldChange("thumbnail", text)}
         placeholder="https://image-link.com"
@@ -44,7 +44,7 @@ export default function EditCourseForm({
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        Subject
+        بابەت
       </Text>
       <SubjectDropdown
         value={formData.subject}
@@ -53,7 +53,7 @@ export default function EditCourseForm({
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        Grade Level
+        پۆل
       </Text>
       <GradeSelector
         value={formData.grade}

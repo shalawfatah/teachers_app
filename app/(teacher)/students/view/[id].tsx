@@ -22,7 +22,7 @@ export default function ViewStudent() {
 
   return (
     <ScrollView style={styles.container}>
-      <Stack.Screen options={{ title: "Student Profile" }} />
+      <Stack.Screen options={{ title: "پرۆفایلی خوێندکار" }} />
       <View style={styles.hero}>
         <Avatar.Text
           size={80}
@@ -74,7 +74,7 @@ export default function ViewStudent() {
           style={[styles.button, { borderColor: "#f44336" }]}
           icon="trash-can-outline"
         >
-          Delete Record
+          سڕینەوەی هەژمار
         </Button>
       </View>
     </ScrollView>

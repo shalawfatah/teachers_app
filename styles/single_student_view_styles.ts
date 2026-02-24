@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
   card: { margin: 16, borderRadius: 12, backgroundColor: "white" },
   detailRow: {
     flexDirection: "row",
+    direction: "rtl",
     alignItems: "center",
     paddingVertical: 12,
   },
