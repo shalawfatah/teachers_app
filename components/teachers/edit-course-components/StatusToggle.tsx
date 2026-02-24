@@ -23,8 +23,8 @@ export default function StatusToggle({ verified, onStatusChange }: Props) {
         value={verified ? "active" : "inactive"}
         onValueChange={(value) => onStatusChange(value === "active")}
         buttons={[
-          { value: "active", label: "Verified", icon: "check-circle" },
-          { value: "inactive", label: "Unverified", icon: "close-circle" },
+          { value: "inactive", label: "مۆڵەتی نیە", icon: "close-circle" },
+          { value: "active", label: "مۆڵەتی هەیە", icon: "check-circle" },
         ]}
         style={styles.segmented}
       />
