@@ -1,17 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { Text, Appbar } from "react-native-paper";
+import { Text, Appbar, ActivityIndicator } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/video_single_styles";
 
+function PlayerSection({ url }: { url: string }) {
+  const player = useVideoPlayer(
+    {
+      uri: url,
+      headers: { Referer: "https://teachers-dash.netlify.app" },
+    },
+    (p) => {
+      p.play();
+    },
+  );
+
+  return (
+    <VideoView
+      style={styles.nativePlayer}
+      player={player}
+      allowsFullscreen
+      allowsPictureInPicture
+      nativeControls={true}
+      contentFit="contain"
+    />
+  );
+}
+
 export default function VideoPlayer() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const [video, setVideo] = useState<any>(null);
-  const [isDataReady, setIsDataReady] = useState(false);
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -20,31 +42,13 @@ export default function VideoPlayer() {
         .select("*, courses(title)")
         .eq("id", id)
         .single();
-      if (data) {
-        setVideo(data);
-        setIsDataReady(true);
-      }
+      if (data) setVideo(data);
     };
     fetchVideo();
-
     return () => {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
     };
   }, [id]);
-
-  const player = useVideoPlayer(
-    video?.video_hls_url
-      ? {
-        uri: video.video_hls_url,
-        headers: { Referer: "https://teachers-dash.netlify.app" },
-      }
-      : null,
-    (p) => {
-      p.play();
-    },
-  );
-
-  if (!isDataReady) return null;
 
   return (
     <View style={styles.container}>
@@ -54,15 +58,13 @@ export default function VideoPlayer() {
       </Appbar.Header>
 
       <View style={styles.videoContainer}>
-        <VideoView
-          key={video?.video_hls_url}
-          style={styles.nativePlayer}
-          player={player}
-          allowsFullscreen
-          allowsPictureInPicture
-          nativeControls={true} // This MUST be true
-          contentFit="contain"
-        />
+        {video?.video_hls_url ? (
+          <PlayerSection url={video.video_hls_url} />
+        ) : (
+          <View style={styles.nativePlayer}>
+            <ActivityIndicator />
+          </View>
+        )}
       </View>
 
       <View style={styles.infoSection}>
