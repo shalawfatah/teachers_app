@@ -66,9 +66,6 @@ export default function EditProfileModal({
         </View>
 
         <View style={styles.buttonRow}>
-          <Button mode="text" onPress={onDismiss} style={styles.button}>
-            رەتکردنەوە
-          </Button>
           <Button
             mode="contained"
             onPress={handleUpdate}
@@ -76,7 +73,10 @@ export default function EditProfileModal({
             disabled={updating || !name}
             style={styles.button}
           >
-            خەزنکردن
+            نوێکردنەوە
+          </Button>
+          <Button mode="text" onPress={onDismiss} style={styles.button}>
+            رەتکردنەوە
           </Button>
         </View>
       </Modal>
