@@ -54,7 +54,7 @@ export default function ViewStudent() {
           <DetailItem
             icon="school-outline"
             label="پۆل"
-            value={`Grade ${student.grade}`}
+            value={`پۆلی ${student.grade}`}
           />
           <Divider style={styles.divider} />
           <DetailItem
