@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useRef } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import { Video, ResizeMode, AVPlaybackStatus } from "expo-av";
 import { styles } from "@/styles/reklam_carousel";
 import { Reklam } from "@/types/reklam";
 import { LinearGradient } from "expo-linear-gradient";
-import { useVideoPlayer, VideoView } from "expo-video";
 import { SlideContent } from "./slide-content";
 
 interface VideoSlideProps {
@@ -19,72 +19,75 @@ export default function VideoSlide({
   onPress,
   onEnd,
 }: VideoSlideProps) {
-  // 1. Memoize the source so the player doesn't reset on every render
-  const source = useMemo(() => {
-    if (!reklam.video_hls_url) return null;
-    return {
-      uri: reklam.video_hls_url,
-      headers: {
-        Referer: "https://teachers-dash.netlify.app",
-      },
-    };
-  }, [reklam.video_hls_url]);
+  const videoRef = useRef<Video>(null);
+  const isMounted = useRef(true);
+  const onEndRef = useRef(onEnd);
 
-  // 2. Initialize the player
-  const player = useVideoPlayer(source, (p) => {
-    p.loop = false;
-    // Muting by default often helps auto-play stability in simulators
-    p.muted = false;
-  });
-
-  // 3. Handle Play/Pause logic based on carousel focus
   useEffect(() => {
-    if (isActive) {
-      player.play();
-    } else {
-      player.pause();
-      // Only seek to 0 if the video has loaded enough to have a duration
-      // This prevents the 'pointer authentication' crash on track metadata
-      if (player.status === "readyToPlay") {
-        player.currentTime = 0;
-      }
-    }
-  }, [isActive, player]);
+    onEndRef.current = onEnd;
+  }, [onEnd]);
 
-  // 4. Handle the "Video Ended" event
   useEffect(() => {
-    const subscription = player.addListener("playToEnd", () => {
-      onEnd();
-    });
+    isMounted.current = true;
     return () => {
-      subscription.remove();
+      isMounted.current = false;
     };
-  }, [player, onEnd]);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (!isMounted.current || !videoRef.current) return;
+      try {
+        if (isActive) {
+          await videoRef.current.playAsync();
+        } else {
+          await videoRef.current.pauseAsync();
+          await videoRef.current.setPositionAsync(0);
+        }
+      } catch (_) {
+        // swallow errors during teardown
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [isActive]);
+
+  const handlePlaybackStatus = (status: AVPlaybackStatus) => {
+    if (!isMounted.current) return;
+    if (status.isLoaded && status.didJustFinish) {
+      setTimeout(() => {
+        if (!isMounted.current) return;
+        onEndRef.current();
+      }, 150);
+    }
+  };
 
   return (
     <View style={styles.slideContainer}>
-      <VideoView
+      <Video
+        ref={videoRef}
+        source={{
+          uri: reklam.video_hls_url!,
+          headers: { Referer: "https://teachers-dash.netlify.app" },
+        }}
         style={styles.webview}
-        player={player}
-        allowsPictureInPicture={false}
-        contentFit="cover"
-        nativeControls={false} // Keeps it clean for a carousel
+        resizeMode={ResizeMode.COVER}
+        shouldPlay={false} // we control play manually
+        isLooping={false}
+        isMuted={false}
+        useNativeControls={false}
+        onPlaybackStatusUpdate={handlePlaybackStatus}
       />
-
-      {/* Transparent overlay for the link click */}
       <Pressable
         style={StyleSheet.absoluteFill}
         onPress={onPress}
         disabled={reklam.link_type === "none"}
       />
-
       <LinearGradient
         colors={["transparent", "rgba(0,0,0,0.3)", "rgba(0,0,0,0.85)"]}
         locations={[0, 0.5, 1]}
         style={styles.gradientOverlay}
         pointerEvents="none"
       />
-
       <SlideContent reklam={reklam} />
     </View>
   );

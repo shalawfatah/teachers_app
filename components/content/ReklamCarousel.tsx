@@ -76,7 +76,7 @@ export function ReklamCarousel({ teacherId }: ReklamCarouselProps) {
         style={styles.pager}
         initialPage={0}
         onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
-        offscreenPageLimit={1}
+        offscreenPageLimit={0}
       >
         {reklams.map((reklam, index) => (
           <View key={reklam.id} style={styles.page}>
