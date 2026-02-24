@@ -33,8 +33,9 @@ export default function EditStudent() {
       >
         <Surface style={styles.formCard} elevation={1}>
           <StudentInfo student={student} />
-          <StatusToggle verified={verified} onStatusChange={setVerified} />
         </Surface>
+
+        <StatusToggle verified={verified} onStatusChange={setVerified} />
 
         <View style={styles.actionContainer}>
           <Button

@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f8f9fa", marginTop: 20 },
+  container: { flex: 1, backgroundColor: "#f8f9fa", marginTop: 24 },
   content: { padding: 16 },
   formCard: {
-    padding: 20,
+    direction: "rtl",
+    padding: 24,
     borderRadius: 12,
     backgroundColor: "white",
-    marginBottom: 20,
   },
   sectionTitle: { marginBottom: 20, color: "#6200ee", fontWeight: "bold" },
   input: { marginBottom: 16, backgroundColor: "white" },
