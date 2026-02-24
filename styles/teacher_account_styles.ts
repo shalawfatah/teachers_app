@@ -50,6 +50,7 @@ export const styles = StyleSheet.create({
   },
   settingsContainer: {
     backgroundColor: "#fff",
+    direction: "rtl",
     marginTop: 8,
   },
   signOutContainer: {
