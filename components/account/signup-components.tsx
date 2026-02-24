@@ -43,7 +43,7 @@ export default function SignupScreen() {
         <Card style={styles.card}>
           <Card.Content>
             <Text variant="headlineMedium" style={styles.title}>
-              Student Registration
+              تۆمارکردنی خوێندکار
             </Text>
 
             <SignupForm

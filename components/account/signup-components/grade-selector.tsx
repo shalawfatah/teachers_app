@@ -10,7 +10,7 @@ export default function GradeSelector({ value, onValueChange }: GradeSelectorPro
   return (
     <>
       <Text variant="labelLarge" style={styles.gradeLabel}>
-        Grade Level
+        پۆل
       </Text>
       <SegmentedButtons
         value={value}

@@ -41,7 +41,7 @@ export default function SignupForm({
   return (
     <View>
       <TextInput
-        label="Full Name"
+        label="ناو"
         value={fullName}
         onChangeText={onFullNameChange}
         style={styles.input}
@@ -50,7 +50,7 @@ export default function SignupForm({
       />
 
       <TextInput
-        label="Email"
+        label="ئیمەیل"
         value={email}
         onChangeText={onEmailChange}
         autoCapitalize="none"
@@ -68,7 +68,7 @@ export default function SignupForm({
       />
 
       <TextInput
-        label="Password"
+        label="وشەی نهێنی"
         value={password}
         onChangeText={onPasswordChange}
         secureTextEntry
@@ -88,7 +88,7 @@ export default function SignupForm({
         disabled={loading}
         style={styles.button}
       >
-        Sign Up
+        دروستکردنی هەژمار
       </Button>
     </View>
   );

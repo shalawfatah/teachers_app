@@ -43,7 +43,7 @@ export default function SignupScreen() {
         <Card style={styles.card}>
           <Card.Content>
             <Text variant="headlineMedium" style={styles.title}>
-              Student Registration
+              تۆمارکردنی خوێندکار
             </Text>
 
             <SignupForm
@@ -68,7 +68,7 @@ export default function SignupScreen() {
               onPress={() => router.back()}
               disabled={loading}
             >
-              Already have an account? Login
+              گەر هەژمارت هەیە، بچۆ ناو هەژمارەکەت
             </Button>
           </Card.Content>
         </Card>
@@ -79,7 +79,7 @@ export default function SignupScreen() {
           visible={successDialogVisible}
           onDismiss={() => router.replace("/(auth)/login")}
         >
-          <Dialog.Title>Verify Email</Dialog.Title>
+          <Dialog.Title>پشتڕاستکردنەوەی ئیمەیل</Dialog.Title>
           <Dialog.Content>
             <Text>Check {email} to activate your student account.</Text>
           </Dialog.Content>

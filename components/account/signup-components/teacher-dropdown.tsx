@@ -36,8 +36,8 @@ export default function TeacherDropdown({
             disabled={disabled}
           >
             {selectedTeacher
-              ? `Teacher: ${selectedTeacher.name}`
-              : "Select Your Teacher"}
+              ? `مامۆستا: ${selectedTeacher.name}`
+              : "مامۆستا هەڵبژێرە"}
           </Button>
         }
       >
