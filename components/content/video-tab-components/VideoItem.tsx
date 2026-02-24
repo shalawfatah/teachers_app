@@ -19,7 +19,6 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
   return (
     <List.Item
       title={video.title}
-      description={`${video.duration || "0:00"} • ${video.views ?? 0} views`}
       style={styles.listItem}
       left={() => (
         <Avatar.Image
@@ -50,7 +49,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
                 onEdit(video);
                 closeMenu();
               }}
-              title="نوێکردنەوەی ڤیدیۆ"
+              title="Edit Video"
               leadingIcon="pencil-outline"
             />
             <Divider />
@@ -59,7 +58,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
                 onDelete(video.id);
                 closeMenu();
               }}
-              title="سڕینەوەی ڤیدیۆ"
+              title="Delete Video"
               leadingIcon="trash-can-outline"
               titleStyle={{ color: "#ff5252" }}
             />
