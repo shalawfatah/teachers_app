@@ -58,8 +58,10 @@ export interface CourseFormData {
 export interface EditCourseFormProps {
   formData: CourseFormData;
   onFieldChange: (field: keyof CourseFormData, value: string) => void;
+  onSubmit: () => void;
   error: string;
   disabled: boolean;
+  saving: boolean;
 }
 
 export interface EditCourseFormChangeProps {

@@ -44,7 +44,7 @@ export default function DeleteAccountModal({
       >
         <Surface style={styles.surface} elevation={4}>
           <Text variant="headlineSmall" style={styles.title}>
-            سڕینەوەی هەژمار
+          سڕینەوەی هەژمار - Delete Account
           </Text>
 
           <Text variant="bodyMedium" style={styles.message}>
