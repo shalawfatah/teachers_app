@@ -66,7 +66,7 @@ export default function AccountScreen() {
           style={styles.deleteAccountButton}
           textColor="#FFFFFF"
         >
-          سڕینەوەی هەژمار
+          سڕینەوەی هەژمار - Delete Account
         </Button>
       </View>
 
