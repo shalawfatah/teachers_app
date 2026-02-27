@@ -5,6 +5,7 @@ import { styles } from "@/styles/teacher_account_styles";
 import StatsCard from "@/components/account/StatsCard";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 import SettingsModal from "@/components/teachers/account/SettingsModal";
+import DeleteAccountModal from "@/components/teachers/account/DeleteAccountModal";
 import { SettingsType } from "@/types/modal";
 import useTeacherAccount from "@/components/teachers/teacher-account-components/useTeacherAccount";
 import AccountSettingsList from "@/components/teachers/teacher-account-components/AccountSettingsList";
@@ -14,9 +15,7 @@ export default function AccountScreen() {
     useTeacherAccount();
   const [editVisible, setEditVisible] = useState(false);
   const [activeSettings, setActiveSettings] = useState<SettingsType>(null);
-  const handleDelete = () => {
-    console.log("handle delete");
-  };
+  const [deleteVisible, setDeleteVisible] = useState(false);
 
   return (
     <ScrollView style={styles.container}>
@@ -58,10 +57,11 @@ export default function AccountScreen() {
           دەرچوون لە ئەپ
         </Button>
       </View>
+
       <View style={styles.deleteAccountContainer}>
         <Button
           mode="outlined"
-          onPress={handleDelete}
+          onPress={() => setDeleteVisible(true)}
           loading={loading}
           style={styles.deleteAccountButton}
           textColor="#FFFFFF"
@@ -69,16 +69,24 @@ export default function AccountScreen() {
           سڕینەوەی هەژمار
         </Button>
       </View>
+
       <EditProfileModal
         visible={editVisible}
         onDismiss={() => setEditVisible(false)}
         profile={profile}
         onProfileUpdate={refreshProfile}
       />
+
       <SettingsModal
         type={activeSettings}
         visible={activeSettings !== null}
         onDismiss={() => setActiveSettings(null)}
+      />
+
+      <DeleteAccountModal
+        visible={deleteVisible}
+        onDismiss={() => setDeleteVisible(false)}
+        userId={profile?.id}
       />
     </ScrollView>
   );
