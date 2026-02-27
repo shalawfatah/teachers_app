@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Avatar, Card, Text, Divider, Button, Chip } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AuxProps, StudentProps } from "@/types/students";
 import { styles } from "@/styles/single_student_view_styles";
+import DeleteStudentModal from "@/components/teachers/account/DeleteStudentModal";
 
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const student: StudentProps = {
     id: Array.isArray(id) ? id[0] : id,
@@ -23,6 +25,7 @@ export default function ViewStudent() {
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: "پرۆفایلی خوێندکار" }} />
+
       <View style={styles.hero}>
         <Avatar.Text
           size={80}
@@ -43,6 +46,7 @@ export default function ViewStudent() {
           {student.status.toUpperCase()}
         </Chip>
       </View>
+
       <Card style={styles.card}>
         <Card.Content>
           <DetailItem
@@ -66,10 +70,11 @@ export default function ViewStudent() {
           />
         </Card.Content>
       </Card>
+
       <View style={styles.actions}>
         <Button
           mode="outlined"
-          onPress={() => console.log("Delete", student.id)}
+          onPress={() => setModalVisible(true)}
           textColor="#f44336"
           style={[styles.button, { borderColor: "#f44336" }]}
           icon="trash-can-outline"
@@ -77,6 +82,13 @@ export default function ViewStudent() {
           سڕینەوەی هەژمار
         </Button>
       </View>
+
+      <DeleteStudentModal
+        visible={modalVisible}
+        onDismiss={() => setModalVisible(false)}
+        studentId={student.id}
+        studentName={student.name}
+      />
     </ScrollView>
   );
 }

@@ -82,12 +82,13 @@ export default function AccountScreen() {
         visible={activeSettings !== null}
         onDismiss={() => setActiveSettings(null)}
       />
-
-      <DeleteAccountModal
-        visible={deleteVisible}
-        onDismiss={() => setDeleteVisible(false)}
-        userId={profile?.id}
-      />
+      {profile != null ? (
+        <DeleteAccountModal
+          visible={deleteVisible}
+          onDismiss={() => setDeleteVisible(false)}
+          userId={profile.id}
+        />
+      ) : null}
     </ScrollView>
   );
 }
