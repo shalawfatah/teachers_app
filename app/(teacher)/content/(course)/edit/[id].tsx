@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { ScrollView, ActivityIndicator } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import EditCourseForm from "@/components/teachers/edit-course-content/EditCourseForm";
 import { CourseFormData } from "@/types/courses";
 
 export default function EditCourseScreen() {
   const { id } = useLocalSearchParams();
+  const router = useRouter();
   const [formData, setFormData] = useState<CourseFormData>({
     title: "",
     description: "",
@@ -15,6 +16,7 @@ export default function EditCourseScreen() {
     subject: "",
   });
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -36,12 +38,26 @@ export default function EditCourseScreen() {
         });
       setLoading(false);
     };
-
     fetchCourse();
   }, [id]);
 
   const handleFieldChange = (field: keyof CourseFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleUpdate = async () => {
+    setSaving(true);
+    setError("");
+
+    const { error } = await supabase
+      .from("courses")
+      .update(formData)
+      .eq("id", id)
+      .select();
+
+    if (error) setError(error.message);
+    else router.replace("/(teacher)/content");
+    setSaving(false);
   };
 
   if (loading) return <ActivityIndicator />;
@@ -51,8 +67,10 @@ export default function EditCourseScreen() {
       <EditCourseForm
         formData={formData}
         onFieldChange={handleFieldChange}
+        onSubmit={handleUpdate}
         error={error}
-        disabled={loading}
+        disabled={loading || saving}
+        saving={saving}
       />
     </ScrollView>
   );
