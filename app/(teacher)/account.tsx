@@ -14,6 +14,9 @@ export default function AccountScreen() {
     useTeacherAccount();
   const [editVisible, setEditVisible] = useState(false);
   const [activeSettings, setActiveSettings] = useState<SettingsType>(null);
+  const handleDelete = () => {
+    console.log("handle delete");
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -55,7 +58,17 @@ export default function AccountScreen() {
           دەرچوون لە ئەپ
         </Button>
       </View>
-
+      <View style={styles.deleteAccountContainer}>
+        <Button
+          mode="outlined"
+          onPress={handleDelete}
+          loading={loading}
+          style={styles.deleteAccountButton}
+          textColor="#FFFFFF"
+        >
+          سڕینەوەی هەژمار
+        </Button>
+      </View>
       <EditProfileModal
         visible={editVisible}
         onDismiss={() => setEditVisible(false)}

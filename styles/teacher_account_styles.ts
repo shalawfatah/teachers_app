@@ -55,9 +55,16 @@ export const styles = StyleSheet.create({
   },
   signOutContainer: {
     padding: 16,
-    paddingBottom: 32,
   },
   signOutButton: {
     borderColor: "#d32f2f",
+  },
+  deleteAccountContainer: {
+    padding: 16,
+  },
+  deleteAccountButton: {
+    borderColor: "red",
+    backgroundColor: "red",
+    color: "white",
   },
 });
