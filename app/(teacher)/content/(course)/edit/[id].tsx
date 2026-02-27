@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { TextInput, Text, HelperText } from "react-native-paper";
 import { styles } from "@/styles/edit_course_content_styles";
 import { EditCourseFormProps } from "@/types/courses";
