@@ -50,7 +50,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
                 onEdit(video);
                 closeMenu();
               }}
-              title="Edit Video"
+              title="نوێکردنەوەی ڤیدیۆ"
               leadingIcon="pencil-outline"
             />
             <Divider />
@@ -59,7 +59,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
                 onDelete(video.id);
                 closeMenu();
               }}
-              title="Delete Video"
+              title="سڕینەوەی ڤیدیۆ"
               leadingIcon="trash-can-outline"
               titleStyle={{ color: "#ff5252" }}
             />
