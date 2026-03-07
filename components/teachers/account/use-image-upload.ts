@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Linking } from "react-native"; // Added Linking
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system/legacy";
 import { decode } from "base64-arraybuffer";
@@ -15,14 +15,25 @@ export function useImageUpload(
 
   const pickImage = async () => {
     try {
+      const { status: existingStatus, canAskAgain } =
+        await ImagePicker.getMediaLibraryPermissionsAsync();
+
+      if (existingStatus === "denied" && !canAskAgain) {
+        Alert.alert(
+          "Permission Required",
+          "To upload images, please enable Photo Library access in your device settings.",
+          [
+            { text: "Cancel", style: "cancel" },
+            { text: "Open Settings", onPress: () => Linking.openSettings() },
+          ],
+        );
+        return;
+      }
+
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (status !== "granted") {
-        Alert.alert(
-          "Permission needed",
-          "Please grant camera roll permissions to upload images.",
-        );
         return;
       }
 
@@ -51,18 +62,15 @@ export function useImageUpload(
       } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Read file as base64
       const base64 = await FileSystem.readAsStringAsync(uri, {
         encoding: FileSystem.EncodingType.Base64,
       });
 
-      // Generate unique filename
       const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
       const fileName = `${user.id}_${type}_${Date.now()}.${fileExt}`;
       const filePath = `${type === "thumbnail" ? "thumbnails" : "covers"}/${fileName}`;
       const contentType = `image/${fileExt === "jpg" ? "jpeg" : fileExt}`;
 
-      // Upload to Supabase Storage
       const { error: uploadError } = await supabase.storage
         .from("teacher-images")
         .upload(filePath, decode(base64), {
@@ -72,7 +80,6 @@ export function useImageUpload(
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
       const {
         data: { publicUrl },
       } = supabase.storage.from("teacher-images").getPublicUrl(filePath);
