@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
   },
   cover: { height: 160 },
-  description: { color: "#666", marginBottom: 12 },
+  description: { color: "black", marginBottom: 12, fontSize: 16},
   badgeContainer: {
     flexDirection: "row",
     flexWrap: "wrap",

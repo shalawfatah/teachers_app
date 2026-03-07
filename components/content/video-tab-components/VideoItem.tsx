@@ -20,6 +20,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
     <List.Item
       title={video.title}
       style={styles.listItem}
+      titleStyle={{ fontFamily: "NRT-Bold", fontSize: 16}}
       left={() => (
         <Avatar.Image
           size={48}
