@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { Text, Avatar, Button } from "react-native-paper";
-import { styles } from "@/styles/account_styles";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
 import SettingsModal from "@/components/students/account/SettingsModal";
 import { SettingsType } from "@/types/modal";
 import StudentSettingsList from "../../components/students/student-account-components/StudentSettingsList";
 import useStudentAccount from "../../components/students/student-account-components/useStudentAccount";
+import { styles } from "@/styles/account_styles";
 
 export default function AccountScreen() {
   const { profile, loading, handleSignOut, refreshProfile } =
@@ -17,17 +17,16 @@ export default function AccountScreen() {
 
   return (
     <>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
         <View style={styles.profileHeader}>
           <Avatar.Text
             size={80}
             label={profile?.name?.charAt(0) || "U"}
-            style={styles.avatar}
           />
-          <Text variant="headlineSmall" style={styles.name}>
+          <Text variant="headlineSmall">
             {profile?.name}
           </Text>
-          <Text variant="bodyMedium" style={styles.role}>
+          <Text variant="bodyMedium">
             خوێندکار
           </Text>
         </View>

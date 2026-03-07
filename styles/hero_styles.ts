@@ -32,9 +32,11 @@ export const heroStyles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "NRT-Bold",
   },
   teacherBio: {
     color: "rgba(255,255,255,0.95)",
+    fontSize: 20,
     textAlign: "center",
     fontWeight: "400",
   },
@@ -44,7 +46,7 @@ export const heroStyles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 40,
     paddingVertical: 24,
-    backgroundColor: "rgba(255,255,255,0.15)",
+    backgroundColor: "rgba(0,0,0,0.9)",
     marginHorizontal: 20,
     borderRadius: 16,
   },
@@ -65,6 +67,7 @@ export const heroStyles = StyleSheet.create({
   statLabel: {
     color: "rgba(255,255,255,0.9)",
     marginTop: 4,
-    fontSize: 14,
+    fontSize: 16,
+    fontFamily: "NRT-Bold",
   },
 });

@@ -1,4 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width } = Dimensions.get("window");
+const isTablet = width > 768;
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,29 +12,32 @@ export const styles = StyleSheet.create({
   profileHeader: {
     backgroundColor: "#fff",
     alignItems: "center",
-    paddingTop: 60,
+    paddingTop: isTablet ? 80 : 60,
     paddingBottom: 24,
+    width: "100%",
   },
-  avatar: {
-    marginBottom: 16,
+  scrollContent: {
+    alignItems: isTablet ? "center" : "stretch",
+    flexGrow: 1,
   },
-  name: {
-    fontFamily: "NRT-Bold",
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  role: {
-    color: "#666",
-    textTransform: "capitalize",
+  contentWrapper: {
+    width: "100%",
+    maxWidth: 600,
+    alignSelf: "center",
   },
   statsCard: {
     margin: 16,
     marginBottom: 8,
+    width: isTablet ? 600 : "auto",
+    alignSelf: "center",
+    borderRadius: 8,
+    elevation: 2,
   },
   statsRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingVertical: isTablet ? 20 : 0,
   },
   statItem: {
     alignItems: "center",

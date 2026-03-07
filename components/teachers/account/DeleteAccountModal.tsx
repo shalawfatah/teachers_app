@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { Modal, Portal, Text, Button, Surface } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
+import { styles } from "@/styles/delete_teacher_account_styles";
 
 interface DeleteAccountModalProps {
   visible: boolean;
@@ -44,7 +45,7 @@ export default function DeleteAccountModal({
       >
         <Surface style={styles.surface} elevation={4}>
           <Text variant="headlineSmall" style={styles.title}>
-          سڕینەوەی هەژمار - Delete Account
+            سڕینەوەی هەژمار - Delete Account
           </Text>
 
           <Text variant="bodyMedium" style={styles.message}>
@@ -77,36 +78,3 @@ export default function DeleteAccountModal({
     </Portal>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 24,
-  },
-  surface: {
-    borderRadius: 16,
-    padding: 24,
-  },
-  title: {
-    textAlign: "center",
-    fontWeight: "bold",
-    marginBottom: 12,
-    color: "#d32f2f",
-  },
-  message: {
-    textAlign: "center",
-    color: "#555",
-    lineHeight: 22,
-    marginBottom: 24,
-  },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 12,
-  },
-  cancelButton: {
-    flex: 1,
-  },
-  deleteButton: {
-    flex: 1,
-  },
-});

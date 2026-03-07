@@ -1,35 +1,57 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width } = Dimensions.get("window");
+const isTablet = width > 768;
+
+// Scaling helper: Increases size by ~25-40% on tablets
+const scale = (size: number) => (isTablet ? size * 1.3 : size);
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
+  scrollContent: {
+    alignItems: isTablet ? "center" : "stretch",
+    // This ensures the background color fills the screen even if content is short
+    flexGrow: 1,
+  },
   profileHeader: {
     backgroundColor: "#fff",
     alignItems: "center",
-    paddingTop: 60,
-    paddingBottom: 24,
+    paddingTop: isTablet ? 80 : 60,
+    paddingBottom: scale(24),
+    width: "100%",
   },
   avatar: {
     marginBottom: 16,
     backgroundColor: "#6200ee",
+    // Make avatar larger on iPad
+    transform: [{ scale: isTablet ? 1.4 : 1 }],
   },
   name: {
     fontWeight: "bold",
     marginBottom: 4,
+    fontSize: scale(22), 
   },
   role: {
     color: "#666",
+    marginTop: 10,
+    fontSize: scale(16),
   },
   statsCard: {
     margin: 16,
     marginBottom: 8,
+    // Constrain width so it's a neat card in the center of the iPad
+    width: isTablet ? 600 : "92%",
+    alignSelf: "center",
+    borderRadius: isTablet ? 12 : 8,
   },
   statsRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingVertical: isTablet ? 20 : 10,
   },
   statItem: {
     alignItems: "center",
@@ -37,34 +59,45 @@ export const styles = StyleSheet.create({
   },
   statDivider: {
     width: 1,
-    height: 40,
+    height: isTablet ? 60 : 40,
     backgroundColor: "#e0e0e0",
   },
   statNumber: {
     fontWeight: "bold",
     color: "#6200ee",
+    fontSize: scale(22), // Significant pop for stats
   },
   statLabel: {
     color: "#666",
     marginTop: 4,
+    fontSize: scale(14),
   },
   settingsContainer: {
     backgroundColor: "#fff",
     direction: "rtl",
     marginTop: 8,
+    width: isTablet ? 600 : "100%",
+    alignSelf: "center",
+    borderRadius: isTablet ? 12 : 0,
   },
   signOutContainer: {
-    padding: 16,
+    padding: scale(16),
+    width: isTablet ? 600 : "100%",
+    alignSelf: "center",
   },
   signOutButton: {
     borderColor: "#d32f2f",
+    height: scale(45), // Taller touch target for iPad
   },
   deleteAccountContainer: {
-    padding: 16,
+    padding: scale(16),
+    width: isTablet ? 600 : "100%",
+    alignSelf: "center",
   },
   deleteAccountButton: {
     borderColor: "red",
     backgroundColor: "red",
     color: "white",
+    height: scale(45),
   },
 });

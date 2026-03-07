@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { heroStyles } from "./hero_styles";
 
 export const styles = StyleSheet.create({
-  // Base Container & Loading
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -12,13 +11,15 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  // User Header (Top Left)
   header: {
+    backgroundColor: "rgba(0, 0, 0, 0.92)",
     direction: "rtl",
+    padding: 20,
+    margin: 20,
+    borderRadius: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
   },
   userInfo: {
     flexDirection: "row",
@@ -29,14 +30,14 @@ export const styles = StyleSheet.create({
     gap: 2,
   },
   welcomeText: {
-    color: "rgba(255,255,255,0.85)",
-    fontSize: 13,
+    color: "rgba(255,255,255,0.92)",
+    fontSize: 16,
   },
   userName: {
     color: "#fff",
     fontWeight: "600",
+    fontSize: 20,
   },
-  // Body Content
   content: {
     backgroundColor: "#fff",
   },
@@ -52,7 +53,6 @@ export const styles = StyleSheet.create({
     color: "#666",
     marginBottom: 16,
   },
-  // Placeholders & FAB
   carouselPlaceholder: {
     paddingHorizontal: 20,
     paddingVertical: 60,
@@ -67,7 +67,5 @@ export const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-
-  // Spread imported hero styles
   ...heroStyles,
 });

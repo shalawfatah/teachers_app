@@ -18,7 +18,10 @@ export default function AccountScreen() {
   const [deleteVisible, setDeleteVisible] = useState(false);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.scrollContent}
+    >
       <View style={styles.profileHeader}>
         <Avatar.Text
           size={80}
