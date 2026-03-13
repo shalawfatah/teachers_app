@@ -4,6 +4,8 @@ import { styles } from "@/styles/single_course_styles";
 import { VideoSingle } from "@/types/videos";
 import VerificationBanner from "./verification-banner";
 import VideosList from "./video-list";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface CourseContentProps {
   course: {
@@ -22,10 +24,12 @@ export default function CourseContent({
   canPlayVideo,
   onVideoPress,
 }: CourseContentProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View style={styles.contentBody}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
-        دەربارەی ئەم خولە
+        {text.about_course}
       </Text>
       <Text variant="bodyMedium" style={styles.descriptionText}>
         {course.description}
@@ -35,7 +39,7 @@ export default function CourseContent({
 
       <View style={styles.curriculumHeader}>
         <Text variant="titleLarge" style={styles.sectionTitle}>
-          لیستی ڤیدیۆکان
+          {text.list_of_videos}
         </Text>
       </View>
 

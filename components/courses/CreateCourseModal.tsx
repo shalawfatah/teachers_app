@@ -5,6 +5,8 @@ import { styles } from "@/styles/create_carousel_styles";
 import { CreateCourseModalProps } from "@/types/modal";
 import { useCourseCreate } from "./use-course-create";
 import { CourseFormInputs } from "./course-form-inputs";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function CreateCourseModal({
   visible,
@@ -13,6 +15,8 @@ export default function CreateCourseModal({
 }: CreateCourseModalProps) {
   const { formData, loading, error, updateField, handleSubmit } =
     useCourseCreate(onSuccess, onDismiss);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <Portal>
@@ -23,7 +27,7 @@ export default function CreateCourseModal({
       >
         <ScrollView>
           <Text variant="headlineSmall" style={styles.modalTitle}>
-            تۆمارکردنی خولی نوێ
+            {text.register_new_course}
           </Text>
 
           <CourseFormInputs formData={formData} onFieldChange={updateField} />
@@ -32,7 +36,7 @@ export default function CreateCourseModal({
 
           <View style={styles.buttonRow}>
             <Button mode="text" onPress={onDismiss} style={styles.flexButton}>
-              Cancel
+              {text.cancel}
             </Button>
             <Button
               mode="contained"
@@ -41,7 +45,7 @@ export default function CreateCourseModal({
               disabled={loading}
               style={styles.flexButton}
             >
-              Create
+              {text.create}
             </Button>
           </View>
         </ScrollView>

@@ -5,6 +5,8 @@ import { styles } from "@/styles/filter_modal_styles";
 import { FilterModalProps } from "@/types/modal";
 import { useFilterLogic } from "./filter-modal-components/useFilterLogic";
 import GradeSelector from "./filter-modal-components/GradeSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function FilterModal({
   visible,
@@ -21,6 +23,8 @@ export default function FilterModal({
     handleClear,
     handleCancel,
   } = useFilterLogic(currentFilters, onApply, onDismiss);
+  const {lang} = useLanguage()
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <Portal>
@@ -31,10 +35,10 @@ export default function FilterModal({
       >
         <View style={styles.header}>
           <Text variant="headlineSmall" style={styles.title}>
-            فلتەری خولەکان
+            {text.filter_courses}
           </Text>
           <Button onPress={handleClear} mode="text" compact>
-            سڕینەوە
+            {text.delete}
           </Button>
         </View>
         <Divider />
@@ -55,14 +59,14 @@ export default function FilterModal({
             onPress={handleCancel}
             style={styles.actionButton}
           >
-            پاشگەزبوونەوە
+            {text.cancel}
           </Button>
           <Button
             mode="contained"
             onPress={handleApply}
             style={styles.actionButton}
           >
-            جێبەجێکردن ({selectedGrades.length})
+            {text.apply} ({selectedGrades.length})
           </Button>
         </View>
       </Modal>

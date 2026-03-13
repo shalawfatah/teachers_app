@@ -3,6 +3,8 @@ import { View } from "react-native";
 import { Text, Searchbar, IconButton, Badge } from "react-native-paper";
 import { courses_styles } from "@/styles/courses";
 import { FilterState } from "@/types/modal";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface Props {
   courseCount: number;
@@ -20,6 +22,8 @@ export default function CourseHeader({
   onOpenFilter,
 }: Props) {
   const filterCount = filters.grades.length;
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <>
@@ -27,10 +31,10 @@ export default function CourseHeader({
         <View style={courses_styles.headerRow}>
           <View style={courses_styles.headerTextContainer}>
             <Text variant="headlineMedium" style={courses_styles.headerTitle}>
-              هەموو خولەکان
+              {text.all_courses}
             </Text>
             <Text variant="bodyMedium" style={courses_styles.headerSubtitle}>
-              خولی بەردەست {courseCount}
+              {text.available_courses} {courseCount}
             </Text>
           </View>
 
@@ -51,7 +55,7 @@ export default function CourseHeader({
 
       <View style={courses_styles.searchContainer}>
         <Searchbar
-          placeholder="گەڕان بۆ خول..."
+          placeholder={text.search}
           onChangeText={onSearchChange}
           value={searchQuery}
           style={courses_styles.searchbar}

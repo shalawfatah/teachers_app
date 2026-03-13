@@ -2,6 +2,8 @@ import { TextInput, Text } from "react-native-paper";
 import { styles } from "@/styles/create_carousel_styles";
 import { SubjectMenu } from "./subject-menu";
 import { GradeSelector } from "./grade-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface CourseFormData {
   title: string;
@@ -19,6 +21,8 @@ export function CourseFormInputs({
   formData,
   onFieldChange,
 }: CourseFormInputsProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <>
       <TextInput
@@ -40,7 +44,7 @@ export function CourseFormInputs({
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        Subject
+        {text.subject}
       </Text>
       <SubjectMenu
         value={formData.subject}
@@ -48,7 +52,7 @@ export function CourseFormInputs({
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        Grade Level
+        {text.grade_level}
       </Text>
       <GradeSelector
         value={formData.grade}

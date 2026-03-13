@@ -2,6 +2,8 @@ import { View, ImageBackground } from "react-native";
 import { Text, IconButton, Chip } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "@/styles/single_course_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface CourseHeroProps {
   course: {
@@ -19,6 +21,8 @@ export default function CourseHero({
   isVerified,
   onBack,
 }: CourseHeroProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <ImageBackground
       source={{ uri: course.thumbnail }}
@@ -38,7 +42,7 @@ export default function CourseHero({
         <View style={styles.heroContent}>
           <View style={styles.badgeRow}>
             <Chip textStyle={styles.chipText} style={styles.categoryChip}>
-              {isVerified ? "بینینی ڤیدیۆ رێپێدراوە" : "هەژمار رێپێنەدراوە"}
+              {isVerified ? text.video_permitted : text.video_not_permitted}
             </Chip>
           </View>
           <Text variant="headlineMedium" style={styles.title}>
@@ -51,7 +55,9 @@ export default function CourseHero({
               size={20}
               style={{ margin: 0 }}
             />
-            <Text style={styles.metaText}>ژمارەی وانە: {videosCount}</Text>
+            <Text style={styles.metaText}>
+              {text.number_of_lessons} {videosCount}
+            </Text>
           </View>
         </View>
       </LinearGradient>
