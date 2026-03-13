@@ -2,6 +2,8 @@ import React from "react";
 import { View } from "react-native";
 import { Text, Chip, Divider } from "react-native-paper";
 import { styles } from "@/styles/content_single_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface Props {
   grade: string | number;
@@ -16,11 +18,13 @@ export default function CourseDetails({
   instructor,
   description,
 }: Props) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View style={{ direction: "rtl" }}>
       <View style={styles.metaRow}>
         <Chip icon="school" style={styles.chip}>
-          پۆل {grade}
+          {text.class} {grade}
         </Chip>
         <Chip icon="book" style={styles.chip}>
           {subject}
@@ -28,7 +32,7 @@ export default function CourseDetails({
       </View>
 
       <Text variant="titleMedium" style={styles.sectionLabel}>
-        مامۆستا
+        {text.teacher}
       </Text>
       <Text variant="bodyLarge" style={styles.teacherName}>
         {instructor}
@@ -37,7 +41,7 @@ export default function CourseDetails({
       <Divider style={styles.divider} />
 
       <Text variant="titleMedium" style={styles.sectionLabel}>
-        دەربارەی ئەم خولە
+        {text.about_course}
       </Text>
       <Text variant="bodyMedium" style={styles.description}>
         {description}

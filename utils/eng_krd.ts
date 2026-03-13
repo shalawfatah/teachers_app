@@ -60,6 +60,8 @@ export const translations = {
     view_video: "بینینی ڤیدیۆ",
     edit_video: "دەستکاری ڤیدیۆ",
     delete_video: "سڕینەوەی ڤیدیۆ",
+    no_course_registered: "هیچ وانەیەک داخڵنەکراوە",
+    course_content: "ناوەرۆکی خول",
 
     // Students
     verified: "سەلمێنراو",
@@ -176,6 +178,8 @@ export const translations = {
     view_video: "View Video",
     edit_video: "Edit Video",
     delete_video: "Delete Video",
+    no_course_registered: "No course has been registered",
+    course_content: "Course content",
 
     // Students
     verified: "Verified",
