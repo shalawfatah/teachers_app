@@ -60,6 +60,13 @@ export const eng_krd = {
       rava_app: "Rava App",
       version: "Version",
     },
+    delete_account_krd: {
+      delete_account_text: "",
+    },
+    delete_account_eng: {
+      delete_account_text:
+        "Are you sure you want to delete this account? This action will delete your entire data on the app and cannot be retrieved later.",
+    },
   },
   account_krd: {
     account: "",
