@@ -44,7 +44,7 @@ export default function LanguageSwitcherModal({
       }
 
       const { error: updateError } = await supabase
-        .from("teachers")
+        .from("students")
         .update({ lang: langId })
         .eq("id", session.user.id);
 
