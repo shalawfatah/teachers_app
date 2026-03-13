@@ -2,6 +2,8 @@ import React from "react";
 import { View } from "react-native";
 import { List, Divider } from "react-native-paper";
 import { styles } from "@/styles/teacher_account_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface Props {
   onEditPress: () => void;
@@ -12,13 +14,15 @@ export default function AccountSettingsList({
   onEditPress,
   onSettingsPress,
 }: Props) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View style={styles.settingsContainer}>
       <List.Section>
         <List.Subheader>سازاندنی هەژمار</List.Subheader>
         <List.Item
-          title="نوێکردنەوەی هەژمار"
-          description="زانیارییەکانت نوێبکەرەوە"
+          title={text.update_acc}
+          description={text.update_info}
           left={(p) => <List.Icon {...p} icon="account-edit" />}
           right={(p) => <List.Icon {...p} icon="chevron-right" />}
           onPress={onEditPress}
@@ -27,15 +31,15 @@ export default function AccountSettingsList({
       </List.Section>
 
       <List.Section>
-        <List.Subheader>پشتیوانی</List.Subheader>
+        <List.Subheader>{text.support}</List.Subheader>
         <List.Item
-          title="یارمەتی"
+          title={text.help}
           left={(p) => <List.Icon {...p} icon="help-circle" />}
           onPress={() => onSettingsPress("help")}
         />
         <Divider />
         <List.Item
-          title="دەربارە"
+          title={text.about}
           left={(p) => <List.Icon {...p} icon="information" />}
           onPress={() => onSettingsPress("about")}
         />

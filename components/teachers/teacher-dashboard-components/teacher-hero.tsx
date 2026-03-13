@@ -7,6 +7,8 @@ import { TeacherStats } from "@/types/teacher";
 import StatsBar from "./stats-bar";
 import { useState } from "react";
 import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface TeacherHeroProps {
   profile: Teacher | null;
@@ -24,7 +26,8 @@ export default function TeacherHero({
   onLanguageChange,
 }: TeacherHeroProps) {
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
-
+  const {lang} = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   // Get flag emoji based on language
   const getLanguageFlag = (lang: number) => {
     return lang === 1 ? "🇬🇧" : "🇮🇶"; // English or Kurdish flag
@@ -50,7 +53,7 @@ export default function TeacherHero({
             <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />
             <View style={styles.userText}>
               <Text variant="bodySmall" style={styles.welcomeText}>
-                بەخێربێیت
+                {text.welcome}
               </Text>
               <Text variant="titleMedium" style={styles.userName}>
                 {profile?.name}

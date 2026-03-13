@@ -2,12 +2,16 @@ import { View } from "react-native";
 import { Text } from "react-native-paper";
 import { styles } from "@/styles/teacher_home_styles";
 import { TeacherStats } from "@/types/teacher";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface StatsBarProps {
   stats: TeacherStats | null;
 }
 
 export default function StatsBar({ stats }: StatsBarProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View style={styles.statsContainer}>
       <View style={styles.stat}>
@@ -15,7 +19,7 @@ export default function StatsBar({ stats }: StatsBarProps) {
           {stats?.videos_count || 0}
         </Text>
         <Text variant="bodyMedium" style={styles.statLabel}>
-          ڤیدیۆ
+          {text.video}
         </Text>
       </View>
 
@@ -26,7 +30,7 @@ export default function StatsBar({ stats }: StatsBarProps) {
           {stats?.courses_count || 0}
         </Text>
         <Text variant="bodyMedium" style={styles.statLabel}>
-          خول
+          {text.course}
         </Text>
       </View>
 
@@ -37,7 +41,7 @@ export default function StatsBar({ stats }: StatsBarProps) {
           {stats?.students_count || 0}
         </Text>
         <Text variant="bodyMedium" style={styles.statLabel}>
-          خوێندکار
+          {text.students}
         </Text>
       </View>
     </View>
