@@ -29,6 +29,8 @@ export const eng_krd = {
     choose_teacher: "مامۆستا هەڵبژێرە",
     select_course: "کۆرس هەڵبژێرە",
     upload: "بارکردن",
+    students: "خوێندکاران",
+    manage_students: "بەڕێوەبردنی خوێندکاران",
   },
   general_eng: {
     search: "Search",
@@ -56,6 +58,8 @@ export const eng_krd = {
     choose_teacher: "Choose Teacher",
     select_course: "Select Course",
     upload: "Upload",
+    students: "Students",
+    manage_students: "Manage Students",
   },
   modals: {
     update_profile_eng: {
