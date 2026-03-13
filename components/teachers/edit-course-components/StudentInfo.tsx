@@ -2,6 +2,8 @@ import React from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 import { styles } from "@/styles/student_edit_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface Props {
   student: {
@@ -12,16 +14,18 @@ interface Props {
 }
 
 export default function StudentInfo({ student }: Props) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View>
       <Text variant="titleMedium" style={styles.sectionTitle}>
-        زانیاری خوێندکار
+        {text.student_information}
       </Text>
 
       {[
-        { label: "ناو", value: student.name },
-        { label: "ئیمەیل", value: student.email },
-        { label: "پۆل", value: student.grade || "N/A" },
+        { label: text.name, value: student.name },
+        { label: text.email, value: student.email },
+        { label: text.class, value: student.grade || "N/A" },
       ].map((item, index) => (
         <View key={index} style={{ marginBottom: 16 }}>
           <Text variant="labelLarge" style={{ marginBottom: 4 }}>

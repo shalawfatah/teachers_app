@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function useStudentData(studentId: string) {
   const router = useRouter();
@@ -9,6 +11,8 @@ export default function useStudentData(studentId: string) {
   const [saving, setSaving] = useState(false);
   const [student, setStudent] = useState<any>(null);
   const [verified, setVerified] = useState<boolean>(false);
+  const {lang} = useLanguage()
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   useEffect(() => {
     if (studentId) fetchStudent();
@@ -44,7 +48,7 @@ export default function useStudentData(studentId: string) {
         .eq("id", studentId);
 
       if (error) throw error;
-      Alert.alert("Success", "Student status updated successfully!");
+      Alert.alert(text.success, text.student_status_text);
       router.back();
     } catch (error) {
       console.error("Update error:", error);

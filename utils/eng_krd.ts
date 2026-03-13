@@ -32,6 +32,7 @@ export const translations = {
     upload: "بارکردن",
     students: "خوێندکاران",
     manage_students: "بەڕێوەبردنی خوێندکاران",
+    success: "ئەنجام",
 
     // Account
     account: "هەژمار",
@@ -116,6 +117,7 @@ export const translations = {
     // Add Course
     register_new_course: "تۆمارکردنی کۆرسی نوێ",
     choose_subject: "بابەت هەڵبژێرە",
+    student_status_text: "مۆڵەتی بینینی ڤیدیۆ بۆ خوێندکار نوێکرایەوە",
   },
   eng: {
     // General
@@ -146,6 +148,7 @@ export const translations = {
     upload: "Upload",
     students: "Students",
     manage_students: "Manage Students",
+    success: "Success",
 
     // Account
     account: "Account",
@@ -230,5 +233,6 @@ export const translations = {
     // Add Course
     register_new_course: "Register New Course",
     choose_subject: "Choose Subject",
+    student_status_text: "Student status updated successfully",
   },
 };
