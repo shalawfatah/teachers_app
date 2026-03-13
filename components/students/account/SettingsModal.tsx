@@ -1,21 +1,18 @@
+import { useLanguage } from "@/contexts/LanguageContext";
 import { styles } from "@/styles/setting_modal";
 import { SettingsModalProps } from "@/types/modal";
+import { translations } from "@/utils/eng_krd";
 import React from "react";
 import { View, ScrollView } from "react-native";
-import {
-  Modal,
-  Portal,
-  Text,
-  Button,
-  List,
-  Divider,
-} from "react-native-paper";
+import { Modal, Portal, Text, Button, List, Divider } from "react-native-paper";
 
 export default function SettingsModal({
   type,
   visible,
   onDismiss,
 }: SettingsModalProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const renderContent = () => {
     switch (type) {
@@ -23,14 +20,15 @@ export default function SettingsModal({
         return (
           <View>
             <Text variant="bodyMedium" style={styles.text}>
-              داتای ئەپ پارێزراوە بە بارکەهێنانی سوپابەیس. بەهیچ جۆرێک داتا و زانیاریی کەسیت نادرێتە لایەنێکی دیکە
+              داتای ئەپ پارێزراوە بە بارکەهێنانی سوپابەیس. بەهیچ جۆرێک داتا و
+              زانیاریی کەسیت نادرێتە لایەنێکی دیکە
             </Text>
             <Button
               mode="outlined"
               onPress={() => { }}
               style={styles.actionButton}
             >
-              داوای داتا و زانیاری
+              {text.data_request}
             </Button>
           </View>
         );
@@ -38,19 +36,19 @@ export default function SettingsModal({
         return (
           <View>
             <List.Item
-              title="پرسیار"
+              title={text.question}
               left={(p) => (
                 <List.Icon {...p} icon="frequently-asked-questions" />
               )}
             />
             <Divider />
             <List.Item
-              title="پەیوەندی"
+              title={text.contact}
               left={(p) => <List.Icon {...p} icon="email-outline" />}
             />
             <Divider />
             <List.Item
-              title="راپۆرتدان لە کێشە"
+              title={text.report_bug}
               left={(p) => <List.Icon {...p} icon="bug" />}
             />
           </View>
@@ -58,10 +56,10 @@ export default function SettingsModal({
       case "about":
         return (
           <View style={styles.centerAlign}>
-            <Text variant="headlineSmall">سۆفتوێری راڤە</Text>
-            <Text variant="bodySmall">ڤێرژن 1.0.0 (Build 42)</Text>
+            <Text variant="headlineSmall">{text.rava_app}</Text>
+            <Text variant="bodySmall">{text.version}</Text>
             <Text variant="bodyMedium" style={[styles.text, { marginTop: 15 }]}>
-              بە ئیکسپۆ و ریئاکت نەیتڤ دروستکراوە
+              {text.expo_text}
             </Text>
           </View>
         );
@@ -87,7 +85,7 @@ export default function SettingsModal({
         </Text>
         <ScrollView style={styles.scrollBody}>{renderContent()}</ScrollView>
         <Button mode="contained" onPress={onDismiss} style={styles.closeButton}>
-          داخستن
+          {text.close}
         </Button>
       </Modal>
     </Portal>

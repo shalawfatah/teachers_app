@@ -12,6 +12,8 @@ import { EditStudentModalProps } from "@/types/modal";
 import { styles } from "@/styles/edit_profile_student_styles";
 import { edit_profile_modal_buttons } from "@/utils/edit_profile_modal_buttons";
 import { useEditProfile } from "./student-account-components/useEditProfile";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function EditProfileModal({
   visible,
@@ -26,6 +28,8 @@ export default function EditProfileModal({
       onSuccess: onProfileUpdate,
       onClose: onDismiss,
     });
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <Portal>
@@ -35,11 +39,11 @@ export default function EditProfileModal({
         contentContainerStyle={styles.container}
       >
         <Text variant="headlineSmall" style={styles.title}>
-          نوێکردنەوەی هەژمار
+          {text.update_acc}
         </Text>
 
         <TextInput
-          label="ناو"
+          label={text.name}
           value={name}
           onChangeText={setName}
           mode="outlined"
@@ -47,7 +51,7 @@ export default function EditProfileModal({
         />
 
         <Text variant="bodyMedium" style={styles.label}>
-          پۆل
+          {text.class}
         </Text>
 
         <View>
@@ -73,10 +77,10 @@ export default function EditProfileModal({
             disabled={updating || !name}
             style={styles.button}
           >
-            نوێکردنەوە
+            {text.update}
           </Button>
           <Button mode="text" onPress={onDismiss} style={styles.button}>
-            رەتکردنەوە
+            {text.cancel}
           </Button>
         </View>
       </Modal>

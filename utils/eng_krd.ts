@@ -113,6 +113,7 @@ export const translations = {
     have_permission: "بەڵێ",
     no_permission: "نەخێر",
     delete_student_account: " سڕینەوەی هەژماری خوێندکار",
+    update_your_info: "زانیارییەکانت نوێبکەرەوە",
 
     // Student Delete
     students_delete_text: "دڵنیای لە سڕینەوەی ئەم قوتابییە؟",
@@ -123,6 +124,11 @@ export const translations = {
     student_status_text: "مۆڵەتی بینینی ڤیدیۆ بۆ خوێندکار نوێکرایەوە",
     report_bug: "راپۆرت دەربارەی کێشە",
     expo_text: " بە ئێکسپۆ و ریئاکت نەیتڤ دروستکراوە",
+    safety_security: "پاراستنی زانیاریی و اسایشی ئەپ",
+    account_setting: "سازاندنی هەژمار",
+    contact: "پەیوەندیی",
+    question: "پرسیار",
+    data_request: "داواکردنی زانیاری و داتا",
   },
   eng: {
     // General
@@ -234,7 +240,7 @@ export const translations = {
     have_permission: "Yes",
     no_permission: "No",
     delete_student_account: "Delete student account",
-
+    update_your_info: "Update your information",
 
     // Student Delete
     students_delete_text: "Are you sure you want to delete this student?",
@@ -245,5 +251,10 @@ export const translations = {
     student_status_text: "Student status updated successfully",
     report_bug: "Report bug",
     expo_text: "This app is created with React Native and Expo",
+    safety_security: "Safety and security",
+    account_setting: "Account Setting",
+    contact: "Contact",
+    question: "Question",
+    data_request: "Data and information request",
   },
 };
