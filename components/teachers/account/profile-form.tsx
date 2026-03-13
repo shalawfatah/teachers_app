@@ -3,6 +3,8 @@ import { View } from "react-native";
 import { Text, TextInput } from "react-native-paper";
 import { styles } from "@/styles/edit_profile_modal_styles";
 import { ImageUploader } from "./image-uploader";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface ProfileFormProps {
   name: string;
@@ -29,6 +31,8 @@ export function ProfileForm({
   uploadingThumbnail,
   uploadingCover,
 }: ProfileFormProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View>
       <TextInput
@@ -48,9 +52,8 @@ export function ProfileForm({
         style={styles.input}
       />
 
-      {/* Thumbnail */}
       <Text variant="labelLarge" style={styles.label}>
-        وێنەی پرۆفایل
+        {text.update_acc}
       </Text>
       <ImageUploader
         imageUri={thumbnail}
@@ -60,9 +63,8 @@ export function ProfileForm({
         placeholderText="Tap to upload thumbnail"
       />
 
-      {/* Cover */}
       <Text variant="labelLarge" style={styles.label}>
-        کەڤەری پرۆفایل
+        {text.profile_cover}
       </Text>
       <ImageUploader
         imageUri={coverImg}

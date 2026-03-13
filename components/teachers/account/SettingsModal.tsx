@@ -1,41 +1,37 @@
+import { useLanguage } from "@/contexts/LanguageContext";
 import { styles } from "@/styles/teachers_account_settings_modal_styles";
 import { SettingsModalProps } from "@/types/modal";
+import { translations } from "@/utils/eng_krd";
 import React from "react";
 import { View, ScrollView } from "react-native";
-import {
-  Modal,
-  Portal,
-  Text,
-  Button,
-  List,
-  Divider,
-} from "react-native-paper";
+import { Modal, Portal, Text, Button, List, Divider } from "react-native-paper";
 
 export default function SettingsModal({
   type,
   visible,
   onDismiss,
 }: SettingsModalProps) {
-
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   const renderContent = () => {
     switch (type) {
       case "help":
         return (
           <View>
             <List.Item
-              title="پرسیاری باو"
+              title={text.faq}
               left={(p) => (
                 <List.Icon {...p} icon="frequently-asked-questions" />
               )}
             />
             <Divider />
             <List.Item
-              title="داوای یارمەتی"
+              title={text.help}
               left={(p) => <List.Icon {...p} icon="email-outline" />}
             />
             <Divider />
             <List.Item
-              title="Report a Bug"
+              title={text.report_bug}
               left={(p) => <List.Icon {...p} icon="bug" />}
             />
           </View>
@@ -43,10 +39,10 @@ export default function SettingsModal({
       case "about":
         return (
           <View style={styles.centerAlign}>
-            <Text variant="headlineSmall">ئەپی راڤە</Text>
-            <Text variant="bodySmall">ڤێرژن ١.٠.٢</Text>
+            <Text variant="headlineSmall">{text.rava_app}</Text>
+            <Text variant="bodySmall">{text.version}</Text>
             <Text variant="bodyMedium" style={[styles.text, { marginTop: 15 }]}>
-              بە ئێکسپۆ و ریئاکت نەیتڤ دروستکراوە
+              {text.expo_text}
             </Text>
           </View>
         );
@@ -72,7 +68,7 @@ export default function SettingsModal({
         </Text>
         <ScrollView style={styles.scrollBody}>{renderContent()}</ScrollView>
         <Button mode="contained" onPress={onDismiss} style={styles.closeButton}>
-          داخستن
+          {text.close}
         </Button>
       </Modal>
     </Portal>

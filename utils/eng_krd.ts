@@ -112,6 +112,7 @@ export const translations = {
     video_play_permission_text: "ئایا قوتابی ڕێپێدانی هەیە بۆ بینینی ڤیدیۆکان؟",
     have_permission: "بەڵێ",
     no_permission: "نەخێر",
+    delete_student_account: " سڕینەوەی هەژماری خوێندکار",
 
     // Student Delete
     students_delete_text: "دڵنیای لە سڕینەوەی ئەم قوتابییە؟",
@@ -120,6 +121,8 @@ export const translations = {
     register_new_course: "تۆمارکردنی کۆرسی نوێ",
     choose_subject: "بابەت هەڵبژێرە",
     student_status_text: "مۆڵەتی بینینی ڤیدیۆ بۆ خوێندکار نوێکرایەوە",
+    report_bug: "راپۆرت دەربارەی کێشە",
+    expo_text: " بە ئێکسپۆ و ریئاکت نەیتڤ دروستکراوە",
   },
   eng: {
     // General
@@ -230,6 +233,8 @@ export const translations = {
     video_play_permission_text: "Does the student permission to play videos?",
     have_permission: "Yes",
     no_permission: "No",
+    delete_student_account: "Delete student account",
+
 
     // Student Delete
     students_delete_text: "Are you sure you want to delete this student?",
@@ -238,5 +243,7 @@ export const translations = {
     register_new_course: "Register New Course",
     choose_subject: "Choose Subject",
     student_status_text: "Student status updated successfully",
+    report_bug: "Report bug",
+    expo_text: "This app is created with React Native and Expo",
   },
 };

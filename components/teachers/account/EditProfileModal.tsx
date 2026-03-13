@@ -6,6 +6,8 @@ import { EditProfileModalProps } from "@/types/modal";
 import { ProfileForm } from "./profile-form";
 import { useImageUpload } from "./use-image-upload";
 import { useProfileUpdate } from "./use-profile-update";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function EditProfileModal({
   visible,
@@ -41,6 +43,8 @@ export default function EditProfileModal({
   const handleUpdate = () => {
     updateProfile({ name, expertise, thumbnail, coverImg });
   };
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <Portal>
@@ -51,7 +55,7 @@ export default function EditProfileModal({
       >
         <View style={styles.container}>
           <Text variant="headlineSmall" style={styles.title}>
-            نوێکردنەوەی پرۆفایل
+            {text.update_acc}
           </Text>
 
           <ScrollView
@@ -80,10 +84,10 @@ export default function EditProfileModal({
               disabled={updating || !name}
               style={styles.button}
             >
-              پاراستن
+              {text.save}
             </Button>
             <Button mode="text" onPress={onDismiss} style={styles.button}>
-              پاشگەزبوونەوە
+              {text.cancel}
             </Button>
           </View>
         </View>

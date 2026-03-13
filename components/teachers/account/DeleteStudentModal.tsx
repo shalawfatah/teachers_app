@@ -3,6 +3,8 @@ import { View, StyleSheet } from "react-native";
 import { Modal, Portal, Text, Button, Surface } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface DeleteStudentModalProps {
   visible: boolean;
@@ -19,6 +21,8 @@ export default function DeleteStudentModal({
 }: DeleteStudentModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleConfirmDelete = async () => {
     try {
@@ -50,12 +54,11 @@ export default function DeleteStudentModal({
       >
         <Surface style={styles.surface} elevation={4}>
           <Text variant="headlineSmall" style={styles.title}>
-            سڕینەوەی هەژماری خوێندکار
+            {text.delete_student_account}
           </Text>
           <Text variant="bodyMedium" style={styles.message}>
-            ئایا دڵنیایت کە دەتەوێت هەژماری{" "}
-            <Text style={styles.studentName}>{studentName}</Text> بسڕیتەوە؟ ئەم
-            کارە گەرێنەوەی نییە و هەموو داتاکانی خوێندکار بە تەواوی دەسڕێتەوە.
+            {text.students_delete_text}
+            <Text style={styles.studentName}>{studentName}</Text>
           </Text>
 
           {error && (
@@ -71,7 +74,7 @@ export default function DeleteStudentModal({
               style={styles.cancelButton}
               disabled={loading}
             >
-              پاشگەزبوونەوە
+              {text.cancel}
             </Button>
             <Button
               mode="contained"
@@ -81,7 +84,7 @@ export default function DeleteStudentModal({
               style={styles.deleteButton}
               buttonColor="#d32f2f"
             >
-              سڕینەوە
+              {text.delete}
             </Button>
           </View>
         </Surface>

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { Modal, Portal, Text, Button, Surface } from "react-native-paper";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
 import { styles } from "@/styles/delete_teacher_account_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface DeleteAccountModalProps {
   visible: boolean;
@@ -17,6 +19,8 @@ export default function DeleteAccountModal({
   userId,
 }: DeleteAccountModalProps) {
   const [loading, setLoading] = useState(false);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleConfirmDelete = async () => {
     try {
@@ -45,12 +49,11 @@ export default function DeleteAccountModal({
       >
         <Surface style={styles.surface} elevation={4}>
           <Text variant="headlineSmall" style={styles.title}>
-            سڕینەوەی هەژمار - Delete Account
+            {text.delete_acc}
           </Text>
 
           <Text variant="bodyMedium" style={styles.message}>
-            ئایا دڵنیایت کە دەتەوێت هەژمارەکەت بسڕیتەوە؟ ئەم کارە گەرێنەوەی نییە
-            و هەموو داتاکانت بە تەواوی دەسڕێتەوە.
+            {text.delete_account_text}
           </Text>
 
           <View style={styles.actions}>
@@ -60,7 +63,7 @@ export default function DeleteAccountModal({
               style={styles.cancelButton}
               disabled={loading}
             >
-              پاشگەزبوونەوە
+              {text.cancel}
             </Button>
             <Button
               mode="contained"
@@ -70,7 +73,7 @@ export default function DeleteAccountModal({
               style={styles.deleteButton}
               buttonColor="#d32f2f"
             >
-              سڕینەوە
+              {text.delete}
             </Button>
           </View>
         </Surface>

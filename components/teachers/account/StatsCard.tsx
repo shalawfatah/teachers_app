@@ -2,6 +2,8 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Surface, Text, useTheme } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface StatsCardProps {
   courseCount: number;
@@ -15,7 +17,8 @@ export default function StatsCard({
   studentCount,
 }: StatsCardProps) {
   const theme = useTheme();
-
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   const StatItem = ({
     icon,
     label,
@@ -42,9 +45,17 @@ export default function StatsCard({
 
   return (
     <View style={styles.container}>
-      <StatItem icon="book-open-variant" label="خول" value={courseCount} />
-      <StatItem icon="play-circle" label="ڤیدیۆ" value={videoCount} />
-      <StatItem icon="account-group" label="خوێندکار" value={studentCount} />
+      <StatItem
+        icon="book-open-variant"
+        label={text.course}
+        value={courseCount}
+      />
+      <StatItem icon="play-circle" label={text.video} value={videoCount} />
+      <StatItem
+        icon="account-group"
+        label={text.students}
+        value={studentCount}
+      />
     </View>
   );
 }
