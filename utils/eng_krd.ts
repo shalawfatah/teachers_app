@@ -115,6 +115,7 @@ export const translations = {
 
     // Add Course
     register_new_course: "تۆمارکردنی کۆرسی نوێ",
+    choose_subject: "بابەت هەڵبژێرە",
   },
   eng: {
     // General
@@ -228,5 +229,6 @@ export const translations = {
 
     // Add Course
     register_new_course: "Register New Course",
+    choose_subject: "Choose Subject",
   },
 };

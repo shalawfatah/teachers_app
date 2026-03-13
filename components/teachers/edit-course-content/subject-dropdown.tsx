@@ -4,6 +4,8 @@ import { Button, Menu } from "react-native-paper";
 import { styles } from "@/styles/edit_course_content_styles";
 import { SubjectDropdownProps } from "@/types/courses";
 import { SUBJECTS } from "@/utils/placeholder_subjects";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function SubjectDropdown({
   value,
@@ -11,6 +13,8 @@ export default function SubjectDropdown({
   disabled = false,
 }: SubjectDropdownProps) {
   const [showMenu, setShowMenu] = useState(false);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <View>
@@ -25,7 +29,7 @@ export default function SubjectDropdown({
             icon="chevron-down"
             disabled={disabled}
           >
-            {value ? value.toUpperCase() : "بابەت هەڵبژێرە"}
+            {value ? value.toUpperCase() : text.choose_subject}
           </Button>
         }
       >

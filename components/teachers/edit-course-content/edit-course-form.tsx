@@ -4,6 +4,8 @@ import { styles } from "@/styles/edit_course_content_styles";
 import { EditCourseFormChangeProps } from "@/types/courses";
 import SubjectDropdown from "./subject-dropdown";
 import GradeSelector from "./grade-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function EditCourseForm({
   formData,
@@ -11,10 +13,12 @@ export default function EditCourseForm({
   error,
   disabled,
 }: EditCourseFormChangeProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View>
       <TextInput
-        label="ناونیشانی خول"
+        label={text.course_title}
         value={formData.title}
         onChangeText={(text) => onFieldChange("title", text)}
         mode="outlined"
@@ -23,7 +27,7 @@ export default function EditCourseForm({
       />
 
       <TextInput
-        label="وەسف"
+        label={text.description}
         value={formData.description}
         onChangeText={(text) => onFieldChange("description", text)}
         mode="outlined"
@@ -34,7 +38,7 @@ export default function EditCourseForm({
       />
 
       <TextInput
-        label="لینکی وێنە"
+        label={text.image_link}
         value={formData.thumbnail}
         onChangeText={(text) => onFieldChange("thumbnail", text)}
         placeholder="https://image-link.com"
@@ -44,7 +48,7 @@ export default function EditCourseForm({
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        بابەت
+        {text.subject}
       </Text>
       <SubjectDropdown
         value={formData.subject}
@@ -53,7 +57,7 @@ export default function EditCourseForm({
       />
 
       <Text variant="labelLarge" style={styles.label}>
-        پۆل
+        {text.class}
       </Text>
       <GradeSelector
         value={formData.grade}
