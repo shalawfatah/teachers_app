@@ -1,3 +1,5 @@
+// Check View Student Account, name not right, remove active
+// create sign out modal for sign out, home and account page
 export const eng_krd = {
   general_krd: {
     search: "",
@@ -12,6 +14,14 @@ export const eng_krd = {
     class: "",
     close: "",
     signout: "",
+    hello: "",
+    password: "",
+    sign_in: "",
+    no_account_create: "",
+    create_account: "",
+    have_account_sign_in: "",
+    register_student: "",
+    choose_teacher: "",
   },
   general_eng: {
     search: "Search",
@@ -26,6 +36,13 @@ export const eng_krd = {
     class: "Class",
     close: "",
     signout: "Sign Out",
+    password: "Password",
+    sign_in: "Sign In",
+    no_account_create: "No account? Create",
+    create_account: "Create Account",
+    have_account_sign_in: "Have account? Log in",
+    register_student: "Register Student",
+    choose_teacher: "Choose Teacher",
   },
   modals: {
     update_profile_eng: {
