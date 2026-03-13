@@ -4,6 +4,7 @@ import { Text, Card, Avatar, IconButton, Menu, Chip } from "react-native-paper";
 import { StudentCardProps } from "@/types/students";
 import { styles } from "@/styles/teacher_students_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function StudentCard({
   student,
@@ -12,7 +13,7 @@ export default function StudentCard({
   onDelete,
 }: StudentCardProps) {
   const [menuVisible, setMenuVisible] = useState(false);
-  const { lang, t } = useLanguage();
+  const { lang } = useLanguage();
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
 
@@ -31,7 +32,7 @@ export default function StudentCard({
     onDelete?.(student.id);
   };
 
-  const general = lang === 1 ? t.general_eng : t.general_krd;
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <Card style={styles.studentCard}>
@@ -66,17 +67,17 @@ export default function StudentCard({
           >
             <Menu.Item
               onPress={handleView}
-              title={general.view}
+              title={text.view}
               leadingIcon="eye"
             />
             <Menu.Item
               onPress={handleEdit}
-              title={general.update}
+              title={text.update}
               leadingIcon="pencil"
             />
             <Menu.Item
               onPress={handleDelete}
-              title={general.delete}
+              title={text.delete}
               leadingIcon="delete"
             />
           </Menu>

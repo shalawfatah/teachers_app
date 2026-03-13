@@ -3,12 +3,16 @@ import { Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { StudentProps } from "@/types/students";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function useStudents() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState<StudentProps[]>([]);
   const router = useRouter();
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const fetchStudents = async () => {
     try {
@@ -46,10 +50,10 @@ export default function useStudents() {
   }, [students, searchQuery]);
 
   const handleDelete = (studentId: string) => {
-    Alert.alert("سڕینەوە", "دڵنیای دەتەوێت ئەم خوێندکارە بسڕیتەوە؟", [
-      { text: "رەتکردەوە", style: "cancel" },
+    Alert.alert(text.delete, text.students_delete_text, [
+      { text: text.cancel, style: "cancel" },
       {
-        text: "سڕینەوە",
+        text: text.delete,
         style: "destructive",
         onPress: async () => {
           const { error } = await supabase

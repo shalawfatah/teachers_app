@@ -2,8 +2,9 @@
 // create sign out modal for sign out, home and account page
 // Translate register new course into Kurdish
 // Translate Upload video into Kurdish - placeholders - also kurdish is wrong
-export const eng_krd = {
-  general_krd: {
+export const translations = {
+  krd: {
+    // General
     search: "گەڕان",
     view: "بینین",
     update: "نوێکردنەوە",
@@ -31,8 +32,92 @@ export const eng_krd = {
     upload: "بارکردن",
     students: "خوێندکاران",
     manage_students: "بەڕێوەبردنی خوێندکاران",
+
+    // Account
+    account: "هەژمار",
+    position: "پێگە",
+    student_stat: "ئاماری قوتابیان",
+    course_stat: "ئاماری کۆرسەکان",
+    video_stat: "ئاماری ڤیدیۆکان",
+    acc_setting: "ڕێکخستنەکانی هەژمار",
+    update_acc: "نوێکردنەوەی هەژمار",
+    update_info: "نوێکردنەوەی زانیارییەکان",
+    support: "پشتگیری",
+    help: "یارمەتی",
+    about: "دەربارە",
+    logout: "چوونەدەرەوە",
+    delete_acc: "سڕینەوەی هەژمار",
+
+    // Home
+    home: "سەرەتا",
+    welcome: "بەخێربێیت",
+
+    // Course & Video
+    course: "کۆرسەکان",
+    video: "ڤیدیۆکان",
+    new_course: "کۆرسی نوێ",
+    view_video: "بینینی ڤیدیۆ",
+    edit_video: "دەستکاری ڤیدیۆ",
+    delete_video: "سڕینەوەی ڤیدیۆ",
+
+    // Students
+    verified: "سەلمێنراو",
+    not_verified: "نەسەلمێنراو",
+
+    // Single Course
+    teacher: "مامۆستا",
+    about_course: "دەربارەی کۆرس",
+
+    // Update Profile Modal
+    updating_profile: "نوێکردنەوەی پڕۆفایل",
+    subject: "بابەت",
+    profile_picture: "وێنەی پڕۆفایل",
+    profile_cover: "وێنەی بەرگ",
+
+    // Help Modal
+    faq: "پرسیارە باوەکان",
+    ask_support: "داوای هاوکاری بکە",
+
+    // About Modal
+    rava_app: "ئەپی ڕاڤە",
+    version: "وەشان",
+
+    // Delete Account Modal
+    delete_account_text:
+      "دڵنیای لە سڕینەوەی ئەم هەژمارە؟ ئەم کارە هەموو داتاکانت لە ئەپەکەدا دەسڕێتەوە و دواتر ناگەڕێتەوە.",
+
+    // Update Course
+    course_title: "ناونیشانی کۆرس",
+    description: "وەسف",
+    image_link: "بەستەری وێنە",
+    grade_level: "قۆناغ - پۆل",
+
+    // Delete Course
+    delete_course: "سڕینەوەی کۆرس",
+    delete_course_warning:
+      "دڵنیای لە سڕینەوەی ئەم کۆرسە؟ هەموو زانیارییەکان لەناودەچن.",
+
+    // Update Video
+    update_video: "نوێکردنەوەی ڤیدیۆ",
+
+    // Student Profile View
+    verification_status: "دۆخی سەلماندن",
+
+    // Student Update Profile
+    student_information: "زانیاری قوتابی",
+    video_play_permission: "ڕێپێدانی لێدانی ڤیدیۆ",
+    video_play_permission_text: "ئایا قوتابی ڕێپێدانی هەیە بۆ بینینی ڤیدیۆکان؟",
+    have_permission: "بەڵێ",
+    no_permission: "نەخێر",
+
+    // Student Delete
+    students_delete_text: "دڵنیای لە سڕینەوەی ئەم قوتابییە؟",
+
+    // Add Course
+    register_new_course: "تۆمارکردنی کۆرسی نوێ",
   },
-  general_eng: {
+  eng: {
+    // General
     search: "Search",
     view: "View",
     update: "Update",
@@ -60,68 +145,11 @@ export const eng_krd = {
     upload: "Upload",
     students: "Students",
     manage_students: "Manage Students",
-  },
-  modals: {
-    update_profile_eng: {
-      updating_profile: "Updating Profile",
-      name: "Name",
-      subject: "Subject",
-      profile_picture: "Profile Picture",
-      profile_cover: "Profile Cover",
-    },
-    update_profile_krd: {
-      updating_profile: "نوێکردنەوەی پڕۆفایل",
-      name: "ناو",
-      subject: "بابەت",
-      profile_picture: "وێنەی پڕۆفایل",
-      profile_cover: "وێنەی بەرگ",
-    },
-    help_modal_krd: {
-      faq: "پرسیارە باوەکان",
-      ask_support: "داوای هاوکاری بکە",
-    },
-    help_modal_eng: {
-      faq: "FAQ",
-      ask_support: "Ask Support",
-    },
-    about_krd: {
-      about: "دەربارە",
-      rava_app: "ئەپی ڕاڤە",
-      version: "وەشان",
-    },
-    about_eng: {
-      about: "About",
-      rava_app: "Rava App",
-      version: "Version",
-    },
-    delete_account_krd: {
-      delete_account_text:
-        "دڵنیای لە سڕینەوەی ئەم هەژمارە؟ ئەم کارە هەموو داتاکانت لە ئەپەکەدا دەسڕێتەوە و دواتر ناگەڕێتەوە.",
-    },
-    delete_account_eng: {
-      delete_account_text:
-        "Are you sure you want to delete this account? This action will delete your entire data on the app and cannot be retrieved later.",
-    },
-  },
-  account_krd: {
-    account: "هەژمار",
-    position: "پێگە",
-    studnet_stat: "ئاماری قوتابیان",
-    course_stat: "ئاماری کۆرسەکان",
-    video_stat: "ئاماری ڤیدیۆکان",
-    acc_setting: "ڕێکخستنەکانی هەژمار",
-    update_acc: "نوێکردنەوەی هەژمار",
-    update_info: "نوێکردنەوەی زانیارییەکان",
-    support: "پشتگیری",
-    help: "یارمەتی",
-    about: "دەربارە",
-    logout: "چوونەدەرەوە",
-    delete_acc: "سڕینەوەی هەژمار",
-  },
-  account_eng: {
+
+    // Account
     account: "Account",
     position: "Position",
-    studnet_stat: "Student Stats",
+    student_stat: "Student Stats",
     course_stat: "Course Stats",
     video_stat: "Video Stats",
     acc_setting: "Settings",
@@ -132,125 +160,73 @@ export const eng_krd = {
     about: "About",
     logout: "Log out",
     delete_acc: "Delete Account",
-  },
-  home_krd: {
-    home: "سەرەتا",
-    welcome: "بەخێربێیت",
-  },
-  home_eng: {
+
+    // Home
     home: "Home",
     welcome: "Welcome",
-  },
-  course_video_krd: {
-    course: "کۆرسەکان",
-    video: "ڤیدیۆکان",
-    new_course: "کۆرسی نوێ",
-    upload: "بارکردنی ڤیدیۆ",
-    view_video: "بینینی ڤیدیۆ",
-    edit_video: "دەستکاری ڤیدیۆ",
-    delete_video: "سڕینەوەی ڤیدیۆ",
-  },
-  course_video_eng: {
+
+    // Course & Video
     course: "Courses",
     video: "Videos",
     new_course: "Add Course",
-    upload: "Upload",
-    view_view: "View Video",
+    view_video: "View Video",
     edit_video: "Edit Video",
     delete_video: "Delete Video",
-  },
-  students_krd: {
-    students: "قوتابیان",
-    manage_students: "بەڕێوەبردنی قوتابیان",
-    verified: "سەلمێنراو",
-    not_verified: "نەسەلمێنراو",
-  },
-  students_eng: {
-    students: "Students",
-    manage_students: "Manage Students",
+
+    // Students
     verified: "Verified",
     not_verified: "Not Verified",
-  },
-  single_course_krd: {
-    teacher: "مامۆستا",
-    about_course: "دەربارەی کۆرس",
-  },
-  single_course_eng: {
+
+    // Single Course
     teacher: "Teacher",
     about_course: "About Course",
-  },
-  update_course_krd: {
-    course_title: "ناونیشانی کۆرس",
-    description: "وەسف",
-    image_link: "بەستەری وێنە",
-    subject: "بابەت",
-    class: "پۆل",
-  },
-  update_course_eng: {
+
+    // Update Profile Modal
+    updating_profile: "Updating Profile",
+    subject: "Subject",
+    profile_picture: "Profile Picture",
+    profile_cover: "Profile Cover",
+
+    // Help Modal
+    faq: "FAQ",
+    ask_support: "Ask Support",
+
+    // About Modal
+    rava_app: "Rava App",
+    version: "Version",
+
+    // Delete Account Modal
+    delete_account_text:
+      "Are you sure you want to delete this account? This action will delete your entire data on the app and cannot be retrieved later.",
+
+    // Update Course
     course_title: "Course Title",
     description: "Description",
     image_link: "Image Link",
-    subject: "Subject",
-    class: "Class",
-  },
-  delete_course_krd: {
-    delete_course: "سڕینەوەی کۆرس",
-    delete_course_warning:
-      "دڵنیای لە سڕینەوەی ئەم کۆرسە؟ هەموو زانیارییەکان لەناودەچن.",
-  },
-  delete_course_eng: {
+    grade_level: "Grade - Level",
+
+    // Delete Course
     delete_course: "Delete Course",
     delete_course_warning:
       "Are you sure you want to delete this course. All data will be lost.",
-  },
-  update_video_krd: {
-    update_video: "نوێکردنەوەی ڤیدیۆ",
-    title: "ناونیشان",
-    link: "بەستەر",
-  },
-  update_video_eng: {
+
+    // Update Video
     update_video: "Update Video",
-    title: "Title",
-    link: "Link",
-  },
-  students_profile_view_krd: {
-    email: "ئیمەیڵ",
-    class: "پۆل",
-    verification_status: "دۆخی سەلماندن",
-  },
-  students_profile_view_eng: {
-    email: "Email",
-    class: "Class",
+
+    // Student Profile View
     verification_status: "Verification Status",
-  },
-  students_update_profile_krd: {
-    student_information: "زانیاری قوتابی",
-    video_play_permission: "ڕێپێدانی لێدانی ڤیدیۆ",
-    video_play_permission_text: "ئایا قوتابی ڕێپێدانی هەیە بۆ بینینی ڤیدیۆکان؟",
-    have_permission: "بەڵێ",
-    no_permission: "نەخێر",
-  },
-  students_profile_update_eng: {
+
+    // Student Update Profile
     student_information: "Student Information",
     video_play_permission: "Video Play Permission",
     video_play_permission_text: "Does the student permission to play videos?",
     have_permission: "Yes",
     no_permission: "No",
-  },
-  students_delete_krd: {
-    students_delete_text: "دڵنیای لە سڕینەوەی ئەم قوتابییە؟",
-  },
-  students_delete_eng: {
+
+    // Student Delete
     students_delete_text: "Are you sure you want to delete this student?",
-  },
-  add_course_krd: {
-    register_new_course: "تۆمارکردنی کۆرسی نوێ",
-    course_title: "ناونیشانی کۆرس",
-    grade_level: "قۆناغ - پۆل",
-  },
-  add_course_eng: {
+
+    // Add Course
     register_new_course: "Register New Course",
-    course_title: "Course Title",
-    grade_level: "Grade - Level",
   },
 };
