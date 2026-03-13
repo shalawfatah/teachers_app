@@ -6,6 +6,12 @@ export const eng_krd = {
     delete: "",
     save: "",
     cancel: "",
+    delete_account: "",
+    name: "",
+    email: "",
+    class: "",
+    close: "",
+    signout: "",
   },
   general_eng: {
     search: "Search",
@@ -14,6 +20,12 @@ export const eng_krd = {
     delete: "Delete",
     save: "Save",
     cancel: "Cancel",
+    delete_account: "Delete Account",
+    name: "Name",
+    email: "Email",
+    class: "Class",
+    close: "",
+    signout: "Sign Out",
   },
   modals: {
     update_profile_eng: {
@@ -29,6 +41,24 @@ export const eng_krd = {
       subject: "Subject",
       profile_picture: "Profile Picture",
       profile_cover: "Cover Picture",
+    },
+    help_modal_krd: {
+      faq: "",
+      ask_support: "",
+    },
+    help_modal_eng: {
+      faq: "",
+      ask_support: "",
+    },
+    about_krd: {
+      about: "",
+      rava_app: "",
+      version: "",
+    },
+    about_eng: {
+      about: "About",
+      rava_app: "Rava App",
+      version: "Version",
     },
   },
   account_krd: {
@@ -98,5 +128,76 @@ export const eng_krd = {
     manage_students: "Manage Students",
     verified: "Verified",
     not_verified: "Not Verified",
+  },
+  single_course_krd: {
+    teacher: "",
+    about_course: "",
+  },
+  single_course_eng: {
+    teacher: "Teacher",
+    about_course: "About Course",
+  },
+  update_course_krd: {
+    course_title: "",
+    description: "",
+    image_link: "",
+    subject: "",
+    class: "",
+  },
+  update_course_eng: {
+    course_title: "Course Title",
+    description: "Description",
+    image_link: "Image Link",
+    subject: "Subject",
+    class: "Class",
+  },
+  delete_course_krd: {
+    delete_course: "",
+    delete_course_warning: "",
+  },
+  delete_course_eng: {
+    delete_course: "Delete Course",
+    delete_course_warning:
+      "Are you sure you want to delete this course. All data will be lost.",
+  },
+  update_video_krd: {
+    update_video: "",
+    title: "",
+    link: "",
+  },
+  update_video_eng: {
+    update_video: "Update Video",
+    title: "Title",
+    link: "Link",
+  },
+  students_profile_view_krd: {
+    email: "",
+    class: "",
+    verification_status: "",
+  },
+  students_profile_view_eng: {
+    email: "Email",
+    class: "Class",
+    verification_status: "Verification Status",
+  },
+  students_update_profile_krd: {
+    student_information: "",
+    video_play_permission: "",
+    video_play_permission_text: "",
+    have_permission: "",
+    no_permission: "",
+  },
+  students_profile_update_eng: {
+    student_information: "Student Information",
+    video_play_permission: "Video Play Permission",
+    video_play_permission_text: "Does the student permission to play videos?",
+    have_permission: "Yes",
+    no_permission: "No",
+  },
+  students_delete_krd: {
+    students_delete_text: "",
+  },
+  students_delete_eng: {
+    students_delete_text: "Are you sure you want to delete this student?",
   },
 };
