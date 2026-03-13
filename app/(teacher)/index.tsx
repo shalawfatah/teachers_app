@@ -21,6 +21,7 @@ export default function TeacherDashboard() {
           stats={stats}
           onEdit={() => setEditModalVisible(true)}
           onSignOut={handleSignOut}
+          onLanguageChange={refresh}
         />
       </ScrollView>
 

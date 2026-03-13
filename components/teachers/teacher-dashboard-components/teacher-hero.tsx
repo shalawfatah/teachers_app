@@ -1,16 +1,19 @@
-import { View, ImageBackground } from "react-native";
+import { View, ImageBackground, Pressable } from "react-native";
 import { Text, Avatar, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "@/styles/teacher_home_styles";
 import { Teacher } from "@/types/profile";
 import { TeacherStats } from "@/types/teacher";
 import StatsBar from "./stats-bar";
+import { useState } from "react";
+import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
 
 interface TeacherHeroProps {
   profile: Teacher | null;
   stats: TeacherStats | null;
   onEdit: () => void;
   onSignOut: () => void;
+  onLanguageChange?: () => void; // Add this prop
 }
 
 export default function TeacherHero({
@@ -18,7 +21,15 @@ export default function TeacherHero({
   stats,
   onEdit,
   onSignOut,
+  onLanguageChange,
 }: TeacherHeroProps) {
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+  // Get flag emoji based on language
+  const getLanguageFlag = (lang: number) => {
+    return lang === 1 ? "🇬🇧" : "🇮🇶"; // English or Kurdish flag
+  };
+
   return (
     <ImageBackground
       source={{
@@ -46,7 +57,31 @@ export default function TeacherHero({
               </Text>
             </View>
           </View>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            {/* Language Switcher Button */}
+            <Pressable
+              onPress={() => setLanguageModalVisible(true)}
+              style={{
+                marginRight: 8,
+                paddingHorizontal: 8,
+                paddingVertical: 4,
+                backgroundColor: "rgba(255,255,255,0.2)",
+                borderRadius: 20,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ fontSize: 16, marginRight: 4 }}>
+                {getLanguageFlag(profile?.lang || 1)}
+              </Text>
+              <IconButton
+                icon="chevron-down"
+                iconColor="#fff"
+                size={16}
+                style={{ margin: 0 }}
+              />
+            </Pressable>
+
             <IconButton
               icon="pencil"
               iconColor="#fff"
@@ -84,6 +119,17 @@ export default function TeacherHero({
           </Text>
         </View>
         <StatsBar stats={stats} />
+
+        {/* Language Switcher Modal */}
+        {profile && (
+          <LanguageSwitcherModal
+            visible={languageModalVisible}
+            onDismiss={() => setLanguageModalVisible(false)}
+            currentLang={profile?.lang || 1}
+            profileId={profile?.id || ""} // Make sure this is the actual profile ID
+            onLanguageChange={onLanguageChange || (() => { })}
+          />
+        )}
       </LinearGradient>
     </ImageBackground>
   );
