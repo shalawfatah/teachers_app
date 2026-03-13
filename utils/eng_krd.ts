@@ -4,12 +4,32 @@ export const eng_krd = {
     view: "",
     update: "",
     delete: "",
+    save: "",
+    cancel: "",
   },
   general_eng: {
     search: "Search",
     view: "View",
     update: "Update",
     delete: "Delete",
+    save: "Save",
+    cancel: "Cancel",
+  },
+  modals: {
+    update_profile_eng: {
+      updating_profile: "",
+      name: "",
+      subject: "",
+      profile_picture: "",
+      profile_cover: "",
+    },
+    update_profile_krd: {
+      updating_profile: "Update Profile",
+      name: "Name",
+      subject: "Subject",
+      profile_picture: "Profile Picture",
+      profile_cover: "Cover Picture",
+    },
   },
   account_krd: {
     account: "",
