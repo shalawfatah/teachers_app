@@ -1,4 +1,16 @@
 export const eng_krd = {
+  general_krd: {
+    search: "",
+    view: "",
+    update: "",
+    delete: "",
+  },
+  general_eng: {
+    search: "Search",
+    view: "View",
+    update: "Update",
+    delete: "Delete",
+  },
   account_krd: {
     account: "",
     position: "",
@@ -40,12 +52,8 @@ export const eng_krd = {
   course_video_krd: {
     course: "",
     video: "",
-    search: "",
     new_course: "",
     upload: "",
-    view: "",
-    update: "",
-    delete: "",
     view_video: "",
     edit_video: "",
     delete_video: "",
@@ -53,14 +61,22 @@ export const eng_krd = {
   course_video_eng: {
     course: "Courses",
     video: "Videos",
-    search: "Search",
     new_course: "Add Course",
     upload: "Upload",
-    view: "View",
-    update: "Update",
-    delete: "Delete",
     view_view: "View Video",
     edit_video: "Edit Video",
     delete_video: "Delete Video",
+  },
+  students_krd: {
+    students: "",
+    manage_students: "",
+    verified: "",
+    not_verified: "",
+  },
+  students_eng: {
+    students: "Students",
+    manage_students: "Manage Students",
+    verified: "Verified",
+    not_verified: "Not Verified",
   },
 };
