@@ -1,5 +1,7 @@
 // Check View Student Account, name not right, remove active
 // create sign out modal for sign out, home and account page
+// Translate register new course into Kurdish
+// Translate Upload video into Kurdish - placeholders - also kurdish is wrong
 export const eng_krd = {
   general_krd: {
     search: "",
@@ -15,6 +17,9 @@ export const eng_krd = {
     close: "",
     signout: "",
     hello: "",
+    title: "",
+    link: "",
+    create: "",
     password: "",
     sign_in: "",
     no_account_create: "",
@@ -22,6 +27,8 @@ export const eng_krd = {
     have_account_sign_in: "",
     register_student: "",
     choose_teacher: "",
+    select_course: "",
+    upload: "",
   },
   general_eng: {
     search: "Search",
@@ -36,6 +43,10 @@ export const eng_krd = {
     class: "Class",
     close: "",
     signout: "Sign Out",
+    hello: "Hello",
+    title: "Title",
+    link: "Link",
+    create: "Create",
     password: "Password",
     sign_in: "Sign In",
     no_account_create: "No account? Create",
@@ -43,6 +54,8 @@ export const eng_krd = {
     have_account_sign_in: "Have account? Log in",
     register_student: "Register Student",
     choose_teacher: "Choose Teacher",
+    select_course: "Select Course",
+    upload: "Upload",
   },
   modals: {
     update_profile_eng: {
@@ -223,5 +236,15 @@ export const eng_krd = {
   },
   students_delete_eng: {
     students_delete_text: "Are you sure you want to delete this student?",
+  },
+  add_course_krd: {
+    register_new_course: "",
+    course_title: "",
+    grade_level: "",
+  },
+  add_course_eng: {
+    register_new_course: "Register New Course",
+    course_title: "Course Title",
+    grade_level: "Grade - Level",
   },
 };
