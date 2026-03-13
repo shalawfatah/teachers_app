@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { Text, Card, Avatar, IconButton, Menu, Chip } from "react-native-paper";
 import { StudentCardProps } from "@/types/students";
 import { styles } from "@/styles/teacher_students_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function StudentCard({
   student,
@@ -11,7 +12,7 @@ export default function StudentCard({
   onDelete,
 }: StudentCardProps) {
   const [menuVisible, setMenuVisible] = useState(false);
-
+  const { lang, t } = useLanguage();
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
 
@@ -29,6 +30,8 @@ export default function StudentCard({
     closeMenu();
     onDelete?.(student.id);
   };
+
+  const general = lang === 1 ? t.general_eng : t.general_krd;
 
   return (
     <Card style={styles.studentCard}>
@@ -48,11 +51,7 @@ export default function StudentCard({
                 {student.email}
               </Text>
               <View style={styles.studentMeta}>
-                <Chip
-                  icon="book-open"
-                  compact
-                  style={styles.courseChip}
-                >
+                <Chip icon="book-open" compact style={styles.courseChip}>
                   {student.verified ? "Verified" : "Not Verified"}
                 </Chip>
               </View>
@@ -67,13 +66,17 @@ export default function StudentCard({
           >
             <Menu.Item
               onPress={handleView}
-              title="بینینی پرۆفایل"
+              title={general.view}
               leadingIcon="eye"
             />
-            <Menu.Item onPress={handleEdit} title="نوێکردنەوە" leadingIcon="pencil" />
+            <Menu.Item
+              onPress={handleEdit}
+              title={general.update}
+              leadingIcon="pencil"
+            />
             <Menu.Item
               onPress={handleDelete}
-              title="سڕینەوە"
+              title={general.delete}
               leadingIcon="delete"
             />
           </Menu>

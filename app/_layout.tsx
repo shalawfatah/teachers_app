@@ -4,6 +4,7 @@ import { PaperProvider } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { theme } from "@/constants/theme";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,12 +26,14 @@ export default function RootLayout() {
 
   return (
     <PaperProvider theme={theme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="(teacher)" />
-        <Stack.Screen name="(student)" />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <LanguageProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(teacher)" />
+          <Stack.Screen name="(student)" />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </LanguageProvider>
     </PaperProvider>
   );
 }
