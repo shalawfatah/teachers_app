@@ -141,6 +141,10 @@ export const translations = {
     all_courses: "هەموو خولەکان",
     available_courses: "خولی بەردەست",
     course_relevant_class: "خولەکە تایبەت بە چ پۆلێکە؟",
+    video_update: "نوێکردنەوەی ڤیدیۆ",
+    video_delete_warning: "دڵنیای دەتەوێت ئەم ڤیدیۆیە بسڕیتەوە؟",
+    download: "داونلۆدکردن",
+    open: "کردنەوە",
   },
   eng: {
     // General
@@ -280,5 +284,9 @@ export const translations = {
     all_courses: "All Courses",
     available_courses: "Available Courses",
     course_relevant_class: "Which class/grade is related to the course?",
+    video_update: "Video update",
+    video_delete_warning: "Are you sure you want to delete this video?",
+    download: "Download",
+    open: "Open",
   },
 };

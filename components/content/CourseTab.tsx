@@ -5,6 +5,8 @@ import { CoursesTabProps } from "@/types/courses";
 import { styles } from "@/styles/course_tab_styles";
 import { useCourses } from "./course-tab/use-courses";
 import { CourseCard } from "./course-tab/course-card";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function CoursesTab({
   onEdit,
@@ -13,21 +15,19 @@ export default function CoursesTab({
 }: CoursesTabProps) {
   const [visibleMenuId, setVisibleMenuId] = useState<string | null>(null);
   const { courses, loading, refreshing, refresh } = useCourses();
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleDeletePress = (id: string) => {
     setVisibleMenuId(null);
-    Alert.alert(
-      "سڕینەوەی خول",
-      "دڵنیای دەتەوێت ئەم خولە بسڕیتەوە، تەواوی زانیارییەکان نامێنێت",
-      [
-        { text: "پاشگەزبوونەوە", style: "cancel" },
-        {
-          text: "سڕینەوە",
-          style: "destructive",
-          onPress: () => onDelete?.(id),
-        },
-      ],
-    );
+    Alert.alert(text.delete_course, text.delete_course_warning, [
+      { text: text.cancel, style: "cancel" },
+      {
+        text: text.delete,
+        style: "destructive",
+        onPress: () => onDelete?.(id),
+      },
+    ]);
   };
 
   if (loading && !refreshing) {
@@ -63,7 +63,7 @@ export default function CoursesTab({
       }
       ListEmptyComponent={
         <View style={styles.emptyContainer}>
-          <Text variant="bodyLarge">هیچ خولێک دانەنراوە</Text>
+          <Text variant="bodyLarge">{text.no_course_registered}</Text>
         </View>
       }
     />

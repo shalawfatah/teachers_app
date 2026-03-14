@@ -5,6 +5,8 @@ import { styles } from "@/styles/video_form_modal_styles";
 import { VideoFormModalProps } from "@/types/modal";
 import { useVideoForm } from "./video-form-modal/use-video-form";
 import { VideoFormFields } from "./video-form-modal/video-form-fields";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function VideoFormModal({
   visible,
@@ -12,13 +14,14 @@ export default function VideoFormModal({
   onDismiss,
   onSuccess,
 }: VideoFormModalProps) {
-  const {
-    formData,
-    courses,
-    loading,
-    updateField,
-    handleSave,
-  } = useVideoForm(visible, video, onSuccess, onDismiss);
+  const { formData, courses, loading, updateField, handleSave } = useVideoForm(
+    visible,
+    video,
+    onSuccess,
+    onDismiss,
+  );
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <Portal>
@@ -28,7 +31,7 @@ export default function VideoFormModal({
         contentContainerStyle={styles.modal}
       >
         <Text variant="headlineSmall" style={styles.header}>
-          {video ? "نوێکردنەوی ڤیدیۆ" : "ئەپۆلدکردنی ڤیدیۆ"}
+          {video ? text.video_update : text.upload}
         </Text>
 
         <VideoFormFields
@@ -48,7 +51,7 @@ export default function VideoFormModal({
         <View style={styles.actions}>
           <Button onPress={onDismiss}>رەتکردنەوە</Button>
           <Button mode="contained" onPress={handleSave} loading={loading}>
-            {video ? "نوێکردنەوە" : "ئەپلۆد"}
+            {video ? text.update : text.upload}
           </Button>
         </View>
       </Modal>

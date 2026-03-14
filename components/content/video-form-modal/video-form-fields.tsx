@@ -15,7 +15,6 @@ interface VideoFormFieldsProps {
 export function VideoFormFields({
   title,
   link,
-  courseId,
   courseName,
   courses,
   onTitleChange,

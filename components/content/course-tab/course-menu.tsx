@@ -1,3 +1,5 @@
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 import { IconButton, Menu, Divider } from "react-native-paper";
 
 interface CourseMenuProps {
@@ -18,6 +20,8 @@ export function CourseMenu({
   onDelete,
   ...iconProps
 }: CourseMenuProps & any) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <Menu
       visible={visible}
@@ -26,13 +30,13 @@ export function CourseMenu({
         <IconButton {...iconProps} icon="dots-vertical" onPress={onOpen} />
       }
     >
-      <Menu.Item onPress={onView} title="بینین" leadingIcon="eye" />
+      <Menu.Item onPress={onView} title={text.view} leadingIcon="eye" />
       <Divider />
-      <Menu.Item onPress={onEdit} title="نوێکردنەوە" leadingIcon="pencil" />
+      <Menu.Item onPress={onEdit} title={text.update} leadingIcon="pencil" />
       <Divider />
       <Menu.Item
         onPress={onDelete}
-        title="سڕینەوە"
+        title={text.delete}
         leadingIcon="delete"
         titleStyle={{ color: "red" }}
       />

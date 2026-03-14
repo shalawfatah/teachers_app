@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { List, IconButton, Avatar, Menu, Divider } from "react-native-paper";
 import { styles } from "@/styles/video_tab_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface Props {
   video: any;
@@ -12,6 +14,8 @@ interface Props {
 
 export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
   const [visible, setVisible] = useState(false);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(null);
@@ -20,7 +24,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
     <List.Item
       title={video.title}
       style={styles.listItem}
-      titleStyle={{ fontFamily: "NRT-Bold", fontSize: 16}}
+      titleStyle={{ fontFamily: "NRT-Bold", fontSize: 16 }}
       left={() => (
         <Avatar.Image
           size={48}
@@ -41,7 +45,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
                 onView(video);
                 closeMenu();
               }}
-              title="سەیرکردنی ڤیدیۆ"
+              title={text.view_video}
               leadingIcon="eye"
             />
             <Divider />
@@ -50,7 +54,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
                 onEdit(video);
                 closeMenu();
               }}
-              title="نوێکردنەوەی ڤیدیۆ"
+              title={text.video_update}
               leadingIcon="pencil-outline"
             />
             <Divider />
@@ -59,7 +63,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
                 onDelete(video.id);
                 closeMenu();
               }}
-              title="سڕینەوەی ڤیدیۆ"
+              title={text.delete_video}
               leadingIcon="trash-can-outline"
               titleStyle={{ color: "#ff5252" }}
             />

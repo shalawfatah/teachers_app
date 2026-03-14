@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import { supabase } from "@/lib/supabase";
 import { deleteVideo } from "@/lib/videoService";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function useContentManagement() {
   const [tab, setTab] = useState("courses");
@@ -11,14 +13,16 @@ export default function useContentManagement() {
   const [playerVisible, setPlayerVisible] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const {lang} = useLanguage()
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
   const handleDeleteVideo = (id: string) => {
-    Alert.alert("سڕینەوەی ڤیدیۆ", "دڵنیای دەتەوێ ئەم ڤیدیۆیە بسڕیتەوە؟", [
-      { text: "پاشگەزبوونەوە", style: "cancel" },
+    Alert.alert(text.delete_video, text.video_delete_warning, [
+      { text: text.cancel, style: "cancel" },
       {
-        text: "سڕینەوە",
+        text: text.delete,
         style: "destructive",
         onPress: async () => {
           try {
