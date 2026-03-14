@@ -160,6 +160,8 @@ export const translations = {
     eleven: "١١",
     twelve: "١٢",
     login: "چوونە ناو هەژمار",
+    screen_not_exist: "ئەم پەڕەیە نەدۆزرایەوە",
+    go_home: "بگەڕێرەوە بۆ پەڕەی سەرەکی",
   },
   eng: {
     // General
@@ -319,5 +321,7 @@ export const translations = {
     eleven: "11",
     twelve: "12",
     login: "Log in",
+    screen_not_exist: "This screen does not exist",
+    go_home: "Go to home screen",
   },
 };
