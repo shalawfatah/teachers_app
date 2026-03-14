@@ -6,6 +6,8 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/video_single_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function VideoPlayer() {
   const { id } = useLocalSearchParams();
@@ -43,14 +45,15 @@ export default function VideoPlayer() {
       p.play();
     },
   );
-
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   if (!isDataReady) return null;
 
   return (
     <View style={styles.container}>
       <Appbar.Header elevated style={{ backgroundColor: "#fff" }}>
         <Appbar.BackAction onPress={() => router.back()} />
-        <Appbar.Content title={video?.title || "Video"} />
+        <Appbar.Content title={video?.title || text.video} />
       </Appbar.Header>
 
       <View style={styles.videoContainer}>

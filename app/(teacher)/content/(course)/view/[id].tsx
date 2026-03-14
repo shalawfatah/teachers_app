@@ -8,6 +8,8 @@ import { styles } from "@/styles/content_single_styles";
 import LessonList from "@/components/teachers/course-view-components/course-list";
 import CourseHeader from "@/components/teachers/course-view-components/course-header";
 import CourseDetails from "@/components/teachers/course-view-components/course-details";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function ViewCourse() {
   const { id } = useLocalSearchParams();
@@ -35,13 +37,15 @@ export default function ViewCourse() {
     }
   };
 
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   if (loading) return <ActivityIndicator style={styles.loader} size="large" />;
   if (!course)
     return (
       <View style={styles.errorContainer}>
         <Text variant="headlineSmall">Course not found</Text>
         <Button onPress={() => router.back()} style={styles.backBtn}>
-          Go Back
+          {text.go_back}
         </Button>
       </View>
     );

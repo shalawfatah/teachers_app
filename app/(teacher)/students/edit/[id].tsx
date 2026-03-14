@@ -7,11 +7,15 @@ import Loader from "@/components/Loader";
 import useStudentData from "@/components/teachers/edit-course-components/useStudentData";
 import StatusToggle from "@/components/teachers/edit-course-components/StatusToggle";
 import StudentInfo from "@/components/teachers/edit-course-components/StudentInfo";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function EditStudent() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const studentId = Array.isArray(id) ? id[0] : id || "";
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const { student, loading, saving, verified, setVerified, handleSave } =
     useStudentData(studentId);
@@ -46,10 +50,10 @@ export default function EditStudent() {
             style={styles.saveButton}
             contentStyle={{ height: 48 }}
           >
-            {saving ? "نوێکردنەوە..." : "نوێکردنەوە"}
+            {saving ? text.update : text.save}
           </Button>
           <Button mode="text" onPress={() => router.back()} disabled={saving}>
-            رەتکردنەوە
+            {text.cancel}
           </Button>
         </View>
       </ScrollView>

@@ -162,6 +162,7 @@ export const translations = {
     login: "چوونە ناو هەژمار",
     screen_not_exist: "ئەم پەڕەیە نەدۆزرایەوە",
     go_home: "بگەڕێرەوە بۆ پەڕەی سەرەکی",
+    student_profile: "پرۆفایلی خوێندکار",
   },
   eng: {
     // General
@@ -323,5 +324,6 @@ export const translations = {
     login: "Log in",
     screen_not_exist: "This screen does not exist",
     go_home: "Go to home screen",
+    student_profile: "Student Profile",
   },
 };

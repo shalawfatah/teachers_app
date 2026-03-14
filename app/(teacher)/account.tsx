@@ -9,6 +9,8 @@ import DeleteAccountModal from "@/components/teachers/account/DeleteAccountModal
 import { SettingsType } from "@/types/modal";
 import useTeacherAccount from "@/components/teachers/teacher-account-components/useTeacherAccount";
 import AccountSettingsList from "@/components/teachers/teacher-account-components/AccountSettingsList";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function AccountScreen() {
   const { profile, stats, loading, handleSignOut, refreshProfile } =
@@ -16,6 +18,8 @@ export default function AccountScreen() {
   const [editVisible, setEditVisible] = useState(false);
   const [activeSettings, setActiveSettings] = useState<SettingsType>(null);
   const [deleteVisible, setDeleteVisible] = useState(false);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <ScrollView
@@ -32,7 +36,7 @@ export default function AccountScreen() {
           {profile?.name}
         </Text>
         <Text variant="bodyMedium" style={styles.role}>
-          مامۆستا
+          {text.teacher}
         </Text>
       </View>
 
@@ -57,7 +61,7 @@ export default function AccountScreen() {
           style={styles.signOutButton}
           textColor="#d32f2f"
         >
-          دەرچوون لە ئەپ
+          {text.logout}
         </Button>
       </View>
 
@@ -69,7 +73,7 @@ export default function AccountScreen() {
           style={styles.deleteAccountButton}
           textColor="#FFFFFF"
         >
-          سڕینەوەی هەژمار - Delete Account
+          {text.delete_acc}
         </Button>
       </View>
 

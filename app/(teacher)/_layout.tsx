@@ -1,8 +1,12 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function TeacherLayout() {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <Tabs
       screenOptions={{
@@ -14,7 +18,7 @@ export default function TeacherLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "ماڵەوە",
+          title: text.home,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" size={size} color={color} />
           ),
@@ -23,7 +27,7 @@ export default function TeacherLayout() {
       <Tabs.Screen
         name="content/index"
         options={{
-          title: "خول و ڤیدیۆ",
+          title: text.course_video,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="video-box"
@@ -36,7 +40,7 @@ export default function TeacherLayout() {
       <Tabs.Screen
         name="students/index"
         options={{
-          title: "خوێندکاران",
+          title: text.students,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-group"
@@ -49,7 +53,7 @@ export default function TeacherLayout() {
       <Tabs.Screen
         name="account"
         options={{
-          title: "هەژمار",
+          title: text.account,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-circle"

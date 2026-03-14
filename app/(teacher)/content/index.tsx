@@ -8,10 +8,14 @@ import { styles } from "@/styles/teacher_content_styles";
 import useContentManagement from "@/components/content/edit-course-components/useContentManagement";
 import ManagementModals from "@/components/content/edit-course-components/ManagementModals";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function ContentManagementScreen() {
   const router = useRouter();
   const m = useContentManagement();
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const onFabPress = () => {
     if (m.tab === "courses") m.setCourseModalVisible(true);
@@ -28,14 +32,14 @@ export default function ContentManagementScreen() {
           value={m.tab}
           onValueChange={m.setTab}
           buttons={[
-            { value: "courses", label: "خول", icon: "book" },
-            { value: "videos", label: "ڤیدیۆ", icon: "play-circle" },
+            { value: "courses", label: text.course, icon: "book" },
+            { value: "videos", label: text.video, icon: "play-circle" },
           ]}
         />
       </View>
 
       <Searchbar
-        placeholder={`گەڕان`}
+        placeholder={text.search}
         onChangeText={m.setSearchQuery}
         value={m.searchQuery}
         style={styles.searchbar}
@@ -67,7 +71,7 @@ export default function ContentManagementScreen() {
 
       <FAB
         icon={m.tab === "courses" ? "plus" : "video-plus"}
-        label={m.tab === "courses" ? "خولی نوێ" : "ئەپلۆدکردن"}
+        label={m.tab === "courses" ? text.new_course : text.upload}
         style={styles.fab}
         onPress={onFabPress}
         color="#FFF"

@@ -6,10 +6,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AuxProps, StudentProps } from "@/types/students";
 import { styles } from "@/styles/single_student_view_styles";
 import DeleteStudentModal from "@/components/teachers/account/DeleteStudentModal";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
   const [modalVisible, setModalVisible] = useState(false);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const student: StudentProps = {
     id: Array.isArray(id) ? id[0] : id,
@@ -24,7 +28,7 @@ export default function ViewStudent() {
 
   return (
     <ScrollView style={styles.container}>
-      <Stack.Screen options={{ title: "پرۆفایلی خوێندکار" }} />
+      <Stack.Screen options={{ title: text.student_profile }} />
 
       <View style={styles.hero}>
         <Avatar.Text
@@ -51,14 +55,14 @@ export default function ViewStudent() {
         <Card.Content>
           <DetailItem
             icon="email-outline"
-            label="ئیمەیل"
+            label={text.email}
             value={student.email}
           />
           <Divider style={styles.divider} />
           <DetailItem
             icon="school-outline"
-            label="پۆل"
-            value={`پۆلی ${student.grade}`}
+            label={text.class}
+            value={`${text.class} ${student.grade}`}
           />
           <Divider style={styles.divider} />
           <DetailItem
@@ -79,7 +83,7 @@ export default function ViewStudent() {
           style={[styles.button, { borderColor: "#f44336" }]}
           icon="trash-can-outline"
         >
-          سڕینەوەی هەژمار
+          {text.delete_acc}
         </Button>
       </View>
 
