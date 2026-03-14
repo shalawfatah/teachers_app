@@ -47,7 +47,7 @@ export default function ViewStudent() {
           selectedColor="white"
           style={{ backgroundColor: statusColor }}
         >
-          {student.status.toUpperCase()}
+          {student.status === "active" ? text.verified : text.not_verified}
         </Chip>
       </View>
 

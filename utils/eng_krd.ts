@@ -1,7 +1,3 @@
-// Check View Student Account, name not right, remove active
-// create sign out modal for sign out, home and account page
-// Translate register new course into Kurdish
-// Translate Upload video into Kurdish - placeholders - also kurdish is wrong
 export const translations = {
   krd: {
     // General

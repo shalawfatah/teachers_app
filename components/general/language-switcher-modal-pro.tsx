@@ -21,7 +21,7 @@ export default function LanguageSwitcherModal({
 
   const languages = [
     { id: 1, name: "English", flag: "🇬🇧", code: "en" },
-    { id: 2, name: "Kurdish", flag: "🇮🇶", code: "ku" },
+    { id: 2, name: "Kurdish", flag: "🇹🇯", code: "ku" },
   ];
 
   const handleLanguageSelect = async (langId: number) => {

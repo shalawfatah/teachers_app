@@ -3,11 +3,11 @@ import { View, ScrollView } from "react-native";
 import { Modal, Portal, Text, Button } from "react-native-paper";
 import { styles } from "@/styles/edit_profile_modal_styles";
 import { EditProfileModalProps } from "@/types/modal";
-import { ProfileForm } from "./profile-form";
 import { useImageUpload } from "./use-image-upload";
 import { useProfileUpdate } from "./use-profile-update";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { ProfileForm } from "./profile-form";
 
 export default function EditProfileModal({
   visible,
@@ -31,6 +31,10 @@ export default function EditProfileModal({
     onDismiss,
   );
 
+  // Get language context here
+  const { lang, isRTL } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
+
   useEffect(() => {
     if (profile && visible) {
       setName(profile.name || "");
@@ -43,8 +47,6 @@ export default function EditProfileModal({
   const handleUpdate = () => {
     updateProfile({ name, expertise, thumbnail, coverImg });
   };
-  const { lang, isRTL } = useLanguage();
-  const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <Portal>
@@ -57,7 +59,10 @@ export default function EditProfileModal({
         ]}
       >
         <View style={styles.container}>
-          <Text variant="headlineSmall" style={styles.title}>
+          <Text
+            variant="headlineSmall"
+            style={[styles.title, { textAlign: isRTL ? "right" : "left" }]}
+          >
             {text.update_acc}
           </Text>
 
@@ -76,10 +81,21 @@ export default function EditProfileModal({
               onUploadCover={uploadCover}
               uploadingThumbnail={uploadingThumbnail}
               uploadingCover={uploadingCover}
+              // Pass language props to child
+              lang={lang}
+              isRTL={isRTL}
             />
           </ScrollView>
 
-          <View style={styles.buttonRow}>
+          <View
+            style={[
+              styles.buttonRow,
+              {
+                flexDirection: isRTL ? "row-reverse" : "row",
+                justifyContent: "flex-end",
+              },
+            ]}
+          >
             <Button
               mode="contained"
               onPress={handleUpdate}

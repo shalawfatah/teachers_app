@@ -3,7 +3,6 @@ import { View } from "react-native";
 import { Text, TextInput } from "react-native-paper";
 import { styles } from "@/styles/edit_profile_modal_styles";
 import { ImageUploader } from "./image-uploader";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 
 interface ProfileFormProps {
@@ -17,6 +16,9 @@ interface ProfileFormProps {
   onUploadCover: () => Promise<void>;
   uploadingThumbnail: boolean;
   uploadingCover: boolean;
+  // Add language props
+  lang: number;
+  isRTL: boolean;
 }
 
 export function ProfileForm({
@@ -30,9 +32,11 @@ export function ProfileForm({
   onUploadCover,
   uploadingThumbnail,
   uploadingCover,
+  lang,
+  isRTL,
 }: ProfileFormProps) {
-  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+
   return (
     <View>
       <TextInput
@@ -40,7 +44,7 @@ export function ProfileForm({
         value={name}
         onChangeText={onNameChange}
         mode="outlined"
-        style={[styles.input, { direction: isRTL ? "rtl" : "ltr" }]}
+        style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
       />
 
       <TextInput
@@ -49,10 +53,13 @@ export function ProfileForm({
         onChangeText={onExpertiseChange}
         mode="outlined"
         placeholder="e.g., Mathematics, Physics, Computer Science"
-        style={styles.input}
+        style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
       />
 
-      <Text variant="labelLarge" style={styles.label}>
+      <Text
+        variant="labelLarge"
+        style={[styles.label, { textAlign: isRTL ? "right" : "left" }]}
+      >
         {text.update_acc}
       </Text>
       <ImageUploader
@@ -63,7 +70,10 @@ export function ProfileForm({
         placeholderText="Tap to upload thumbnail"
       />
 
-      <Text variant="labelLarge" style={styles.label}>
+      <Text
+        variant="labelLarge"
+        style={[styles.label, { textAlign: isRTL ? "right" : "left" }]}
+      >
         {text.profile_cover}
       </Text>
       <ImageUploader

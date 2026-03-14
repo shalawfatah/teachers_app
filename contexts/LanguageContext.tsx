@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import { eng_krd } from "@/utils/eng_krd";
+import { translations } from "@/utils/eng_krd";
 
 type LanguageContextType = {
   lang: number;
-  t: typeof eng_krd;
+  t: typeof translations;
   isRTL: boolean;
   setLanguage: (lang: number) => void;
   refreshLanguage: () => Promise<void>;
@@ -17,8 +17,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<number>(1); // Default to English
 
-  const isRTL = lang === 2; // Kurdish is RTL
-  const t = eng_krd; // Your translations object
+  const isRTL = lang === 2;
+  const t = translations;
 
   const refreshLanguage = async () => {
     try {
