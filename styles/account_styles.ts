@@ -5,7 +5,6 @@ const isTablet = width > 768;
 
 export const styles = StyleSheet.create({
   container: {
-    direction: "rtl",
     flex: 1,
     backgroundColor: "#f5f5f5",
   },

@@ -65,8 +65,8 @@ export const translations = {
     course_content: "ناوەرۆکی خول",
 
     // Students
-    verified: "سەلمێنراو",
-    not_verified: "نەسەلمێنراو",
+    verified: "مۆڵەتی هەیە",
+    not_verified: "بێ مۆڵەتە",
 
     // Single Course
     teacher: "مامۆستا",

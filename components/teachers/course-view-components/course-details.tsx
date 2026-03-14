@@ -18,10 +18,10 @@ export default function CourseDetails({
   instructor,
   description,
 }: Props) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
-    <View style={{ direction: "rtl" }}>
+    <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
       <View style={styles.metaRow}>
         <Chip icon="school" style={styles.chip}>
           {text.class} {grade}

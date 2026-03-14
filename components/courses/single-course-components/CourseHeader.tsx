@@ -22,7 +22,7 @@ export default function CourseHeader({
   onOpenFilter,
 }: Props) {
   const filterCount = filters.grades.length;
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
@@ -53,12 +53,20 @@ export default function CourseHeader({
         </View>
       </View>
 
-      <View style={courses_styles.searchContainer}>
+      <View
+        style={[
+          courses_styles.searchContainer,
+          { direction: isRTL ? "rtl" : "ltr" },
+        ]}
+      >
         <Searchbar
           placeholder={text.search}
           onChangeText={onSearchChange}
           value={searchQuery}
-          style={courses_styles.searchbar}
+          style={[
+            courses_styles.searchbar,
+            { direction: isRTL ? "rtl" : "ltr" },
+          ]}
         />
       </View>
     </>

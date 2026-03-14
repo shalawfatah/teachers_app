@@ -26,7 +26,7 @@ export default function TeacherHero({
   onLanguageChange,
 }: TeacherHeroProps) {
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
-  const {lang} = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   // Get flag emoji based on language
   const getLanguageFlag = (lang: number) => {
@@ -48,7 +48,7 @@ export default function TeacherHero({
         style={styles.gradient}
       >
         {/* Header with user info and actions */}
-        <View style={styles.header}>
+        <View style={[styles.header, { direction: isRTL ? "rtl" : "ltr" }]}>
           <View style={styles.userInfo}>
             <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />
             <View style={styles.userText}>

@@ -6,6 +6,7 @@ import Loader from "@/components/Loader";
 import useStudents from "@/components/teachers/teacher-student-components/useStudents";
 import StudentHeader from "@/components/teachers/teacher-student-components/StudentHeader";
 import StudentCard from "@/components/teachers/StudentCard";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function StudentsScreen() {
   const {
@@ -18,10 +19,12 @@ export default function StudentsScreen() {
     handleDelete,
   } = useStudents();
 
+  const { isRTL } = useLanguage();
+
   if (loading) return <Loader />;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}>
       <StudentHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}

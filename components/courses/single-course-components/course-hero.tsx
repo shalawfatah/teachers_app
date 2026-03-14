@@ -21,7 +21,7 @@ export default function CourseHero({
   isVerified,
   onBack,
 }: CourseHeroProps) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <ImageBackground
@@ -55,7 +55,9 @@ export default function CourseHero({
               size={20}
               style={{ margin: 0 }}
             />
-            <Text style={styles.metaText}>
+            <Text
+              style={[styles.metaText, { direction: isRTL ? "rtl" : "ltr" }]}
+            >
               {text.number_of_lessons} {videosCount}
             </Text>
           </View>

@@ -15,7 +15,7 @@ export default function CreateCourseModal({
 }: CreateCourseModalProps) {
   const { formData, loading, error, updateField, handleSubmit } =
     useCourseCreate(onSuccess, onDismiss);
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
@@ -23,7 +23,10 @@ export default function CreateCourseModal({
       <Modal
         visible={visible}
         onDismiss={onDismiss}
-        contentContainerStyle={styles.modalContainer}
+        contentContainerStyle={[
+          styles.modalContainer,
+          { direction: isRTL ? "rtl" : "ltr" },
+        ]}
       >
         <ScrollView>
           <Text variant="headlineSmall" style={styles.modalTitle}>

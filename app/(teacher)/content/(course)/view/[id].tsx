@@ -37,7 +37,7 @@ export default function ViewCourse() {
     }
   };
 
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   if (loading) return <ActivityIndicator style={styles.loader} size="large" />;
   if (!course)
@@ -52,7 +52,7 @@ export default function ViewCourse() {
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
       contentContainerStyle={styles.scrollContent}
     >
       <CourseHeader title={course.title} thumbnail={course.thumbnail} />

@@ -28,7 +28,7 @@ export default function EditProfileModal({
       onSuccess: onProfileUpdate,
       onClose: onDismiss,
     });
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
@@ -36,7 +36,10 @@ export default function EditProfileModal({
       <Modal
         visible={visible}
         onDismiss={onDismiss}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={[
+          styles.container,
+          { direction: isRTL ? "rtl" : "ltr" },
+        ]}
       >
         <Text variant="headlineSmall" style={styles.title}>
           {text.update_acc}

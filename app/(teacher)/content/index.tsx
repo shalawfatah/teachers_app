@@ -14,7 +14,7 @@ import { translations } from "@/utils/eng_krd";
 export default function ContentManagementScreen() {
   const router = useRouter();
   const m = useContentManagement();
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   const onFabPress = () => {
@@ -42,7 +42,7 @@ export default function ContentManagementScreen() {
         placeholder={text.search}
         onChangeText={m.setSearchQuery}
         value={m.searchQuery}
-        style={styles.searchbar}
+        style={[styles.searchbar, { direction: isRTL ? "rtl" : "ltr" }]}
       />
 
       {m.tab === "courses" ? (

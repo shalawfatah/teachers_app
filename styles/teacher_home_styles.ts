@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: "rgba(0, 0, 0, 0.92)",
-    direction: "rtl",
     padding: 20,
     margin: 20,
     borderRadius: 20,

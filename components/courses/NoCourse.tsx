@@ -7,13 +7,17 @@ import { translations } from "@/utils/eng_krd";
 
 export default function NoCourse() {
   const router = useRouter();
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View
       style={[
         styles.container,
-        { justifyContent: "center", alignItems: "center" },
+        {
+          justifyContent: "center",
+          alignItems: "center",
+          direction: isRTL ? "rtl" : "ltr",
+        },
       ]}
     >
       <Text variant="headlineSmall">{text.course_not_found}</Text>

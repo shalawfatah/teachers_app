@@ -31,7 +31,7 @@ export function ProfileForm({
   uploadingThumbnail,
   uploadingCover,
 }: ProfileFormProps) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View>
@@ -40,7 +40,7 @@ export function ProfileForm({
         value={name}
         onChangeText={onNameChange}
         mode="outlined"
-        style={styles.input}
+        style={[styles.input, { direction: isRTL ? "rtl" : "ltr" }]}
       />
 
       <TextInput

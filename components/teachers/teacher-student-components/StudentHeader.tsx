@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function StudentHeader({ searchQuery, onSearchChange }: Props) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <>
@@ -24,12 +24,14 @@ export default function StudentHeader({ searchQuery, onSearchChange }: Props) {
         </Text>
       </View>
 
-      <View style={styles.searchContainer}>
+      <View
+        style={[styles.searchContainer, { direction: isRTL ? "rtl" : "ltr" }]}
+      >
         <Searchbar
           placeholder={text.search}
           onChangeText={onSearchChange}
           value={searchQuery}
-          style={styles.searchbar}
+          style={[styles.searchbar, { direction: isRTL ? "rtl" : "ltr" }]}
         />
       </View>
     </>

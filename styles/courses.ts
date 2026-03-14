@@ -6,7 +6,6 @@ export const courses_styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    direction: "rtl",
     backgroundColor: "#f5f5f5",
   },
   header: {
@@ -45,13 +44,11 @@ export const courses_styles = StyleSheet.create({
     backgroundColor: "#6200ee",
   },
   searchContainer: {
-    direction: "rtl",
     backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingBottom: 16,
   },
   searchbar: {
-    direction: "rtl",
     elevation: 0,
     paddingHorizontal: 12,
     backgroundColor: "#f5f5f5",

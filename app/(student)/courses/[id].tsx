@@ -17,7 +17,7 @@ export default function SingleCourse() {
   const { course, videos, isVerified, loading, canPlayVideo } = useCourseData(
     id as string,
   );
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleVideoPress = (videoId: string) => {
@@ -37,7 +37,7 @@ export default function SingleCourse() {
   const hasPlayableVideos = videos.some((v) => canPlayVideo(v));
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}>
       <StatusBar barStyle="light-content" />
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <CourseHero

@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     elevation: 4,
     backgroundColor: "white",
     borderRadius: 16,
-    direction: "rtl",
   },
   backgroundImage: {
     width: "100%",

@@ -53,7 +53,7 @@ export default function StudentCard({
               </Text>
               <View style={styles.studentMeta}>
                 <Chip icon="book-open" compact style={styles.courseChip}>
-                  {student.verified ? "Verified" : "Not Verified"}
+                  {student.verified ? text.verified : text.not_verified}
                 </Chip>
               </View>
             </View>

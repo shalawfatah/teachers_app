@@ -29,6 +29,7 @@ export default function CoursesTab({
       },
     ]);
   };
+  const { isRTL } = useLanguage();
 
   if (loading && !refreshing) {
     return <ActivityIndicator style={{ flex: 1 }} size="large" />;
@@ -37,7 +38,7 @@ export default function CoursesTab({
   return (
     <FlatList
       data={courses}
-      style={{ direction: "rtl" }}
+      style={{ direction: isRTL ? "rtl" : "ltr" }}
       renderItem={({ item }) => (
         <CourseCard
           course={item}

@@ -23,7 +23,7 @@ export default function FilterModal({
     handleClear,
     handleCancel,
   } = useFilterLogic(currentFilters, onApply, onDismiss);
-  const {lang} = useLanguage()
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
@@ -31,7 +31,10 @@ export default function FilterModal({
       <Modal
         visible={visible}
         onDismiss={handleCancel}
-        contentContainerStyle={styles.modalContainer}
+        contentContainerStyle={[
+          styles.modalContainer,
+          { direction: isRTL ? "rtl" : "ltr" },
+        ]}
       >
         <View style={styles.header}>
           <Text variant="headlineSmall" style={styles.title}>

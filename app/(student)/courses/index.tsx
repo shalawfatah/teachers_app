@@ -12,13 +12,15 @@ import { translations } from "@/utils/eng_krd";
 
 export default function CoursesScreen() {
   const c = useCourses();
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   if (c.loading && !c.refreshing) return <Loader />;
 
   return (
-    <View style={courses_styles.container}>
+    <View
+      style={[courses_styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
+    >
       <CourseHeader
         courseCount={c.courses.length}
         searchQuery={c.searchQuery}

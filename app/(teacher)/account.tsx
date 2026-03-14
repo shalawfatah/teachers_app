@@ -18,12 +18,12 @@ export default function AccountScreen() {
   const [editVisible, setEditVisible] = useState(false);
   const [activeSettings, setActiveSettings] = useState<SettingsType>(null);
   const [deleteVisible, setDeleteVisible] = useState(false);
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
       contentContainerStyle={styles.scrollContent}
     >
       <View style={styles.profileHeader}>

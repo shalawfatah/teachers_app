@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", direction: "rtl"},
+  container: { flex: 1, backgroundColor: "#fff"},
   heroImage: { height: 320 },
   gradient: { flex: 1, justifyContent: "space-between", padding: 16 },
   backButton: {
@@ -15,9 +15,8 @@ export const styles = StyleSheet.create({
   chipText: { color: "white", fontWeight: "bold", fontSize: 10 },
   title: { color: "white", fontWeight: "bold", letterSpacing: -0.5, fontFamily: "NRT-Bold" },
   metaRow: { flexDirection: "row", alignItems: "center", marginLeft: -8 },
-  metaText: { color: "white", fontSize: 14, fontWeight: "500", direction: "rtl"},
+  metaText: { color: "white", fontSize: 14, fontWeight: "500"},
   contentBody: {
-    direction: "rtl",
     padding: 24,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,

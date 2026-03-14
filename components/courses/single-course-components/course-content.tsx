@@ -24,10 +24,10 @@ export default function CourseContent({
   canPlayVideo,
   onVideoPress,
 }: CourseContentProps) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
-    <View style={styles.contentBody}>
+    <View style={[styles.contentBody, { direction: isRTL ? "rtl" : "ltr" }]}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
         {text.about_course}
       </Text>

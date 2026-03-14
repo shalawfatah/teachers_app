@@ -74,7 +74,6 @@ export const styles = StyleSheet.create({
   },
   settingsContainer: {
     backgroundColor: "#fff",
-    direction: "rtl",
     marginTop: 8,
     width: isTablet ? 600 : "100%",
     alignSelf: "center",

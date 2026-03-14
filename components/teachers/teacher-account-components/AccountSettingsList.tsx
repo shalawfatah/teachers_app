@@ -14,10 +14,12 @@ export default function AccountSettingsList({
   onEditPress,
   onSettingsPress,
 }: Props) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
-    <View style={styles.settingsContainer}>
+    <View
+      style={[styles.settingsContainer, { direction: isRTL ? "rtl" : "ltr" }]}
+    >
       <List.Section>
         <List.Subheader>سازاندنی هەژمار</List.Subheader>
         <List.Item

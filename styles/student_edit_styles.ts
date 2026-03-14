@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f8f9fa", marginTop: 24 },
   content: { padding: 16 },
   formCard: {
-    direction: "rtl",
     padding: 24,
     borderRadius: 12,
     backgroundColor: "white",

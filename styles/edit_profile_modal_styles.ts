@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     borderRadius: 12,
-    direction: "rtl",
     padding: 24,
   },
   title: {
@@ -20,7 +19,6 @@ export const styles = StyleSheet.create({
     maxHeight: 500,
   },
   input: {
-    direction: "rtl",
     marginBottom: 16,
   },
   label: {

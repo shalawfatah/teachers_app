@@ -11,11 +11,11 @@ interface Props {
 }
 
 export default function StatusToggle({ verified, onStatusChange }: Props) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View>
-      <View style={{ direction: "rtl" }}>
+      <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
         <Text variant="labelLarge" style={[styles.label, { marginTop: 20 }]}>
           {text.video_play_permission}
         </Text>

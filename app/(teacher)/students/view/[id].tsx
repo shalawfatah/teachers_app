@@ -98,8 +98,9 @@ export default function ViewStudent() {
 }
 
 function DetailItem({ icon, label, value }: AuxProps) {
+  const { isRTL } = useLanguage();
   return (
-    <View style={styles.detailRow}>
+    <View style={[styles.detailRow, { direction: isRTL ? "rtl" : "ltr" }]}>
       <MaterialCommunityIcons name={icon as any} size={24} color="#666" />
       <View style={styles.detailText}>
         <Text variant="labelMedium" style={{ color: "#666" }}>

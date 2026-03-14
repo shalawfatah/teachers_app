@@ -14,7 +14,7 @@ export default function EditStudent() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const studentId = Array.isArray(id) ? id[0] : id || "";
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   const { student, loading, saving, verified, setVerified, handleSave } =
@@ -35,7 +35,10 @@ export default function EditStudent() {
         style={styles.container}
         contentContainerStyle={styles.content}
       >
-        <Surface style={styles.formCard} elevation={1}>
+        <Surface
+          style={[styles.formCard, { direction: isRTL ? "rtl" : "ltr" }]}
+          elevation={1}
+        >
           <StudentInfo student={student} />
         </Surface>
 

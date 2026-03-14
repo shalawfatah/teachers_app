@@ -11,10 +11,10 @@ interface Props {
 }
 
 export default function LoginForm({ state }: Props) {
-  const { lang } = useLanguage();
+  const { lang, isRTL} = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
-    <View style={{ direction: "rtl" }}>
+    <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
       <Text variant="headlineMedium" style={styles.title}>
         {text.hello}
       </Text>
