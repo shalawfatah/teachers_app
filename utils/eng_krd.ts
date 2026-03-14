@@ -165,6 +165,8 @@ export const translations = {
     student_profile: "پرۆفایلی خوێندکار",
     courses: "خولەکان",
     course_start: "دەستپێکی خول",
+    confirm_email: "پشتڕاستکردنەوەی ئیمەیل",
+    got_it: "تەواو",
   },
   eng: {
     // General
@@ -329,5 +331,7 @@ export const translations = {
     student_profile: "Student Profile",
     courses: "Courses",
     course_start: "Course Start",
+    confirm_email: "Confirm email",
+    got_it: "Got it",
   },
 };

@@ -6,6 +6,8 @@ import { styles } from "@/styles/signup_styles";
 import useTeachers from "@/components/account/signup-components/use-teachers";
 import useSignup from "@/components/account/signup-components/use-signup";
 import SignupForm from "@/components/account/signup-components/signup-form";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function SignupScreen() {
   const [email, setEmail] = useState("");
@@ -19,6 +21,8 @@ export default function SignupScreen() {
 
   const { teachers, loading: teachersLoading } = useTeachers();
   const { loading, error, signup } = useSignup();
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleSignup = async () => {
     const success = await signup({
@@ -43,7 +47,7 @@ export default function SignupScreen() {
         <Card style={styles.card}>
           <Card.Content>
             <Text variant="headlineMedium" style={styles.title}>
-              تۆمارکردنی خوێندکار
+              {text.register_student}
             </Text>
 
             <SignupForm
@@ -68,7 +72,7 @@ export default function SignupScreen() {
               onPress={() => router.back()}
               disabled={loading}
             >
-              گەر هەژمارت هەیە، بچۆ ناو هەژمارەکەت
+              {text.have_account_sign_in}
             </Button>
           </Card.Content>
         </Card>
@@ -79,13 +83,13 @@ export default function SignupScreen() {
           visible={successDialogVisible}
           onDismiss={() => router.replace("/(auth)/login")}
         >
-          <Dialog.Title>پشتڕاستکردنەوەی ئیمەیل</Dialog.Title>
+          <Dialog.Title>{text.confirm_email}</Dialog.Title>
           <Dialog.Content>
             <Text>Check {email} to activate your student account.</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => router.replace("/(auth)/login")}>
-              Got it
+              {text.got_it}
             </Button>
           </Dialog.Actions>
         </Dialog>
