@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   },
   welcomeText: {
     color: "rgba(255,255,255,0.92)",
-    fontSize: 16,
+    fontSize: 14,
   },
   userName: {
     color: "#fff",

@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
   title: {
     paddingHorizontal: 20,
     fontWeight: "bold",
+    marginBottom: 12,
     backgroundColor: "white",
   },
   scrollView: {

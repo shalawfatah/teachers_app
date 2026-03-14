@@ -21,7 +21,7 @@ export default function AccountSettingsList({
       style={[styles.settingsContainer, { direction: isRTL ? "rtl" : "ltr" }]}
     >
       <List.Section>
-        <List.Subheader>سازاندنی هەژمار</List.Subheader>
+        <List.Subheader>{text.acc_setting}</List.Subheader>
         <List.Item
           title={text.update_acc}
           description={text.update_info}

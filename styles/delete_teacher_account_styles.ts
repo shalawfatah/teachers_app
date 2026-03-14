@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 12,
     color: "#d32f2f",
-    fontSize: isTablet ? 24 : 20, 
+    fontSize: isTablet ? 24 : 20,
   },
   message: {
     textAlign: "center",
@@ -39,14 +39,15 @@ export const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
     gap: 12,
     height: isTablet ? 55 : 45,
   },
   cancelButton: {
-    flex: 1,
+    display: "flex",
   },
   deleteButton: {
-    flex: 1,
+    display: "flex",
   },
 });

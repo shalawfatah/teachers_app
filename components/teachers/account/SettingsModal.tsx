@@ -40,7 +40,7 @@ export default function SettingsModal({
         return (
           <View style={styles.centerAlign}>
             <Text variant="headlineSmall">{text.rava_app}</Text>
-            <Text variant="bodySmall">{text.version}</Text>
+            <Text variant="bodySmall">{text.version} 1.0.5</Text>
             <Text variant="bodyMedium" style={[styles.text, { marginTop: 15 }]}>
               {text.expo_text}
             </Text>

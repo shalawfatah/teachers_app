@@ -31,18 +31,18 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
+    marginTop: 12,
     marginBottom: 4,
-    fontSize: scale(22), 
+    fontSize: scale(22),
   },
   role: {
     color: "#666",
     marginTop: 10,
-    fontSize: scale(16),
+    fontSize: scale(12),
   },
   statsCard: {
     margin: 16,
     marginBottom: 8,
-    // Constrain width so it's a neat card in the center of the iPad
     width: isTablet ? 600 : "92%",
     alignSelf: "center",
     borderRadius: isTablet ? 12 : 8,
@@ -65,12 +65,11 @@ export const styles = StyleSheet.create({
   statNumber: {
     fontWeight: "bold",
     color: "#6200ee",
-    fontSize: scale(22), // Significant pop for stats
   },
   statLabel: {
     color: "#666",
     marginTop: 4,
-    fontSize: scale(14),
+    fontSize: scale(10),
   },
   settingsContainer: {
     backgroundColor: "#fff",
@@ -80,16 +79,15 @@ export const styles = StyleSheet.create({
     borderRadius: isTablet ? 12 : 0,
   },
   signOutContainer: {
-    padding: scale(16),
     width: isTablet ? 600 : "100%",
     alignSelf: "center",
   },
   signOutButton: {
     borderColor: "#d32f2f",
-    height: scale(45), // Taller touch target for iPad
+    marginTop: 16,
+    marginBottom: 8,
   },
   deleteAccountContainer: {
-    padding: scale(16),
     width: isTablet ? 600 : "100%",
     alignSelf: "center",
   },
@@ -97,6 +95,5 @@ export const styles = StyleSheet.create({
     borderColor: "red",
     backgroundColor: "red",
     color: "white",
-    height: scale(45),
   },
 });

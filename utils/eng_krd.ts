@@ -1,3 +1,5 @@
+// add Help  - FAQ, Help
+// add About description - Rava Teachers app provides ... (both KRD, ENG)
 export const translations = {
   krd: {
     // General
@@ -79,7 +81,7 @@ export const translations = {
     ask_support: "داوای هاوکاری بکە",
 
     // About Modal
-    rava_app: "ئەپی ڕاڤە",
+    rava_app: "ئەپی مامۆستایانی راڤە",
     version: "وەشان",
 
     // Delete Account Modal
@@ -245,7 +247,7 @@ export const translations = {
     ask_support: "Ask Support",
 
     // About Modal
-    rava_app: "Rava App",
+    rava_app: "Rava Teachers App",
     version: "Version",
 
     // Delete Account Modal
