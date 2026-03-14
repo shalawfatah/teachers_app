@@ -145,6 +145,7 @@ export const translations = {
     video_delete_warning: "دڵنیای دەتەوێت ئەم ڤیدیۆیە بسڕیتەوە؟",
     download: "داونلۆدکردن",
     open: "کردنەوە",
+    student: "خوێندکار",
   },
   eng: {
     // General
@@ -288,5 +289,6 @@ export const translations = {
     video_delete_warning: "Are you sure you want to delete this video?",
     download: "Download",
     open: "Open",
+    student: "Student",
   },
 };

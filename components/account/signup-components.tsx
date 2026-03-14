@@ -6,6 +6,8 @@ import { styles } from "@/styles/signup_styles";
 import SignupForm from "../../components/account/signup-components/signup-form";
 import useTeachers from "../../components/account/signup-components/use-teachers";
 import useSignup from "../../components/account/signup-components/use-signup";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function SignupScreen() {
   const [email, setEmail] = useState("");
@@ -16,6 +18,8 @@ export default function SignupScreen() {
     null,
   );
   const [successDialogVisible, setSuccessDialogVisible] = useState(false);
+  const {lang} = useLanguage()
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const { teachers, loading: teachersLoading } = useTeachers();
   const { loading, error, signup } = useSignup();
@@ -43,7 +47,7 @@ export default function SignupScreen() {
         <Card style={styles.card}>
           <Card.Content>
             <Text variant="headlineMedium" style={styles.title}>
-              تۆمارکردنی خوێندکار
+              {text.register_student}
             </Text>
 
             <SignupForm
