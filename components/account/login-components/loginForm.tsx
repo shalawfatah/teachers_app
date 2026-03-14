@@ -3,19 +3,23 @@ import { TextInput, Button, Text, HelperText } from "react-native-paper";
 import { router } from "expo-router";
 import { styles } from "@/styles/login_styles";
 import { View } from "react-native";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface Props {
   state: any;
 }
 
 export default function LoginForm({ state }: Props) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View style={{ direction: "rtl" }}>
       <Text variant="headlineMedium" style={styles.title}>
-        سڵاو
+        {text.hello}
       </Text>
       <TextInput
-        label="ئیمەیل"
+        label={text.email}
         value={state.email}
         onChangeText={state.setEmail}
         autoCapitalize="none"
@@ -25,7 +29,7 @@ export default function LoginForm({ state }: Props) {
         disabled={state.loading}
       />
       <TextInput
-        label="وشەی نهێنی"
+        label={text.password}
         value={state.password}
         onChangeText={state.setPassword}
         secureTextEntry
@@ -45,14 +49,14 @@ export default function LoginForm({ state }: Props) {
         disabled={state.loading}
         style={styles.button}
       >
-        چوونە ناو هەژمار
+        {text.login}
       </Button>
       <Button
         mode="text"
         onPress={() => router.push("/(auth)/signup")}
         disabled={state.loading}
       >
-        گەر هەژمارت نیە، دروستی بکە
+        {text.no_account_create}
       </Button>
     </View>
   );

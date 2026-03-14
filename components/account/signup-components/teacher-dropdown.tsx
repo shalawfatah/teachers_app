@@ -3,6 +3,8 @@ import { View } from "react-native";
 import { Button, Menu } from "react-native-paper";
 import { styles } from "@/styles/signup_styles";
 import { TeacherShort } from "@/types/teacher";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface TeacherDropdownProps {
   teachers: TeacherShort[];
@@ -18,6 +20,8 @@ export default function TeacherDropdown({
   disabled = false,
 }: TeacherDropdownProps) {
   const [menuVisible, setMenuVisible] = useState(false);
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const selectedTeacher = teachers.find((t) => t.id === selectedTeacherId);
 
@@ -36,8 +40,8 @@ export default function TeacherDropdown({
             disabled={disabled}
           >
             {selectedTeacher
-              ? `مامۆستا: ${selectedTeacher.name}`
-              : "مامۆستا هەڵبژێرە"}
+              ? `${text.teacher} ${selectedTeacher.name}`
+              : text.choose_teacher}
           </Button>
         }
       >
@@ -53,7 +57,7 @@ export default function TeacherDropdown({
             />
           ))
         ) : (
-          <Menu.Item title="No teachers found" disabled />
+          <Menu.Item title={text.no_teacher_found} disabled />
         )}
       </Menu>
     </View>

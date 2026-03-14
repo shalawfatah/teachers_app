@@ -4,6 +4,8 @@ import { styles } from "@/styles/signup_styles";
 import { TeacherShort } from "@/types/teacher";
 import GradeSelector from "./grade-selector";
 import TeacherDropdown from "./teacher-dropdown";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 interface SignupFormProps {
   email: string;
@@ -38,10 +40,12 @@ export default function SignupForm({
   loading,
   error,
 }: SignupFormProps) {
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View>
       <TextInput
-        label="ناو"
+        label={text.name}
         value={fullName}
         onChangeText={onFullNameChange}
         style={styles.input}
@@ -50,7 +54,7 @@ export default function SignupForm({
       />
 
       <TextInput
-        label="ئیمەیل"
+        label={text.email}
         value={email}
         onChangeText={onEmailChange}
         autoCapitalize="none"
@@ -68,7 +72,7 @@ export default function SignupForm({
       />
 
       <TextInput
-        label="وشەی نهێنی"
+        label={text.password}
         value={password}
         onChangeText={onPasswordChange}
         secureTextEntry
@@ -88,7 +92,7 @@ export default function SignupForm({
         disabled={loading}
         style={styles.button}
       >
-        دروستکردنی هەژمار
+        {text.create_account}
       </Button>
     </View>
   );

@@ -5,6 +5,8 @@
 export const translations = {
   krd: {
     // General
+    home: "ماڵەوە",
+    course_video: "خول و ڤیدیۆ",
     search: "گەڕان",
     view: "بینین",
     update: "نوێکردنەوە",
@@ -50,9 +52,8 @@ export const translations = {
     delete_acc: "سڕینەوەی هەژمار",
 
     // Home
-    home: "سەرەتا",
     welcome: "بەخێربێیت",
-
+    no_teacher_found: "هیچ مامۆستایەک نەدۆزرایەوە",
     // Course & Video
     course: "کۆرسەکان",
     video: "ڤیدیۆکان",
@@ -146,9 +147,24 @@ export const translations = {
     download: "داونلۆدکردن",
     open: "کردنەوە",
     student: "خوێندکار",
+    one: "١",
+    two: "٢",
+    three: "٣",
+    four: "٤",
+    five: "٥",
+    six: "٦",
+    seven: "٧",
+    eight: "٨",
+    nine: "٩",
+    ten: "١٠",
+    eleven: "١١",
+    twelve: "١٢",
+    login: "چوونە ناو هەژمار",
   },
   eng: {
     // General
+    home: "Home",
+    course_video: "Courses",
     search: "Search",
     view: "View",
     update: "Update",
@@ -194,8 +210,8 @@ export const translations = {
     delete_acc: "Delete Account",
 
     // Home
-    home: "Home",
     welcome: "Welcome",
+    no_teacher_found: "No Teacher Found.",
 
     // Course & Video
     course: "Courses",
@@ -290,5 +306,18 @@ export const translations = {
     download: "Download",
     open: "Open",
     student: "Student",
+    one: "1",
+    two: "2",
+    three: "3",
+    four: "4",
+    five: "5",
+    six: "6",
+    seven: "7",
+    eight: "8",
+    nine: "9",
+    ten: "10",
+    eleven: "11",
+    twelve: "12",
+    login: "Log in",
   },
 };
