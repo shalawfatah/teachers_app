@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Rava Teachers",
-    "slug": "rava_teachers",
+    "slug": "teachers-app",
     "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
