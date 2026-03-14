@@ -163,6 +163,8 @@ export const translations = {
     screen_not_exist: "ئەم پەڕەیە نەدۆزرایەوە",
     go_home: "بگەڕێرەوە بۆ پەڕەی سەرەکی",
     student_profile: "پرۆفایلی خوێندکار",
+    courses: "خولەکان",
+    course_start: "دەستپێکی خول",
   },
   eng: {
     // General
@@ -325,5 +327,7 @@ export const translations = {
     screen_not_exist: "This screen does not exist",
     go_home: "Go to home screen",
     student_profile: "Student Profile",
+    courses: "Courses",
+    course_start: "Course Start",
   },
 };

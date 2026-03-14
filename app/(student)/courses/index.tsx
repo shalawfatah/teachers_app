@@ -7,9 +7,13 @@ import { renderCourse } from "@/components/courses/Card";
 import FilterModal from "@/components/courses/FilterModal";
 import CourseHeader from "../../../components/courses/single-course-components/CourseHeader";
 import useCourses from "../../../components/courses/single-course-components/use-courses";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function CoursesScreen() {
   const c = useCourses();
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   if (c.loading && !c.refreshing) return <Loader />;
 
@@ -32,7 +36,7 @@ export default function CoursesScreen() {
         refreshControl={
           <RefreshControl refreshing={c.refreshing} onRefresh={c.onRefresh} />
         }
-        ListEmptyComponent={<Text>هیچ خولێک دانەنراوە</Text>}
+        ListEmptyComponent={<Text>{text.no_course_registered}</Text>}
       />
 
       <FilterModal

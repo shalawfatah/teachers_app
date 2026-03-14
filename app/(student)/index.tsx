@@ -68,18 +68,17 @@ export default function StudentDashboard() {
   };
 
   const getLanguageFlag = (lang: number) => {
-    return lang === 1 ? "🇬🇧" : "🇮🇶";
+    return lang === 1 ? "🇬🇧" : "🇹🇯";
   };
 
   const handleLanguageChange = () => {
-    getProfile(); // Refresh profile to get updated language
+    getProfile();
   };
 
   if (loading) return <Loader />;
 
   return (
     <>
-      {/* Language Switcher Button - Fixed at top */}
       <View
         style={{
           position: "absolute",

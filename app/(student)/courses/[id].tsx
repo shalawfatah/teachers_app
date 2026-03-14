@@ -8,6 +8,8 @@ import Loader from "@/components/Loader";
 import CourseContent from "@/components/courses/single-course-components/course-content";
 import CourseHero from "@/components/courses/single-course-components/course-hero";
 import useCourseData from "@/components/courses/single-course-components/use-course-data";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/utils/eng_krd";
 
 export default function SingleCourse() {
   const { id } = useLocalSearchParams();
@@ -15,6 +17,8 @@ export default function SingleCourse() {
   const { course, videos, isVerified, loading, canPlayVideo } = useCourseData(
     id as string,
   );
+  const { lang } = useLanguage();
+  const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleVideoPress = (videoId: string) => {
     router.push(`/video/${videoId}`);
@@ -61,7 +65,7 @@ export default function SingleCourse() {
           onPress={handleStartCourse}
           disabled={videos.length === 0 || !hasPlayableVideos}
         >
-          دەستپێکی خول
+          {text.course_start}
         </Button>
       </View>
     </View>
