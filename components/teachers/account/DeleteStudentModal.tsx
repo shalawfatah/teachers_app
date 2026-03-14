@@ -58,6 +58,7 @@ export default function DeleteStudentModal({
           </Text>
           <Text variant="bodyMedium" style={styles.message}>
             {text.students_delete_text}
+
             <Text style={styles.studentName}>{studentName}</Text>
           </Text>
 

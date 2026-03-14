@@ -33,7 +33,7 @@ export default function EditCourseForm({
         onChangeText={(text) => onFieldChange("description", text)}
         mode="outlined"
         multiline
-        numberOfLines={4}
+        numberOfLines={12}
         style={styles.input}
         disabled={disabled}
       />
@@ -42,6 +42,8 @@ export default function EditCourseForm({
         value={formData?.thumbnail}
         onChangeText={(text) => onFieldChange("thumbnail", text)}
         placeholder="https://image-link.com"
+        multiline
+        numberOfLines={16}
         mode="outlined"
         style={styles.input}
         disabled={disabled}

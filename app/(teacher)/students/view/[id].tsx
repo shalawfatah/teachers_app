@@ -83,7 +83,7 @@ export default function ViewStudent() {
           style={[styles.button, { borderColor: "#f44336" }]}
           icon="trash-can-outline"
         >
-          {text.delete_acc}
+          {text.delete_student_account}
         </Button>
       </View>
 

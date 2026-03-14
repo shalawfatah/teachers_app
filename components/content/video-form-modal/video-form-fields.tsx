@@ -33,6 +33,8 @@ export function VideoFormFields({
       <TextInput
         label="Link"
         value={link}
+        multiline
+        numberOfLines={16}
         onChangeText={onLinkChange}
         mode="outlined"
       />

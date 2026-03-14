@@ -115,7 +115,7 @@ export const translations = {
     update_your_info: "زانیارییەکانت نوێبکەرەوە",
 
     // Student Delete
-    students_delete_text: "دڵنیای لە سڕینەوەی ئەم قوتابییە؟",
+    students_delete_text: "دڵنیای لە سڕینەوەی ئەم قوتابییە؟ ",
 
     // Add Course
     register_new_course: "تۆمارکردنی کۆرسی نوێ",
@@ -281,7 +281,7 @@ export const translations = {
     update_your_info: "Update your information",
 
     // Student Delete
-    students_delete_text: "Are you sure you want to delete this student?",
+    students_delete_text: "Are you sure you want to delete this student? ",
 
     // Add Course
     register_new_course: "Register New Course",
