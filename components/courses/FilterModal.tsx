@@ -52,6 +52,7 @@ export default function FilterModal({
             expanded={gradeExpanded}
             onToggleExpand={() => setGradeExpanded(!gradeExpanded)}
             onToggleGrade={toggleGrade}
+            lang={lang}
           />
         </ScrollView>
 

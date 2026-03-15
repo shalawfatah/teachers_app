@@ -3,7 +3,6 @@ import { View } from "react-native";
 import { List, Checkbox, Text } from "react-native-paper";
 import { GRADES } from "@/utils/placeholder_grades";
 import { styles } from "@/styles/filter_modal_styles";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 
 interface Props {
@@ -11,6 +10,7 @@ interface Props {
   expanded: boolean;
   onToggleExpand: () => void;
   onToggleGrade: (grade: string) => void;
+  lang: number;
 }
 
 export default function GradeSelector({
@@ -18,9 +18,10 @@ export default function GradeSelector({
   expanded,
   onToggleExpand,
   onToggleGrade,
+  lang,
 }: Props) {
-  const {lang} = useLanguage()
   const text = lang === 1 ? translations.eng : translations.krd;
+
   return (
     <List.Accordion
       title={text.course_relevant_class}
