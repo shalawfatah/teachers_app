@@ -15,7 +15,7 @@ interface TeacherHeroProps {
   stats: TeacherStats | null;
   onEdit: () => void;
   onSignOut: () => void;
-  onLanguageChange?: () => void; // Add this prop
+  onLanguageChange?: () => void;
 }
 
 export default function TeacherHero({
@@ -28,9 +28,8 @@ export default function TeacherHero({
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
-  // Get flag emoji based on language
   const getLanguageFlag = (lang: number) => {
-    return lang === 1 ? "🇬🇧" : "🇮🇶"; // English or Kurdish flag
+    return lang === 1 ? "🇬🇧" : "🇹🇯"; 
   };
 
   return (
@@ -47,7 +46,7 @@ export default function TeacherHero({
         colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.7)"]}
         style={styles.gradient}
       >
-        {/* Header with user info and actions */}
+
         <View style={[styles.header, { direction: isRTL ? "rtl" : "ltr" }]}>
           <View style={styles.userInfo}>
             <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />
@@ -61,7 +60,7 @@ export default function TeacherHero({
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {/* Language Switcher Button */}
+
             <Pressable
               onPress={() => setLanguageModalVisible(true)}
               style={{
@@ -123,7 +122,6 @@ export default function TeacherHero({
         </View>
         <StatsBar stats={stats} />
 
-        {/* Language Switcher Modal */}
         {profile && (
           <LanguageSwitcherModal
             visible={languageModalVisible}
