@@ -4,16 +4,9 @@ import { Text } from "react-native-paper";
 import { styles } from "@/styles/student_edit_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { StudentInfoProps } from "@/types/students";
 
-interface Props {
-  student: {
-    name: string;
-    email: string;
-    grade?: string | number;
-  };
-}
-
-export default function StudentInfo({ student }: Props) {
+export default function StudentInfo({ student }: StudentInfoProps) {
   const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (

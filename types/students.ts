@@ -24,3 +24,11 @@ export interface StudentHeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
+
+export interface StudentInfoProps {
+  student: {
+    name: string;
+    email: string;
+    grade?: string | number;
+  };
+}
