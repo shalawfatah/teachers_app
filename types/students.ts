@@ -19,3 +19,8 @@ export interface AuxProps {
   label: string;
   value: string;
 }
+
+export interface StudentHeaderProps {
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+}

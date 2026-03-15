@@ -4,13 +4,12 @@ import { Text, Searchbar } from "react-native-paper";
 import { styles } from "@/styles/teacher_students_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { StudentHeaderProps } from "@/types/students";
 
-interface Props {
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-}
-
-export default function StudentHeader({ searchQuery, onSearchChange }: Props) {
+export default function StudentHeader({
+  searchQuery,
+  onSearchChange,
+}: StudentHeaderProps) {
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
