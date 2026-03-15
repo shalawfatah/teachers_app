@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
-
-interface UpdateProfileParams {
-  name: string;
-  expertise: string;
-  thumbnail: string | null;
-  coverImg: string | null;
-}
+import { UpdateProfileParams } from "@/types/profile";
 
 export function useProfileUpdate(onSuccess: () => void, onDismiss: () => void) {
   const [updating, setUpdating] = useState(false);

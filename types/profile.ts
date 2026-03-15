@@ -20,6 +20,12 @@ export interface Student {
   teacher_id: string;
   created_at: string;
   updated_at: string;
-  // This represents the joined teacher data from your Supabase query
   teachers?: Teacher;
+}
+
+export interface UpdateProfileParams {
+  name: string;
+  expertise: string;
+  thumbnail: string | null;
+  coverImg: string | null;
 }
