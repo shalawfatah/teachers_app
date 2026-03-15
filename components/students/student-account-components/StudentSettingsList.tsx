@@ -32,7 +32,7 @@ export default function StudentSettingsList({
         />
         <Divider />
         <List.Item
-          title={text.save}
+          title={text.safety_security}
           description={text.safety_security}
           left={(p) => <List.Icon {...p} icon="shield-account" />}
           right={(p) => <List.Icon {...p} icon="chevron-right" />}
