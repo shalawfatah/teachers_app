@@ -4,22 +4,7 @@ import { Text, TextInput } from "react-native-paper";
 import { styles } from "@/styles/edit_profile_modal_styles";
 import { ImageUploader } from "./image-uploader";
 import { translations } from "@/utils/eng_krd";
-
-interface ProfileFormProps {
-  name: string;
-  expertise: string;
-  thumbnail: string | null;
-  coverImg: string | null;
-  onNameChange: (name: string) => void;
-  onExpertiseChange: (expertise: string) => void;
-  onUploadThumbnail: () => Promise<void>;
-  onUploadCover: () => Promise<void>;
-  uploadingThumbnail: boolean;
-  uploadingCover: boolean;
-  // Add language props
-  lang: number;
-  isRTL: boolean;
-}
+import { ProfileFormProps } from "@/types/profile";
 
 export function ProfileForm({
   name,

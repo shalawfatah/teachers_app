@@ -29,3 +29,18 @@ export interface UpdateProfileParams {
   thumbnail: string | null;
   coverImg: string | null;
 }
+
+export interface ProfileFormProps {
+  name: string;
+  expertise: string;
+  thumbnail: string | null;
+  coverImg: string | null;
+  onNameChange: (name: string) => void;
+  onExpertiseChange: (expertise: string) => void;
+  onUploadThumbnail: () => Promise<void>;
+  onUploadCover: () => Promise<void>;
+  uploadingThumbnail: boolean;
+  uploadingCover: boolean;
+  lang: number;
+  isRTL: boolean;
+}
