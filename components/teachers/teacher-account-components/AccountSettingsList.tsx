@@ -4,16 +4,12 @@ import { List, Divider } from "react-native-paper";
 import { styles } from "@/styles/teacher_account_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
-
-interface Props {
-  onEditPress: () => void;
-  onSettingsPress: (type: "help" | "about") => void;
-}
+import { AccountSettingListProps } from "@/types/setting_modal";
 
 export default function AccountSettingsList({
   onEditPress,
   onSettingsPress,
-}: Props) {
+}: AccountSettingListProps) {
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
