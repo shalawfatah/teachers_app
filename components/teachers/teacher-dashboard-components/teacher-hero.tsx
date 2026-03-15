@@ -2,21 +2,12 @@ import { View, ImageBackground, Pressable } from "react-native";
 import { Text, Avatar, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "@/styles/teacher_home_styles";
-import { Teacher } from "@/types/profile";
-import { TeacherStats } from "@/types/teacher";
+import { TeacherHeroProps } from "@/types/teacher";
 import StatsBar from "./stats-bar";
 import { useState } from "react";
 import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
-
-interface TeacherHeroProps {
-  profile: Teacher | null;
-  stats: TeacherStats | null;
-  onEdit: () => void;
-  onSignOut: () => void;
-  onLanguageChange?: () => void;
-}
 
 export default function TeacherHero({
   profile,
@@ -29,7 +20,7 @@ export default function TeacherHero({
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   const getLanguageFlag = (lang: number) => {
-    return lang === 1 ? "🇬🇧" : "🇹🇯"; 
+    return lang === 1 ? "🇬🇧" : "🇹🇯";
   };
 
   return (
@@ -46,7 +37,6 @@ export default function TeacherHero({
         colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.7)"]}
         style={styles.gradient}
       >
-
         <View style={[styles.header, { direction: isRTL ? "rtl" : "ltr" }]}>
           <View style={styles.userInfo}>
             <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />
@@ -60,7 +50,6 @@ export default function TeacherHero({
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-
             <Pressable
               onPress={() => setLanguageModalVisible(true)}
               style={{
