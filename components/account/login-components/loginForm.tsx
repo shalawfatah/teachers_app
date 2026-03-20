@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function LoginForm({ state }: Props) {
-  const { lang, isRTL} = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
@@ -19,15 +19,15 @@ export default function LoginForm({ state }: Props) {
         {text.hello}
       </Text>
       <TextInput
-        label={text.email}
-        value={state.email}
-        onChangeText={state.setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
+        label={text.phone}
+        value={state.phone}
+        onChangeText={state.setPhone}
+        keyboardType="phone-pad"
         style={styles.input}
         mode="outlined"
         disabled={state.loading}
       />
+
       <TextInput
         label={text.password}
         value={state.password}
