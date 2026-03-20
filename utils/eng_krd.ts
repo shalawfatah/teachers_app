@@ -22,7 +22,7 @@ export const translations = {
     title: "ناونیشان",
     link: "بەستەر",
     create: "دروستکردن",
-    password: "تێپەڕەوشە",
+    password: "وشەی نهێنی",
     sign_in: "چوونەژوورەوە",
     no_account_create: "هەژمارت نییە؟ دروستی بکە",
     create_account: "دروستکردنی هەژمار",
