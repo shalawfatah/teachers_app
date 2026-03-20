@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { View } from "react-native";
-import { Button, Menu } from "react-native-paper";
+import { View, Text } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import { styles } from "@/styles/signup_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
@@ -16,8 +15,7 @@ export default function GradeDropdown({
   onValueChange,
   disabled = false,
 }: GradeDropdownProps) {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   const grades = [
@@ -29,39 +27,21 @@ export default function GradeDropdown({
     { value: "12", label: text.twelve },
   ];
 
-  const selectedGrade = grades.find((g) => g.value === value);
-
   return (
     <View style={styles.dropdownContainer}>
-      <Menu
-        visible={menuVisible}
-        onDismiss={() => setMenuVisible(false)}
-        anchor={
-          <Button
-            mode="outlined"
-            onPress={() => setMenuVisible(true)}
-            style={styles.dropdownButton}
-            contentStyle={styles.dropdownButtonContent}
-            icon="chevron-down"
-            disabled={disabled}
-          >
-            {selectedGrade
-              ? `${text.class} ${selectedGrade.label}`
-              : text.class}
-          </Button>
-        }
+      <Text style={{ textAlign: isRTL ? "right" : "left" }}>{text.class}</Text>
+      <Picker
+        selectedValue={value ?? ""}
+        onValueChange={(val) => {
+          if (val !== "") onValueChange(val);
+        }}
+        enabled={!disabled}
+        style={styles.dropdownButton}
       >
         {grades.map((g) => (
-          <Menu.Item
-            key={g.value}
-            onPress={() => {
-              onValueChange(g.value);
-              setMenuVisible(false);
-            }}
-            title={g.label}
-          />
+          <Picker.Item key={g.value} label={g.label} value={g.value} />
         ))}
-      </Menu>
+      </Picker>
     </View>
   );
 }
