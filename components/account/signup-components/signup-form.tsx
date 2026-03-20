@@ -2,10 +2,10 @@ import { View } from "react-native";
 import { TextInput, Button, HelperText } from "react-native-paper";
 import { styles } from "@/styles/signup_styles";
 import { TeacherShort } from "@/types/teacher";
-import GradeSelector from "./grade-selector";
 import TeacherDropdown from "./teacher-dropdown";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import GradeDropdown from "@/components/courses/filter-modal-components/GradeSelector";
 
 interface SignupFormProps {
   phone: string;
@@ -40,25 +40,26 @@ export default function SignupForm({
   loading,
   error,
 }: SignupFormProps) {
-  const { lang } = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
-    <View style={{ direction: lang === 2 ? "rtl" : "ltr" }}>
+    <View>
       <TextInput
-        label={text.name}
+        placeholder={text.name}
         value={fullName}
         onChangeText={onFullNameChange}
         style={styles.input}
+        contentStyle={{ textAlign: isRTL ? "right" : "left" }}
         mode="outlined"
         disabled={loading}
       />
       <TextInput
-        label={text.phone}
+        placeholder={text.phone}
         value={phone}
         onChangeText={onPhoneChange}
         keyboardType="phone-pad"
-        style={styles.input}
+        style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
         mode="outlined"
         disabled={loading}
       />
@@ -69,7 +70,7 @@ export default function SignupForm({
         disabled={loading}
       />
       <TextInput
-        label={text.password}
+        placeholder={text.password}
         value={password}
         onChangeText={onPasswordChange}
         secureTextEntry
@@ -77,7 +78,11 @@ export default function SignupForm({
         mode="outlined"
         disabled={loading}
       />
-      <GradeSelector value={grade} onValueChange={onGradeChange} />
+      <GradeDropdown
+        value={grade}
+        onValueChange={onGradeChange}
+        disabled={loading}
+      />
       {error ? <HelperText type="error">{error}</HelperText> : null}
       <Button
         mode="contained"

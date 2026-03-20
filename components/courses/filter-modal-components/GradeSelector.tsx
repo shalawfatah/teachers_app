@@ -1,59 +1,67 @@
-import React from "react";
+import { useState } from "react";
 import { View } from "react-native";
-import { List, Checkbox, Text } from "react-native-paper";
-import { GRADES } from "@/utils/placeholder_grades";
-import { styles } from "@/styles/filter_modal_styles";
+import { Button, Menu } from "react-native-paper";
+import { styles } from "@/styles/signup_styles";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 
-interface Props {
-  selectedGrades: string[];
-  expanded: boolean;
-  onToggleExpand: () => void;
-  onToggleGrade: (grade: string) => void;
-  lang: number;
+interface GradeDropdownProps {
+  value: string;
+  onValueChange: (grade: string) => void;
+  disabled?: boolean;
 }
 
-export default function GradeSelector({
-  selectedGrades,
-  expanded,
-  onToggleExpand,
-  onToggleGrade,
-  lang,
-}: Props) {
+export default function GradeDropdown({
+  value,
+  onValueChange,
+  disabled = false,
+}: GradeDropdownProps) {
+  const [menuVisible, setMenuVisible] = useState(false);
+  const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
+  const grades = [
+    { value: "7", label: text.seven },
+    { value: "8", label: text.eight },
+    { value: "9", label: text.nine },
+    { value: "10", label: text.ten },
+    { value: "11", label: text.eleven },
+    { value: "12", label: text.twelve },
+  ];
+
+  const selectedGrade = grades.find((g) => g.value === value);
+
   return (
-    <List.Accordion
-      title={text.course_relevant_class}
-      titleStyle={styles.accordionTitle}
-      expanded={expanded}
-      onPress={onToggleExpand}
-      left={(props) => <List.Icon {...props} icon="school" />}
-      right={(p) => (
-        <View style={styles.accordionRight}>
-          {selectedGrades.length > 0 && (
-            <Text variant="bodySmall" style={styles.selectedCount}>
-              {selectedGrades.length} selected
-            </Text>
-          )}
-          <List.Icon {...p} icon={expanded ? "chevron-up" : "chevron-down"} />
-        </View>
-      )}
-      style={styles.accordion}
-    >
-      {GRADES.map((grade) => (
-        <List.Item
-          key={grade}
-          title={grade}
-          onPress={() => onToggleGrade(grade)}
-          left={() => (
-            <Checkbox
-              status={selectedGrades.includes(grade) ? "checked" : "unchecked"}
-            />
-          )}
-          style={styles.listItem}
-        />
-      ))}
-    </List.Accordion>
+    <View style={styles.dropdownContainer}>
+      <Menu
+        visible={menuVisible}
+        onDismiss={() => setMenuVisible(false)}
+        anchor={
+          <Button
+            mode="outlined"
+            onPress={() => setMenuVisible(true)}
+            style={styles.dropdownButton}
+            contentStyle={styles.dropdownButtonContent}
+            icon="chevron-down"
+            disabled={disabled}
+          >
+            {selectedGrade
+              ? `${text.class} ${selectedGrade.label}`
+              : text.class}
+          </Button>
+        }
+      >
+        {grades.map((g) => (
+          <Menu.Item
+            key={g.value}
+            onPress={() => {
+              onValueChange(g.value);
+              setMenuVisible(false);
+            }}
+            title={g.label}
+          />
+        ))}
+      </Menu>
+    </View>
   );
 }

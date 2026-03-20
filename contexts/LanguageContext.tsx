@@ -15,7 +15,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 );
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<number>(1); // Default to English
+  const [lang, setLang] = useState<number>(2);
 
   const isRTL = lang === 2;
   const t = translations;
