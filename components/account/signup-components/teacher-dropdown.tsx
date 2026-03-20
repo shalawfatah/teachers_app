@@ -4,6 +4,7 @@ import { styles } from "@/styles/signup_styles";
 import { TeacherShort } from "@/types/teacher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { useEffect } from "react";
 
 interface TeacherDropdownProps {
   teachers: TeacherShort[];
@@ -21,13 +22,19 @@ export default function TeacherDropdown({
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
+  useEffect(() => {
+    if (!selectedTeacherId && teachers.length > 0) {
+      onSelect(teachers[0].id);
+    }
+  }, [teachers]);
+
   return (
     <View style={styles.dropdownContainer}>
       <Text style={{ textAlign: isRTL ? "right" : "left" }}>
         {text.choose_teacher}
       </Text>
       <Picker
-        selectedValue={selectedTeacherId ?? ""}
+        selectedValue={selectedTeacherId ?? teachers[0]?.id ?? ""}
         onValueChange={(value) => {
           if (value !== "") onSelect(value);
         }}

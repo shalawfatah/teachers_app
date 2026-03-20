@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
 
 export default function useLogin() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -12,14 +12,19 @@ export default function useLogin() {
     setError("");
     setLoading(true);
     try {
-      const { data: authData, error: loginError } =
-        await supabase.auth.signInWithPassword({ email, password });
+      const isEmail = phone.includes("@");
+      const resolvedEmail = isEmail ? phone : `${phone}@ravaemail.com`;
 
+      const { data: authData, error: loginError } =
+        await supabase.auth.signInWithPassword({
+          email: resolvedEmail,
+          password,
+        });
       if (loginError) throw loginError;
+
       const user = authData?.user;
       if (!user) throw new Error("No user found");
 
-      // Check Teacher Role
       const { data: teacher } = await supabase
         .from("teachers")
         .select("id")
@@ -27,7 +32,6 @@ export default function useLogin() {
         .single();
       if (teacher) return router.replace("/(teacher)");
 
-      // Check Student Role
       const { data: student } = await supabase
         .from("students")
         .select("id")
@@ -44,8 +48,8 @@ export default function useLogin() {
   };
 
   return {
-    email,
-    setEmail,
+    phone,
+    setPhone,
     password,
     setPassword,
     loading,
