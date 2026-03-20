@@ -19,21 +19,23 @@ export default function LoginForm({ state }: Props) {
         {text.hello}
       </Text>
       <TextInput
-        label={text.phone}
+        placeholder={text.phone}
         value={state.phone}
         onChangeText={state.setPhone}
         keyboardType="phone-pad"
         style={styles.input}
+        contentStyle={{ textAlign: isRTL ? "right" : "left" }}
         mode="outlined"
         disabled={state.loading}
       />
 
       <TextInput
-        label={text.password}
+        placeholder={text.password}
         value={state.password}
         onChangeText={state.setPassword}
         secureTextEntry
         style={styles.input}
+        contentStyle={{ textAlign: isRTL ? "right" : "left" }}
         mode="outlined"
         disabled={state.loading}
       />

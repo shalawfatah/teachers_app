@@ -75,6 +75,7 @@ export default function SignupForm({
         onChangeText={onPasswordChange}
         secureTextEntry
         style={styles.input}
+        contentStyle={{ textAlign: isRTL ? "right" : "left" }}
         mode="outlined"
         disabled={loading}
       />
