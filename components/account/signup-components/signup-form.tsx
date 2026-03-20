@@ -8,13 +8,13 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 
 interface SignupFormProps {
-  email: string;
+  phone: string;
   password: string;
   fullName: string;
   grade: string;
   selectedTeacherId: string | null;
   teachers: TeacherShort[];
-  onEmailChange: (email: string) => void;
+  onPhoneChange: (phone: string) => void;
   onPasswordChange: (password: string) => void;
   onFullNameChange: (name: string) => void;
   onGradeChange: (grade: string) => void;
@@ -25,13 +25,13 @@ interface SignupFormProps {
 }
 
 export default function SignupForm({
-  email,
+  phone,
   password,
   fullName,
   grade,
   selectedTeacherId,
   teachers,
-  onEmailChange,
+  onPhoneChange,
   onPasswordChange,
   onFullNameChange,
   onGradeChange,
@@ -42,6 +42,7 @@ export default function SignupForm({
 }: SignupFormProps) {
   const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+
   return (
     <View>
       <TextInput
@@ -52,25 +53,21 @@ export default function SignupForm({
         mode="outlined"
         disabled={loading}
       />
-
       <TextInput
-        label={text.email}
-        value={email}
-        onChangeText={onEmailChange}
-        autoCapitalize="none"
-        keyboardType="email-address"
+        label={text.phone} // add text.phone to your translations
+        value={phone}
+        onChangeText={onPhoneChange}
+        keyboardType="phone-pad"
         style={styles.input}
         mode="outlined"
         disabled={loading}
       />
-
       <TeacherDropdown
         teachers={teachers}
         selectedTeacherId={selectedTeacherId}
         onSelect={onTeacherSelect}
         disabled={loading}
       />
-
       <TextInput
         label={text.password}
         value={password}
@@ -80,11 +77,8 @@ export default function SignupForm({
         mode="outlined"
         disabled={loading}
       />
-
       <GradeSelector value={grade} onValueChange={onGradeChange} />
-
       {error ? <HelperText type="error">{error}</HelperText> : null}
-
       <Button
         mode="contained"
         onPress={onSubmit}

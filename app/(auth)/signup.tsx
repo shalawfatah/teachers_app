@@ -10,7 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 
 export default function SignupScreen() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [grade, setGrade] = useState("9");
@@ -25,15 +25,17 @@ export default function SignupScreen() {
   const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleSignup = async () => {
+    const fakeEmail = `${phone.replace(/\s+/g, "")}@ravaemail.com`;
+
     const success = await signup({
-      email,
+      email: fakeEmail,
       password,
       fullName,
       grade,
       teacherId: selectedTeacherId,
     });
 
-    if (success === "email_verification_required") {
+    if (success) {
       setSuccessDialogVisible(true);
     }
   };
@@ -49,15 +51,14 @@ export default function SignupScreen() {
             <Text variant="headlineMedium" style={styles.title}>
               {text.register_student}
             </Text>
-
             <SignupForm
-              email={email}
+              phone={phone}
               password={password}
               fullName={fullName}
               grade={grade}
               selectedTeacherId={selectedTeacherId}
               teachers={teachers}
-              onEmailChange={setEmail}
+              onPhoneChange={setPhone}
               onPasswordChange={setPassword}
               onFullNameChange={setFullName}
               onGradeChange={setGrade}
@@ -66,7 +67,6 @@ export default function SignupScreen() {
               loading={loading || teachersLoading}
               error={error}
             />
-
             <Button
               mode="text"
               onPress={() => router.back()}
@@ -77,15 +77,14 @@ export default function SignupScreen() {
           </Card.Content>
         </Card>
       </ScrollView>
-
       <Portal>
         <Dialog
           visible={successDialogVisible}
           onDismiss={() => router.replace("/(auth)/login")}
         >
-          <Dialog.Title>{text.confirm_email}</Dialog.Title>
+          <Dialog.Title>{text.account_created}</Dialog.Title>
           <Dialog.Content>
-            <Text>Check {email} to activate your student account.</Text>
+            <Text>{text.account_created_message}</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => router.replace("/(auth)/login")}>
