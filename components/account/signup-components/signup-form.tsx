@@ -44,7 +44,7 @@ export default function SignupForm({
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
-    <View>
+    <View style={{ direction: lang === 2 ? "rtl" : "ltr" }}>
       <TextInput
         label={text.name}
         value={fullName}

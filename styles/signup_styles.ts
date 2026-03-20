@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: 50,
   },
-  gradeLabel: { marginTop: 8, marginBottom: 8, textAlign: "right" },
+  gradeLabel: { marginTop: 8, marginBottom: 8 },
   segmented: { marginBottom: 8 },
   button: { marginTop: 16, marginBottom: 8 },
 });

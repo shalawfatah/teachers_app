@@ -17,7 +17,7 @@ export default function GradeSelector({
   return (
     <>
       <Text variant="labelLarge" style={styles.gradeLabel}>
-        پۆل
+        {text.class}
       </Text>
       <SegmentedButtons
         value={value}
