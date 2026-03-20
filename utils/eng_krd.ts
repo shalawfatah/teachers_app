@@ -17,6 +17,7 @@ export const translations = {
     class: "پۆل",
     close: "داخستن",
     signout: "چوونەدەرەوە",
+    phone: "ژمارەی مۆبایل",
     hello: "سڵاو",
     title: "ناونیشان",
     link: "بەستەر",
@@ -165,6 +166,8 @@ export const translations = {
     course_start: "دەستپێکی خول",
     confirm_email: "پشتڕاستکردنەوەی ئیمەیل",
     got_it: "تەواو",
+    account_created: "هەژمارەکەت دروستکرا",
+    account_created_message: "هەژماری خوێندکارت بۆ دروستکرا",
   },
   eng: {
     // General
@@ -179,6 +182,7 @@ export const translations = {
     delete_account: "Delete Account",
     name: "Name",
     email: "Email",
+    phone: "Phone",
     class: "Class",
     close: "Close",
     signout: "Sign Out",
@@ -331,5 +335,8 @@ export const translations = {
     course_start: "Course Start",
     confirm_email: "Confirm email",
     got_it: "Got it",
+    account_created: "Account Created",
+    account_created_message:
+      "Your student account has been created successfully.",
   },
 };

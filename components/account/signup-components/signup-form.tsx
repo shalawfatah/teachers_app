@@ -54,7 +54,7 @@ export default function SignupForm({
         disabled={loading}
       />
       <TextInput
-        label={text.phone} // add text.phone to your translations
+        label={text.phone}
         value={phone}
         onChangeText={onPhoneChange}
         keyboardType="phone-pad"
