@@ -14,6 +14,9 @@ export const translations = {
     delete_account: "سڕینەوەی هەژمار",
     name: "ناو",
     email: "ئیمەیڵ",
+    privacy: "مافی زانیاریی",
+    privacy_text:
+      "داتای ئەپ پارێزراوە بە بەکارهێنانی سوپابەیس. بەهیچ جۆرێک داتا و زانیاریی کەسیت نادرێتە لایەنێکی دیکە.",
     class: "پۆل",
     close: "داخستن",
     signout: "چوونەدەرەوە",
@@ -217,6 +220,9 @@ export const translations = {
     about: "About",
     logout: "Log out",
     delete_acc: "Delete Account",
+    privacy: "Privacy",
+    privacy_text:
+      "Your data is protected and your information will not be shared with any third-party",
 
     // Home
     welcome: "Welcome",
