@@ -53,6 +53,10 @@ export default function AccountScreen() {
               disabled={loading}
               style={styles.signOutButton}
               textColor="#FFF"
+              labelStyle={{
+                fontFamily: "NRT-Bold",
+                fontSize: 16,
+              }}
             >
               {text.logout}
             </Button>
