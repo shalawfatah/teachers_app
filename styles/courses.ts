@@ -6,10 +6,8 @@ export const courses_styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
   },
   header: {
-    backgroundColor: "#fff",
     padding: 20,
     paddingTop: 60,
     paddingBottom: 16,
@@ -25,10 +23,11 @@ export const courses_styles = StyleSheet.create({
   headerTitle: {
     fontWeight: "bold",
     fontFamily: "NRT-Bold",
+    color: "#FFF",
     marginBottom: 4,
   },
   headerSubtitle: {
-    color: "#666",
+    color: "#FFF",
   },
   filterButtonContainer: {
     position: "relative",
@@ -41,20 +40,19 @@ export const courses_styles = StyleSheet.create({
     position: "absolute",
     top: -4,
     right: -4,
-    backgroundColor: "#6200ee",
   },
   searchContainer: {
-    backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingBottom: 16,
   },
   searchbar: {
     elevation: 0,
     paddingHorizontal: 12,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "transparent",
+    borderColor: "#FFF",
+    borderWidth: 1,
   },
   listContent: {
     padding: 16,
   },
-  // ... rest of your existing styles
 });

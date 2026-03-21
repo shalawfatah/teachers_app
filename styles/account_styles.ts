@@ -6,10 +6,8 @@ const isTablet = width > 768;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
   },
   profileHeader: {
-    backgroundColor: "#fff",
     alignItems: "center",
     paddingTop: isTablet ? 80 : 60,
     paddingBottom: 24,

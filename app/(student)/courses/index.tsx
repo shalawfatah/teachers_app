@@ -9,6 +9,7 @@ import CourseHeader from "../../../components/courses/single-course-components/C
 import useCourses from "../../../components/courses/single-course-components/use-courses";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function CoursesScreen() {
   const c = useCourses();
@@ -18,35 +19,37 @@ export default function CoursesScreen() {
   if (c.loading && !c.refreshing) return <Loader />;
 
   return (
-    <View
-      style={[courses_styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
-    >
-      <CourseHeader
-        courseCount={c.courses.length}
-        searchQuery={c.searchQuery}
-        onSearchChange={c.setSearchQuery}
-        filters={c.filters}
-        onOpenFilter={() => c.setFilterVisible(true)}
-      />
+    <LinearGradient colors={["#FF8C00", "#FF0080"]} style={{ flex: 1 }}>
+      <View
+        style={[courses_styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
+      >
+        <CourseHeader
+          courseCount={c.courses.length}
+          searchQuery={c.searchQuery}
+          onSearchChange={c.setSearchQuery}
+          filters={c.filters}
+          onOpenFilter={() => c.setFilterVisible(true)}
+        />
 
-      <FlatList
-        data={c.courses}
-        renderItem={renderCourse}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={courses_styles.listContent}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={c.refreshing} onRefresh={c.onRefresh} />
-        }
-        ListEmptyComponent={<Text>{text.no_course_registered}</Text>}
-      />
+        <FlatList
+          data={c.courses}
+          renderItem={renderCourse}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={courses_styles.listContent}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={c.refreshing} onRefresh={c.onRefresh} />
+          }
+          ListEmptyComponent={<Text>{text.no_course_registered}</Text>}
+        />
 
-      <FilterModal
-        visible={c.filterVisible}
-        onDismiss={() => c.setFilterVisible(false)}
-        onApply={c.setFilters}
-        currentFilters={c.filters}
-      />
-    </View>
+        <FilterModal
+          visible={c.filterVisible}
+          onDismiss={() => c.setFilterVisible(false)}
+          onApply={c.setFilters}
+          currentFilters={c.filters}
+        />
+      </View>
+    </LinearGradient>
   );
 }

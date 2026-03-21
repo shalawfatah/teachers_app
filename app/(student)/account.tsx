@@ -9,6 +9,7 @@ import useStudentAccount from "../../components/students/student-account-compone
 import { styles } from "@/styles/account_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function AccountScreen() {
   const { profile, loading, handleSignOut, refreshProfile } =
@@ -21,46 +22,48 @@ export default function AccountScreen() {
 
   return (
     <>
-      <ScrollView
-        style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
-        contentContainerStyle={styles.scrollContent}
-      >
-        <View style={styles.profileHeader}>
-          <Avatar.Text size={80} label={profile?.name?.charAt(0) || "U"} />
-          <Text variant="headlineSmall">{profile?.name}</Text>
-          <Text variant="bodyMedium">خوێندکار</Text>
-        </View>
+      <LinearGradient colors={["#FF8C00", "#FF0080"]} style={{ flex: 1 }}>
+        <ScrollView
+          style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
+          contentContainerStyle={styles.scrollContent}
+        >
+          <View style={styles.profileHeader}>
+            <Avatar.Text size={80} label={profile?.name?.charAt(0) || "U"} />
+            <Text variant="headlineSmall">{profile?.name}</Text>
+            <Text variant="bodyMedium">خوێندکار</Text>
+          </View>
 
-        <StudentSettingsList
-          onEditPress={() => setIsModalVisible(true)}
-          onSettingsPress={setActiveSettingsType}
+          <StudentSettingsList
+            onEditPress={() => setIsModalVisible(true)}
+            onSettingsPress={setActiveSettingsType}
+          />
+
+          <View style={styles.signOutContainer}>
+            <Button
+              mode="outlined"
+              onPress={handleSignOut}
+              loading={loading}
+              disabled={loading}
+              style={styles.signOutButton}
+              textColor="#d32f2f"
+            >
+              {text.logout}
+            </Button>
+          </View>
+        </ScrollView>
+
+        <EditProfileModal
+          visible={isModalVisible}
+          onDismiss={() => setIsModalVisible(false)}
+          profile={profile}
+          onProfileUpdate={refreshProfile}
         />
-
-        <View style={styles.signOutContainer}>
-          <Button
-            mode="outlined"
-            onPress={handleSignOut}
-            loading={loading}
-            disabled={loading}
-            style={styles.signOutButton}
-            textColor="#d32f2f"
-          >
-            {text.logout}
-          </Button>
-        </View>
-      </ScrollView>
-
-      <EditProfileModal
-        visible={isModalVisible}
-        onDismiss={() => setIsModalVisible(false)}
-        profile={profile}
-        onProfileUpdate={refreshProfile}
-      />
-      <SettingsModal
-        type={activeSettingsType}
-        visible={activeSettingsType !== null}
-        onDismiss={() => setActiveSettingsType(null)}
-      />
+        <SettingsModal
+          type={activeSettingsType}
+          visible={activeSettingsType !== null}
+          onDismiss={() => setActiveSettingsType(null)}
+        />
+      </LinearGradient>
     </>
   );
 }
