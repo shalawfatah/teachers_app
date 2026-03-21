@@ -3,6 +3,7 @@ import { Reklam } from "@/types/reklam";
 import { ImageBackground, Pressable, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SlideContent } from "./slide-content";
+import { GeometricPattern } from "@/components/backgrounds/GeometicPattern";
 
 export default function ImageSlide({
   reklam,
@@ -17,6 +18,7 @@ export default function ImageSlide({
       onPress={onPress}
       disabled={reklam.link_type === "none"}
     >
+      <GeometricPattern />
       <ImageBackground
         source={{
           uri:
