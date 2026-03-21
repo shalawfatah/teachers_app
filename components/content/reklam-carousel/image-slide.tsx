@@ -28,15 +28,12 @@ export default function ImageSlide({
         style={StyleSheet.absoluteFill}
         resizeMode="cover"
       />
-
-      {/* Bottom gradient - 33% only */}
       <LinearGradient
         colors={["transparent", "transparent", "rgba(0,0,0,0.85)"]}
         locations={[0, 0.66, 1]}
         style={styles.gradientOverlay}
         pointerEvents="none"
       />
-
       <SlideContent reklam={reklam} />
     </Pressable>
   );
