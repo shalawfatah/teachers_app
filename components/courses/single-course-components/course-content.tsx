@@ -2,7 +2,6 @@ import { View } from "react-native";
 import { Text } from "react-native-paper";
 import { styles } from "@/styles/single_course_styles";
 import { VideoSingle } from "@/types/videos";
-import VerificationBanner from "./verification-banner";
 import VideosList from "./video-list";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
@@ -12,7 +11,6 @@ interface CourseContentProps {
     description: string;
   };
   videos: VideoSingle[];
-  isVerified: boolean;
   canPlayVideo: (video: VideoSingle) => boolean;
   onVideoPress: (videoId: string) => void;
 }
@@ -20,7 +18,6 @@ interface CourseContentProps {
 export default function CourseContent({
   course,
   videos,
-  isVerified,
   canPlayVideo,
   onVideoPress,
 }: CourseContentProps) {
@@ -34,8 +31,6 @@ export default function CourseContent({
       <Text variant="bodyMedium" style={styles.descriptionText}>
         {course.description}
       </Text>
-
-      {!isVerified && <VerificationBanner />}
 
       <View style={styles.curriculumHeader}>
         <Text variant="titleLarge" style={styles.sectionTitle}>

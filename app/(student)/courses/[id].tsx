@@ -1,7 +1,15 @@
 import React from "react";
-import { View, ScrollView, StatusBar } from "react-native";
+import {
+  View,
+  ScrollView,
+  StatusBar,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { Button } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import { BlurView } from "expo-blur";
 import { styles } from "@/styles/single_course_styles";
 import NoCourse from "@/components/courses/NoCourse";
 import Loader from "@/components/Loader";
@@ -36,38 +44,81 @@ export default function SingleCourse() {
 
   const hasPlayableVideos = videos.some((v) => canPlayVideo(v));
 
+  // Determine bottom offset based on the Tab Bar height from StudentLayout
+  const tabBarHeight = Platform.OS === "ios" ? 90 : 70;
+
   return (
-    <View style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}>
-      <StatusBar barStyle="light-content" />
-      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
-        <CourseHero
-          course={course}
-          videosCount={videos.length}
-          isVerified={isVerified}
-          onBack={() => router.back()}
-        />
+    <LinearGradient colors={["#FF8C00", "#FF0080"]} style={{ flex: 1 }}>
+      <StatusBar
+        barStyle="light-content"
+        translucent
+        backgroundColor="transparent"
+      />
 
-        <CourseContent
-          course={course}
-          videos={videos}
-          isVerified={isVerified}
-          canPlayVideo={canPlayVideo}
-          onVideoPress={handleVideoPress}
-        />
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <Button
-          mode="contained"
-          style={styles.primaryButton}
-          contentStyle={{ height: 56 }}
-          labelStyle={styles.buttonLabel}
-          onPress={handleStartCourse}
-          disabled={videos.length === 0 || !hasPlayableVideos}
+      <View style={{ flex: 1, direction: isRTL ? "rtl" : "ltr" }}>
+        <ScrollView
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: "transparent" }}
+          contentContainerStyle={{
+            paddingBottom: 180,
+          }}
         >
-          {text.course_start}
-        </Button>
+          <CourseHero
+            course={course}
+            videosCount={videos.length}
+            isVerified={isVerified}
+            onBack={() => router.back()}
+          />
+
+          <CourseContent
+            course={course}
+            videos={videos}
+            isVerified={isVerified}
+            canPlayVideo={canPlayVideo}
+            onVideoPress={handleVideoPress}
+          />
+        </ScrollView>
+
+        <View style={[footerStyles.footerContainer, { bottom: tabBarHeight }]}>
+            <Button
+              mode="contained"
+              style={[
+                styles.primaryButton,
+                {
+                  backgroundColor: "#FFF",
+                  borderRadius: 16,
+                },
+              ]}
+              contentStyle={{ height: 56 }}
+              labelStyle={[
+                styles.buttonLabel,
+                { color: "#000", fontFamily: "NRT-Bold" },
+              ]}
+              onPress={handleStartCourse}
+              disabled={videos.length === 0 || !hasPlayableVideos}
+            >
+              {text.course_start}
+            </Button>
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
+
+const footerStyles = StyleSheet.create({
+  footerContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    backgroundColor: "transparent",
+    paddingHorizontal: 16, // Adds breathing room on the sides
+  },
+  blurWrapper: {
+    padding: 16,
+    borderRadius: 24, // Rounded "pill" look sits better above a tab bar
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+  },
+});

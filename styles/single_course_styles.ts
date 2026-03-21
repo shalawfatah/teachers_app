@@ -1,32 +1,73 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff"},
-  heroImage: { height: 320 },
-  gradient: { flex: 1, justifyContent: "space-between", padding: 16 },
-  backButton: {
-    marginTop: 40,
-    backgroundColor: "rgba(0,0,0,0.3)",
-    borderRadius: 12,
+  container: {
+    flex: 1,
   },
-  heroContent: { marginBottom: 20 },
-  badgeRow: { flexDirection: "row", marginBottom: 8 },
-  categoryChip: { backgroundColor: "#6200ee" },
-  chipText: { color: "white", fontWeight: "bold", fontSize: 10 },
-  title: { color: "white", fontWeight: "bold", letterSpacing: -0.5, fontFamily: "NRT-Bold" },
-  metaRow: { flexDirection: "row", alignItems: "center", marginLeft: -8 },
-  metaText: { color: "white", fontSize: 14, fontWeight: "500"},
+  heroImage: {
+    height: 320,
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: "space-between",
+    padding: 16,
+  },
+  backButton: {
+    marginTop: Platform.OS === "ios" ? 50 : 30,
+    backgroundColor: "rgba(255, 255, 255, 0.2)", // Glassy back button
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+  },
+  heroContent: {
+    marginBottom: 20,
+  },
+  badgeRow: {
+    flexDirection: "row",
+    marginBottom: 8,
+  },
+  categoryChip: {
+    backgroundColor: "rgba(255, 255, 255, 0.3)", // Glass chip
+    borderRadius: 8,
+  },
+  chipText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 10,
+    fontFamily: "NRT-Bold",
+  },
+  title: {
+    color: "white",
+    fontWeight: "bold",
+    letterSpacing: -0.5,
+    fontFamily: "NRT-Bold",
+    fontSize: 28,
+  },
+  metaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: -8,
+  },
+  metaText: {
+    color: "rgba(255, 255, 255, 0.9)",
+    fontSize: 14,
+    fontWeight: "500",
+    fontFamily: "Goran",
+  },
   contentBody: {
     padding: 24,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    marginTop: -32,
-    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+    minHeight: 500,
   },
   descriptionText: {
-    color: "#666",
-    lineHeight: 22,
+    color: "rgba(255, 255, 255, 0.8)", // Light text for dark background
+    lineHeight: 24,
     marginBottom: 32,
+    fontFamily: "Goran",
+    fontSize: 15,
   },
   curriculumHeader: {
     flexDirection: "row",
@@ -34,44 +75,58 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 16,
   },
-  lessonCount: {
-    color: "#6200ee",
-    fontWeight: "600",
+  sectionTitle: {
+    fontWeight: "800",
+    color: "#FFFFFF",
+    fontFamily: "NRT-Bold",
+    fontSize: 20,
   },
-  sectionTitle: { fontWeight: "800", color: "#1a1a1a", fontFamily: "NRT-Bold", },
+  lessonCount: {
+    color: "#FF8C00", // Highlight color from your gradient
+    fontWeight: "600",
+    fontFamily: "NRT-Bold",
+  },
   lessonCard: {
     marginBottom: 12,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "rgba(255, 255, 255, 0.1)", // Glassy lesson cards
     elevation: 0,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.1)",
   },
-  lessonTitle: { fontWeight: "600" },
+  lessonTitle: {
+    fontWeight: "600",
+    color: "#FFFFFF",
+    fontFamily: "NRT-Bold",
+  },
   lessonNumber: {
     justifyContent: "center",
     alignItems: "center",
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
     marginLeft: 8,
   },
-  lessonNumberText: { color: "#1a1a1a", fontWeight: "bold" },
+  lessonNumberText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+  },
   footer: {
+    // Note: We use absolute positioning in the component now
     padding: 20,
-    paddingBottom: 34, // Padding for safe area/home indicator
-    backgroundColor: "white",
-    borderTopWidth: 1,
-    borderColor: "#f0f0f0",
+    backgroundColor: "transparent",
   },
   primaryButton: {
     borderRadius: 16,
-    backgroundColor: "#6200ee",
-    fontFamily: "NRT-Bold",
+    backgroundColor: "#FFFFFF", // High contrast white button
+    marginBottom: 16,
   },
   buttonLabel: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     textTransform: "none",
     fontFamily: "NRT-Bold",
+    color: "#000",
   },
 });

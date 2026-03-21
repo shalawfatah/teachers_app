@@ -1,15 +1,8 @@
 import { useState, useEffect } from "react";
-import {
-  ScrollView,
-  View,
-  Pressable,
-  Platform,
-  SafeAreaView,
-} from "react-native";
+import { ScrollView, View, Pressable, Platform } from "react-native";
 import { Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { supabase } from "@/lib/supabase";
-import { styles } from "@/styles/home_styles";
 import Loader from "@/components/Loader";
 import { Student } from "@/types/profile";
 import { ReklamCarousel } from "@/components/content/ReklamCarousel";
@@ -139,7 +132,7 @@ export default function StudentDashboard() {
             variant="titleLarge"
             style={{ color: "#FFF", fontFamily: "NRT-Bold" }}
           >
-            {profile?.full_name}
+            {profile?.name}
           </Text>
         </View>
       </ScrollView>
