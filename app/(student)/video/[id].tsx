@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Dimensions, StyleSheet } from "react-native";
 import { Text, Appbar, ActivityIndicator } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { supabase } from "@/lib/supabase";
-import { styles } from "@/styles/video_single_styles";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
+
+const { width } = Dimensions.get("window");
 
 function PlayerSection({ url }: { url: string }) {
   const player = useVideoPlayer(
@@ -52,17 +56,27 @@ export default function VideoPlayer() {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header elevated style={{ backgroundColor: "#fff" }}>
-        <Appbar.BackAction onPress={() => router.back()} />
-        <Appbar.Content title={video?.title || "Video"} />
+      {/* THE FIX: Absolute fill ensures the gradient covers the background layer completely */}
+      <LinearGradient
+        colors={gradient_colors}
+        style={StyleSheet.absoluteFill}
+      />
+
+      <BackgroundShapes />
+      <Appbar.Header elevated={false} style={styles.header}>
+        <Appbar.BackAction onPress={() => router.back()} color="#FFF" />
+        <Appbar.Content
+          title={video?.title || "Video"}
+          titleStyle={styles.headerTitle}
+        />
       </Appbar.Header>
 
       <View style={styles.videoContainer}>
         {video?.video_hls_url ? (
           <PlayerSection url={video.video_hls_url} />
         ) : (
-          <View style={styles.nativePlayer}>
-            <ActivityIndicator />
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator color="#FF8C00" size="large" />
           </View>
         )}
       </View>
@@ -78,3 +92,42 @@ export default function VideoPlayer() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#000", // Acts as a fallback for the video area
+  },
+  header: {
+    backgroundColor: "transparent",
+    elevation: 0,
+  },
+  headerTitle: {
+    color: "#FFF",
+    fontFamily: "NRT-Bold",
+  },
+  videoContainer: {
+    width: width,
+    height: width * (9 / 16),
+    backgroundColor: "#000",
+  },
+  nativePlayer: {
+    flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  infoSection: {
+    padding: 20,
+  },
+  videoTitle: {
+    fontWeight: "800",
+    color: "#FFF",
+  },
+  courseTitle: {
+    color: "rgba(255, 255, 255, 0.7)",
+    marginTop: 4,
+  },
+});
