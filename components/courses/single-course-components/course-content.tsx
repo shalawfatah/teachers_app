@@ -5,6 +5,7 @@ import { VideoSingle } from "@/types/videos";
 import VideosList from "./video-list";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 interface CourseContentProps {
   course: {
@@ -25,6 +26,7 @@ export default function CourseContent({
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View style={[styles.contentBody, { direction: isRTL ? "rtl" : "ltr" }]}>
+      <BackgroundShapes />
       <Text variant="titleLarge" style={styles.sectionTitle}>
         {text.about_course}
       </Text>

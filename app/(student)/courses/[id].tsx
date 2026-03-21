@@ -77,46 +77,7 @@ export default function SingleCourse() {
             onVideoPress={handleVideoPress}
           />
         </ScrollView>
-
-        <View style={[footerStyles.footerContainer, { bottom: tabBarHeight }]}>
-            <Button
-              mode="contained"
-              style={[
-                styles.primaryButton,
-                {
-                  backgroundColor: "#FFF",
-                  borderRadius: 16,
-                },
-              ]}
-              contentStyle={{ height: 56 }}
-              labelStyle={[
-                styles.buttonLabel,
-                { color: "#000", fontFamily: "NRT-Bold" },
-              ]}
-              onPress={handleStartCourse}
-              disabled={videos.length === 0 || !hasPlayableVideos}
-            >
-              {text.course_start}
-            </Button>
-        </View>
       </View>
     </LinearGradient>
   );
 }
-
-const footerStyles = StyleSheet.create({
-  footerContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    backgroundColor: "transparent",
-    paddingHorizontal: 16, // Adds breathing room on the sides
-  },
-  blurWrapper: {
-    padding: 16,
-    borderRadius: 24, // Rounded "pill" look sits better above a tab bar
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.2)",
-  },
-});

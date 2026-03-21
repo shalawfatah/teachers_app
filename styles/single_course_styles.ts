@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 32,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.2)",
-    minHeight: 500,
+    minHeight: "100%",
   },
   descriptionText: {
     color: "rgba(255, 255, 255, 0.8)", // Light text for dark background
