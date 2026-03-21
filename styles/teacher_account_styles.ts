@@ -9,15 +9,14 @@ const scale = (size: number) => (isTablet ? size * 1.3 : size);
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "transparent",
   },
   scrollContent: {
     alignItems: isTablet ? "center" : "stretch",
-    // This ensures the background color fills the screen even if content is short
     flexGrow: 1,
   },
   profileHeader: {
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     alignItems: "center",
     paddingTop: isTablet ? 80 : 60,
     paddingBottom: scale(24),
@@ -72,9 +71,12 @@ export const styles = StyleSheet.create({
     fontSize: scale(10),
   },
   settingsContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     marginTop: 8,
     width: isTablet ? 600 : "100%",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.3)",
+    padding: 12,
     alignSelf: "center",
     borderRadius: isTablet ? 12 : 0,
   },
@@ -84,6 +86,7 @@ export const styles = StyleSheet.create({
   },
   signOutButton: {
     borderColor: "#d32f2f",
+    backgroundColor: "#FFF",
     marginTop: 16,
     marginBottom: 8,
   },
@@ -93,7 +96,7 @@ export const styles = StyleSheet.create({
   },
   deleteAccountButton: {
     borderColor: "red",
-    backgroundColor: "red",
-    color: "white",
+    backgroundColor: "orange",
+    color: "black",
   },
 });

@@ -9,6 +9,7 @@ import LanguageSwitcherModal from "@/components/general/language-switcher-modal-
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { gradient_colors } from "@/utils/gradient_colors";
+import { GeometricPattern } from "@/components/backgrounds/GeometicPattern";
 
 export default function TeacherHero({
   profile,
@@ -34,6 +35,7 @@ export default function TeacherHero({
       style={styles.heroSection}
       resizeMode="cover"
     >
+      <GeometricPattern />
       <LinearGradient colors={gradient_colors} style={styles.gradient}>
         <View style={[styles.header, { direction: isRTL ? "rtl" : "ltr" }]}>
           <View style={styles.userInfo}>
@@ -115,7 +117,7 @@ export default function TeacherHero({
             onDismiss={() => setLanguageModalVisible(false)}
             currentLang={profile?.lang || 1}
             profileId={profile?.id || ""} // Make sure this is the actual profile ID
-            onLanguageChange={onLanguageChange || (() => { })}
+            onLanguageChange={onLanguageChange || (() => {})}
           />
         )}
       </LinearGradient>
