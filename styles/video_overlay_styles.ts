@@ -13,7 +13,7 @@ export const overlayStyles = StyleSheet.create({
   // Content area
   content: {
     position: "absolute",
-    bottom: 80,
+    bottom: 120,
     left: 24,
     right: 24,
     alignItems: "flex-end",

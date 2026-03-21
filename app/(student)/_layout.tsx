@@ -3,7 +3,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { BlurView } from "expo-blur"; // Import this
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function StudentLayout() {
   const { lang } = useLanguage();
@@ -14,26 +14,51 @@ export default function StudentLayout() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#FF8C00",
-        tabBarInactiveTintColor: "#FFFFFF", // Vivid white as requested
+        tabBarInactiveTintColor: "#FFFFFF",
+        tabBarShowLabel: true,
         tabBarStyle: {
-          position: "absolute", // Required for content to show behind the bar
+          position: "absolute",
           borderTopWidth: 0,
           elevation: 0,
-          height: Platform.OS === "ios" ? 90 : 70,
-          backgroundColor: "transparent", // Transparent so BlurView shows through
+          bottom: 25,
+          marginRight: "4%",
+          marginLeft: "4%",
+          height: 70,
+          borderRadius: 24,
+          backgroundColor: "transparent",
+          paddingBottom: 0,
+          // Optional: Add a subtle shadow to make the "box" pop from the background
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.2,
+          shadowRadius: 5,
         },
-        // This is where the magic happens
+        tabBarItemStyle: {
+          // Use horizontal margin instead of vertical if icons feel too spread out
+          marginHorizontal: 5,
+          justifyContent: "center",
+          alignItems: "center",
+        },
         tabBarBackground: () => (
           <BlurView
             tint="dark"
-            intensity={80} // Adjust this (0-100) for more or less blur
-            style={StyleSheet.absoluteFill}
+            intensity={80}
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              borderRadius: 24,
+              overflow: "hidden",
+              borderWidth: 1,
+              borderColor: "rgba(255, 255, 255, 0.15)",
+            }}
           />
         ),
         tabBarLabelStyle: {
           fontFamily: "NRT-Bold",
-          fontSize: 12,
-          marginBottom: Platform.OS === "ios" ? 0 : 10,
+          fontSize: 10, // Dropped to 10 for better fit in a narrower bar
+          marginTop: 2,
+        },
+        tabBarIconStyle: {
+          marginTop: 5, // Pushes icons down slightly to center vertically
         },
       }}
     >

@@ -6,7 +6,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 export const styles = StyleSheet.create({
   // Layout Containers
   container: {
-    height: SCREEN_HEIGHT - 75,
+    height: SCREEN_HEIGHT,
   },
   loadingContainer: {
     flex: 1,

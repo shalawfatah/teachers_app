@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { ScrollView, View, Pressable, Platform } from "react-native";
+import { ScrollView, View, Pressable } from "react-native";
 import { Text, IconButton } from "react-native-paper";
-import { LinearGradient } from "expo-linear-gradient";
 import { supabase } from "@/lib/supabase";
+import { styles } from "@/styles/home_styles";
 import Loader from "@/components/Loader";
 import { Student } from "@/types/profile";
 import { ReklamCarousel } from "@/components/content/ReklamCarousel";
 import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
-import { gradient_colors } from "@/utils/gradient_colors";
 
 type TeacherStats = {
   students_count: number;
@@ -69,68 +68,57 @@ export default function StudentDashboard() {
   };
 
   const getLanguageFlag = (lang: number) => {
-    return lang === 1 ? "🇬🇧" : "☀️";
+    return lang === 1 ? "🇬🇧" : "🇹🇯";
+  };
+
+  const handleLanguageChange = () => {
+    getProfile();
   };
 
   if (loading) return <Loader />;
 
   return (
-    <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
+    <>
       <View
         style={{
           position: "absolute",
-          top: Platform.OS === "ios" ? 50 : 20,
+          top: 50,
           right: 16,
-          zIndex: 100, // Ensure it's above the scrollview content
+          zIndex: 10,
         }}
       >
         <Pressable
           onPress={() => setLanguageModalVisible(true)}
           style={{
-            paddingHorizontal: 10,
-            paddingVertical: 4,
-            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            paddingHorizontal: 12,
+            paddingVertical: 6,
+            backgroundColor: "rgba(255,255,255,0.4)",
             borderRadius: 20,
             flexDirection: "row",
             alignItems: "center",
-            borderWidth: 1,
-            borderColor: "rgba(255, 255, 255, 0.3)",
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 3,
           }}
         >
-          <Text style={{ fontSize: 16, marginRight: 2 }}>
+          <Text style={{ fontSize: 18, marginRight: 4 }}>
             {getLanguageFlag(profile?.lang || 1)}
           </Text>
           <IconButton
             icon="chevron-down"
-            iconColor="#FFF"
-            size={14}
+            iconColor="#333"
+            size={16}
             style={{ margin: 0 }}
           />
         </Pressable>
       </View>
 
-      <ScrollView
-        style={{ flex: 1 }}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingTop: 0, // REMOVED: Items will now fill from the very top
-          paddingBottom: 90, // KEPT: Only enough to clear the bottom tab bar
-        }}
-      >
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {profile?.teachers?.id && (
           <ReklamCarousel teacherId={profile.teachers.id} />
         )}
-
-        <View style={{ height: 20 }} />
-
-        <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
-          <Text
-            variant="titleLarge"
-            style={{ color: "#FFF", fontFamily: "NRT-Bold" }}
-          >
-            {profile?.name}
-          </Text>
-        </View>
       </ScrollView>
 
       {profile && (
@@ -139,9 +127,9 @@ export default function StudentDashboard() {
           onDismiss={() => setLanguageModalVisible(false)}
           currentLang={profile?.lang || 1}
           profileId={profile?.id || ""}
-          onLanguageChange={getProfile}
+          onLanguageChange={handleLanguageChange}
         />
       )}
-    </LinearGradient>
+    </>
   );
 }

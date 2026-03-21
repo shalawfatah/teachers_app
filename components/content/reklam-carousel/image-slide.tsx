@@ -3,7 +3,6 @@ import { Reklam } from "@/types/reklam";
 import { ImageBackground, Pressable, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SlideContent } from "./slide-content";
-import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function ImageSlide({
   reklam,
@@ -28,8 +27,9 @@ export default function ImageSlide({
         resizeMode="cover"
       />
 
+      {/* Bottom gradient - 33% only */}
       <LinearGradient
-        colors={gradient_colors}
+        colors={["transparent", "transparent", "rgba(0,0,0,0.85)"]}
         locations={[0, 0.66, 1]}
         style={styles.gradientOverlay}
         pointerEvents="none"

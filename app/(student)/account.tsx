@@ -11,6 +11,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
+import { GeometricPattern } from "@/components/backgrounds/GeometicPattern";
 
 export default function AccountScreen() {
   const { profile, loading, handleSignOut, refreshProfile } =
@@ -24,6 +25,7 @@ export default function AccountScreen() {
   return (
     <>
       <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
+        <GeometricPattern />
         <ScrollView
           style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
           contentContainerStyle={styles.scrollContent}

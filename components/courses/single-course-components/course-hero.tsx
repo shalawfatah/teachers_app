@@ -30,7 +30,7 @@ export default function CourseHero({
       style={styles.heroImage}
     >
       <LinearGradient
-        colors={gradient_colors}
+        colors={["rgba(0,0,0,0.2)", "rgba(0,0,0,0.8)"]}
         style={styles.gradient}
       >
         <IconButton

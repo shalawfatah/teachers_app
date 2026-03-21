@@ -10,6 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function CoursesScreen() {
   const c = useCourses();
@@ -20,6 +21,7 @@ export default function CoursesScreen() {
 
   return (
     <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
+      <BackgroundShapes />
       <View
         style={[courses_styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
       >

@@ -65,7 +65,6 @@ export default function LanguageSwitcherModal({
       onRequestClose={onDismiss}
     >
       <Pressable style={{ flex: 1 }} onPress={onDismiss}>
-        {/* BlurView for the backdrop */}
         <BlurView
           intensity={Platform.OS === "ios" ? 30 : 100}
           tint="dark"
@@ -79,7 +78,7 @@ export default function LanguageSwitcherModal({
               width: "85%",
               maxWidth: 400,
               borderWidth: 1,
-              borderColor: "rgba(255, 255, 255, 0.2)", // Subtle border
+              borderColor: "rgba(0, 0, 0, 0.6)",
               overflow: "hidden",
             }}
           >
