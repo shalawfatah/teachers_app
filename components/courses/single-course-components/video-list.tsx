@@ -50,6 +50,7 @@ export default function VideosList({
                 ) : (
                   <IconButton
                     icon="play-circle"
+                    size={36}
                     iconColor="#6200ee"
                     onPress={() => onVideoPress(video.id)}
                   />

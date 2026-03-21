@@ -113,13 +113,12 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   footer: {
-    // Note: We use absolute positioning in the component now
     padding: 20,
     backgroundColor: "transparent",
   },
   primaryButton: {
     borderRadius: 16,
-    backgroundColor: "#FFFFFF", // High contrast white button
+    backgroundColor: "#FFFFFF",
     marginBottom: 16,
   },
   buttonLabel: {

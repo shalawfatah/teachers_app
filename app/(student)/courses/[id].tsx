@@ -74,7 +74,6 @@ export default function SingleCourse() {
           <CourseContent
             course={course}
             videos={videos}
-            isVerified={isVerified}
             canPlayVideo={canPlayVideo}
             onVideoPress={handleVideoPress}
           />
