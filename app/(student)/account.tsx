@@ -29,8 +29,15 @@ export default function AccountScreen() {
         >
           <View style={styles.profileHeader}>
             <Avatar.Text size={80} label={profile?.name?.charAt(0) || "U"} />
-            <Text variant="headlineSmall">{profile?.name}</Text>
-            <Text variant="bodyMedium">خوێندکار</Text>
+            <Text
+              variant="headlineSmall"
+              style={{ color: "#FFF", fontFamily: "NRT-Bold", marginTop: 8 }}
+            >
+              {profile?.name}
+            </Text>
+            <Text variant="bodyMedium" style={{ color: "#FFF" }}>
+              {text.student}
+            </Text>
           </View>
 
           <StudentSettingsList
@@ -45,7 +52,7 @@ export default function AccountScreen() {
               loading={loading}
               disabled={loading}
               style={styles.signOutButton}
-              textColor="#d32f2f"
+              textColor="#FFF"
             >
               {text.logout}
             </Button>

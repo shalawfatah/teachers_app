@@ -54,7 +54,6 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
   settingsContainer: {
-    backgroundColor: "#fff",
     marginTop: 8,
     fontFamily: "NRT-Bold",
   },
@@ -63,7 +62,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 32,
   },
   signOutButton: {
-    borderColor: "#d32f2f",
+    borderColor: "#FFF",
     fontFamily: "NRT-Bold",
   },
 });

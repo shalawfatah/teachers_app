@@ -17,40 +17,83 @@ export default function StudentSettingsList({
 }: Props) {
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+
+  const titleStyle = { color: "#FFFFFF", fontFamily: "NRT-Bold", fontSize: 16 };
+  const descStyle = { color: "rgba(255, 255, 255, 0.7)", fontFamily: "Goran" };
+  const iconColor = "#FFFFFF";
+
   return (
     <View
       style={[styles.settingsContainer, { direction: isRTL ? "rtl" : "ltr" }]}
     >
       <List.Section>
-        <List.Subheader>{text.account_setting}</List.Subheader>
+        <List.Subheader
+          style={{ color: "rgba(255, 255, 255, 0.5)", fontFamily: "NRT-Bold" }}
+        >
+          {text.account_setting}
+        </List.Subheader>
+
         <List.Item
           title={text.update_acc}
           description={text.update_your_info}
-          left={(p) => <List.Icon {...p} icon="account-edit" />}
-          right={(p) => <List.Icon {...p} icon="chevron-right" />}
+          titleStyle={titleStyle}
+          descriptionStyle={descStyle}
+          left={(p) => (
+            <List.Icon {...p} icon="account-edit" color={iconColor} />
+          )}
+          right={(p) => (
+            <List.Icon
+              {...p}
+              icon={isRTL ? "chevron-left" : "chevron-right"}
+              color={iconColor}
+            />
+          )}
           onPress={onEditPress}
         />
-        <Divider />
+        <Divider style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }} />
+
         <List.Item
           title={text.safety_security}
           description={text.safety_security}
-          left={(p) => <List.Icon {...p} icon="shield-account" />}
-          right={(p) => <List.Icon {...p} icon="chevron-right" />}
+          titleStyle={titleStyle}
+          descriptionStyle={descStyle}
+          left={(p) => (
+            <List.Icon {...p} icon="shield-account" color={iconColor} />
+          )}
+          right={(p) => (
+            <List.Icon
+              {...p}
+              icon={isRTL ? "chevron-left" : "chevron-right"}
+              color={iconColor}
+            />
+          )}
           onPress={() => onSettingsPress("privacy")}
         />
       </List.Section>
 
       <List.Section>
-        <List.Subheader>{text.help}</List.Subheader>
+        <List.Subheader
+          style={{ color: "rgba(255, 255, 255, 0.5)", fontFamily: "NRT-Bold" }}
+        >
+          {text.help}
+        </List.Subheader>
+
         <List.Item
           title={text.help}
-          left={(p) => <List.Icon {...p} icon="help-circle" />}
+          titleStyle={titleStyle}
+          left={(p) => (
+            <List.Icon {...p} icon="help-circle" color={iconColor} />
+          )}
           onPress={() => onSettingsPress("help")}
         />
-        <Divider />
+        <Divider style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }} />
+
         <List.Item
           title={text.about}
-          left={(p) => <List.Icon {...p} icon="information" />}
+          titleStyle={titleStyle}
+          left={(p) => (
+            <List.Icon {...p} icon="information" color={iconColor} />
+          )}
           onPress={() => onSettingsPress("about")}
         />
       </List.Section>
