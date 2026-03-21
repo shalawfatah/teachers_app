@@ -43,6 +43,14 @@ export default function SignupForm({
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
+  // This theme object ensures the internal label and cursor are white
+  const inputTheme = {
+    colors: {
+      onSurfaceVariant: "rgba(255, 255, 255, 0.7)", // White label/placeholder
+      primary: "#ffffff", // White cursor
+    },
+  };
+
   return (
     <View>
       <TextInput
@@ -53,7 +61,13 @@ export default function SignupForm({
         contentStyle={{ textAlign: isRTL ? "right" : "left" }}
         mode="outlined"
         disabled={loading}
+        placeholderTextColor="rgba(255, 255, 255, 0.7)"
+        textColor="#ffffff"
+        outlineColor="#ffffff" // Forced White Border
+        activeOutlineColor="#ffffff"
+        theme={inputTheme}
       />
+
       <TextInput
         placeholder={text.phone}
         value={phone}
@@ -62,13 +76,20 @@ export default function SignupForm({
         style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
         mode="outlined"
         disabled={loading}
+        placeholderTextColor="rgba(255, 255, 255, 0.7)"
+        textColor="#ffffff"
+        outlineColor="#ffffff"
+        activeOutlineColor="#ffffff"
+        theme={inputTheme}
       />
+
       <TeacherDropdown
         teachers={teachers}
         selectedTeacherId={selectedTeacherId}
         onSelect={onTeacherSelect}
         disabled={loading}
       />
+
       <TextInput
         placeholder={text.password}
         value={password}
@@ -78,19 +99,32 @@ export default function SignupForm({
         contentStyle={{ textAlign: isRTL ? "right" : "left" }}
         mode="outlined"
         disabled={loading}
+        placeholderTextColor="rgba(255, 255, 255, 0.7)"
+        textColor="#ffffff"
+        outlineColor="#ffffff"
+        activeOutlineColor="#ffffff"
+        theme={inputTheme}
       />
+
       <GradeDropdown
         value={grade}
         onValueChange={onGradeChange}
         disabled={loading}
       />
-      {error ? <HelperText type="error">{error}</HelperText> : null}
+
+      {error ? (
+        <HelperText type="error" style={{ color: "#ff8a8a" }}>
+          {error}
+        </HelperText>
+      ) : null}
+
       <Button
         mode="contained"
         onPress={onSubmit}
         loading={loading}
         disabled={loading}
         style={styles.button}
+        labelStyle={{ color: "#000000", fontFamily: "NRT-Bold" }}
       >
         {text.create_account}
       </Button>

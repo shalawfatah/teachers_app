@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { Card, Text, Dialog, Portal, Button } from "react-native-paper";
 import { router } from "expo-router";
 import { styles } from "@/styles/signup_styles";
+import { LinearGradient } from "expo-linear-gradient"; // Import this
 import useTeachers from "@/components/account/signup-components/use-teachers";
 import useSignup from "@/components/account/signup-components/use-signup";
 import SignupForm from "@/components/account/signup-components/signup-form";
@@ -26,7 +27,6 @@ export default function SignupScreen() {
 
   const handleSignup = async () => {
     const fakeEmail = `${phone.replace(/\s+/g, "")}@ravaemail.com`;
-
     const success = await signup({
       email: fakeEmail,
       password,
@@ -41,58 +41,69 @@ export default function SignupScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
+    // 1. Wrap the entire screen in the LinearGradient
+    <LinearGradient
+      colors={["#FF8C00", "#FF0080"]} // Use the same "Aura" colors as your login
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text variant="headlineMedium" style={styles.title}>
-              {text.register_student}
-            </Text>
-            <SignupForm
-              phone={phone}
-              password={password}
-              fullName={fullName}
-              grade={grade}
-              selectedTeacherId={selectedTeacherId}
-              teachers={teachers}
-              onPhoneChange={setPhone}
-              onPasswordChange={setPassword}
-              onFullNameChange={setFullName}
-              onGradeChange={setGrade}
-              onTeacherSelect={setSelectedTeacherId}
-              onSubmit={handleSignup}
-              loading={loading || teachersLoading}
-              error={error}
-            />
-            <Button
-              mode="text"
-              onPress={() => router.back()}
-              disabled={loading}
-            >
-              {text.have_account_sign_in}
-            </Button>
-          </Card.Content>
-        </Card>
-      </ScrollView>
-      <Portal>
-        <Dialog
-          visible={successDialogVisible}
-          onDismiss={() => router.replace("/(auth)/login")}
-        >
-          <Dialog.Title>{text.account_created}</Dialog.Title>
-          <Dialog.Content>
-            <Text>{text.account_created_message}</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => router.replace("/(auth)/login")}>
-              {text.got_it}
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
-    </KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <Card style={styles.card}>
+            <Card.Content>
+              <Text variant="headlineMedium" style={styles.title}>
+                {text.register_student}
+              </Text>
+
+              <SignupForm
+                phone={phone}
+                password={password}
+                fullName={fullName}
+                grade={grade}
+                selectedTeacherId={selectedTeacherId}
+                teachers={teachers}
+                onPhoneChange={setPhone}
+                onPasswordChange={setPassword}
+                onFullNameChange={setFullName}
+                onGradeChange={setGrade}
+                onTeacherSelect={setSelectedTeacherId}
+                onSubmit={handleSignup}
+                loading={loading || teachersLoading}
+                error={error}
+              />
+
+              <Button
+                mode="text"
+                onPress={() => router.back()}
+                disabled={loading}
+                // Ensure the "Back" button text is visible on the gradient/glass
+                labelStyle={{ color: "#ffffff" }}
+              >
+                {text.have_account_sign_in}
+              </Button>
+            </Card.Content>
+          </Card>
+        </ScrollView>
+
+        <Portal>
+          <Dialog
+            visible={successDialogVisible}
+            onDismiss={() => router.replace("/(auth)/login")}
+          >
+            <Dialog.Title>{text.account_created}</Dialog.Title>
+            <Dialog.Content>
+              <Text>{text.account_created_message}</Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => router.replace("/(auth)/login")}>
+                {text.got_it}
+              </Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }

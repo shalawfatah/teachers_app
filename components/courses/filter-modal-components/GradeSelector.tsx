@@ -29,19 +29,39 @@ export default function GradeDropdown({
 
   return (
     <View style={styles.dropdownContainer}>
-      <Text style={{ textAlign: isRTL ? "right" : "left" }}>{text.class}</Text>
-      <Picker
-        selectedValue={value ?? ""}
-        onValueChange={(val) => {
-          if (val !== "") onValueChange(val);
+      <Text
+        style={{
+          textAlign: isRTL ? "right" : "left",
+          color: "#FFF",
+          marginBottom: 12,
+          fontFamily: "NRT-Bold", // Keeping your Kurdish font consistent
         }}
-        enabled={!disabled}
-        style={styles.dropdownButton}
       >
-        {grades.map((g) => (
-          <Picker.Item key={g.value} label={g.label} value={g.value} />
-        ))}
-      </Picker>
+        {text.class}
+      </Text>
+
+      <View style={styles.dropdownButton}>
+        <Picker
+          selectedValue={value ?? ""}
+          onValueChange={(val) => {
+            if (val !== "") onValueChange(val);
+          }}
+          enabled={!disabled}
+          // 1. This color affects the selected text on Android
+          style={{ color: "#FFFFFF" }}
+          // 2. This controls the dropdown icon color on Android
+          dropdownIconColor="#FFFFFF"
+        >
+          {grades.map((g) => (
+            <Picker.Item
+              key={g.value}
+              label={g.label}
+              value={g.value}
+              color={"#FFFFFF"}
+            />
+          ))}
+        </Picker>
+      </View>
     </View>
   );
 }

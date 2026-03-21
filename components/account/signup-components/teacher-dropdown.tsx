@@ -30,7 +30,13 @@ export default function TeacherDropdown({
 
   return (
     <View style={styles.dropdownContainer}>
-      <Text style={{ textAlign: isRTL ? "right" : "left" }}>
+      <Text
+        style={{
+          textAlign: isRTL ? "right" : "left",
+          color: "#FFF",
+          marginBottom: 12,
+        }}
+      >
         {text.choose_teacher}
       </Text>
       <Picker
@@ -42,7 +48,7 @@ export default function TeacherDropdown({
         style={styles.dropdownButton}
       >
         {teachers.map((t) => (
-          <Picker.Item key={t.id} label={t.name} value={t.id} />
+          <Picker.Item key={t.id} label={t.name} value={t.id} color={"#FFF"} />
         ))}
       </Picker>
     </View>
