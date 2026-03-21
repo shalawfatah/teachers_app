@@ -9,6 +9,7 @@ import { styles } from "@/styles/edit_profile_student_styles";
 import { useEditProfile } from "./student-account-components/useEditProfile";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function EditProfileModal({
   visible,
@@ -16,7 +17,6 @@ export default function EditProfileModal({
   profile,
   onProfileUpdate,
 }: EditStudentModalProps) {
-  // Logic preserved from your hook
   const { name, setName, grade, setGrade, updating, handleUpdate } =
     useEditProfile({
       profile,
@@ -60,10 +60,7 @@ export default function EditProfileModal({
           },
         ]}
       >
-        <LinearGradient
-          colors={["#FF8C00", "#FF0080"]}
-          style={{ borderRadius: 24 }}
-        >
+        <LinearGradient colors={gradient_colors} style={{ borderRadius: 24 }}>
           <BlurView
             intensity={90}
             tint="dark"

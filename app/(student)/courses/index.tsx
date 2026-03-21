@@ -9,6 +9,7 @@ import useCourses from "../../../components/courses/single-course-components/use
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function CoursesScreen() {
   const c = useCourses();
@@ -18,7 +19,7 @@ export default function CoursesScreen() {
   if (c.loading && !c.refreshing) return <Loader />;
 
   return (
-    <LinearGradient colors={["#FF8C00", "#FF0080"]} style={{ flex: 1 }}>
+    <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
       <View
         style={[courses_styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
       >

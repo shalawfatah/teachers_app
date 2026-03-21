@@ -4,12 +4,13 @@ import { Text, Avatar, Button } from "react-native-paper";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
 import SettingsModal from "@/components/students/account/SettingsModal";
 import { SettingsType } from "@/types/modal";
-import StudentSettingsList from "../../components/students/student-account-components/StudentSettingsList";
-import useStudentAccount from "../../components/students/student-account-components/useStudentAccount";
+import StudentSettingsList from "@/components/students/student-account-components/StudentSettingsList";
+import useStudentAccount from "@/components/students/student-account-components/useStudentAccount";
 import { styles } from "@/styles/account_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function AccountScreen() {
   const { profile, loading, handleSignOut, refreshProfile } =
@@ -22,7 +23,7 @@ export default function AccountScreen() {
 
   return (
     <>
-      <LinearGradient colors={["#FF8C00", "#FF0080"]} style={{ flex: 1 }}>
+      <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
         <ScrollView
           style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
           contentContainerStyle={styles.scrollContent}

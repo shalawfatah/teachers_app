@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "@/styles/single_course_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 interface CourseHeroProps {
   course: {
@@ -29,7 +30,7 @@ export default function CourseHero({
       style={styles.heroImage}
     >
       <LinearGradient
-        colors={["rgba(0,0,0,0.2)", "rgba(0,0,0,0.8)"]}
+        colors={gradient_colors}
         style={styles.gradient}
       >
         <IconButton

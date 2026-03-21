@@ -55,6 +55,9 @@ export const styles = StyleSheet.create({
   },
   settingsContainer: {
     marginTop: 8,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+    borderRadius: 24,
     fontFamily: "NRT-Bold",
   },
   signOutContainer: {

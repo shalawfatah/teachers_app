@@ -8,6 +8,7 @@ import { useState } from "react";
 import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function TeacherHero({
   profile,
@@ -33,10 +34,7 @@ export default function TeacherHero({
       style={styles.heroSection}
       resizeMode="cover"
     >
-      <LinearGradient
-        colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.7)"]}
-        style={styles.gradient}
-      >
+      <LinearGradient colors={gradient_colors} style={styles.gradient}>
         <View style={[styles.header, { direction: isRTL ? "rtl" : "ltr" }]}>
           <View style={styles.userInfo}>
             <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />

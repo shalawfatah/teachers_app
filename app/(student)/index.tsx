@@ -7,6 +7,7 @@ import Loader from "@/components/Loader";
 import { Student } from "@/types/profile";
 import { ReklamCarousel } from "@/components/content/ReklamCarousel";
 import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 type TeacherStats = {
   students_count: number;
@@ -74,8 +75,7 @@ export default function StudentDashboard() {
   if (loading) return <Loader />;
 
   return (
-    <LinearGradient colors={["#FF8C00", "#FF0080"]} style={{ flex: 1 }}>
-      {/* 1. Language Switcher: Positioned absolutely but higher up */}
+    <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
       <View
         style={{
           position: "absolute",
@@ -109,7 +109,6 @@ export default function StudentDashboard() {
         </Pressable>
       </View>
 
-      {/* 2. ScrollView: No backgroundColor, filling the screen */}
       <ScrollView
         style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
@@ -118,15 +117,12 @@ export default function StudentDashboard() {
           paddingBottom: 90, // KEPT: Only enough to clear the bottom tab bar
         }}
       >
-        {/* If your carousel is the first item, it will now hit the top of the screen */}
         {profile?.teachers?.id && (
           <ReklamCarousel teacherId={profile.teachers.id} />
         )}
 
-        {/* Optional: Add a small spacer if the carousel is too high under the status bar */}
         <View style={{ height: 20 }} />
 
-        {/* Welcome section moved inside or removed to maximize space */}
         <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
           <Text
             variant="titleLarge"

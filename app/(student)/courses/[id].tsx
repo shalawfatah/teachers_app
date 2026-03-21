@@ -9,7 +9,6 @@ import {
 import { Button } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-import { BlurView } from "expo-blur";
 import { styles } from "@/styles/single_course_styles";
 import NoCourse from "@/components/courses/NoCourse";
 import Loader from "@/components/Loader";
@@ -18,6 +17,7 @@ import CourseHero from "@/components/courses/single-course-components/course-her
 import useCourseData from "@/components/courses/single-course-components/use-course-data";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function SingleCourse() {
   const { id } = useLocalSearchParams();
@@ -44,11 +44,10 @@ export default function SingleCourse() {
 
   const hasPlayableVideos = videos.some((v) => canPlayVideo(v));
 
-  // Determine bottom offset based on the Tab Bar height from StudentLayout
   const tabBarHeight = Platform.OS === "ios" ? 90 : 70;
 
   return (
-    <LinearGradient colors={["#FF8C00", "#FF0080"]} style={{ flex: 1 }}>
+    <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
       <StatusBar
         barStyle="light-content"
         translucent

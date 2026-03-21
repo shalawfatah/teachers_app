@@ -5,6 +5,7 @@ import { styles } from "@/styles/login_styles";
 import useLogin from "@/components/account/login-components/useLogin";
 import LoginForm from "@/components/account/login-components/loginForm";
 import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function LoginScreen() {
   const loginState = useLogin();
@@ -14,7 +15,7 @@ export default function LoginScreen() {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <LinearGradient style={styles.container} colors={["#FF8C00", "#FF0080"]}>
+      <LinearGradient style={styles.container} colors={gradient_colors}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <Card style={styles.card}>
             <Card.Content>

@@ -5,6 +5,7 @@ import { styles } from "@/styles/reklam_carousel";
 import { Reklam } from "@/types/reklam";
 import { LinearGradient } from "expo-linear-gradient";
 import { SlideContent } from "./slide-content";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 interface VideoSlideProps {
   reklam: Reklam;
@@ -71,7 +72,7 @@ export default function VideoSlide({
         }}
         style={styles.webview}
         resizeMode={ResizeMode.COVER}
-        shouldPlay={false} // we control play manually
+        shouldPlay={false}
         isLooping={false}
         isMuted={false}
         useNativeControls={false}
@@ -83,7 +84,7 @@ export default function VideoSlide({
         disabled={reklam.link_type === "none"}
       />
       <LinearGradient
-        colors={["transparent", "rgba(0,0,0,0.3)", "rgba(0,0,0,0.85)"]}
+        colors={gradient_colors}
         locations={[0, 0.5, 1]}
         style={styles.gradientOverlay}
         pointerEvents="none"

@@ -7,6 +7,7 @@ import { View, ScrollView } from "react-native";
 import { Modal, Portal, Text, Button, List, Divider } from "react-native-paper";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function SettingsModal({
   type,
@@ -151,11 +152,7 @@ export default function SettingsModal({
           },
         ]}
       >
-        {/* Removed padding: 4 to eliminate the vivid lines/border */}
-        <LinearGradient
-          colors={["#FF8C00", "#FF0080"]}
-          style={{ borderRadius: 24 }}
-        >
+        <LinearGradient colors={gradient_colors} style={{ borderRadius: 24 }}>
           <BlurView
             intensity={90}
             tint="dark"

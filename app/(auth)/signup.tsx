@@ -9,6 +9,7 @@ import useSignup from "@/components/account/signup-components/use-signup";
 import SignupForm from "@/components/account/signup-components/signup-form";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function SignupScreen() {
   const [phone, setPhone] = useState("");
@@ -41,10 +42,7 @@ export default function SignupScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={["#FF8C00", "#FF0080"]}
-      style={styles.container}
-    >
+    <LinearGradient colors={gradient_colors} style={styles.container}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
