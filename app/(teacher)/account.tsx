@@ -13,6 +13,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function AccountScreen() {
   const { profile, stats, loading, handleSignOut, refreshProfile } =
@@ -25,7 +26,11 @@ export default function AccountScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#1a1a1a" }}>
-      <LinearGradient colors={gradient_colors} style={StyleSheet.absoluteFill} />
+      <LinearGradient
+        colors={gradient_colors}
+        style={StyleSheet.absoluteFill}
+      />
+      <BackgroundShapes />
 
       <ScrollView
         style={{ flex: 1, backgroundColor: "transparent" }}
@@ -41,7 +46,12 @@ export default function AccountScreen() {
             },
           ]}
         >
-          <View style={styles.profileHeader}>
+          <View
+            style={[
+              styles.profileHeader,
+              { width: "100%", marginLeft: "100%", marginRight: "100%" },
+            ]}
+          >
             <Avatar.Text
               size={80}
               label={profile?.name?.charAt(0) || "U"}
@@ -49,13 +59,17 @@ export default function AccountScreen() {
             />
             <Text
               variant="headlineSmall"
-              style={{ color: "#FFF", fontWeight: "bold" }}
+              style={{ color: "#FFF", fontWeight: "bold", textAlign: "center" }}
             >
               {profile?.name}
             </Text>
             <Text
               variant="bodyMedium"
-              style={{ color: "rgba(255,255,255,0.7)", marginTop: 4 }}
+              style={{
+                color: "rgba(255,255,255,0.7)",
+                marginTop: 4,
+                textAlign: "center",
+              }}
             >
               {text.teacher}
             </Text>

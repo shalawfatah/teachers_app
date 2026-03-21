@@ -40,6 +40,9 @@ export const styles = StyleSheet.create({
     fontSize: scale(12),
   },
   statsCard: {
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.5)",
     margin: 16,
     marginBottom: 8,
     width: isTablet ? 600 : "92%",
@@ -63,10 +66,10 @@ export const styles = StyleSheet.create({
   },
   statNumber: {
     fontWeight: "bold",
-    color: "#6200ee",
+    color: "orange",
   },
   statLabel: {
-    color: "#666",
+    color: "#FFF",
     marginTop: 4,
     fontSize: scale(10),
   },

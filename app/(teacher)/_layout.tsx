@@ -3,18 +3,65 @@ import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { BlurView } from "expo-blur";
+import { StyleSheet } from "react-native";
 
 export default function TeacherLayout() {
   const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#6200ee",
+        tabBarActiveTintColor: "orange",
+        tabBarInactiveTintColor: "#FFFFFF",
+        tabBarShowLabel: true,
+        tabBarStyle: {
+          position: "absolute",
+          borderTopWidth: 0,
+          elevation: 0,
+          bottom: 25,
+          marginRight: "4%",
+          marginLeft: "4%",
+          height: 70,
+          borderRadius: 24,
+          backgroundColor: "transparent",
+          paddingBottom: 0,
+          // Shadow for depth
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.2,
+          shadowRadius: 5,
+        },
+        tabBarItemStyle: {
+          marginHorizontal: 5,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        tabBarBackground: () => (
+          <BlurView
+            tint="dark"
+            intensity={80}
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              borderRadius: 24,
+              overflow: "hidden",
+              borderWidth: 1,
+              borderColor: "rgba(255, 255, 255, 0.15)",
+            }}
+          />
+        ),
+        tabBarLabelStyle: {
+          fontFamily: "NRT-Bold",
+          fontSize: 10,
+          marginTop: 2,
+        },
+        tabBarIconStyle: {
+          marginTop: 5,
+        },
       }}
     >
-      {/* Primary Tab Navigation */}
       <Tabs.Screen
         name="index"
         options={{
@@ -64,22 +111,12 @@ export default function TeacherLayout() {
         }}
       />
 
-      {/* Secondary / Detail Screens 
-          'href: null' hides them from the bottom bar while allowing navigation.
-      */}
-
-      {/* Student Detail Routes */}
+      {/* Hidden Routes */}
       <Tabs.Screen name="students/view/[id]" options={{ href: null }} />
       <Tabs.Screen name="students/edit/[id]" options={{ href: null }} />
       <Tabs.Screen name="video/[id]" options={{ href: null }} />
-
-      {/* Course Detail Routes (Matches (course) folder in your tree) */}
       <Tabs.Screen name="content/(course)/view/[id]" options={{ href: null }} />
       <Tabs.Screen name="content/(course)/edit/[id]" options={{ href: null }} />
-
-      {/* NOTE: Removed content/(video) entries because that folder 
-          does not exist in your file system according to your tree. 
-      */}
     </Tabs>
   );
 }

@@ -8,6 +8,9 @@ import { useProfileUpdate } from "./use-profile-update";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { ProfileForm } from "./profile-form";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
 
 export default function EditProfileModal({
   visible,
@@ -31,7 +34,6 @@ export default function EditProfileModal({
     onDismiss,
   );
 
-  // Get language context here
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
@@ -58,58 +60,85 @@ export default function EditProfileModal({
           { direction: isRTL ? "rtl" : "ltr" },
         ]}
       >
-        <View style={styles.container}>
-          <Text
-            variant="headlineSmall"
-            style={[styles.title, { textAlign: isRTL ? "right" : "left" }]}
+        <LinearGradient colors={gradient_colors} style={{ borderRadius: 24 }}>
+          <BlurView
+            intensity={90}
+            tint="dark"
+            style={{ padding: 24, borderRadius: 24 }}
           >
-            {text.update_acc}
-          </Text>
+            <View style={styles.container}>
+              <Text
+                variant="headlineSmall"
+                style={[
+                  styles.title,
+                  { textAlign: isRTL ? "right" : "left", color: "#FFF" },
+                ]}
+              >
+                {text.update_acc}
+              </Text>
 
-          <ScrollView
-            style={styles.scrollView}
-            showsVerticalScrollIndicator={false}
-          >
-            <ProfileForm
-              name={name}
-              expertise={expertise}
-              thumbnail={thumbnail}
-              coverImg={coverImg}
-              onNameChange={setName}
-              onExpertiseChange={setExpertise}
-              onUploadThumbnail={uploadThumbnail}
-              onUploadCover={uploadCover}
-              uploadingThumbnail={uploadingThumbnail}
-              uploadingCover={uploadingCover}
-              // Pass language props to child
-              lang={lang}
-              isRTL={isRTL}
-            />
-          </ScrollView>
+              <ScrollView
+                style={styles.scrollView}
+                showsVerticalScrollIndicator={false}
+              >
+                {/* NOTE: Ensure ProfileForm passes these theme overrides to its internal TextInputs
+                 */}
+                <ProfileForm
+                  name={name}
+                  expertise={expertise}
+                  thumbnail={thumbnail}
+                  coverImg={coverImg}
+                  onNameChange={setName}
+                  onExpertiseChange={setExpertise}
+                  onUploadThumbnail={uploadThumbnail}
+                  onUploadCover={uploadCover}
+                  uploadingThumbnail={uploadingThumbnail}
+                  uploadingCover={uploadingCover}
+                  lang={lang}
+                  isRTL={isRTL}
+                />
+              </ScrollView>
 
-          <View
-            style={[
-              styles.buttonRow,
-              {
-                flexDirection: isRTL ? "row-reverse" : "row",
-                justifyContent: "flex-end",
-              },
-            ]}
-          >
-            <Button
-              mode="contained"
-              onPress={handleUpdate}
-              loading={updating}
-              disabled={updating || !name}
-              style={styles.button}
-            >
-              {text.save}
-            </Button>
-            <Button mode="text" onPress={onDismiss} style={styles.button}>
-              {text.cancel}
-            </Button>
-          </View>
-        </View>
+              <View
+                style={[
+                  styles.buttonRow,
+                  {
+                    flexDirection: isRTL ? "row-reverse" : "row",
+                    justifyContent: "flex-end",
+                    gap: 12,
+                    marginTop: 20,
+                  },
+                ]}
+              >
+                {/* CANCEL BUTTON: White text with transparent white border */}
+                <Button
+                  mode="outlined"
+                  onPress={onDismiss}
+                  textColor="#FFFFFF"
+                  style={{
+                    borderColor: "rgba(255, 255, 255, 0.5)",
+                    borderRadius: 12,
+                  }}
+                >
+                  {text.cancel}
+                </Button>
+
+                {/* SAVE BUTTON: Primary Orange */}
+                <Button
+                  mode="contained"
+                  onPress={handleUpdate}
+                  loading={updating}
+                  disabled={updating || !name}
+                  buttonColor="#FF8C00" // Your primary orange
+                  textColor="#FFFFFF"
+                  style={{ borderRadius: 12, minWidth: 100 }}
+                >
+                  {text.save}
+                </Button>
+              </View>
+            </View>
+          </BlurView>
+        </LinearGradient>
       </Modal>
     </Portal>
   );

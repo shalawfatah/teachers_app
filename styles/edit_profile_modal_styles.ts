@@ -3,10 +3,11 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   modalContainer: {
     margin: 20,
+    backgroundColor: "transparent",
     maxHeight: "85%",
   },
   container: {
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     borderRadius: 12,
     padding: 24,
   },
@@ -14,16 +15,19 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontWeight: "bold",
     marginBottom: 12,
-    backgroundColor: "white",
+    backgroundColor: "transparent",
+    color: "#FFF",
   },
   scrollView: {
     maxHeight: 500,
   },
   input: {
     marginBottom: 16,
+    backgroundColor: "transparent",
   },
   label: {
     marginBottom: 8,
+    color: "white",
     marginTop: 8,
   },
   imageContainer: {
@@ -68,9 +72,7 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 20,
     paddingVertical: 16,
-    backgroundColor: "white",
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
+    backgroundColor: "transparent",
   },
   button: {
     marginLeft: 10,
