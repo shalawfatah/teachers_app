@@ -1,7 +1,10 @@
-import { View, Modal, Alert, Pressable } from "react-native";
+import { View, Modal, Alert, Pressable, Platform } from "react-native";
 import { Text, IconButton, ActivityIndicator } from "react-native-paper";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { BlurView } from "expo-blur"; // Import BlurView
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
+import { gradient_colors } from "@/utils/gradient_colors";
 
 interface LanguageSwitcherModalProps {
   visible: boolean;
@@ -21,7 +24,7 @@ export default function LanguageSwitcherModal({
 
   const languages = [
     { id: 1, name: "English", flag: "🇬🇧", code: "en" },
-    { id: 2, name: "Kurdish", flag: "🇹🇯", code: "ku" },
+    { id: 2, name: "Kurdish", flag: "☀️", code: "ku" }, // Updated flag to match your dashboard
   ];
 
   const handleLanguageSelect = async (langId: number) => {
@@ -29,30 +32,22 @@ export default function LanguageSwitcherModal({
       onDismiss();
       return;
     }
-
     setLoading(true);
-
     try {
       const {
         data: { session },
         error: sessionError,
       } = await supabase.auth.getSession();
-
       if (sessionError || !session) {
         Alert.alert("Error", "You must be logged in to change language");
         return;
       }
-
       const { error: updateError } = await supabase
         .from("students")
         .update({ lang: langId })
         .eq("id", session.user.id);
 
-      if (updateError) {
-        throw updateError;
-      }
-
-      Alert.alert("Success", "Language preference updated!");
+      if (updateError) throw updateError;
       onLanguageChange();
       onDismiss();
     } catch (error: any) {
@@ -69,79 +64,94 @@ export default function LanguageSwitcherModal({
       animationType="fade"
       onRequestClose={onDismiss}
     >
-      <Pressable
-        style={{
-          flex: 1,
-          backgroundColor: "rgba(0,0,0,0.5)",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={onDismiss}
-      >
-        <View
-          style={{
-            backgroundColor: "white",
-            borderRadius: 20,
-            padding: 20,
-            width: "90%",
-            maxWidth: 400,
-          }}
+      <Pressable style={{ flex: 1 }} onPress={onDismiss}>
+        {/* BlurView for the backdrop */}
+        <BlurView
+          intensity={Platform.OS === "ios" ? 30 : 100}
+          tint="dark"
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <View
+          <LinearGradient
+            colors={gradient_colors}
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: 20,
+              borderRadius: 24,
+              padding: 24,
+              width: "85%",
+              maxWidth: 400,
+              borderWidth: 1,
+              borderColor: "rgba(255, 255, 255, 0.2)", // Subtle border
+              overflow: "hidden",
             }}
           >
-            <Text variant="titleLarge">Select Language</Text>
-            <IconButton icon="close" onPress={onDismiss} />
-          </View>
-
-          <View style={{ marginBottom: 10 }}>
-            <Text
-              variant="bodySmall"
-              style={{ color: "#666", marginBottom: 5 }}
-            >
-              Current language:{" "}
-              {currentLang === 1 ? "🇬🇧 English" : "🇮🇶 Kurdish"}
-            </Text>
-          </View>
-
-          {languages.map((lang) => (
-            <Pressable
-              key={lang.id}
-              onPress={() => handleLanguageSelect(lang.id)}
-              disabled={loading}
+            <View
               style={{
                 flexDirection: "row",
+                justifyContent: "space-between",
                 alignItems: "center",
-                padding: 15,
-                backgroundColor:
-                  currentLang === lang.id ? "#e3f2fd" : "#f5f5f5",
-                borderRadius: 10,
-                marginBottom: 10,
-                opacity: loading ? 0.5 : 1,
+                marginBottom: 20,
               }}
             >
-              <Text style={{ fontSize: 24, marginRight: 10 }}>{lang.flag}</Text>
-              <Text variant="titleMedium" style={{ flex: 1 }}>
-                {lang.name}
+              <Text
+                variant="titleLarge"
+                style={{ color: "#FFF", fontFamily: "NRT-Bold" }}
+              >
+                Select Language
               </Text>
-              {currentLang === lang.id && (
-                <IconButton icon="check" size={20} iconColor="#4caf50" />
-              )}
-            </Pressable>
-          ))}
-
-          {loading && (
-            <View style={{ marginTop: 10, alignItems: "center" }}>
-              <ActivityIndicator size="small" />
-              <Text style={{ marginTop: 5 }}>Updating...</Text>
+              <IconButton icon="close" iconColor="#FFF" onPress={onDismiss} />
             </View>
-          )}
-        </View>
+
+            {languages.map((lang) => (
+              <Pressable
+                key={lang.id}
+                onPress={() => handleLanguageSelect(lang.id)}
+                disabled={loading}
+                style={({ pressed }) => ({
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: 16,
+                  // If selected, bright transparent white. If not, very subtle transparent white.
+                  backgroundColor:
+                    currentLang === lang.id
+                      ? "rgba(255, 255, 255, 0.25)"
+                      : "rgba(255, 255, 255, 0.1)",
+                  borderRadius: 12,
+                  marginBottom: 12,
+                  opacity: loading ? 0.5 : pressed ? 0.8 : 1,
+                  borderWidth: 1,
+                  borderColor:
+                    currentLang === lang.id
+                      ? "rgba(255, 255, 255, 0.4)"
+                      : "transparent",
+                })}
+              >
+                <Text style={{ fontSize: 24, marginRight: 12 }}>
+                  {lang.flag}
+                </Text>
+                <Text
+                  variant="titleMedium"
+                  style={{ flex: 1, color: "#FFF", fontFamily: "NRT-Bold" }}
+                >
+                  {lang.name}
+                </Text>
+                {currentLang === lang.id && (
+                  <IconButton
+                    icon="check-circle"
+                    size={20}
+                    iconColor="#99f2c8"
+                    style={{ margin: 0 }}
+                  />
+                )}
+              </Pressable>
+            ))}
+
+            {loading && (
+              <View style={{ marginTop: 10, alignItems: "center" }}>
+                <ActivityIndicator size="small" color="#FFF" />
+                <Text style={{ marginTop: 8, color: "#FFF" }}>Updating...</Text>
+              </View>
+            )}
+          </LinearGradient>
+        </BlurView>
       </Pressable>
     </Modal>
   );
