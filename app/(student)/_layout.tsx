@@ -2,15 +2,39 @@ import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { BlurView } from "expo-blur"; // Import this
+import { Platform, StyleSheet } from "react-native";
 
 export default function StudentLayout() {
   const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#6200ee",
+        tabBarActiveTintColor: "#FF8C00",
+        tabBarInactiveTintColor: "#FFFFFF", // Vivid white as requested
+        tabBarStyle: {
+          position: "absolute", // Required for content to show behind the bar
+          borderTopWidth: 0,
+          elevation: 0,
+          height: Platform.OS === "ios" ? 90 : 70,
+          backgroundColor: "transparent", // Transparent so BlurView shows through
+        },
+        // This is where the magic happens
+        tabBarBackground: () => (
+          <BlurView
+            tint="dark"
+            intensity={80} // Adjust this (0-100) for more or less blur
+            style={StyleSheet.absoluteFill}
+          />
+        ),
+        tabBarLabelStyle: {
+          fontFamily: "NRT-Bold",
+          fontSize: 12,
+          marginBottom: Platform.OS === "ios" ? 0 : 10,
+        },
       }}
     >
       <Tabs.Screen
@@ -23,7 +47,6 @@ export default function StudentLayout() {
         }}
       />
 
-      {/* 1. This handles the 'courses' folder (the list) */}
       <Tabs.Screen
         name="courses/index"
         options={{
@@ -38,15 +61,15 @@ export default function StudentLayout() {
         }}
       />
 
-      {/* 2. HIDE THE DETAIL SCREEN FROM THE TAB BAR */}
       <Tabs.Screen
         name="courses/[id]"
         options={{
-          href: null, // This removes it from the bottom bar entirely
+          href: null,
         }}
       />
 
       <Tabs.Screen name="video/[id]" options={{ href: null }} />
+
       <Tabs.Screen
         name="account"
         options={{

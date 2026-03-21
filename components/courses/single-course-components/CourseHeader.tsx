@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, Searchbar, IconButton, Badge } from "react-native-paper";
+import { Text, Searchbar } from "react-native-paper";
 import { courses_styles } from "@/styles/courses";
 import { FilterState } from "@/types/modal";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -18,10 +18,7 @@ export default function CourseHeader({
   courseCount,
   searchQuery,
   onSearchChange,
-  filters,
-  onOpenFilter,
 }: Props) {
-  const filterCount = filters.grades.length;
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
@@ -36,21 +33,6 @@ export default function CourseHeader({
             <Text variant="bodyMedium" style={courses_styles.headerSubtitle}>
               {text.available_courses} {courseCount}
             </Text>
-          </View>
-
-          <View style={courses_styles.filterButtonContainer}>
-            <IconButton
-              icon="filter-variant"
-              mode="contained"
-              size={24}
-              onPress={onOpenFilter}
-              style={courses_styles.filterButton}
-              iconColor="#1a1a1a"
-              containerColor="#ffffff"
-            />
-            {filterCount > 0 && (
-              <Badge style={courses_styles.filterBadge}>{filterCount}</Badge>
-            )}
           </View>
         </View>
       </View>

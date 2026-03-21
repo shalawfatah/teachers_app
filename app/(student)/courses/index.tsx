@@ -4,7 +4,6 @@ import { Text } from "react-native-paper";
 import { courses_styles } from "@/styles/courses";
 import Loader from "@/components/Loader";
 import { renderCourse } from "@/components/courses/Card";
-import FilterModal from "@/components/courses/FilterModal";
 import CourseHeader from "../../../components/courses/single-course-components/CourseHeader";
 import useCourses from "../../../components/courses/single-course-components/use-courses";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -41,13 +40,6 @@ export default function CoursesScreen() {
             <RefreshControl refreshing={c.refreshing} onRefresh={c.onRefresh} />
           }
           ListEmptyComponent={<Text>{text.no_course_registered}</Text>}
-        />
-
-        <FilterModal
-          visible={c.filterVisible}
-          onDismiss={() => c.setFilterVisible(false)}
-          onApply={c.setFilters}
-          currentFilters={c.filters}
         />
       </View>
     </LinearGradient>
