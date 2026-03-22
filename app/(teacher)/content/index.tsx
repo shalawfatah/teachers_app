@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { FAB, Searchbar, SegmentedButtons } from "react-native-paper";
 import { useRouter } from "expo-router";
 import CoursesTab from "@/components/content/CourseTab";
@@ -10,6 +10,9 @@ import ManagementModals from "@/components/content/edit-course-components/Manage
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function ContentManagementScreen() {
   const router = useRouter();
@@ -27,6 +30,11 @@ export default function ContentManagementScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <LinearGradient
+        colors={gradient_colors}
+        style={[StyleSheet.absoluteFill, { flex: 1 }]}
+      />
+      <BackgroundShapes />
       <View style={styles.header}>
         <SegmentedButtons
           value={m.tab}
@@ -37,14 +45,15 @@ export default function ContentManagementScreen() {
           ]}
         />
       </View>
-
       <Searchbar
         placeholder={text.search}
+        iconColor="#FFF"
+        placeholderTextColor="#FFF"
+        inputStyle={{ color: "#FFF" }}
         onChangeText={m.setSearchQuery}
         value={m.searchQuery}
         style={[styles.searchbar, { direction: isRTL ? "rtl" : "ltr" }]}
       />
-
       {m.tab === "courses" ? (
         <CoursesTab
           key={`courses-${m.refreshKey}`}
@@ -66,15 +75,13 @@ export default function ContentManagementScreen() {
           onDelete={m.handleDeleteVideo}
         />
       )}
-
       <ManagementModals state={m} onRefresh={m.triggerRefresh} />
-
       <FAB
         icon={m.tab === "courses" ? "plus" : "video-plus"}
         label={m.tab === "courses" ? text.new_course : text.upload}
         style={styles.fab}
         onPress={onFabPress}
-        color="#FFF"
+        color="#000"
       />
     </SafeAreaView>
   );

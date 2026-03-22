@@ -4,10 +4,12 @@ export const styles = StyleSheet.create({
   listContent: { padding: 16, paddingBottom: 100 },
   card: {
     marginBottom: 20,
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     borderRadius: 12,
+    borderColor: "rgba(255,255,255,0.5)",
+    borderWidth: 1,
   },
-  cover: { height: 160 },
+  cover: { height: 160, borderBottomRightRadius: 0, borderBottomLeftRadius: 0},
   description: { color: "black", marginBottom: 12, fontSize: 16},
   badgeContainer: {
     flexDirection: "row",

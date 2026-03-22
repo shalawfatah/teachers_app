@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function LessonList({ videos }: Props) {
-  const { lang, isRTL} = useLanguage();
+  const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   const router = useRouter();
   if (videos.length === 0) {
@@ -30,9 +30,11 @@ export default function LessonList({ videos }: Props) {
   }
 
   return (
-    <View style={{direction: isRTL ? "rtl" : "ltr"}}>
+    <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
       <View style={styles.lessonsHeader}>
-        <Text variant="titleLarge">{text.course_content}</Text>
+        <Text style={{ color: "#FFF" }} variant="titleLarge">
+          {text.course_content}
+        </Text>
       </View>
       {videos.map((item, index) => (
         <Pressable

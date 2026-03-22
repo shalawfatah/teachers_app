@@ -1,20 +1,27 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f8f9fa" },
+  container: { flex: 1, backgroundColor: "transparent" },
   header: {
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     gap: 10,
   },
-  title: { fontWeight: "bold", color: "#1a1a1a" },
-  searchBox: { padding: 16, paddingBottom: 8 },
-  searchbar: { backgroundColor: "#fff", elevation: 2, borderRadius: 10 },
+  title: { fontWeight: "bold", color: "#fff" },
+  searchBox: { padding: 16, paddingBottom: 8, marginHorizontal: 12 },
+  searchbar: {
+    backgroundColor: "transparent",
+    elevation: 2,
+    margin: 12,
+    borderRadius: 48,
+    borderColor: "rgba(255,255,255,0.5)",
+    borderWidth: 1,
+  },
   fab: {
     position: "absolute",
     margin: 16,
     right: 0,
-    bottom: 20,
-    backgroundColor: "#6200ee",
+    bottom: 100,
+    backgroundColor: "orange",
   },
 });

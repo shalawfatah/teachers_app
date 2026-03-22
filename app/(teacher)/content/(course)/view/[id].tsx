@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Text, Button } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
@@ -10,6 +10,9 @@ import CourseHeader from "@/components/teachers/course-view-components/course-he
 import CourseDetails from "@/components/teachers/course-view-components/course-details";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function ViewCourse() {
   const { id } = useLocalSearchParams();
@@ -55,6 +58,12 @@ export default function ViewCourse() {
       style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
       contentContainerStyle={styles.scrollContent}
     >
+      <LinearGradient
+        colors={gradient_colors}
+        style={[StyleSheet.absoluteFill, { flex: 1 }]}
+      />
+      <BackgroundShapes />
+
       <CourseHeader title={course.title} thumbnail={course.thumbnail} />
       <View style={styles.content}>
         <CourseDetails

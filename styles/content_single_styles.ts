@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff"},
+  container: { flex: 1, backgroundColor: "transparent" },
   scrollContent: { paddingBottom: 40 },
   loader: { flex: 1, justifyContent: "center" },
   errorContainer: {
@@ -23,12 +23,12 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  title: { fontWeight: "bold", flex: 1 },
+  title: { fontWeight: "bold", flex: 1, color: "#FFF" },
   metaRow: { flexDirection: "row", gap: 8, marginVertical: 12 },
   chip: { backgroundColor: "#f0f0f0" },
-  sectionLabel: { marginTop: 16, fontWeight: "bold", color: "#666" },
-  teacherName: { marginTop: 4, color: "#1c1c1c" },
-  description: { marginTop: 8, lineHeight: 22, color: "#444" },
+  sectionLabel: { marginTop: 16, fontWeight: "bold", color: "#FFF" },
+  teacherName: { marginTop: 4, color: "#FFF" },
+  description: { marginTop: 8, lineHeight: 22, color: "#FFF" },
   divider: { marginVertical: 20 },
   lessonsHeader: {
     flexDirection: "row",
