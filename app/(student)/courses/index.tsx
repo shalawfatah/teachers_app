@@ -1,7 +1,6 @@
 import React from "react";
-import { View, FlatList, RefreshControl } from "react-native";
+import { View, FlatList, RefreshControl, StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
-import { courses_styles } from "@/styles/courses";
 import Loader from "@/components/Loader";
 import { renderCourse } from "@/components/courses/Card";
 import CourseHeader from "../../../components/courses/single-course-components/CourseHeader";
@@ -22,8 +21,9 @@ export default function CoursesScreen() {
   return (
     <LinearGradient colors={gradient_colors} style={{ flex: 1 }}>
       <BackgroundShapes />
+
       <View
-        style={[courses_styles.container, { direction: isRTL ? "rtl" : "ltr" }]}
+        style={[gridStyles.container, { direction: isRTL ? "rtl" : "ltr" }]}
       >
         <CourseHeader
           courseCount={c.courses.length}
@@ -34,17 +34,57 @@ export default function CoursesScreen() {
         />
 
         <FlatList
+          // key prop ensures the list re-renders correctly if columns change
+          key={"two-column-grid"}
           data={c.courses}
           renderItem={renderCourse}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={courses_styles.listContent}
+          // --- GRID PROPS ---
+          numColumns={2}
+          columnWrapperStyle={gridStyles.row}
+          contentContainerStyle={gridStyles.listContent}
+          // ------------------
+
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={c.refreshing} onRefresh={c.onRefresh} />
+            <RefreshControl
+              refreshing={c.refreshing}
+              onRefresh={c.onRefresh}
+              tintColor="#FFF"
+            />
           }
-          ListEmptyComponent={<Text>{text.no_course_registered}</Text>}
+          ListEmptyComponent={
+            <View style={gridStyles.emptyContainer}>
+              <Text style={gridStyles.emptyText}>
+                {text.no_course_registered}
+              </Text>
+            </View>
+          }
         />
       </View>
     </LinearGradient>
   );
 }
+
+const gridStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 10,
+  },
+  listContent: {
+    paddingHorizontal: 8, // Half of the gap to balance the outer edges
+    paddingBottom: 100,
+  },
+  row: {
+    justifyContent: "space-between", // Pushes the two books to the edges
+    paddingHorizontal: 8,
+  },
+  emptyContainer: {
+    marginTop: 100,
+    alignItems: "center",
+  },
+  emptyText: {
+    color: "rgba(255,255,255,0.5)",
+    fontSize: 16,
+  },
+});

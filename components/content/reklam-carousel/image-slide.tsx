@@ -1,9 +1,7 @@
-import { styles } from "@/styles/reklam_carousel";
-import { Reklam } from "@/types/reklam";
-import { ImageBackground, Pressable, StyleSheet } from "react-native";
+import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SlideContent } from "./slide-content";
-import { GeometricPattern } from "@/components/backgrounds/GeometicPattern";
+import { Reklam } from "@/types/reklam";
 
 export default function ImageSlide({
   reklam,
@@ -14,11 +12,10 @@ export default function ImageSlide({
 }) {
   return (
     <Pressable
-      style={styles.slideContainer}
+      style={slideStyles.container}
       onPress={onPress}
       disabled={reklam.link_type === "none"}
     >
-      <GeometricPattern />
       <ImageBackground
         source={{
           uri:
@@ -27,14 +24,25 @@ export default function ImageSlide({
         }}
         style={StyleSheet.absoluteFill}
         resizeMode="cover"
-      />
-      <LinearGradient
-        colors={["transparent", "transparent", "rgba(0,0,0,0.85)"]}
-        locations={[0, 0.66, 1]}
-        style={styles.gradientOverlay}
-        pointerEvents="none"
-      />
-      <SlideContent reklam={reklam} />
+      >
+        {/* Subtle vignette gradient to catch text at the bottom */}
+        <LinearGradient
+          colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)", "rgba(0,0,0,0.8)"]}
+          style={StyleSheet.absoluteFill}
+        />
+
+        <SlideContent reklam={reklam} />
+      </ImageBackground>
     </Pressable>
   );
 }
+
+const slideStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderRadius: 24,
+    marginHorizontal: 10,
+    overflow: "hidden", // Clips the image to the corners
+    backgroundColor: "#1a1a1a",
+  },
+});
