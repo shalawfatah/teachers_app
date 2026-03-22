@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
 import { styles } from "@/styles/teacher_students_styles";
 import Loader from "@/components/Loader";
@@ -7,6 +7,9 @@ import useStudents from "@/components/teachers/teacher-student-components/useStu
 import StudentHeader from "@/components/teachers/teacher-student-components/StudentHeader";
 import StudentCard from "@/components/teachers/StudentCard";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function StudentsScreen() {
   const {
@@ -25,6 +28,11 @@ export default function StudentsScreen() {
 
   return (
     <View style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]}>
+      <LinearGradient
+        colors={gradient_colors}
+        style={StyleSheet.absoluteFill}
+      />
+      <BackgroundShapes />
       <StudentHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}

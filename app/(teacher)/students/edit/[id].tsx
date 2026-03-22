@@ -1,5 +1,11 @@
 import React from "react";
-import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { Button, Surface } from "react-native-paper";
 import { styles } from "@/styles/student_edit_styles";
@@ -9,6 +15,9 @@ import StatusToggle from "@/components/teachers/edit-course-components/StatusTog
 import StudentInfo from "@/components/teachers/edit-course-components/StudentInfo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function EditStudent() {
   const { id } = useLocalSearchParams();
@@ -28,6 +37,11 @@ export default function EditStudent() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
+      <LinearGradient
+        colors={gradient_colors}
+        style={[StyleSheet.absoluteFill, { flex: 1 }]}
+      />
+      <BackgroundShapes />
       <Stack.Screen
         options={{ title: "Manage Student", headerRight: () => null }}
       />
@@ -41,9 +55,7 @@ export default function EditStudent() {
         >
           <StudentInfo student={student} />
         </Surface>
-
         <StatusToggle verified={verified} onStatusChange={setVerified} />
-
         <View style={styles.actionContainer}>
           <Button
             mode="contained"
@@ -51,11 +63,11 @@ export default function EditStudent() {
             loading={saving}
             disabled={saving}
             style={styles.saveButton}
-            contentStyle={{ height: 48 }}
+            contentStyle={{ height: 48, backgroundColor: "orange"}}
           >
             {saving ? text.update : text.save}
           </Button>
-          <Button mode="text" onPress={() => router.back()} disabled={saving}>
+          <Button mode="text" buttonColor="#FFF" onPress={() => router.back()} disabled={saving}>
             {text.cancel}
           </Button>
         </View>

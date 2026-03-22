@@ -11,7 +11,7 @@ export default function StudentInfo({ student }: StudentInfoProps) {
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
     <View>
-      <Text variant="titleMedium" style={styles.sectionTitle}>
+      <Text variant="titleLarge" style={styles.sectionTitle}>
         {text.student_information}
       </Text>
 
@@ -21,10 +21,12 @@ export default function StudentInfo({ student }: StudentInfoProps) {
         { label: text.class, value: student.grade || "N/A" },
       ].map((item, index) => (
         <View key={index} style={{ marginBottom: 16 }}>
-          <Text variant="labelLarge" style={{ marginBottom: 4 }}>
+          <Text variant="labelLarge" style={{ marginBottom: 4, color: "#FFF" }}>
             {item.label}
           </Text>
-          <Text variant="bodyLarge">{item.value}</Text>
+          <Text variant="bodyLarge" style={{ color: "#FFF" }}>
+            {item.value}
+          </Text>
         </View>
       ))}
     </View>

@@ -59,7 +59,13 @@ export default function AccountScreen() {
             />
             <Text
               variant="headlineSmall"
-              style={{ color: "#FFF", fontWeight: "bold", textAlign: "center" }}
+              style={{
+                marginTop: 12,
+                color: "#FFF",
+                fontWeight: "bold",
+                textAlign: "center",
+                fontFamily: "NRT-Bold",
+              }}
             >
               {profile?.name}
             </Text>

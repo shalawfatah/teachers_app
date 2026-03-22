@@ -62,7 +62,12 @@ export default function StudentCard({
             visible={menuVisible}
             onDismiss={closeMenu}
             anchor={
-              <IconButton icon="dots-vertical" size={24} onPress={openMenu} />
+              <IconButton
+                iconColor="#FFF"
+                icon="dots-vertical"
+                size={24}
+                onPress={openMenu}
+              />
             }
           >
             <Menu.Item

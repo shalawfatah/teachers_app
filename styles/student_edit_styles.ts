@@ -1,16 +1,16 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f8f9fa", marginTop: 24 },
+  container: { flex: 1, backgroundColor: "transparent", marginTop: 24 },
   content: { padding: 16 },
   formCard: {
     padding: 24,
     borderRadius: 12,
-    backgroundColor: "white",
+    backgroundColor: "rgba(255,255,255,0.1)",
   },
-  sectionTitle: { marginBottom: 20, color: "#6200ee", fontWeight: "bold" },
-  input: { marginBottom: 16, backgroundColor: "white" },
-  label: { marginTop: 8, marginBottom: 8, color: "#666" },
+  sectionTitle: { marginBottom: 20, color: "#FFF", fontWeight: "bold" },
+  input: { marginBottom: 16, backgroundColor: "transparent" },
+  label: { marginTop: 8, marginBottom: 8, color: "#FFF" },
   segmented: { marginBottom: 8 },
   actionContainer: { gap: 8 },
   saveButton: { borderRadius: 8 },

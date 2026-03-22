@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Avatar, Card, Text, Divider, Button, Chip } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -8,6 +8,9 @@ import { styles } from "@/styles/single_student_view_styles";
 import DeleteStudentModal from "@/components/teachers/account/DeleteStudentModal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
@@ -29,6 +32,11 @@ export default function ViewStudent() {
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: text.student_profile }} />
+      <LinearGradient
+        colors={gradient_colors}
+        style={[StyleSheet.absoluteFill, { flex: 1 }]}
+      />
+      <BackgroundShapes />
 
       <View style={styles.hero}>
         <Avatar.Text
@@ -37,7 +45,7 @@ export default function ViewStudent() {
             .split(" ")
             .map((n) => n[0])
             .join("")}
-          style={{ backgroundColor: "#6200ee" }}
+          style={{ backgroundColor: "orange" }}
         />
         <Text variant="headlineMedium" style={styles.name}>
           {student.name}
@@ -79,8 +87,8 @@ export default function ViewStudent() {
         <Button
           mode="outlined"
           onPress={() => setModalVisible(true)}
-          textColor="#f44336"
-          style={[styles.button, { borderColor: "#f44336" }]}
+          textColor="#FFF"
+          style={[styles.button, { borderColor: "#fff" }]}
           icon="trash-can-outline"
         >
           {text.delete_student_account}
@@ -101,12 +109,14 @@ function DetailItem({ icon, label, value }: AuxProps) {
   const { isRTL } = useLanguage();
   return (
     <View style={[styles.detailRow, { direction: isRTL ? "rtl" : "ltr" }]}>
-      <MaterialCommunityIcons name={icon as any} size={24} color="#666" />
+      <MaterialCommunityIcons name={icon as any} size={24} color="#FFF" />
       <View style={styles.detailText}>
-        <Text variant="labelMedium" style={{ color: "#666" }}>
+        <Text variant="labelMedium" style={{ color: "#FFF" }}>
           {label}
         </Text>
-        <Text variant="bodyLarge">{value}</Text>
+        <Text variant="bodyLarge" style={{ color: "#FFF" }}>
+          {value}
+        </Text>
       </View>
     </View>
   );

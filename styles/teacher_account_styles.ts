@@ -24,8 +24,7 @@ export const styles = StyleSheet.create({
   },
   avatar: {
     marginBottom: 16,
-    backgroundColor: "#6200ee",
-    // Make avatar larger on iPad
+    backgroundColor: "orange",
     transform: [{ scale: isTablet ? 1.4 : 1 }],
   },
   name: {

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "transparent",
   },
   loadingContainer: {
     flex: 1,
@@ -11,17 +11,18 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     padding: 20,
     paddingTop: 60,
     paddingBottom: 16,
   },
   headerTitle: {
     fontWeight: "bold",
+    color: "#FFF",
     marginBottom: 4,
   },
   headerSubtitle: {
-    color: "#666",
+    color: "#FFF",
   },
   statsContainer: {
     flexDirection: "row",
@@ -45,20 +46,28 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
   searchContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     paddingHorizontal: 20,
     paddingBottom: 16,
   },
   searchbar: {
     elevation: 0,
     paddingHorizontal: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    color: "#FFF",
+    borderColor: "rgba(255,255,255,0.4)",
   },
   listContent: {
     padding: 16,
+    backgroundColor: "transparent",
   },
   studentCard: {
     marginBottom: 12,
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    color: "#FFF",
+    borderColor: "rgba(255,255,255,0.4)",
     elevation: 2,
   },
   studentRow: {
@@ -72,17 +81,18 @@ export const styles = StyleSheet.create({
     gap: 12,
   },
   avatar: {
-    backgroundColor: "#6200ee",
+    backgroundColor: "orange",
   },
   studentDetails: {
     flex: 1,
   },
   studentName: {
     fontWeight: "bold",
+    color: "#FFF",
     marginBottom: 4,
   },
   studentEmail: {
-    color: "#666",
+    color: "#FFF",
     marginBottom: 8,
   },
   studentMeta: {

@@ -31,6 +31,9 @@ export default function StudentHeader({
           onChangeText={onSearchChange}
           value={searchQuery}
           style={[styles.searchbar, { direction: isRTL ? "rtl" : "ltr" }]}
+          iconColor="#FFF"
+          placeholderTextColor="#FFF"
+          inputStyle={{ color: "#FFF" }}
         />
       </View>
     </>
