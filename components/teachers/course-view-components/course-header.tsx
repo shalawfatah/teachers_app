@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image } from "react-native";
-import { Text, IconButton } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { styles } from "@/styles/content_single_styles";
 
 interface Props {
@@ -20,7 +20,6 @@ export default function CourseHeader({ title, thumbnail }: Props) {
         <Text variant="headlineMedium" style={styles.title}>
           {title}
         </Text>
-        <IconButton icon="share-variant" onPress={() => { }} />
       </View>
     </>
   );

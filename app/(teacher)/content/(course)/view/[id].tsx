@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { ActivityIndicator, Text, Button } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
@@ -19,6 +24,7 @@ export default function ViewCourse() {
   const router = useRouter();
   const [course, setCourse] = useState<ExtendedCourse | null>(null);
   const [loading, setLoading] = useState(true);
+  const { height } = useWindowDimensions();
 
   useEffect(() => {
     if (id) fetchCourseDetails();
@@ -60,7 +66,7 @@ export default function ViewCourse() {
     >
       <LinearGradient
         colors={gradient_colors}
-        style={[StyleSheet.absoluteFill, { flex: 1 }]}
+        style={[StyleSheet.absoluteFill, { flex: 1, height: height }]}
       />
       <BackgroundShapes />
 

@@ -39,7 +39,8 @@ export function CourseCard({
 
         <Card.Title
           title={course.title}
-          titleStyle={{ fontFamily: "NRT-Bold" }}
+          titleStyle={{ fontFamily: "NRT-Bold", color: "#FFF" }}
+          subtitleStyle={{ color: "#FFF" }}
           titleVariant="titleLarge"
           subtitle={`${(course as any).videos?.length || 0} Videos • ${course.subject}`}
           right={(props) => (

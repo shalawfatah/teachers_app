@@ -27,7 +27,12 @@ export function CourseMenu({
       visible={visible}
       onDismiss={onClose}
       anchor={
-        <IconButton {...iconProps} icon="dots-vertical" onPress={onOpen} />
+        <IconButton
+          {...iconProps}
+          iconColor="#FFF"
+          icon="dots-vertical"
+          onPress={onOpen}
+        />
       }
     >
       <Menu.Item onPress={onView} title={text.view} leadingIcon="eye" />
