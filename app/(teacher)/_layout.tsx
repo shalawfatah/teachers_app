@@ -14,7 +14,7 @@ export default function TeacherLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "orange",
+        tabBarActiveTintColor: "#FF8C00",
         tabBarInactiveTintColor: "#FFFFFF",
         tabBarShowLabel: true,
         tabBarStyle: {

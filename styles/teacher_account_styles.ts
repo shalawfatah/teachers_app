@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   },
   avatar: {
     marginBottom: 16,
-    backgroundColor: "orange",
+    backgroundColor: "#FF8C00",
     transform: [{ scale: isTablet ? 1.4 : 1 }],
   },
   name: {
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
   },
   statNumber: {
     fontWeight: "bold",
-    color: "orange",
+    color: "#FF8C00",
   },
   statLabel: {
     color: "#FFF",
@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
   },
   deleteAccountButton: {
     borderColor: "red",
-    backgroundColor: "orange",
+    backgroundColor: "#FF8C00",
     color: "black",
   },
 });

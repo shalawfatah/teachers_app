@@ -81,7 +81,7 @@ export default function EditCourseForm({
         onPress={onSubmit}
         loading={saving}
         disabled={disabled || saving}
-        style={{ marginTop: 16, backgroundColor: "orange" }}
+        style={{ marginTop: 16, backgroundColor: "#FF8C00" }}
         labelStyle={{ color: "#000" }}
       >
         {text.update}

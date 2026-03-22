@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "transparent" },
   hero: {
     alignItems: "center",
-    padding: 30,
+    padding: 32,
     backgroundColor: "transparent",
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
@@ -20,5 +20,15 @@ export const styles = StyleSheet.create({
   detailText: { marginLeft: 16 },
   divider: { marginVertical: 4 },
   actions: { padding: 16, gap: 12 },
-  button: { borderRadius: 8, backgroundColor: "orange" },
+  btn_container: {
+    backgroundColor: "transparent",
+    paddingHorizontal: 32,
+  },
+  button: { borderRadius: 8, backgroundColor: "#FF8C00", marginVertical: 12 },
+  secondary_button: {
+    borderRadius: 8,
+    color: "#000",
+    backgroundColor: "#FFF",
+    marginTop: 12,
+  },
 });

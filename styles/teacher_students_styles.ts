@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
     gap: 12,
   },
   avatar: {
-    backgroundColor: "orange",
+    backgroundColor: "#FF8C00",
   },
   studentDetails: {
     flex: 1,

@@ -17,7 +17,7 @@ export function GradeSelector({ value, onValueChange }: GradeSelectorProps) {
         style={styles.segmented}
         theme={{
           colors: {
-            secondaryContainer: "orange", // selected button bg
+            secondaryContainer: "#FF8C00", // selected button bg
             onSecondaryContainer: "#fff", // selected button text
             outline: "#fff", // ✅ this controls the border color
           },
@@ -27,7 +27,7 @@ export function GradeSelector({ value, onValueChange }: GradeSelectorProps) {
         value={value}
         theme={{
           colors: {
-            secondaryContainer: "orange", // selected button bg
+            secondaryContainer: "#FF8C00", // selected button bg
             onSecondaryContainer: "#fff", // selected button text
             outline: "#fff", // ✅ this controls the border color
           },

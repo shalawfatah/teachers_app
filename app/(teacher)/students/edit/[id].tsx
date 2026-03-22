@@ -63,7 +63,7 @@ export default function EditStudent() {
             loading={saving}
             disabled={saving}
             style={styles.saveButton}
-            contentStyle={{ height: 48, backgroundColor: "orange"}}
+            contentStyle={{ height: 48, backgroundColor: "#FF8C00"}}
           >
             {saving ? text.update : text.save}
           </Button>

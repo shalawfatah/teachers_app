@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Avatar, Card, Text, Divider, Button, Chip } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -11,12 +16,14 @@ import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
+import PrimaryButton from "@/components/general/primary-button";
 
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
   const [modalVisible, setModalVisible] = useState(false);
   const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+  const { height } = useWindowDimensions();
 
   const student: StudentProps = {
     id: Array.isArray(id) ? id[0] : id,
@@ -34,7 +41,7 @@ export default function ViewStudent() {
       <Stack.Screen options={{ title: text.student_profile }} />
       <LinearGradient
         colors={gradient_colors}
-        style={[StyleSheet.absoluteFill, { flex: 1 }]}
+        style={[StyleSheet.absoluteFill, { flex: 1, height: height }]}
       />
       <BackgroundShapes />
 
@@ -45,7 +52,7 @@ export default function ViewStudent() {
             .split(" ")
             .map((n) => n[0])
             .join("")}
-          style={{ backgroundColor: "orange" }}
+          style={{ backgroundColor: "#FF8C00" }}
         />
         <Text variant="headlineMedium" style={styles.name}>
           {student.name}
@@ -82,19 +89,10 @@ export default function ViewStudent() {
           />
         </Card.Content>
       </Card>
-
-      <View style={styles.actions}>
-        <Button
-          mode="outlined"
-          onPress={() => setModalVisible(true)}
-          textColor="#FFF"
-          style={[styles.button, { borderColor: "#fff" }]}
-          icon="trash-can-outline"
-        >
-          {text.delete_student_account}
-        </Button>
-      </View>
-
+      <PrimaryButton
+        text={text.delete_student_account}
+        action={() => setModalVisible(true)}
+      />
       <DeleteStudentModal
         visible={modalVisible}
         onDismiss={() => setModalVisible(false)}

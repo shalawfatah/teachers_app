@@ -50,8 +50,6 @@ export const GeometricPattern = () => {
               fillOpacity="0.05"
             />
           </Pattern>
-
-          {/* Accent Pattern (The Orange Bits) */}
           <Pattern
             id="orangeAccents"
             width="400"

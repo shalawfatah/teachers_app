@@ -14,6 +14,8 @@ import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
+import PrimaryButton from "@/components/general/primary-button";
+import SecondaryButton from "@/components/general/secondary-button";
 
 export default function AccountScreen() {
   const { profile, stats, loading, handleSignOut, refreshProfile } =
@@ -46,12 +48,7 @@ export default function AccountScreen() {
             },
           ]}
         >
-          <View
-            style={[
-              styles.profileHeader,
-              { width: "100%", marginLeft: "100%", marginRight: "100%" },
-            ]}
-          >
+          <View style={[styles.profileHeader, { width: "100%" }]}>
             <Avatar.Text
               size={80}
               label={profile?.name?.charAt(0) || "U"}
@@ -93,30 +90,11 @@ export default function AccountScreen() {
             onEditPress={() => setEditVisible(true)}
             onSettingsPress={(type) => setActiveSettings(type)}
           />
-
-          <View style={styles.signOutContainer}>
-            <Button
-              mode="outlined"
-              onPress={handleSignOut}
-              loading={loading}
-              style={styles.signOutButton}
-              textColor="#FF6B6B"
-            >
-              {text.logout}
-            </Button>
-          </View>
-
-          <View style={styles.deleteAccountContainer}>
-            <Button
-              mode="text"
-              onPress={() => setDeleteVisible(true)}
-              loading={loading}
-              style={styles.deleteAccountButton}
-              textColor="black"
-            >
-              {text.delete_acc}
-            </Button>
-          </View>
+          <SecondaryButton text={text.logout} action={handleSignOut} />
+          <PrimaryButton
+            text={text.delete_acc}
+            action={() => setDeleteVisible(true)}
+          />
         </View>
       </ScrollView>
 

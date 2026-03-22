@@ -22,6 +22,6 @@ export const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 100,
-    backgroundColor: "orange",
+    backgroundColor: "#FF8C00",
   },
 });
