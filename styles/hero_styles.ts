@@ -4,8 +4,8 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export const heroStyles = StyleSheet.create({
   heroSection: {
-    height: SCREEN_HEIGHT - 50,
     width: "100%",
+    height: SCREEN_HEIGHT,
   },
   gradient: {
     flex: 1,
@@ -19,14 +19,14 @@ export const heroStyles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   teacherAvatar: {
-    marginBottom: 12,
-    borderWidth: 4,
-    borderColor: "#fff",
-    elevation: 8,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: "rgba(255,255,255,0.5)",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    elevation: 8,
   },
   teacherName: {
     color: "#fff",
@@ -46,9 +46,7 @@ export const heroStyles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 40,
     paddingVertical: 24,
-    backgroundColor: "rgba(0,0,0,0.9)",
-    marginHorizontal: 20,
-    borderRadius: 16,
+    marginBottom: 100,
   },
   stat: {
     alignItems: "center",

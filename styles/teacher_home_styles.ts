@@ -12,9 +12,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    backgroundColor: "rgba(0, 0, 0, 0.92)",
     padding: 20,
     margin: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.3)",
     borderRadius: 20,
     flexDirection: "row",
     justifyContent: "space-between",

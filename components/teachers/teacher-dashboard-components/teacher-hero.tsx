@@ -9,7 +9,7 @@ import LanguageSwitcherModal from "@/components/general/language-switcher-modal-
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { gradient_colors } from "@/utils/gradient_colors";
-import { GeometricPattern } from "@/components/backgrounds/GeometicPattern";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function TeacherHero({
   profile,
@@ -35,8 +35,8 @@ export default function TeacherHero({
       style={styles.heroSection}
       resizeMode="cover"
     >
-      <GeometricPattern />
       <LinearGradient colors={gradient_colors} style={styles.gradient}>
+        <BackgroundShapes />
         <View style={[styles.header, { direction: isRTL ? "rtl" : "ltr" }]}>
           <View style={styles.userInfo}>
             <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />
@@ -109,15 +109,15 @@ export default function TeacherHero({
             {profile?.expertise || "Computer Science & Web Development"}
           </Text>
         </View>
-        <StatsBar stats={stats} />
 
+        <View></View>
         {profile && (
           <LanguageSwitcherModal
             visible={languageModalVisible}
             onDismiss={() => setLanguageModalVisible(false)}
             currentLang={profile?.lang || 1}
             profileId={profile?.id || ""} // Make sure this is the actual profile ID
-            onLanguageChange={onLanguageChange || (() => {})}
+            onLanguageChange={onLanguageChange || (() => { })}
           />
         )}
       </LinearGradient>
