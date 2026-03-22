@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React from "react";
 import { View, Platform } from "react-native";
 import { Modal, Portal, Text, TextInput, Button } from "react-native-paper";
@@ -70,7 +71,7 @@ export default function EditProfileModal({
               variant="headlineSmall"
               style={[
                 styles.title,
-                { color: "#fff", fontFamily: "NRT-Bold", marginBottom: 20 },
+                { color: "#fff", fontFamily: style_vars.PRIMARY_FONT, marginBottom: 20 },
               ]}
             >
               {text.update_acc}
@@ -100,7 +101,7 @@ export default function EditProfileModal({
             {/* Class Label */}
             <Text
               variant="bodyMedium"
-              style={{ color: "#fff", fontFamily: "NRT-Bold", marginBottom: 8 }}
+              style={{ color: "#fff", fontFamily: style_vars.PRIMARY_FONT, marginBottom: 8 }}
             >
               {text.class}
             </Text>
@@ -129,7 +130,7 @@ export default function EditProfileModal({
                 }}
                 itemStyle={{
                   color: "#fff",
-                  fontFamily: "NRT-Bold",
+                  fontFamily: style_vars.PRIMARY_FONT,
                   fontSize: 18,
                   height: Platform.OS === "ios" ? 150 : 55,
                 }}
@@ -164,7 +165,7 @@ export default function EditProfileModal({
                     marginLeft: isRTL ? 8 : 0,
                   },
                 ]}
-                labelStyle={{ color: "#000", fontFamily: "NRT-Bold" }}
+                labelStyle={{ color: "#000", fontFamily: style_vars.PRIMARY_FONT }}
               >
                 {text.update}
               </Button>
@@ -172,7 +173,7 @@ export default function EditProfileModal({
                 mode="text"
                 onPress={onDismiss}
                 textColor="#fff"
-                labelStyle={{ fontFamily: "NRT-Bold" }}
+                labelStyle={{ fontFamily: style_vars.PRIMARY_FONT }}
               >
                 {text.cancel}
               </Button>

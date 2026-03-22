@@ -29,7 +29,7 @@ export const overlayStyles = StyleSheet.create({
     color: "#fff",
     fontSize: 28,
     fontWeight: "bold",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     textAlign: "right",
   },
   descriptionWrapper: {

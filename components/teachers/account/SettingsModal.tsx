@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SettingsModalProps } from "@/types/modal";
 import { translations } from "@/utils/eng_krd";
@@ -18,7 +19,7 @@ export default function SettingsModal({
 
   const itemTitleStyle = {
     color: "#FFF",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     fontSize: 16,
     textAlign: isRTL ? ("right" as const) : ("left" as const),
   };
@@ -74,7 +75,7 @@ export default function SettingsModal({
               variant="headlineSmall"
               style={{
                 color: "#FFF",
-                fontFamily: "NRT-Bold",
+                fontFamily: style_vars.PRIMARY_FONT,
                 textAlign: "center",
               }}
             >
@@ -148,7 +149,7 @@ export default function SettingsModal({
               variant="headlineSmall"
               style={{
                 color: "#FFF",
-                fontFamily: "NRT-Bold",
+                fontFamily: style_vars.PRIMARY_FONT,
                 textAlign: isRTL ? "right" : "left",
                 marginBottom: 15,
                 paddingTop: 5, // Extra safety for top-right/left titles
@@ -179,7 +180,7 @@ export default function SettingsModal({
                   // Adding shadow specifically to the button for "pop"
                   elevation: 4,
                 }}
-                labelStyle={{ fontFamily: "NRT-Bold", fontSize: 16 }}
+                labelStyle={{ fontFamily: style_vars.PRIMARY_FONT, fontSize: 16 }}
               >
                 {text.close}
               </Button>

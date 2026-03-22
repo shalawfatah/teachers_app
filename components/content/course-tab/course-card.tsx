@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React from "react";
 import { View, Pressable } from "react-native";
 import { Card, Text, Chip } from "react-native-paper";
@@ -39,7 +40,7 @@ export function CourseCard({
 
         <Card.Title
           title={course.title}
-          titleStyle={{ fontFamily: "NRT-Bold" }}
+          titleStyle={{ fontFamily: style_vars.PRIMARY_FONT }}
           titleVariant="titleLarge"
           right={(props) => (
             <CourseMenu

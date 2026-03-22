@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { View, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "@/styles/signup_styles";
@@ -34,7 +35,7 @@ export default function GradeDropdown({
           textAlign: isRTL ? "right" : "left",
           color: "#FFF",
           marginBottom: 12,
-          fontFamily: "NRT-Bold", // Keeping your Kurdish font consistent
+          fontFamily: style_vars.PRIMARY_FONT, // Keeping your Kurdish font consistent
         }}
       >
         {text.class}

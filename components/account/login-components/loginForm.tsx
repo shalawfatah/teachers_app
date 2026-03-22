@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React from "react";
 import { TextInput, Button, Text, HelperText } from "react-native-paper";
 import { router } from "expo-router";
@@ -77,7 +78,7 @@ export default function LoginForm({ state }: Props) {
         disabled={state.loading}
         style={styles.button}
         // --- NEW PROPS START ---
-        labelStyle={{ color: "#1a1a1a", fontFamily: "NRT-Bold" }} // Dark text for the white button
+        labelStyle={{ color: "#1a1a1a", fontFamily: style_vars.PRIMARY_FONT }} // Dark text for the white button
       // --- NEW PROPS END ---
       >
         {text.login}

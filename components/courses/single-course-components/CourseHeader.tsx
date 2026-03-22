@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React from "react";
 import { View } from "react-native";
 import { Text, Searchbar } from "react-native-paper";
@@ -47,7 +48,7 @@ export default function CourseHeader({
           inputStyle={{
             textAlign: isRTL ? "right" : "left",
             color: "#ffffff",
-            fontFamily: "NRT-Bold",
+            fontFamily: style_vars.PRIMARY_FONT,
             paddingHorizontal: 16,
           }}
           style={[

@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React, { useEffect, useState } from "react";
 import { View, Dimensions, StyleSheet } from "react-native";
 import { Text, Appbar, ActivityIndicator } from "react-native-paper";
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#FFF",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   videoContainer: {
     width: width,

@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React from "react";
 import { View } from "react-native";
 import { List, Divider } from "react-native-paper";
@@ -18,7 +19,7 @@ export default function StudentSettingsList({
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
-  const titleStyle = { color: "#FFFFFF", fontFamily: "NRT-Bold", fontSize: 16 };
+  const titleStyle = { color: "#FFFFFF", fontFamily: style_vars.PRIMARY_FONT, fontSize: 16 };
   const descStyle = { color: "rgba(255, 255, 255, 0.7)", fontFamily: "Goran" };
   const iconColor = "#FFFFFF";
 
@@ -28,7 +29,7 @@ export default function StudentSettingsList({
     >
       <List.Section>
         <List.Subheader
-          style={{ color: "rgba(255, 255, 255, 0.5)", fontFamily: "NRT-Bold" }}
+          style={{ color: "rgba(255, 255, 255, 0.5)", fontFamily: style_vars.PRIMARY_FONT }}
         >
           {text.account_setting}
         </List.Subheader>
@@ -73,7 +74,7 @@ export default function StudentSettingsList({
 
       <List.Section>
         <List.Subheader
-          style={{ color: "rgba(255, 255, 255, 0.3)", fontFamily: "NRT-Bold" }}
+          style={{ color: "rgba(255, 255, 255, 0.3)", fontFamily: style_vars.PRIMARY_FONT }}
         >
           {text.help}
         </List.Subheader>

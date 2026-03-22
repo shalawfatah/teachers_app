@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { Text, Avatar, Button } from "react-native-paper";
@@ -45,14 +46,14 @@ export default function AccountScreen() {
             size={90}
             label={profile?.name?.charAt(0) || "U"}
             style={{ backgroundColor: "#325b4d", elevation: 0 }}
-            labelStyle={{ color: "#FFF", fontSize: 32, fontFamily: "NRT-Bold" }}
+            labelStyle={{ color: "#FFF", fontSize: 32, fontFamily: style_vars.PRIMARY_FONT }}
           />
           <Text
             style={{
               marginTop: 16,
               color: "#FFF",
               fontSize: 24,
-              fontFamily: "NRT-Bold",
+              fontFamily: style_vars.PRIMARY_FONT,
             }}
           >
             {profile?.name}

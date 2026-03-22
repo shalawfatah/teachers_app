@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -26,7 +27,7 @@ export const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     marginBottom: 24,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     fontSize: 28,
     color: "#ffffff",
   },
@@ -52,7 +53,7 @@ export const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
     color: "#ffffff",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   segmented: {
     marginBottom: 8,

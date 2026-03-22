@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { Dimensions, StyleSheet } from "react-native";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -25,12 +26,12 @@ export const teacherHeroStyles = StyleSheet.create({
   teacherName: {
     color: "#fff",
     fontWeight: "bold",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     textAlign: "center",
   },
   teacherBio: {
     color: "rgba(255,255,255,0.95)",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     textAlign: "center",
     fontWeight: "400",
   },

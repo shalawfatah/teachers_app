@@ -35,13 +35,13 @@ export const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   title: {
     color: "white",
     fontWeight: "bold",
     letterSpacing: -0.5,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     fontSize: 28,
   },
   metaRow: {
@@ -79,13 +79,13 @@ export const styles = StyleSheet.create({
   sectionTitle: {
     fontWeight: "800",
     color: "#FFFFFF",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     fontSize: 20,
   },
   lessonCount: {
     color: "#FF8C00", // Highlight color from your gradient
     fontWeight: "600",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   lessonCard: {
     marginBottom: 12,
@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
   lessonTitle: {
     fontWeight: "600",
     color: "#FFFFFF",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   lessonNumber: {
     justifyContent: "center",
@@ -126,7 +126,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textTransform: "none",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     color: "#000",
   },
 });

@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const courses_styles = StyleSheet.create({
@@ -22,7 +23,7 @@ export const courses_styles = StyleSheet.create({
   },
   headerTitle: {
     fontWeight: "bold",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     color: "#FFF",
     marginBottom: 4,
   },

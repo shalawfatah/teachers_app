@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { StyleSheet, Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -58,7 +59,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.3)",
     borderRadius: 24,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   signOutContainer: {
     padding: 16,
@@ -66,6 +67,6 @@ export const styles = StyleSheet.create({
   },
   signOutButton: {
     borderColor: "#FFF",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
 });

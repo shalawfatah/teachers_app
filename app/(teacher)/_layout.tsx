@@ -1,11 +1,11 @@
+import { style_vars } from "@/utils/style_vars";
 import React from "react";
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { BlurView } from "expo-blur";
-import { StyleSheet } from "react-native";
-import { style_vars } from "@/utils/style_vars";
+import { Platform, StyleSheet } from "react-native";
 
 export default function TeacherLayout() {
   const { lang } = useLanguage();
@@ -29,7 +29,6 @@ export default function TeacherLayout() {
           borderRadius: 24,
           backgroundColor: "transparent",
           paddingBottom: 0,
-          // Shadow for depth
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.2,
@@ -43,18 +42,19 @@ export default function TeacherLayout() {
         tabBarBackground: () => (
           <BlurView
             tint="dark"
-            intensity={80}
+            intensity={Platform.OS === "ios" ? 70 : 90}
             style={{
               ...StyleSheet.absoluteFillObject,
               borderRadius: 24,
               overflow: "hidden",
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
               borderWidth: 1,
-              borderColor: "rgba(255, 255, 255, 0.15)",
+              borderColor: "rgba(255, 255, 255, 0.12)",
             }}
           />
         ),
         tabBarLabelStyle: {
-          fontFamily: "NRT-Bold",
+          fontFamily: style_vars.PRIMARY_FONT,
           fontSize: 10,
           marginTop: 2,
         },

@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { List, Divider, Text } from "react-native-paper";
@@ -94,7 +95,7 @@ const settingStyles = StyleSheet.create({
   header: {
     color: "rgba(255, 255, 255, 0.4)",
     fontSize: 12,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     marginBottom: 10,
     textTransform: "uppercase",
   },

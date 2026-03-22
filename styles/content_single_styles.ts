@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -23,7 +24,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  title: { fontWeight: "bold", fontFamily: "NRT-Bold", flex: 1, color: "#FFF" },
+  title: { fontWeight: "bold", fontFamily: style_vars.PRIMARY_FONT, flex: 1, color: "#FFF" },
   metaRow: { flexDirection: "row", gap: 8, marginVertical: 12 },
   chip: { backgroundColor: "#f0f0f0" },
   sectionLabel: { marginTop: 16, fontWeight: "bold", color: "#FFF" },

@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { List, IconButton, Avatar, Menu, Divider } from "react-native-paper";
@@ -24,7 +25,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
     <List.Item
       title={video.title}
       style={styles.listItem}
-      titleStyle={{ fontFamily: "NRT-Bold", fontSize: 16, color: "#FFF" }}
+      titleStyle={{ fontFamily: style_vars.PRIMARY_FONT, fontSize: 16, color: "#FFF" }}
       left={() => (
         <Avatar.Image
           size={48}

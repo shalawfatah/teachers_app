@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native"; // Added TouchableOpacity
 import {
@@ -88,7 +89,7 @@ export default function StudentCard({
                     color: "#FFF",
                     fontSize: 16,
                     fontWeight: "700",
-                    fontFamily: "NRT-Bold",
+                    fontFamily: style_vars.PRIMARY_FONT,
                   }}
                 >
                   {student.name}

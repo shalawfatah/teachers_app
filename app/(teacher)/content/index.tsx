@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React from "react";
 
 import { StyleSheet, View } from "react-native";
@@ -58,7 +59,7 @@ export default function ContentManagementScreen() {
               label: text.course,
               icon: "book",
               labelStyle: {
-                fontFamily: "NRT-Bold",
+                fontFamily: style_vars.PRIMARY_FONT,
                 color: m.tab === "courses" ? "#FFF" : "rgba(255,255,255,0.5)",
               },
             },
@@ -67,7 +68,7 @@ export default function ContentManagementScreen() {
               label: text.video,
               icon: "play-circle",
               labelStyle: {
-                fontFamily: "NRT-Bold",
+                fontFamily: style_vars.PRIMARY_FONT,
                 color: m.tab === "videos" ? "#FFF" : "rgba(255,255,255,0.5)",
               },
             },
@@ -139,7 +140,7 @@ export default function ContentManagementScreen() {
           elevation: 4, // Keep small elevation for FAB so it stays above content
         }}
         labelStyle={{
-          fontFamily: "NRT-Bold",
+          fontFamily: style_vars.PRIMARY_FONT,
           fontSize: 16,
           color: "#000",
         }}

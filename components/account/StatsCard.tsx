@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { Text } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 import { StatsProps } from "@/types/account";
@@ -60,7 +61,7 @@ const customStatsStyles = StyleSheet.create({
   statNumber: {
     color: "#FFF",
     fontSize: 22,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   statLabel: {
     color: "rgba(255, 255, 255, 0.5)",

@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Dimensions } from "react-native";
 import { Modal, Portal, Text } from "react-native-paper";
@@ -81,7 +82,7 @@ export default function EditProfileModal({
                 style={{
                   textAlign: isRTL ? "right" : "left",
                   color: "#FFF",
-                  fontFamily: "NRT-Bold",
+                  fontFamily: style_vars.PRIMARY_FONT,
                   marginBottom: 15,
                   paddingHorizontal: 4,
                 }}

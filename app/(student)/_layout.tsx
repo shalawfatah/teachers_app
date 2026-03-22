@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -53,7 +54,7 @@ export default function StudentLayout() {
           />
         ),
         tabBarLabelStyle: {
-          fontFamily: "NRT-Bold",
+          fontFamily: style_vars.PRIMARY_FONT,
           fontSize: 10, // Dropped to 10 for better fit in a narrower bar
           marginTop: 2,
         },

@@ -20,7 +20,7 @@ export default function SettingsModal({
 
   const itemTitleStyle = {
     color: "#FFF",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     fontSize: 16,
     textAlign: isRTL ? "right" : ("left" as const),
   };
@@ -53,7 +53,7 @@ export default function SettingsModal({
                 styles.actionButton,
                 { borderColor: style_vars.MUTED_WHITE_BORDER, marginTop: 24 },
               ]}
-              labelStyle={{ fontFamily: "NRT-Bold" }}
+              labelStyle={{ fontFamily: style_vars.PRIMARY_FONT }}
             >
               {text.data_request}
             </Button>
@@ -94,7 +94,7 @@ export default function SettingsModal({
           <View style={styles.centerAlign}>
             <Text
               variant="headlineSmall"
-              style={{ color: "#FFF", fontFamily: "NRT-Bold" }}
+              style={{ color: "#FFF", fontFamily: style_vars.PRIMARY_FONT }}
             >
               {text.rava_app}
             </Text>
@@ -165,7 +165,7 @@ export default function SettingsModal({
                 styles.modalTitle,
                 {
                   color: "#FFF",
-                  fontFamily: "NRT-Bold",
+                  fontFamily: style_vars.PRIMARY_FONT,
                   textAlign: isRTL ? "right" : "left",
                   marginBottom: 20,
                   marginTop: 4, // Added small top margin to title instead of padding
@@ -189,7 +189,7 @@ export default function SettingsModal({
                 styles.closeButton,
                 { backgroundColor: "#FFF", marginTop: 24, marginBottom: 4 }, // Added bottom margin
               ]}
-              labelStyle={{ color: "#000", fontFamily: "NRT-Bold" }}
+              labelStyle={{ color: "#000", fontFamily: style_vars.PRIMARY_FONT }}
             >
               {text.close}
             </Button>

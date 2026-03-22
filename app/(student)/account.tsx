@@ -1,3 +1,4 @@
+import {style_vars} from "@/utils/style_vars";
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { Text, Avatar, Button } from "react-native-paper";
@@ -34,7 +35,7 @@ export default function AccountScreen() {
             <Avatar.Text size={80} label={profile?.name?.charAt(0) || "U"} />
             <Text
               variant="headlineSmall"
-              style={{ color: "#FFF", fontFamily: "NRT-Bold", marginTop: 8 }}
+              style={{ color: "#FFF", fontFamily: style_vars.PRIMARY_FONT, marginTop: 8 }}
             >
               {profile?.name}
             </Text>
@@ -57,7 +58,7 @@ export default function AccountScreen() {
               style={styles.signOutButton}
               textColor="#FFF"
               labelStyle={{
-                fontFamily: "NRT-Bold",
+                fontFamily: style_vars.PRIMARY_FONT,
                 fontSize: 16,
               }}
             >

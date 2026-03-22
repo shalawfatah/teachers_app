@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     marginBottom: 24,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
     fontSize: 28,
     color: "#ffffff",
   },

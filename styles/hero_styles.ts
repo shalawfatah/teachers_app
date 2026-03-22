@@ -33,7 +33,7 @@ export const heroStyles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   teacherBio: {
     color: "rgba(255,255,255,0.95)",
@@ -67,6 +67,6 @@ export const heroStyles = StyleSheet.create({
     color: "rgba(255,255,255,0.9)",
     marginTop: 4,
     fontSize: 16,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
 });

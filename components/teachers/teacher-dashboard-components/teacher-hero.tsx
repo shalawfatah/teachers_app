@@ -1,10 +1,9 @@
+import {style_vars} from "@/utils/style_vars";
 import {
   View,
   ImageBackground,
-  Pressable,
   StyleSheet,
   Dimensions,
-  Platform,
 } from "react-native";
 import { Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
@@ -114,7 +113,7 @@ const heroStyles = StyleSheet.create({
   nameText: {
     color: "#FFF",
     fontSize: 38,
-    fontFamily: "NRT-Bold",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   expertiseText: {
     color: "rgba(255,255,255,0.7)",
