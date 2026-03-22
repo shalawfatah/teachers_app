@@ -1,3 +1,4 @@
+import { style_vars } from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -56,7 +57,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 1,
     color: "#FFF",
-    borderColor: "rgba(255,255,255,0.4)",
+    borderColor: style_vars.MUTED_WHITE_BORDER,
   },
   listContent: {
     padding: 16,
@@ -67,7 +68,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 1,
     color: "#FFF",
-    borderColor: "rgba(255,255,255,0.4)",
+    borderColor:style_vars.MUTED_WHITE_BORDER,
     elevation: 2,
   },
   studentRow: {

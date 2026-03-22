@@ -1,5 +1,6 @@
 import { TextInput } from "react-native-paper";
 import { CourseDropdown } from "./course-dropdown";
+import { whiteInputTheme } from "@/utils/theme";
 
 interface VideoFormFieldsProps {
   title: string;
@@ -26,6 +27,8 @@ export function VideoFormFields({
       <TextInput
         label="Title"
         value={title}
+        style={{ backgroundColor: "transparent", color: "#FFF" }}
+        theme={whiteInputTheme}
         onChangeText={onTitleChange}
         mode="outlined"
       />
@@ -33,6 +36,8 @@ export function VideoFormFields({
       <TextInput
         label="Link"
         value={link}
+        style={{ backgroundColor: "transparent" }}
+        theme={whiteInputTheme}
         multiline
         numberOfLines={16}
         onChangeText={onLinkChange}

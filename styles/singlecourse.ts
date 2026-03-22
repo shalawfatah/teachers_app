@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { videoStyles } from "./course_videos";
+import { style_vars } from "@/utils/style_vars";
 
 export const styles = StyleSheet.create({
   container: {
@@ -77,7 +78,7 @@ export const styles = StyleSheet.create({
   },
   statDivider: {
     width: 1,
-    backgroundColor: "rgba(255,255,255,0.3)",
+    backgroundColor:style_vars.MUTED_WHITE_BORDER,
   },
 
   ...videoStyles,

@@ -1,3 +1,4 @@
+import { style_vars } from "@/utils/style_vars";
 import { Dimensions, StyleSheet } from "react-native";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -21,7 +22,7 @@ export const heroStyles = StyleSheet.create({
   teacherAvatar: {
     marginBottom: 16,
     borderWidth: 2,
-    borderColor: "rgba(255,255,255,0.5)",
+    borderColor:style_vars.MUTED_WHITE_BORDER,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,

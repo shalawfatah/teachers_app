@@ -8,6 +8,7 @@ import { Modal, Portal, Text, Button, List, Divider } from "react-native-paper";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
+import { style_vars } from "@/utils/style_vars";
 
 export default function SettingsModal({
   type,
@@ -50,7 +51,7 @@ export default function SettingsModal({
               textColor="#FFF"
               style={[
                 styles.actionButton,
-                { borderColor: "rgba(255,255,255,0.4)", marginTop: 24 },
+                { borderColor: style_vars.MUTED_WHITE_BORDER, marginTop: 24 },
               ]}
               labelStyle={{ fontFamily: "NRT-Bold" }}
             >

@@ -1,3 +1,4 @@
+import { style_vars } from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -6,7 +7,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: "transparent",
     borderRadius: 12,
-    borderColor: "rgba(255,255,255,0.5)",
+    borderColor:style_vars.MUTED_WHITE_BORDER,
     borderWidth: 1,
   },
   cover: { height: 160, borderBottomRightRadius: 0, borderBottomLeftRadius: 0},

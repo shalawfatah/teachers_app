@@ -73,7 +73,7 @@ export default function StudentSettingsList({
 
       <List.Section>
         <List.Subheader
-          style={{ color: "rgba(255, 255, 255, 0.5)", fontFamily: "NRT-Bold" }}
+          style={{ color: "rgba(255, 255, 255, 0.3)", fontFamily: "NRT-Bold" }}
         >
           {text.help}
         </List.Subheader>

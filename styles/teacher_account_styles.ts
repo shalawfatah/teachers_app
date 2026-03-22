@@ -1,3 +1,4 @@
+import { style_vars } from "@/utils/style_vars";
 import { StyleSheet, Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -41,7 +42,7 @@ export const styles = StyleSheet.create({
   statsCard: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.5)",
+    borderColor: style_vars.MUTED_WHITE_BORDER,
     margin: 16,
     marginBottom: 8,
     width: isTablet ? 600 : "92%",
@@ -77,7 +78,7 @@ export const styles = StyleSheet.create({
     marginTop: 8,
     width: isTablet ? 600 : "100%",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.3)",
+    borderColor: style_vars.MUTED_WHITE_BORDER,
     padding: 12,
     alignSelf: "center",
     borderRadius: isTablet ? 12 : 0,

@@ -24,7 +24,7 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
     <List.Item
       title={video.title}
       style={styles.listItem}
-      titleStyle={{ fontFamily: "NRT-Bold", fontSize: 16 }}
+      titleStyle={{ fontFamily: "NRT-Bold", fontSize: 16, color: "#FFF" }}
       left={() => (
         <Avatar.Image
           size={48}
@@ -37,7 +37,12 @@ export default function VideoItem({ video, onEdit, onDelete, onView }: Props) {
             visible={visible}
             onDismiss={closeMenu}
             anchor={
-              <IconButton icon="dots-vertical" size={24} onPress={openMenu} />
+              <IconButton
+                icon="dots-vertical"
+                iconColor="#FFF"
+                size={24}
+                onPress={openMenu}
+              />
             }
           >
             <Menu.Item

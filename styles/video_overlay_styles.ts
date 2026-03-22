@@ -1,3 +1,4 @@
+import { style_vars } from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const overlayStyles = StyleSheet.create({
@@ -20,7 +21,7 @@ export const overlayStyles = StyleSheet.create({
     borderRadius: 24,
     right: 24,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.3)",
+    borderColor:style_vars.MUTED_WHITE_BORDER,
     alignItems: "flex-end",
     gap: 12,
   },

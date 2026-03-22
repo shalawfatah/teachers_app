@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { heroStyles } from "./hero_styles";
+import { style_vars } from "@/utils/style_vars";
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,7 +16,7 @@ export const styles = StyleSheet.create({
     padding: 20,
     margin: 20,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.3)",
+    borderColor:style_vars.MUTED_WHITE_BORDER,
     borderRadius: 20,
     flexDirection: "row",
     justifyContent: "space-between",

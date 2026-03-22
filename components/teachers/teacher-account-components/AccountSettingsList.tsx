@@ -5,6 +5,7 @@ import { styles } from "@/styles/teacher_account_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { AccountSettingListProps } from "@/types/setting_modal";
+import { style_vars } from "@/utils/style_vars";
 
 export default function AccountSettingsList({
   onEditPress,
@@ -39,7 +40,7 @@ export default function AccountSettingsList({
             <List.Icon
               {...p}
               icon="chevron-right"
-              color="rgba(255,255,255,0.3)"
+              color={style_vars.MUTED_WHITE_BORDER}
             />
           )}
           onPress={onEditPress}

@@ -11,6 +11,7 @@ import { ProfileForm } from "./profile-form";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
+import { style_vars } from "@/utils/style_vars";
 
 export default function EditProfileModal({
   visible,
@@ -115,7 +116,7 @@ export default function EditProfileModal({
                   onPress={onDismiss}
                   textColor="#FFFFFF"
                   style={{
-                    borderColor: "rgba(255, 255, 255, 0.5)",
+                    borderColor: style_vars.MUTED_WHITE_BORDER,
                     borderRadius: 12,
                   }}
                 >

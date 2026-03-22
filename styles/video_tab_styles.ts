@@ -1,10 +1,14 @@
+import { style_vars } from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  listContent: { padding: 16, paddingBottom: 100 },
+  listContent: { padding: 16, paddingBottom: 100, backgroundColor: "transparent"},
   listItem: {
-    backgroundColor: "white",
+    backgroundColor: "transparent",
+    borderColor: style_vars.MUTED_WHITE_BORDER,
+    borderWidth: 1,
     marginBottom: 8,
+    paddingHorizontal: 12,
     borderRadius: 12,
     elevation: 1,
   },
