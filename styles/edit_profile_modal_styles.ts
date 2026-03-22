@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 16,
+    color: "#FFF",
     backgroundColor: "transparent",
   },
   label: {

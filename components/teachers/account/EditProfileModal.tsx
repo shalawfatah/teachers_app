@@ -110,7 +110,6 @@ export default function EditProfileModal({
                   },
                 ]}
               >
-                {/* CANCEL BUTTON: White text with transparent white border */}
                 <Button
                   mode="outlined"
                   onPress={onDismiss}
@@ -123,14 +122,13 @@ export default function EditProfileModal({
                   {text.cancel}
                 </Button>
 
-                {/* SAVE BUTTON: Primary Orange */}
                 <Button
                   mode="contained"
                   onPress={handleUpdate}
                   loading={updating}
                   disabled={updating || !name}
-                  buttonColor="#FF8C00" // Your primary orange
-                  textColor="#FFFFFF"
+                  buttonColor="#FF8C00"
+                  textColor="#000"
                   style={{ borderRadius: 12, minWidth: 100 }}
                 >
                   {text.save}

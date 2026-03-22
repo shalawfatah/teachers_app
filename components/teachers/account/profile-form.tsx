@@ -25,24 +25,39 @@ export function ProfileForm({
   return (
     <View>
       <TextInput
-        label="Full Name"
+        label={text.name}
         value={name}
         onChangeText={onNameChange}
+        theme={{
+          colors: {
+            onSurface: "#fff",
+          },
+        }}
         mode="outlined"
         style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
       />
 
       <TextInput
-        label="Expertise"
+        label={text.expertise}
         value={expertise}
         onChangeText={onExpertiseChange}
         mode="outlined"
+        theme={{
+          colors: {
+            onSurface: "#fff",
+          },
+        }}
         placeholder="e.g., Mathematics, Physics, Computer Science"
         style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
       />
 
       <Text
         variant="labelLarge"
+        theme={{
+          colors: {
+            onSurface: "#fff",
+          },
+        }}
         style={[styles.label, { textAlign: isRTL ? "right" : "left" }]}
       >
         {text.update_acc}
