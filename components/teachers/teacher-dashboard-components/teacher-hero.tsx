@@ -1,126 +1,124 @@
-import { View, ImageBackground, Pressable } from "react-native";
-import { Text, Avatar, IconButton } from "react-native-paper";
+import {
+  View,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Dimensions,
+  Platform,
+} from "react-native";
+import { Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-import { styles } from "@/styles/teacher_home_styles";
-import { TeacherHeroProps } from "@/types/teacher";
-import StatsBar from "./stats-bar";
-import { useState } from "react";
-import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { translations } from "@/utils/eng_krd";
-import { gradient_colors } from "@/utils/gradient_colors";
+import { BlurView } from "expo-blur";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
-export default function TeacherHero({
-  profile,
-  stats,
-  onEdit,
-  onSignOut,
-  onLanguageChange,
-}: TeacherHeroProps) {
-  const [languageModalVisible, setLanguageModalVisible] = useState(false);
-  const { lang, isRTL } = useLanguage();
-  const text = lang === 1 ? translations.eng : translations.krd;
-  const getLanguageFlag = (lang: number) => {
-    return lang === 1 ? "🇬🇧" : "🇹🇯";
-  };
+// Get device height to force the view to fill the screen
+const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
+export default function TeacherHero({ profile, onEdit, onSignOut }: any) {
   return (
-    <ImageBackground
-      source={{
-        uri:
-          profile?.cover_img ||
-          "https://images.unsplash.com/photo-1511629091441-ee46146481b6?w=1200",
-      }}
-      style={styles.heroSection}
-      resizeMode="cover"
-    >
-      <LinearGradient colors={gradient_colors} style={styles.gradient}>
-        <BackgroundShapes />
-        <View style={[styles.header, { direction: isRTL ? "rtl" : "ltr" }]}>
-          <View style={styles.userInfo}>
-            <Avatar.Text size={45} label={profile?.name?.charAt(0) || "U"} />
-            <View style={styles.userText}>
-              <Text variant="bodySmall" style={styles.welcomeText}>
-                {text.welcome}
-              </Text>
-              <Text variant="titleMedium" style={styles.userName}>
-                {profile?.name}
-              </Text>
+    <View style={heroStyles.mainContainer}>
+      {/* 1. THE IMAGE LAYER */}
+      <ImageBackground
+        source={{
+          uri: profile?.thumbnail || "https://via.placeholder.com/800",
+        }}
+        style={heroStyles.absoluteImage}
+        resizeMode="cover"
+      >
+        {/* 2. THE GLASS LAYER */}
+        <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill}>
+          {/* 3. THE COLOR/VIGNETTE LAYER */}
+          <LinearGradient
+            colors={["rgba(0,0,0,0.5)", "transparent", "rgba(0,0,0,0.9)"]}
+            style={StyleSheet.absoluteFill}
+          >
+            <BackgroundShapes />
+
+            {/* HEADER AREA */}
+            <View style={heroStyles.topNav}>
+              <View style={heroStyles.glassPill}>
+                <IconButton
+                  icon="pencil"
+                  iconColor="#fff"
+                  size={20}
+                  onPress={onEdit}
+                />
+                <IconButton
+                  icon="logout"
+                  iconColor="#FF6B6B"
+                  size={20}
+                  onPress={onSignOut}
+                />
+              </View>
             </View>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Pressable
-              onPress={() => setLanguageModalVisible(true)}
-              style={{
-                marginRight: 8,
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                backgroundColor: "rgba(255,255,255,0.2)",
-                borderRadius: 20,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 16, marginRight: 4 }}>
-                {getLanguageFlag(profile?.lang || 1)}
+
+            {/* CENTER CONTENT */}
+            <View style={heroStyles.contentCenter}>
+              <View style={heroStyles.avatarCircle}>
+                <ImageBackground
+                  source={{ uri: profile?.thumbnail }}
+                  style={{ width: 140, height: 140 }}
+                  imageStyle={{ borderRadius: 70 }}
+                />
+              </View>
+              <Text style={heroStyles.nameText}>
+                {profile?.name || "Teacher"}
               </Text>
-              <IconButton
-                icon="chevron-down"
-                iconColor="#fff"
-                size={16}
-                style={{ margin: 0 }}
-              />
-            </Pressable>
-
-            <IconButton
-              icon="pencil"
-              iconColor="#fff"
-              size={24}
-              onPress={onEdit}
-            />
-            <IconButton
-              icon="logout"
-              iconColor="#fff"
-              size={24}
-              onPress={onSignOut}
-            />
-          </View>
-        </View>
-
-        <View style={styles.teacherInfo}>
-          {profile?.thumbnail ? (
-            <Avatar.Image
-              size={140}
-              source={{ uri: profile.thumbnail }}
-              style={styles.teacherAvatar}
-            />
-          ) : (
-            <Avatar.Text
-              size={140}
-              label={profile?.name?.charAt(0) || "U"}
-              style={styles.teacherAvatar}
-            />
-          )}
-          <Text variant="headlineLarge" style={styles.teacherName}>
-            {profile?.name}
-          </Text>
-          <Text variant="titleMedium" style={styles.teacherBio}>
-            {profile?.expertise || "Computer Science & Web Development"}
-          </Text>
-        </View>
-
-        <View></View>
-        {profile && (
-          <LanguageSwitcherModal
-            visible={languageModalVisible}
-            onDismiss={() => setLanguageModalVisible(false)}
-            currentLang={profile?.lang || 1}
-            profileId={profile?.id || ""} // Make sure this is the actual profile ID
-            onLanguageChange={onLanguageChange || (() => { })}
-          />
-        )}
-      </LinearGradient>
-    </ImageBackground>
+              <Text style={heroStyles.expertiseText}>{profile?.expertise}</Text>
+            </View>
+          </LinearGradient>
+        </BlurView>
+      </ImageBackground>
+    </View>
   );
 }
+
+const heroStyles = StyleSheet.create({
+  mainContainer: {
+    // Force the container to take the full screen height
+    height: SCREEN_HEIGHT,
+    width: SCREEN_WIDTH,
+    backgroundColor: "#000", // If the image fails, this keeps the screen from being white
+  },
+  absoluteImage: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+  topNav: {
+    paddingTop: 60,
+    alignItems: "flex-end",
+    paddingHorizontal: 20,
+  },
+  glassPill: {
+    flexDirection: "row",
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
+  },
+  contentCenter: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  avatarCircle: {
+    padding: 10,
+    borderRadius: 80,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.3)",
+    marginBottom: 20,
+  },
+  nameText: {
+    color: "#FFF",
+    fontSize: 38,
+    fontFamily: "NRT-Bold",
+  },
+  expertiseText: {
+    color: "rgba(255,255,255,0.7)",
+    fontSize: 16,
+    marginTop: 10,
+  },
+});
