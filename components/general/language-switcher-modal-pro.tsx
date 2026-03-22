@@ -1,4 +1,3 @@
-import {style_vars} from "@/utils/style_vars";
 import { View, Modal, Alert, Pressable, Platform } from "react-native";
 import { Text, IconButton, ActivityIndicator } from "react-native-paper";
 import { useState } from "react";
@@ -66,6 +65,7 @@ export default function LanguageSwitcherModal({
       onRequestClose={onDismiss}
     >
       <Pressable style={{ flex: 1 }} onPress={onDismiss}>
+        {/* BlurView for the backdrop */}
         <BlurView
           intensity={Platform.OS === "ios" ? 30 : 100}
           tint="dark"
@@ -93,7 +93,7 @@ export default function LanguageSwitcherModal({
             >
               <Text
                 variant="titleLarge"
-                style={{ color: "#FFF", fontFamily: style_vars.PRIMARY_FONT }}
+                style={{ color: "#FFF", fontFamily: "NRT-Bold" }}
               >
                 Select Language
               </Text>
@@ -129,7 +129,7 @@ export default function LanguageSwitcherModal({
                 </Text>
                 <Text
                   variant="titleMedium"
-                  style={{ flex: 1, color: "#FFF", fontFamily: style_vars.PRIMARY_FONT }}
+                  style={{ flex: 1, color: "#FFF", fontFamily: "NRT-Bold" }}
                 >
                   {lang.name}
                 </Text>

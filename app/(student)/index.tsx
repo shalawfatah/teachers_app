@@ -7,7 +7,6 @@ import Loader from "@/components/Loader";
 import { Student } from "@/types/profile";
 import { ReklamCarousel } from "@/components/content/ReklamCarousel";
 import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
-import { style_vars } from "@/utils/style_vars";
 
 type TeacherStats = {
   students_count: number;
@@ -99,7 +98,7 @@ export default function StudentDashboard() {
             alignItems: "center",
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
-            borderColor: style_vars.MUTED_WHITE_BORDER,
+            borderColor: "rgba(255,255,255,0.6)",
             borderWidth: 1,
             shadowOpacity: 0.1,
             shadowRadius: 4,
