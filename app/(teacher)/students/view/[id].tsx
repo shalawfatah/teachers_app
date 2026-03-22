@@ -17,6 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 import PrimaryButton from "@/components/general/primary-button";
+import { style_vars } from "@/utils/style_vars";
 
 export default function ViewStudent() {
   const { id } = useLocalSearchParams();
@@ -52,7 +53,7 @@ export default function ViewStudent() {
             .split(" ")
             .map((n) => n[0])
             .join("")}
-          style={{ backgroundColor: "#FF8C00" }}
+          style={{ backgroundColor: style_vars.PRIMARY_WHITE_BUTTON }}
         />
         <Text variant="headlineMedium" style={styles.name}>
           {student.name}
@@ -91,6 +92,7 @@ export default function ViewStudent() {
       </Card>
       <PrimaryButton
         text={text.delete_student_account}
+        icon={"trash-can"}
         action={() => setModalVisible(true)}
       />
       <DeleteStudentModal

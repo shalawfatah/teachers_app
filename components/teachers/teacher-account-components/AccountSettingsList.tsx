@@ -1,11 +1,10 @@
 import React from "react";
-import { View } from "react-native";
-import { List, Divider } from "react-native-paper";
-import { styles } from "@/styles/teacher_account_styles";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { List, Divider, Text } from "react-native-paper";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { AccountSettingListProps } from "@/types/setting_modal";
-import { style_vars } from "@/utils/style_vars";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function AccountSettingsList({
   onEditPress,
@@ -14,62 +13,113 @@ export default function AccountSettingsList({
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
-  // Shared styles to keep the code clean
-  const whiteTitle = { color: "#FFFFFF", fontWeight: "600" as const };
-  const whiteDesc = { color: "rgba(255, 255, 255, 0.6)" };
-  const iconColor = "#FFFFFF";
-  const subheaderColor = "rgba(255, 255, 255, 0.5)";
+  const SettingItem = ({ title, icon, onPress, description }: any) => (
+    <TouchableOpacity
+      style={[
+        settingStyles.item,
+        { flexDirection: isRTL ? "row-reverse" : "row" },
+      ]}
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
+      <View style={[settingStyles.iconCircle, { backgroundColor: "#325b4d" }]}>
+        <MaterialCommunityIcons name={icon} size={20} color="#FFF" />
+      </View>
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: 12,
+          alignItems: isRTL ? "flex-end" : "flex-start",
+        }}
+      >
+        <Text style={settingStyles.title}>{title}</Text>
+        {description && <Text style={settingStyles.desc}>{description}</Text>}
+      </View>
+      <MaterialCommunityIcons
+        name={isRTL ? "chevron-left" : "chevron-right"}
+        size={20}
+        color="rgba(255,255,255,0.3)"
+      />
+    </TouchableOpacity>
+  );
 
   return (
-    <View
-      style={[styles.settingsContainer, { direction: isRTL ? "rtl" : "ltr" }]}
-    >
-      <List.Section>
-        <List.Subheader style={{ color: subheaderColor }}>
-          {text.acc_setting}
-        </List.Subheader>
-        <List.Item
-          title={text.update_acc}
-          description={text.update_info}
-          titleStyle={whiteTitle}
-          descriptionStyle={whiteDesc}
-          left={(p) => (
-            <List.Icon {...p} icon="account-edit" color={iconColor} />
-          )}
-          right={(p) => (
-            <List.Icon
-              {...p}
-              icon="chevron-right"
-              color={style_vars.MUTED_WHITE_BORDER}
-            />
-          )}
-          onPress={onEditPress}
-        />
-        <Divider style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }} />
-      </List.Section>
+    <View style={settingStyles.glassPanel}>
+      <Text
+        style={[settingStyles.header, { textAlign: isRTL ? "right" : "left" }]}
+      >
+        {text.acc_setting}
+      </Text>
+      <SettingItem
+        title={text.update_acc}
+        description={text.update_info}
+        icon="account-edit"
+        onPress={onEditPress}
+      />
 
-      <List.Section>
-        <List.Subheader style={{ color: subheaderColor }}>
-          {text.support}
-        </List.Subheader>
-        <List.Item
-          title={text.help}
-          titleStyle={whiteTitle}
-          left={(p) => (
-            <List.Icon {...p} icon="help-circle" color={iconColor} />
-          )}
-          onPress={() => onSettingsPress("help")}
-        />
-        <Divider style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }} />
-        <List.Item
-          title={text.about}
-          titleStyle={whiteTitle}
-          left={(p) => (
-            <List.Icon {...p} icon="information" color={iconColor} />
-          )}
-          onPress={() => onSettingsPress("about")}
-        />
-      </List.Section>
+      <Divider style={settingStyles.divider} />
+
+      <Text
+        style={[
+          settingStyles.header,
+          { textAlign: isRTL ? "right" : "left", marginTop: 15 },
+        ]}
+      >
+        {text.support}
+      </Text>
+      <SettingItem
+        title={text.help}
+        icon="help-circle"
+        onPress={() => onSettingsPress("help")}
+      />
+      <Divider style={settingStyles.divider} />
+      <SettingItem
+        title={text.about}
+        icon="information"
+        onPress={() => onSettingsPress("about")}
+      />
     </View>
   );
 }
+
+const settingStyles = StyleSheet.create({
+  glassPanel: {
+    backgroundColor: "rgba(255, 255, 255, 0.06)",
+    borderRadius: 24,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.1)",
+    marginBottom: 20,
+  },
+  header: {
+    color: "rgba(255, 255, 255, 0.4)",
+    fontSize: 12,
+    fontFamily: "NRT-Bold",
+    marginBottom: 10,
+    textTransform: "uppercase",
+  },
+  item: {
+    paddingVertical: 12,
+    alignItems: "center",
+  },
+  iconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    color: "#FFF",
+    fontSize: 15,
+    fontWeight: "600",
+  },
+  desc: {
+    color: "rgba(255, 255, 255, 0.5)",
+    fontSize: 12,
+  },
+  divider: {
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    marginVertical: 4,
+  },
+});

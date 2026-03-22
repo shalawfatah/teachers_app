@@ -1,3 +1,4 @@
+import { style_vars } from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -24,11 +25,13 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     paddingHorizontal: 32,
   },
-  button: { borderRadius: 8, backgroundColor: "#FF8C00", marginVertical: 12 },
+  button: { borderRadius: 8, backgroundColor: style_vars.PRIMARY_WHITE_BUTTON, marginVertical: 12 },
   secondary_button: {
     borderRadius: 8,
     color: "#000",
-    backgroundColor: "#FFF",
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: style_vars.MUTED_WHITE_BORDER,
     marginTop: 12,
   },
 });

@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { BlurView } from "expo-blur";
 import { StyleSheet } from "react-native";
+import { style_vars } from "@/utils/style_vars";
 
 export default function TeacherLayout() {
   const { lang } = useLanguage();
@@ -14,8 +15,8 @@ export default function TeacherLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#FF8C00",
-        tabBarInactiveTintColor: "#FFFFFF",
+        tabBarActiveTintColor: style_vars.PRIMARY_WHITE_BUTTON,
+        tabBarInactiveTintColor: style_vars.INACTIVE_BACKGROUND,
         tabBarShowLabel: true,
         tabBarStyle: {
           position: "absolute",

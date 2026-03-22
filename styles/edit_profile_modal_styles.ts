@@ -69,10 +69,8 @@ export const styles = StyleSheet.create({
     height: "100%",
   },
   buttonRow: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "flex-end",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
     backgroundColor: "transparent",
   },
   button: {

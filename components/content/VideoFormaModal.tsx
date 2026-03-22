@@ -60,8 +60,16 @@ export default function VideoFormModal({
         />
 
         <View style={styles.actions}>
-          <SecondaryButton text={text.cancel} action={onDismiss} />
-          <PrimaryButton text={text.update} action={handleSave} />
+          <SecondaryButton
+            text={text.cancel}
+            action={onDismiss}
+            icon={"cancel"}
+          />
+          <PrimaryButton
+            text={text.update}
+            action={handleSave}
+            icon={"pencil"}
+          />
         </View>
       </Modal>
     </Portal>

@@ -18,6 +18,9 @@ import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
+import { style_vars } from "@/utils/style_vars";
+import PrimaryButton from "@/components/general/primary-button";
+import SecondaryButton from "@/components/general/secondary-button";
 
 export default function EditStudent() {
   const { id } = useLocalSearchParams();
@@ -57,19 +60,16 @@ export default function EditStudent() {
         </Surface>
         <StatusToggle verified={verified} onStatusChange={setVerified} />
         <View style={styles.actionContainer}>
-          <Button
-            mode="contained"
-            onPress={handleSave}
-            loading={saving}
-            disabled={saving}
-            style={styles.saveButton}
-            contentStyle={{ height: 48, backgroundColor: "#FF8C00"}}
-          >
-            {saving ? text.update : text.save}
-          </Button>
-          <Button mode="text" buttonColor="#FFF" onPress={() => router.back()} disabled={saving}>
-            {text.cancel}
-          </Button>
+          <PrimaryButton
+            text={saving ? text.update : text.save}
+            icon={"content-save"}
+            action={handleSave}
+          />
+          <SecondaryButton
+            text={text.cancel}
+            icon={"cancel"}
+            action={() => router.back()}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

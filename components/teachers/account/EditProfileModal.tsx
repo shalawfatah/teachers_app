@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView } from "react-native";
-import { Modal, Portal, Text, Button } from "react-native-paper";
-import { styles } from "@/styles/edit_profile_modal_styles";
+import { View, ScrollView, Dimensions } from "react-native";
+import { Modal, Portal, Text } from "react-native-paper";
 import { EditProfileModalProps } from "@/types/modal";
 import { useImageUpload } from "./use-image-upload";
 import { useProfileUpdate } from "./use-profile-update";
@@ -11,7 +10,10 @@ import { ProfileForm } from "./profile-form";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
-import { style_vars } from "@/utils/style_vars";
+import PrimaryButton from "@/components/general/primary-button";
+import SecondaryButton from "@/components/general/secondary-button";
+
+const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function EditProfileModal({
   visible,
@@ -56,34 +58,42 @@ export default function EditProfileModal({
       <Modal
         visible={visible}
         onDismiss={onDismiss}
-        contentContainerStyle={[
-          styles.modalContainer,
-          { direction: isRTL ? "rtl" : "ltr" },
-        ]}
+        // FIXED: Using absolute positioning for the modal container to center it perfectly
+        contentContainerStyle={{
+          margin: 20,
+          justifyContent: "center",
+        }}
       >
-        <LinearGradient colors={gradient_colors} style={{ borderRadius: 24 }}>
-          <BlurView
-            intensity={90}
-            tint="dark"
-            style={{ padding: 24, borderRadius: 24 }}
-          >
-            <View style={styles.container}>
+        <LinearGradient
+          colors={gradient_colors}
+          style={{
+            borderRadius: 28,
+            borderWidth: 1,
+            borderColor: "rgba(255,255,255,0.15)",
+            overflow: "hidden",
+          }}
+        >
+          <BlurView intensity={95} tint="dark" style={{ padding: 20 }}>
+            <View style={{ maxHeight: SCREEN_HEIGHT * 0.8 }}>
+              {/* Header */}
               <Text
                 variant="headlineSmall"
-                style={[
-                  styles.title,
-                  { textAlign: isRTL ? "right" : "left", color: "#FFF" },
-                ]}
+                style={{
+                  textAlign: isRTL ? "right" : "left",
+                  color: "#FFF",
+                  fontFamily: "NRT-Bold",
+                  marginBottom: 15,
+                  paddingHorizontal: 4,
+                }}
               >
                 {text.update_acc}
               </Text>
 
+              {/* Scrollable Form Area */}
               <ScrollView
-                style={styles.scrollView}
                 showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 10 }}
               >
-                {/* NOTE: Ensure ProfileForm passes these theme overrides to its internal TextInputs
-                 */}
                 <ProfileForm
                   name={name}
                   expertise={expertise}
@@ -100,40 +110,29 @@ export default function EditProfileModal({
                 />
               </ScrollView>
 
+              {/* Action Buttons */}
               <View
-                style={[
-                  styles.buttonRow,
-                  {
-                    flexDirection: isRTL ? "row-reverse" : "row",
-                    justifyContent: "flex-end",
-                    gap: 12,
-                    marginTop: 20,
-                  },
-                ]}
+                style={{
+                  marginTop: 15,
+                  gap: 10,
+                  // Ensure buttons stay at the bottom even when scrolling
+                  paddingTop: 10,
+                  borderTopWidth: 1,
+                  borderTopColor: "rgba(255,255,255,0.05)",
+                }}
               >
-                <Button
-                  mode="outlined"
-                  onPress={onDismiss}
-                  textColor="#FFFFFF"
-                  style={{
-                    borderColor: style_vars.MUTED_WHITE_BORDER,
-                    borderRadius: 12,
-                  }}
-                >
-                  {text.cancel}
-                </Button>
-
-                <Button
-                  mode="contained"
-                  onPress={handleUpdate}
+                <PrimaryButton
+                  text={text.save}
+                  icon={"check"}
+                  action={handleUpdate}
                   loading={updating}
                   disabled={updating || !name}
-                  buttonColor="#FF8C00"
-                  textColor="#000"
-                  style={{ borderRadius: 12, minWidth: 100 }}
-                >
-                  {text.save}
-                </Button>
+                />
+                <SecondaryButton
+                  text={text.cancel}
+                  icon={"close"}
+                  action={onDismiss}
+                />
               </View>
             </View>
           </BlurView>

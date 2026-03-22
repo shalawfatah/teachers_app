@@ -35,70 +35,64 @@ export default function AccountScreen() {
       <BackgroundShapes />
 
       <ScrollView
-        style={{ flex: 1, backgroundColor: "transparent" }}
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: 100 }]}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 20, paddingBottom: 120 }}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          style={[
-            styles.container,
-            {
-              direction: isRTL ? "rtl" : "ltr",
-              backgroundColor: "transparent",
-            },
-          ]}
-        >
-          <View style={[styles.profileHeader, { width: "100%" }]}>
-            <Avatar.Text
-              size={80}
-              label={profile?.name?.charAt(0) || "U"}
-              style={styles.avatar}
-            />
-            <Text
-              variant="headlineSmall"
-              style={{
-                marginTop: 12,
-                color: "#FFF",
-                fontWeight: "bold",
-                textAlign: "center",
-                fontFamily: "NRT-Bold",
-              }}
-            >
-              {profile?.name}
-            </Text>
-            <Text
-              variant="bodyMedium"
-              style={{
-                color: "rgba(255,255,255,0.7)",
-                marginTop: 4,
-                textAlign: "center",
-              }}
-            >
-              {text.teacher}
-            </Text>
-          </View>
-
-          {stats && (
-            <StatsCard
-              courseNumber={stats.courses_count}
-              videoNumber={stats.videos_count}
-              studentNumber={stats.students_count}
-            />
-          )}
-
-          <AccountSettingsList
-            onEditPress={() => setEditVisible(true)}
-            onSettingsPress={(type) => setActiveSettings(type)}
+        {/* Header Section */}
+        <View style={{ alignItems: "center", marginTop: 40, marginBottom: 10 }}>
+          <Avatar.Text
+            size={90}
+            label={profile?.name?.charAt(0) || "U"}
+            style={{ backgroundColor: "#325b4d", elevation: 0 }}
+            labelStyle={{ color: "#FFF", fontSize: 32, fontFamily: "NRT-Bold" }}
           />
-          <SecondaryButton text={text.logout} action={handleSignOut} />
+          <Text
+            style={{
+              marginTop: 16,
+              color: "#FFF",
+              fontSize: 24,
+              fontFamily: "NRT-Bold",
+            }}
+          >
+            {profile?.name}
+          </Text>
+          <Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 14 }}>
+            {text.teacher}
+          </Text>
+        </View>
+
+        {/* Stats Card */}
+        {stats && (
+          <StatsCard
+            courseNumber={stats.courses_count}
+            videoNumber={stats.videos_count}
+            studentNumber={stats.students_count}
+          />
+        )}
+
+        {/* Settings List */}
+        <AccountSettingsList
+          onEditPress={() => setEditVisible(true)}
+          onSettingsPress={(type) => setActiveSettings(type)}
+        />
+
+        {/* Buttons Section */}
+        <View style={{ gap: 12 }}>
+          <SecondaryButton
+            text={text.logout}
+            action={handleSignOut}
+            icon={"logout"}
+          />
           <PrimaryButton
             text={text.delete_acc}
             action={() => setDeleteVisible(true)}
+            icon={"trash-can"}
           />
         </View>
       </ScrollView>
 
-      {/* Modals */}
+      {/* Modals remain the same as they are already updated */}
       <EditProfileModal
         visible={editVisible}
         onDismiss={() => setEditVisible(false)}

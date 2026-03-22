@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     gap: 12,
   },
   avatar: {
-    backgroundColor: "#FF8C00",
+    backgroundColor: style_vars.PRIMARY_WHITE_BUTTON,
   },
   studentDetails: {
     flex: 1,

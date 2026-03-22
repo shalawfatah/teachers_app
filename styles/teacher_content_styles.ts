@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     elevation: 2,
     margin: 12,
     borderRadius: 48,
-    borderColor:style_vars.MUTED_WHITE_BORDER,
+    borderColor: style_vars.MUTED_WHITE_BORDER,
     borderWidth: 1,
   },
   fab: {
@@ -23,6 +23,6 @@ export const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 100,
-    backgroundColor: "#FF8C00",
+    backgroundColor: style_vars.PRIMARY_WHITE_BUTTON
   },
 });

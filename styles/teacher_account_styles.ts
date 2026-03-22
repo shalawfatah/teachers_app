@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
   },
   avatar: {
     marginBottom: 16,
-    backgroundColor: "#FF8C00",
+    backgroundColor: style_vars.PRIMARY_WHITE_BUTTON,
     transform: [{ scale: isTablet ? 1.4 : 1 }],
   },
   name: {
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
   },
   statNumber: {
     fontWeight: "bold",
-    color: "#FF8C00",
+    color: style_vars.PRIMARY_WHITE_BUTTON,
   },
   statLabel: {
     color: "#FFF",
