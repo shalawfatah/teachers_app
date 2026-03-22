@@ -15,9 +15,23 @@ export function GradeSelector({ value, onValueChange }: GradeSelectorProps) {
         onValueChange={onValueChange}
         buttons={edit_course_content_grades}
         style={styles.segmented}
+        theme={{
+          colors: {
+            secondaryContainer: "orange", // selected button bg
+            onSecondaryContainer: "#fff", // selected button text
+            outline: "#fff", // ✅ this controls the border color
+          },
+        }}
       />
       <SegmentedButtons
         value={value}
+        theme={{
+          colors: {
+            secondaryContainer: "orange", // selected button bg
+            onSecondaryContainer: "#fff", // selected button text
+            outline: "#fff", // ✅ this controls the border color
+          },
+        }}
         onValueChange={onValueChange}
         buttons={edit_course_content_grades}
         style={styles.segmented}

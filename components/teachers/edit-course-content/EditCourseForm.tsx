@@ -18,7 +18,7 @@ export default function EditCourseForm({
   const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
   return (
-    <SafeAreaView style={{ padding: 12 }}>
+    <SafeAreaView style={{ padding: 12, marginTop: 24}}>
       <TextInput
         label={text.course_title}
         value={formData?.title}
@@ -26,6 +26,12 @@ export default function EditCourseForm({
         mode="outlined"
         style={styles.input}
         disabled={disabled}
+        theme={{
+          colors: {
+            onSurface: "#FFF",
+            onSurfaceVariant: "#FFF",
+          },
+        }}
       />
       <TextInput
         label={text.description}
@@ -36,6 +42,7 @@ export default function EditCourseForm({
         numberOfLines={12}
         style={styles.input}
         disabled={disabled}
+        theme={{ colors: { onSurface: "#FFF", onSurfaceVariant: "#FFF" } }}
       />
       <TextInput
         label={text.image_link}
@@ -47,6 +54,7 @@ export default function EditCourseForm({
         mode="outlined"
         style={styles.input}
         disabled={disabled}
+        theme={{ colors: { onSurface: "#FFF", onSurfaceVariant: "#FFF" } }}
       />
       <Text variant="labelLarge" style={styles.label}>
         {text.subject}
@@ -73,7 +81,8 @@ export default function EditCourseForm({
         onPress={onSubmit}
         loading={saving}
         disabled={disabled || saving}
-        style={{ marginTop: 16 }}
+        style={{ marginTop: 16, backgroundColor: "orange" }}
+        labelStyle={{ color: "#000" }}
       >
         {text.update}
       </Button>

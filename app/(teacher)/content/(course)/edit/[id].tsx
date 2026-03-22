@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
-import { ScrollView, ActivityIndicator } from "react-native";
+import {
+  ScrollView,
+  useWindowDimensions,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import EditCourseForm from "@/components/teachers/edit-course-content/EditCourseForm";
 import { CourseFormData } from "@/types/courses";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient_colors } from "@/utils/gradient_colors";
+import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
 export default function EditCourseScreen() {
   const { id } = useLocalSearchParams();
+  const { height } = useWindowDimensions();
   const router = useRouter();
   const [formData, setFormData] = useState<CourseFormData>({
     title: "",
@@ -64,6 +73,11 @@ export default function EditCourseScreen() {
 
   return (
     <ScrollView>
+      <LinearGradient
+        colors={gradient_colors}
+        style={[StyleSheet.absoluteFill, { flex: 1, height: height }]}
+      />
+      <BackgroundShapes />
       <EditCourseForm
         formData={formData}
         onFieldChange={handleFieldChange}
