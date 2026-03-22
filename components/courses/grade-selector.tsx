@@ -1,6 +1,7 @@
 import { SegmentedButtons } from "react-native-paper";
 import { styles } from "@/styles/create_carousel_styles";
 import { edit_course_content_grades } from "@/utils/edit_course_content_grades";
+import { style_vars } from "@/utils/style_vars";
 
 interface GradeSelectorProps {
   value: string;
@@ -17,7 +18,7 @@ export function GradeSelector({ value, onValueChange }: GradeSelectorProps) {
         style={styles.segmented}
         theme={{
           colors: {
-            secondaryContainer: "#FF8C00", // selected button bg
+            secondaryContainer: style_vars.PRIMARY_WHITE_BUTTON, // selected button bg
             onSecondaryContainer: "#fff", // selected button text
             outline: "#fff", // ✅ this controls the border color
           },
@@ -27,7 +28,7 @@ export function GradeSelector({ value, onValueChange }: GradeSelectorProps) {
         value={value}
         theme={{
           colors: {
-            secondaryContainer: "#FF8C00", // selected button bg
+            secondaryContainer: style_vars.PRIMARY_WHITE_BUTTON, // selected button bg
             onSecondaryContainer: "#fff", // selected button text
             outline: "#fff", // ✅ this controls the border color
           },
