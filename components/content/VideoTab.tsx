@@ -2,7 +2,6 @@ import React from "react";
 import { FlatList, View, RefreshControl } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { VideosTabProps } from "@/types/videos";
-import { styles } from "@/styles/video_tab_styles";
 import { useVideos } from "./video-tab-components/useVideos";
 import VideoItem from "./video-tab-components/VideoItem";
 
@@ -15,8 +14,8 @@ export default function VideosTab({
 
   if (loading && !refreshing) {
     return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="rgba(255,255,255,0.7)" />
       </View>
     );
   }
@@ -25,9 +24,13 @@ export default function VideosTab({
     <FlatList
       data={videos}
       keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.listContent}
+      contentContainerStyle={{ paddingVertical: 12, paddingBottom: 32 }}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="rgba(255,255,255,0.5)"
+        />
       }
       renderItem={({ item }) => (
         <VideoItem
