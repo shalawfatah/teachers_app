@@ -5,7 +5,11 @@ import { useEffect } from "react";
 import { styles } from "@/styles/video_player_modal_styles";
 import { VideoPlayerModalProps } from "@/types/modal";
 
-export default function VideoPlayerModal({ visible, video, onDismiss }: VideoPlayerModalProps) {
+export default function VideoPlayerModal({
+  visible,
+  video,
+  onDismiss,
+}: VideoPlayerModalProps) {
   const videoSource = {
     uri: video?.video_hls_url || video?.link || "",
     headers: {
@@ -16,6 +20,9 @@ export default function VideoPlayerModal({ visible, video, onDismiss }: VideoPla
   const player = useVideoPlayer(videoSource, (player) => {
     player.loop = false;
   });
+
+  console.log("player ", player);
+  console.log("video ", videoSource);
 
   useEffect(() => {
     if (visible && video) {
@@ -55,8 +62,8 @@ export default function VideoPlayerModal({ visible, video, onDismiss }: VideoPla
           <VideoView
             style={styles.video}
             player={player}
-            allowsFullscreen
             allowsPictureInPicture
+            fullscreenOptions={{ enable: true }}
             startsPictureInPictureAutomatically
             nativeControls={true}
           />

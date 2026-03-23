@@ -12,6 +12,7 @@ export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
     Goran: require("@/assets/fonts/goran.ttf"),
     "NRT-Bold": require("@/assets/fonts/nrt-bd.ttf"),
+    Rabar_Title: require("@/assets/fonts/rabar_001.ttf"),
   });
 
   const { loading } = useAuthGuard(fontsLoaded);

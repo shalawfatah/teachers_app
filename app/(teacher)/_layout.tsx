@@ -55,7 +55,7 @@ export default function TeacherLayout() {
         ),
         tabBarLabelStyle: {
           fontFamily: style_vars.PRIMARY_FONT,
-          fontSize: 10,
+          fontSize: 12,
           marginTop: 2,
         },
         tabBarIconStyle: {

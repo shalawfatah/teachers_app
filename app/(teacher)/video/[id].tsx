@@ -62,8 +62,7 @@ export default function VideoPlayer() {
           key={video?.video_hls_url}
           style={styles.nativePlayer}
           player={player}
-          allowsFullscreen
-          allowsPictureInPicture
+          fullscreenOptions={{ enable: true }}
           nativeControls={true} // This MUST be true
           contentFit="contain"
         />

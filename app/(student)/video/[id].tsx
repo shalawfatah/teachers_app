@@ -28,8 +28,7 @@ function PlayerSection({ url }: { url: string }) {
     <VideoView
       style={styles.nativePlayer}
       player={player}
-      allowsFullscreen
-      allowsPictureInPicture
+      fullscreenOptions={{ enable: true }}
       nativeControls={true}
       contentFit="contain"
     />

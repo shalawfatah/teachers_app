@@ -28,14 +28,12 @@ export default function StudentLayout() {
           borderRadius: 24,
           backgroundColor: "transparent",
           paddingBottom: 0,
-          // Optional: Add a subtle shadow to make the "box" pop from the background
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.2,
           shadowRadius: 5,
         },
         tabBarItemStyle: {
-          // Use horizontal margin instead of vertical if icons feel too spread out
           marginHorizontal: 5,
           justifyContent: "center",
           alignItems: "center",
@@ -55,7 +53,7 @@ export default function StudentLayout() {
         ),
         tabBarLabelStyle: {
           fontFamily: style_vars.PRIMARY_FONT,
-          fontSize: 10, // Dropped to 10 for better fit in a narrower bar
+          fontSize: 12, // Dropped to 10 for better fit in a narrower bar
           marginTop: 2,
         },
         tabBarIconStyle: {
