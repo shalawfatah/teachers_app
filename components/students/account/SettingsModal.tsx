@@ -157,7 +157,7 @@ export default function SettingsModal({
           <BlurView
             intensity={90}
             tint="dark"
-            style={{ padding: 24, borderRadius: 24 }} // Matched border radius to parent
+            style={{ padding: 24, borderRadius: 24 }}
           >
             <Text
               variant="headlineSmall"

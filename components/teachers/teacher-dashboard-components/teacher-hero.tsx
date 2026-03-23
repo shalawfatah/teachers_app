@@ -10,7 +10,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 
-// Get device height to force the view to fill the screen
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function TeacherHero({ profile, onEdit, onSignOut }: any) {
