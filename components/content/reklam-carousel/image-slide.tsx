@@ -41,7 +41,6 @@ const slideStyles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 24,
-    marginHorizontal: 10,
     overflow: "hidden", // Clips the image to the corners
     backgroundColor: "#1a1a1a",
   },

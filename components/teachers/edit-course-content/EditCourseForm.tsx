@@ -16,7 +16,7 @@ export default function EditCourseForm({
   disabled,
   saving,
 }: EditCourseFormProps) {
-  const { lang, isRTL } = useLanguage();
+  const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   // Shared theme for glass inputs
@@ -145,7 +145,6 @@ const formStyles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "#FFF",
     borderRadius: 14,
-    // Add a slight glow effect to the button
     shadowColor: "#FFF",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,

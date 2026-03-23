@@ -1,4 +1,4 @@
-import {style_vars} from "@/utils/style_vars";
+import { style_vars } from "@/utils/style_vars";
 import React, { useEffect, useState } from "react";
 import { View, Dimensions, StyleSheet } from "react-native";
 import { Text, Appbar, ActivityIndicator } from "react-native-paper";
@@ -77,7 +77,10 @@ export default function VideoPlayer() {
           <PlayerSection url={video.video_hls_url} />
         ) : (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator color="#FF8C00" size="large" />
+            <ActivityIndicator
+              color={style_vars.PRIMARY_WHITE_BUTTON}
+              size="large"
+            />
           </View>
         )}
       </View>

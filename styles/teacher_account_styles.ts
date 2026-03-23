@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
   },
   deleteAccountButton: {
     borderColor: "red",
-    backgroundColor: "#FF8C00",
+    backgroundColor: style_vars.PRIMARY_WHITE_BUTTON,
     color: "black",
   },
 });

@@ -1,4 +1,4 @@
-import {style_vars} from "@/utils/style_vars";
+import { style_vars } from "@/utils/style_vars";
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -14,8 +14,8 @@ export default function StudentLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#FF8C00",
-        tabBarInactiveTintColor: "#FFFFFF",
+        tabBarActiveTintColor: style_vars.PRIMARY_WHITE_BUTTON,
+        tabBarInactiveTintColor: style_vars.INACTIVE_BACKGROUND,
         tabBarShowLabel: true,
         tabBarStyle: {
           position: "absolute",

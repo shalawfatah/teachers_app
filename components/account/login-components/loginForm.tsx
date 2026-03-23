@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { TextInput, Button, Text, HelperText } from "react-native-paper";
 import { router } from "expo-router";
 import { BlurView } from "expo-blur";
@@ -10,6 +10,15 @@ import { style_vars } from "@/utils/style_vars";
 export default function LoginForm({ state }: any) {
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+
+  // Determine keyboard type:
+  // Default to phone-pad for students, switch to email-address if letters are detected
+  const getKeyboardType = () => {
+    if (!state.phone) return "phone-pad";
+    // If the first character is NOT a number, use the email/text keyboard
+    const isNumber = /^\d+$/.test(state.phone.charAt(0));
+    return isNumber ? "phone-pad" : "email-address";
+  };
 
   const inputTheme = {
     colors: {
@@ -28,11 +37,16 @@ export default function LoginForm({ state }: any) {
           label={text.phone}
           value={state.phone}
           onChangeText={state.setPhone}
-          keyboardType="phone-pad"
+          // DYNAMIC KEYBOARD LOGIC
+          keyboardType={getKeyboardType()}
+          autoCapitalize="none" // Essential for emails
+          autoCorrect={false}
           mode="outlined"
           textColor="#FFF"
           style={formStyles.input}
           theme={inputTheme}
+          // Show a "search" or "go" button on keyboard instead of new line
+          returnKeyType="next"
         />
 
         <TextInput
@@ -44,10 +58,15 @@ export default function LoginForm({ state }: any) {
           textColor="#FFF"
           style={formStyles.input}
           theme={inputTheme}
+          returnKeyType="done"
         />
 
         {state.error && (
-          <HelperText type="error" visible style={{ color: "#FF6B6B" }}>
+          <HelperText
+            type="error"
+            visible
+            style={{ color: "#FF6B6B", fontWeight: "600" }}
+          >
             {state.error}
           </HelperText>
         )}
@@ -102,10 +121,17 @@ const formStyles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "#FFF",
     borderRadius: 15,
+    // Add a slight glow to the white button
+    shadowColor: "#FFF",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
   },
   btnLabel: {
     color: "#000",
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: style_vars.PRIMARY_FONT,
   },
 });

@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
   },
   lessonCount: {
-    color: "#FF8C00", // Highlight color from your gradient
+    color: style_vars.PRIMARY_WHITE_BUTTON, // Highlight color from your gradient
     fontWeight: "600",
     fontFamily: style_vars.PRIMARY_FONT,
   },
