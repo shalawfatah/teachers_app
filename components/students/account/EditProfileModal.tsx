@@ -10,6 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { gradient_colors } from "@/utils/gradient_colors";
 import GlassDropdown from "@/components/general/glass-dropdown";
+import RavaLabel from "@/components/general/rava-label";
 
 export default function EditProfileModal({
   visible,
@@ -49,6 +50,7 @@ export default function EditProfileModal({
             <Text variant="headlineSmall" style={styles.title}>
               {text.update_acc}
             </Text>
+            <RavaLabel label={text.name} />
 
             <TextInput
               label={text.name}
@@ -61,7 +63,6 @@ export default function EditProfileModal({
               }}
               style={styles.input}
             />
-
             <GlassDropdown
               label={text.class}
               value={grade}

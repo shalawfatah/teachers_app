@@ -25,15 +25,15 @@ export default function RootLayout() {
   if (!fontsLoaded && !fontError) return null;
 
   return (
-    <PaperProvider theme={theme}>
-      <LanguageProvider>
+    <LanguageProvider>
+      <PaperProvider theme={theme}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(auth)" />
           <Stack.Screen name="(teacher)" />
           <Stack.Screen name="(student)" />
           <Stack.Screen name="+not-found" />
         </Stack>
-      </LanguageProvider>
-    </PaperProvider>
+      </PaperProvider>
+    </LanguageProvider>
   );
 }

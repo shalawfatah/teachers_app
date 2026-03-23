@@ -11,7 +11,7 @@ export const translations = {
     update: "نوێکردنەوە",
     delete: "سڕینەوە",
     save: "پاشەکەوتکردن",
-    cancel: "پاشگەزبوونەوە",
+    cancel: "رەتکردنەوە",
     delete_account: "سڕینەوەی هەژمار",
     name: "ناو",
     email: "ئیمەیڵ",

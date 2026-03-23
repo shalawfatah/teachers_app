@@ -34,7 +34,6 @@ export default function GlassDropdown({
 }: GlassDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Find the label for the currently selected value
   const currentLabel = options.find((o) => o.value === value)?.label || label;
 
   return (
