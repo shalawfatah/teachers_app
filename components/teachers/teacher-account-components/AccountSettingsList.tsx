@@ -1,7 +1,7 @@
 import {style_vars} from "@/utils/style_vars";
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { List, Divider, Text } from "react-native-paper";
+import { Divider, Text } from "react-native-paper";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { AccountSettingListProps } from "@/types/setting_modal";

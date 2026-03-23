@@ -31,7 +31,7 @@ export default function SignupScreen() {
 
   const { teachers, loading: teachersLoading } = useTeachers();
   const { loading, error, signup } = useSignup();
-  const { lang, isRTL } = useLanguage();
+  const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   const handleSignup = async () => {

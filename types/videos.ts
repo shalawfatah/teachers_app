@@ -1,3 +1,7 @@
+export interface Course {
+  id: string;
+  title: string;
+}
 export interface Video {
   id: string;
   title: string;
@@ -7,6 +11,8 @@ export interface Video {
   duration: string;
   views: number;
   uploaded_at: string;
+  video_hls_url?: string;
+  courses?: Course | null; 
 }
 
 export interface VideosTabProps {
@@ -29,7 +35,4 @@ export interface VideoFormData {
   courseName: string;
 }
 
-export interface Course {
-  id: string;
-  title: string;
-}
+

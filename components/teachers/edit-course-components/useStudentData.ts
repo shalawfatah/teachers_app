@@ -4,12 +4,13 @@ import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { Student } from "@/types/profile";
 
 export default function useStudentData(studentId: string) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [student, setStudent] = useState<any>(null);
+  const [student, setStudent] = useState<Student | null>(null);
   const [verified, setVerified] = useState<boolean>(false);
   const {lang} = useLanguage()
   const text = lang === 1 ? translations.eng : translations.krd;

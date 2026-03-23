@@ -44,7 +44,7 @@ export default function VideoSlide({
           await videoRef.current.pauseAsync();
           await videoRef.current.setPositionAsync(0);
         }
-      } catch (_) {
+      } catch {
         // swallow errors during teardown
       }
     }, 100);

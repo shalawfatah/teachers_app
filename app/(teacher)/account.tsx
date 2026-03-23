@@ -1,8 +1,7 @@
-import {style_vars} from "@/utils/style_vars";
+import { style_vars } from "@/utils/style_vars";
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { Text, Avatar, Button } from "react-native-paper";
-import { styles } from "@/styles/teacher_account_styles";
+import { Text, Avatar } from "react-native-paper";
 import StatsCard from "@/components/account/StatsCard";
 import EditProfileModal from "@/components/teachers/account/EditProfileModal";
 import SettingsModal from "@/components/teachers/account/SettingsModal";
@@ -19,12 +18,11 @@ import PrimaryButton from "@/components/general/primary-button";
 import SecondaryButton from "@/components/general/secondary-button";
 
 export default function AccountScreen() {
-  const { profile, stats, loading, handleSignOut, refreshProfile } =
-    useTeacherAccount();
+  const { profile, stats, handleSignOut, refreshProfile } = useTeacherAccount();
   const [editVisible, setEditVisible] = useState(false);
   const [activeSettings, setActiveSettings] = useState<SettingsType>(null);
   const [deleteVisible, setDeleteVisible] = useState(false);
-  const { lang, isRTL } = useLanguage();
+  const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
   return (
@@ -46,7 +44,11 @@ export default function AccountScreen() {
             size={90}
             label={profile?.name?.charAt(0) || "U"}
             style={{ backgroundColor: "#325b4d", elevation: 0 }}
-            labelStyle={{ color: "#FFF", fontSize: 32, fontFamily: style_vars.PRIMARY_FONT }}
+            labelStyle={{
+              color: "#FFF",
+              fontSize: 32,
+              fontFamily: style_vars.PRIMARY_FONT,
+            }}
           />
           <Text
             style={{

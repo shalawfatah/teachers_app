@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Modal, Portal, Button, Text } from "react-native-paper";
+import { Modal, Portal, Text } from "react-native-paper";
 import { styles } from "@/styles/video_form_modal_styles";
 import { VideoFormModalProps } from "@/types/modal";
 import { useVideoForm } from "./video-form-modal/use-video-form";
@@ -19,7 +19,7 @@ export default function VideoFormModal({
   onDismiss,
   onSuccess,
 }: VideoFormModalProps) {
-  const { formData, courses, loading, updateField, handleSave } = useVideoForm(
+  const { formData, courses, updateField, handleSave } = useVideoForm(
     visible,
     video,
     onSuccess,

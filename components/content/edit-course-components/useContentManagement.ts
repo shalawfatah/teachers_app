@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { deleteVideo } from "@/lib/videoService";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { Video } from "@/types/videos";
 
 export default function useContentManagement() {
   const [tab, setTab] = useState("courses");
@@ -11,7 +12,7 @@ export default function useContentManagement() {
   const [courseModalVisible, setCourseModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [playerVisible, setPlayerVisible] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const {lang} = useLanguage()
   const text = lang === 1 ? translations.eng : translations.krd;

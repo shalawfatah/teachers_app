@@ -1,9 +1,9 @@
-import {style_vars} from "@/utils/style_vars";
-import { View, Text } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import React from "react";
+import { View } from "react-native";
 import { styles } from "@/styles/signup_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import GlassDropdown from "@/components/general/glass-dropdown";
 
 interface GradeDropdownProps {
   value: string;
@@ -30,39 +30,16 @@ export default function GradeDropdown({
 
   return (
     <View style={styles.dropdownContainer}>
-      <Text
-        style={{
-          textAlign: isRTL ? "right" : "left",
-          color: "#FFF",
-          marginBottom: 12,
-          fontFamily: style_vars.PRIMARY_FONT, // Keeping your Kurdish font consistent
-        }}
-      >
-        {text.class}
-      </Text>
-
-      <View style={styles.dropdownButton}>
-        <Picker
-          selectedValue={value ?? ""}
-          onValueChange={(val) => {
-            if (val !== "") onValueChange(val);
-          }}
-          enabled={!disabled}
-          // 1. This color affects the selected text on Android
-          style={{ color: "#FFFFFF" }}
-          // 2. This controls the dropdown icon color on Android
-          dropdownIconColor="#FFFFFF"
-        >
-          {grades.map((g) => (
-            <Picker.Item
-              key={g.value}
-              label={g.label}
-              value={g.value}
-              color={"#FFFFFF"}
-            />
-          ))}
-        </Picker>
-      </View>
+      <GlassDropdown
+        label={text.class}
+        value={value}
+        options={grades}
+        onSelect={(val) => !disabled && onValueChange(val)}
+        isRTL={isRTL}
+        // Since it's inside a container with its own margins, 
+        // we can zero out the component's default bottom margin if needed
+        style={{ marginBottom: 0 }}
+      />
     </View>
   );
 }

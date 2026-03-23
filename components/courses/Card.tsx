@@ -6,7 +6,7 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
-import { Text, Chip } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { Link } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";

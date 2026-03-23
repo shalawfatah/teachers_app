@@ -8,11 +8,12 @@ import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/video_single_styles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
+import { Video } from "@/types/videos";
 
 export default function VideoPlayer() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const [video, setVideo] = useState<any>(null);
+  const [video, setVideo] = useState<Video | null>(null);
   const [isDataReady, setIsDataReady] = useState(false);
 
   useEffect(() => {

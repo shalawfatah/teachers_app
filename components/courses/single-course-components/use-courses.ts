@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { FilterState } from "@/types/modal";
+import { Course } from "@/types/courses";
 
 export default function useCourses() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [courses, setCourses] = useState<any[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);

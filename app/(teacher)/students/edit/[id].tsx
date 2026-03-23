@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
-import { Button, Surface } from "react-native-paper";
+import { Surface } from "react-native-paper";
 import { styles } from "@/styles/student_edit_styles";
 import Loader from "@/components/Loader";
 import useStudentData from "@/components/teachers/edit-course-components/useStudentData";
@@ -18,7 +18,6 @@ import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
-import { style_vars } from "@/utils/style_vars";
 import PrimaryButton from "@/components/general/primary-button";
 import SecondaryButton from "@/components/general/secondary-button";
 

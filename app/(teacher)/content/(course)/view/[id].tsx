@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  useWindowDimensions,
   Platform,
 } from "react-native";
 import { ActivityIndicator, Text, Button } from "react-native-paper";
@@ -24,7 +23,6 @@ export default function ViewCourse() {
   const router = useRouter();
   const [course, setCourse] = useState<ExtendedCourse | null>(null);
   const [loading, setLoading] = useState(true);
-  const { height } = useWindowDimensions();
 
   useEffect(() => {
     if (id) fetchCourseDetails();

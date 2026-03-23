@@ -1,4 +1,4 @@
-import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
+import { ImageBackground, Pressable, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SlideContent } from "./slide-content";
 import { Reklam } from "@/types/reklam";

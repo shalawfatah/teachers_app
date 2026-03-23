@@ -9,6 +9,7 @@ import { supabase } from "@/lib/supabase";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
+import { Video } from "@/types/videos";
 
 const { width } = Dimensions.get("window");
 
@@ -38,7 +39,7 @@ function PlayerSection({ url }: { url: string }) {
 export default function VideoPlayer() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const [video, setVideo] = useState<any>(null);
+  const [video, setVideo] = useState<Video | null>(null);
 
   useEffect(() => {
     const fetchVideo = async () => {

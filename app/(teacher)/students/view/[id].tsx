@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
-import { Avatar, Card, Text, Divider, Button, Chip } from "react-native-paper";
+import { Avatar, Card, Text, Divider, Chip } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AuxProps, StudentProps } from "@/types/students";
 import { styles } from "@/styles/single_student_view_styles";

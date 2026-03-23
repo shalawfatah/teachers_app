@@ -1,6 +1,6 @@
 import { style_vars } from "@/utils/style_vars";
 import React, { useState } from "react";
-import { View, ScrollView, StyleSheet, Platform } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { Text, Avatar, Button } from "react-native-paper";
 import { BlurView } from "expo-blur";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
