@@ -87,3 +87,10 @@ export interface SubjectDropdownProps {
   onSelect: (subject: string) => void;
   disabled?: boolean;
 }
+
+export interface CourseHeaderProps {
+  courseCount: number;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+  onOpenFilter: () => void;
+}
