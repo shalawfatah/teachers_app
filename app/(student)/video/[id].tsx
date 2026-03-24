@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 import { Video } from "@/types/videos";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const { width } = Dimensions.get("window");
 
@@ -17,7 +18,7 @@ function PlayerSection({ url }: { url: string }) {
   const player = useVideoPlayer(
     {
       uri: url,
-      headers: { Referer: "https://teachers-dash.netlify.app" },
+      headers: { Referer: "teachers-dash.netlify.app" },
     },
     (p) => {
       p.play();
@@ -39,6 +40,7 @@ export default function VideoPlayer() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const [video, setVideo] = useState<Video | null>(null);
+  const { isRTL } = useLanguage();
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -57,7 +59,6 @@ export default function VideoPlayer() {
 
   return (
     <View style={styles.container}>
-      {/* THE FIX: Absolute fill ensures the gradient covers the background layer completely */}
       <LinearGradient
         colors={gradient_colors}
         style={StyleSheet.absoluteFill}
@@ -86,10 +87,16 @@ export default function VideoPlayer() {
       </View>
 
       <View style={styles.infoSection}>
-        <Text variant="headlineSmall" style={styles.videoTitle}>
+        <Text
+          variant="headlineSmall"
+          style={[styles.videoTitle, { textAlign: isRTL ? "right" : "left" }]}
+        >
           {video?.title}
         </Text>
-        <Text variant="titleMedium" style={styles.courseTitle}>
+        <Text
+          variant="titleMedium"
+          style={[styles.courseTitle, { textAlign: isRTL ? "right" : "left" }]}
+        >
           {video?.courses?.title}
         </Text>
       </View>
@@ -127,11 +134,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   videoTitle: {
+    fontFamily: style_vars.PRIMARY_FONT,
     fontWeight: "800",
     color: "#FFF",
   },
   courseTitle: {
     color: "rgba(255, 255, 255, 0.7)",
+    fontFamily: style_vars.SECONDARY_FONT,
     marginTop: 4,
   },
 });

@@ -34,16 +34,13 @@ export default function CoursesScreen() {
         />
 
         <FlatList
-          // key prop ensures the list re-renders correctly if columns change
           key={"two-column-grid"}
           data={c.courses}
           renderItem={renderCourse}
           keyExtractor={(item) => item.id}
-          // --- GRID PROPS ---
           numColumns={2}
           columnWrapperStyle={gridStyles.row}
           contentContainerStyle={gridStyles.listContent}
-          // ------------------
 
           showsVerticalScrollIndicator={false}
           refreshControl={

@@ -13,7 +13,6 @@ import { BlurView } from "expo-blur";
 import { style_vars } from "@/utils/style_vars";
 
 const { width } = Dimensions.get("window");
-// 3:4 Aspect Ratio (Portrait Book Style)
 const CARD_WIDTH = width / 2 - 24;
 const CARD_HEIGHT = (CARD_WIDTH * 4) / 3;
 
@@ -79,8 +78,7 @@ const bookStyles = StyleSheet.create({
     height: CARD_HEIGHT,
     margin: 8,
     borderRadius: 16,
-    backgroundColor: "#1a1a1a", // Fallback
-    // Shadow to give it "physical" book presence
+    backgroundColor: "#1a1a1a",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.35,
@@ -135,7 +133,7 @@ const bookStyles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "800",
     lineHeight: 20,
-    fontSize: 15,
+    fontSize: 16,
   },
   divider: {
     height: 1.5,

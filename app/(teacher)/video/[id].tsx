@@ -39,7 +39,7 @@ export default function VideoPlayer() {
     video?.video_hls_url
       ? {
         uri: video.video_hls_url,
-        headers: { Referer: "https://teachers-dash.netlify.app" },
+        headers: { Referer: "teachers-dash.netlify.app" },
       }
       : null,
     (p) => {
