@@ -1,6 +1,6 @@
 import { style_vars } from "@/utils/style_vars";
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Dimensions } from "react-native";
+import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
 import { Modal, Portal, Text } from "react-native-paper";
 import { EditProfileModalProps } from "@/types/modal";
 import { useImageUpload } from "./use-image-upload";
@@ -59,41 +59,30 @@ export default function EditProfileModal({
       <Modal
         visible={visible}
         onDismiss={onDismiss}
-        // FIXED: Using absolute positioning for the modal container to center it perfectly
-        contentContainerStyle={{
-          margin: 20,
-          justifyContent: "center",
-        }}
+        contentContainerStyle={modalStyles.modalWrapper}
       >
         <LinearGradient
           colors={gradient_colors}
-          style={{
-            borderRadius: 28,
-            borderWidth: 1,
-            borderColor: "rgba(255,255,255,0.15)",
-            overflow: "hidden",
-          }}
+          style={modalStyles.glassContainer}
         >
-          <BlurView intensity={95} tint="dark" style={{ padding: 20 }}>
-            <View style={{ maxHeight: SCREEN_HEIGHT * 0.8 }}>
-              {/* Header */}
-              <Text
-                variant="headlineSmall"
-                style={{
-                  textAlign: isRTL ? "right" : "left",
-                  color: "#FFF",
-                  fontFamily: style_vars.PRIMARY_FONT,
-                  marginBottom: 15,
-                  paddingHorizontal: 4,
-                }}
-              >
-                {text.update_acc}
-              </Text>
+          <BlurView intensity={100} tint="dark" style={modalStyles.blurPadding}>
+            {/* 1. FIXED HEADER */}
+            <Text
+              variant="headlineSmall"
+              style={[
+                modalStyles.headerText,
+                { textAlign: isRTL ? "right" : "left" },
+              ]}
+            >
+              {text.update_acc}
+            </Text>
 
-              {/* Scrollable Form Area */}
+            {/* 2. SCROLLABLE CONTENT AREA */}
+            <View style={{ maxHeight: SCREEN_HEIGHT * 0.55 }}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: 10 }}
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={{ paddingBottom: 20 }}
               >
                 <ProfileForm
                   name={name}
@@ -110,29 +99,23 @@ export default function EditProfileModal({
                   isRTL={isRTL}
                 />
               </ScrollView>
+            </View>
 
-              <View
-                style={{
-                  marginTop: 15,
-                  paddingTop: 10,
-                  borderTopWidth: 1,
-                  borderTopColor: "rgba(255,255,255,0.05)",
-                  flexDirection: isRTL ? "row-reverse" : "row",
-                  gap: 12, 
-                  alignItems: "center",
-                }}
-              >
-                <PrimaryButton
-                  text={text.save}
-                  icon={"check"}
-                  action={handleUpdate}
-                  loading={updating}
-                  disabled={updating || !name}
-                />
+            {/* 3. FIXED ACTION BUTTONS (Outside ScrollView) */}
+            <View style={modalStyles.actionFooter}>
+              <PrimaryButton
+                text={text.save}
+                icon={"check"}
+                action={handleUpdate}
+                loading={updating}
+                disabled={updating || !name}
+              />
+              <View style={{ marginTop: 8 }}>
                 <SecondaryButton
                   text={text.cancel}
                   icon={"close"}
                   action={onDismiss}
+                  disabled={updating}
                 />
               </View>
             </View>
@@ -142,3 +125,33 @@ export default function EditProfileModal({
     </Portal>
   );
 }
+
+const modalStyles = StyleSheet.create({
+  modalWrapper: {
+    margin: 20,
+    justifyContent: "center",
+  },
+  glassContainer: {
+    borderRadius: 32,
+    borderWidth: 1.5,
+    borderColor: "rgba(255,255,255,0.18)",
+    overflow: "hidden",
+  },
+  blurPadding: {
+    padding: 24,
+  },
+  headerText: {
+    color: "#FFF",
+    fontFamily: style_vars.PRIMARY_FONT,
+    marginBottom: 20,
+    fontWeight: "800",
+    fontSize: 24,
+  },
+  actionFooter: {
+    marginTop: 10,
+    paddingTop: 15,
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255,255,255,0.1)",
+    flexDirection: "column", // Stacked to ensure full visibility
+  },
+});
