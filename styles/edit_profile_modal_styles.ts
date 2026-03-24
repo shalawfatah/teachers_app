@@ -1,3 +1,4 @@
+import { style_vars } from "@/utils/style_vars";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -22,9 +23,9 @@ export const styles = StyleSheet.create({
     maxHeight: 500,
   },
   input: {
-    marginBottom: 16,
-    color: "#FFF",
-    backgroundColor: "transparent",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    marginBottom: 20,
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   label: {
     marginBottom: 8,

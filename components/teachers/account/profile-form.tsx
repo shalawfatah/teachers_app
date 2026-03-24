@@ -41,12 +41,11 @@ export function ProfileForm({
         label={text.expertise}
         value={expertise}
         onChangeText={onExpertiseChange}
-        mode="outlined"
+        textColor="#fff"
         theme={{
-          colors: {
-            onSurface: "#fff",
-          },
+          colors: { primary: "#fff", outline: "rgba(255,255,255,0.4)" },
         }}
+        mode="outlined"
         placeholder="e.g., Mathematics, Physics, Computer Science"
         style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
       />
