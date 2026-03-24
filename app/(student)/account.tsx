@@ -1,7 +1,7 @@
 import { style_vars } from "@/utils/style_vars";
 import React, { useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { Text, Avatar, Button } from "react-native-paper";
+import { Text, Avatar } from "react-native-paper";
 import { BlurView } from "expo-blur";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
 import SettingsModal from "@/components/students/account/SettingsModal";
@@ -13,6 +13,8 @@ import { translations } from "@/utils/eng_krd";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { GeometricPattern } from "@/components/backgrounds/GeometicPattern";
+import { accountStyles } from "@/styles/account_styles_2";
+import PrimaryButton from "@/components/general/primary-button";
 
 export default function AccountScreen() {
   const { profile, loading, handleSignOut, refreshProfile } =
@@ -25,7 +27,6 @@ export default function AccountScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* 1. FIXED BACKGROUND LAYER */}
       <View style={StyleSheet.absoluteFill}>
         <LinearGradient colors={gradient_colors} style={{ flex: 1 }} />
         <GeometricPattern />
@@ -36,7 +37,6 @@ export default function AccountScreen() {
         contentContainerStyle={accountStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* 2. GLASS PROFILE CARD */}
         <BlurView
           intensity={25}
           tint="light"
@@ -62,7 +62,6 @@ export default function AccountScreen() {
           </Text>
         </BlurView>
 
-        {/* 3. SETTINGS SECTION WRAPPED IN GLASS */}
         <View
           style={[
             accountStyles.settingsWrapper,
@@ -80,23 +79,14 @@ export default function AccountScreen() {
             />
           </BlurView>
         </View>
+        <PrimaryButton
+          text={text.logout}
+          icon="logout"
+          loading={loading}
+          disabled={loading}
+          action={handleSignOut}
+        />
 
-        {/* 4. LOGOUT ACTION */}
-        <View style={accountStyles.signOutContainer}>
-          <Button
-            mode="contained"
-            onPress={handleSignOut}
-            loading={loading}
-            disabled={loading}
-            style={accountStyles.signOutButton}
-            textColor="#000"
-            labelStyle={accountStyles.signOutLabel}
-          >
-            {text.logout}
-          </Button>
-        </View>
-
-        {/* Bottom Spacing for TabBar */}
         <View style={{ height: 100 }} />
       </ScrollView>
 
@@ -114,70 +104,3 @@ export default function AccountScreen() {
     </View>
   );
 }
-
-const accountStyles = StyleSheet.create({
-  scrollContent: {
-    paddingTop: 60,
-    paddingHorizontal: 20,
-  },
-  profileGlassCard: {
-    padding: 25,
-    borderRadius: 30,
-    alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.2)",
-    marginBottom: 20,
-    overflow: "hidden",
-  },
-  avatarContainer: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 15,
-    elevation: 10,
-  },
-  avatarShadow: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-  },
-  userName: {
-    color: "#FFF",
-    fontFamily: style_vars.PRIMARY_FONT,
-    marginTop: 15,
-    fontWeight: "bold",
-  },
-  userRole: {
-    color: "rgba(255, 255, 255, 0.6)",
-    letterSpacing: 2,
-    fontSize: 12,
-    marginTop: 4,
-    fontFamily: style_vars.PRIMARY_FONT,
-  },
-  settingsWrapper: {
-    marginTop: 10,
-  },
-  listGlassCard: {
-    borderRadius: 25,
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
-    overflow: "hidden",
-    paddingVertical: 10,
-  },
-  signOutContainer: {
-    marginTop: 30,
-    alignItems: "center",
-  },
-  signOutButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    borderRadius: 15,
-    width: "100%",
-    height: 50,
-    justifyContent: "center",
-  },
-  signOutLabel: {
-    fontFamily: style_vars.PRIMARY_FONT,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});

@@ -25,7 +25,15 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     paddingHorizontal: 32,
   },
-  button: { borderRadius: 8, backgroundColor: style_vars.PRIMARY_WHITE_BUTTON, marginVertical: 12 },
+  button: {
+    backgroundColor: style_vars.PRIMARY_WHITE_BUTTON,
+    marginVertical: 12,
+    borderRadius: 15,
+    fontFamily: style_vars.PRIMARY_FONT,
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+  },
   secondary_button: {
     borderRadius: 8,
     color: "#000",

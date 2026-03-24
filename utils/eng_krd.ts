@@ -128,7 +128,7 @@ export const translations = {
     student_status_text: "مۆڵەتی بینینی ڤیدیۆ بۆ خوێندکار نوێکرایەوە",
     report_bug: "راپۆرت دەربارەی کێشە",
     expo_text: " بە ئێکسپۆ و ریئاکت نەیتڤ دروستکراوە",
-    safety_security: "پاراستنی زانیاریی و اسایشی ئەپ",
+    safety_security: "پاراستنی زانیاریی و ئاسایشی ئەپ",
     account_setting: "سازاندنی هەژمار",
     contact: "پەیوەندیی",
     question: "پرسیار",
