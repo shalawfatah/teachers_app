@@ -7,6 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RavaTitle from "@/components/general/rava-title";
+import RavaSubtitle from "@/components/general/rava-subtitle";
 
 interface Props {
   courseCount: number;
@@ -33,19 +34,10 @@ export default function CourseHeader({
     >
       <View style={headerStyles.textSection}>
         <RavaTitle text={text.all_courses} placement="center" />
-        <Text
-          variant="bodyMedium"
-          style={[
-            headerStyles.subtitle,
-            {
-              textAlign: "center",
-            },
-          ]}
-        >
-          {isRTL
-            ? `${courseCount} :${text.available_courses}`
-            : `${text.available_courses}: ${courseCount}`}
-        </Text>
+        <RavaSubtitle
+          text={`${text.available_courses} : ${courseCount}`}
+          placement="center"
+        />
       </View>
 
       <View
@@ -86,11 +78,6 @@ const headerStyles = StyleSheet.create({
   },
   textSection: {
     marginBottom: 20,
-  },
-  subtitle: {
-    color: "rgba(255, 255, 255, 0.7)",
-    fontFamily: style_vars.PRIMARY_FONT,
-    letterSpacing: 0.2,
   },
   actionRow: {
     alignItems: "center",
