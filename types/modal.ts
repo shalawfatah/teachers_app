@@ -32,17 +32,6 @@ export interface CreateCourseModalProps {
   onSuccess: () => void;
 }
 
-export interface FilterModalProps {
-  visible: boolean;
-  onDismiss: () => void;
-  onApply: (filters: FilterState) => void;
-  currentFilters: FilterState;
-}
-
-export interface FilterState {
-  grades: string[];
-}
-
 export interface EditStudentModalProps {
   visible: boolean;
   onDismiss: () => void;

@@ -61,7 +61,7 @@ export default function EditProfileModal({
               theme={{
                 colors: { primary: "#fff", outline: "rgba(255,255,255,0.4)" },
               }}
-              style={styles.input}
+              style={[styles.input, {textAlign: isRTL ? "right" : "left"}]}
             />
             <GlassDropdown
               label={text.class}
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "rgba(255, 255, 255, 0.05)",
     marginBottom: 20,
+    fontFamily: style_vars.PRIMARY_FONT,
   },
   buttonRow: {
     marginTop: 10,
