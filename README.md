@@ -19,7 +19,8 @@ Students get:
 - Access to courses and video content
 - Document downloads
 - Real-time progress tracking
-
+- Ability to sign up to multiple teachers in the same app 
+- Ability to know what teachers offer before they sign up
 ---
 
 ## 🏗️ Tech Stack
