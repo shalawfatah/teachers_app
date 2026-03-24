@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
   btn_container: {
     backgroundColor: "transparent",
     paddingHorizontal: 32,
+    width: "100%",
   },
   button: {
     backgroundColor: style_vars.PRIMARY_WHITE_BUTTON,
@@ -40,6 +41,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 1,
     borderColor: style_vars.MUTED_WHITE_BORDER,
+    width: "100%",
     marginTop: 12,
   },
 });

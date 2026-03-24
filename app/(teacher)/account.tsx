@@ -95,7 +95,6 @@ export default function AccountScreen() {
         </View>
       </ScrollView>
 
-      {/* Modals remain the same as they are already updated */}
       <EditProfileModal
         visible={editVisible}
         onDismiss={() => setEditVisible(false)}

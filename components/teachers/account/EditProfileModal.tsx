@@ -1,4 +1,4 @@
-import {style_vars} from "@/utils/style_vars";
+import { style_vars } from "@/utils/style_vars";
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Dimensions } from "react-native";
 import { Modal, Portal, Text } from "react-native-paper";
@@ -111,15 +111,15 @@ export default function EditProfileModal({
                 />
               </ScrollView>
 
-              {/* Action Buttons */}
               <View
                 style={{
                   marginTop: 15,
-                  gap: 10,
-                  // Ensure buttons stay at the bottom even when scrolling
                   paddingTop: 10,
                   borderTopWidth: 1,
                   borderTopColor: "rgba(255,255,255,0.05)",
+                  flexDirection: isRTL ? "row-reverse" : "row",
+                  gap: 12, 
+                  alignItems: "center",
                 }}
               >
                 <PrimaryButton
