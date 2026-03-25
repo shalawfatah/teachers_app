@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { ScrollView, View, Pressable } from "react-native";
+import { ScrollView, View, Pressable, StyleSheet } from "react-native";
 import { Text, IconButton } from "react-native-paper";
+import { BlurView } from "expo-blur";
+import { useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { styles } from "@/styles/home_styles";
 import Loader from "@/components/Loader";
 import { Student } from "@/types/profile";
 import { ReklamCarousel } from "@/components/content/ReklamCarousel";
 import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
+import { useLanguage } from "@/contexts/LanguageContext"; // Added to handle guest translations
 
 type TeacherStats = {
   students_count: number;
@@ -21,6 +24,9 @@ export default function StudentDashboard() {
   const [loading, setLoading] = useState(true);
   const [, setStatsLoading] = useState(false);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+  const router = useRouter();
+  const { lang } = useLanguage();
 
   useEffect(() => {
     getProfile();
@@ -80,8 +86,8 @@ export default function StudentDashboard() {
     }
   };
 
-  const getLanguageFlag = (lang: number) => {
-    return lang === 1 ? "🇬🇧" : "🇹🇯";
+  const getLanguageFlag = (langCode: number) => {
+    return langCode === 1 ? "🇬🇧" : "🇹🇯";
   };
 
   const handleLanguageChange = () => {
@@ -91,41 +97,41 @@ export default function StudentDashboard() {
   if (loading) return <Loader />;
 
   const activeTeacherId = profile?.teachers?.id || guestTeacherId;
+  const isGuest = !profile;
 
   return (
     <>
-      <View
-        style={{
-          position: "absolute",
-          top: 50,
-          right: 16,
-          zIndex: 10,
-        }}
-      >
+      {/* LEFT SIDE: LOGIN CHIP (Only for Guests) */}
+      {isGuest && (
+        <View style={localStyles.topLeftContainer}>
+          <Pressable onPress={() => router.push("/(auth)/login")}>
+            <BlurView intensity={60} tint="light" style={localStyles.glassChip}>
+              <IconButton
+                icon="account-circle-outline"
+                iconColor="#FFF"
+                size={20}
+                style={{ margin: 0 }}
+              />
+              <Text style={localStyles.loginText}>
+                {lang === 1 ? "Login" : "چوونەژوورەوە"}
+              </Text>
+            </BlurView>
+          </Pressable>
+        </View>
+      )}
+
+      {/* RIGHT SIDE: LANGUAGE SWITCHER */}
+      <View style={localStyles.topRightContainer}>
         <Pressable
           onPress={() => setLanguageModalVisible(true)}
-          style={{
-            paddingHorizontal: 12,
-            paddingVertical: 6,
-            backgroundColor: "rgba(0,0,0,0.6)",
-            borderRadius: 20,
-            flexDirection: "row",
-            alignItems: "center",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            borderColor: "rgba(255,255,255,0.6)",
-            borderWidth: 1,
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 3,
-          }}
+          style={localStyles.languageButton}
         >
           <Text style={{ fontSize: 18, marginRight: 4 }}>
-            {getLanguageFlag(profile?.lang || 1)}
+            {getLanguageFlag(profile?.lang || lang || 1)}
           </Text>
           <IconButton
             icon="chevron-down"
-            iconColor="#333"
+            iconColor="#FFF" // Changed to white for better visibility on glass
             size={16}
             style={{ margin: 0 }}
           />
@@ -136,15 +142,55 @@ export default function StudentDashboard() {
         {activeTeacherId && <ReklamCarousel teacherId={activeTeacherId} />}
       </ScrollView>
 
-      {profile && (
-        <LanguageSwitcherModal
-          visible={languageModalVisible}
-          onDismiss={() => setLanguageModalVisible(false)}
-          currentLang={profile?.lang || 1}
-          profileId={profile?.id || ""}
-          onLanguageChange={handleLanguageChange}
-        />
-      )}
+      <LanguageSwitcherModal
+        visible={languageModalVisible}
+        onDismiss={() => setLanguageModalVisible(false)}
+        currentLang={profile?.lang || lang || 1}
+        profileId={profile?.id || ""}
+        onLanguageChange={handleLanguageChange}
+      />
     </>
   );
 }
+
+const localStyles = StyleSheet.create({
+  topLeftContainer: {
+    position: "absolute",
+    top: 50,
+    left: 16,
+    zIndex: 10,
+  },
+  topRightContainer: {
+    position: "absolute",
+    top: 50,
+    right: 16,
+    zIndex: 10,
+  },
+  glassChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.4)",
+    backgroundColor: "rgba(255,255,255,0.1)",
+    overflow: "hidden",
+  },
+  loginText: {
+    color: "#FFF",
+    fontSize: 12,
+    fontWeight: "bold",
+    marginRight: 4,
+  },
+  languageButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "rgba(255,255,255,0.4)",
+    borderWidth: 1,
+  },
+});
