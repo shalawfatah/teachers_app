@@ -6,24 +6,27 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+import { Button } from "react-native-paper";
+import { useRouter } from "expo-router";
 import useLogin from "@/components/account/login-components/useLogin";
 import LoginForm from "@/components/account/login-components/loginForm";
 import { LinearGradient } from "expo-linear-gradient";
 import { gradient_colors } from "@/utils/gradient_colors";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function LoginScreen() {
   const loginState = useLogin();
+  const router = useRouter();
+  const { lang } = useLanguage();
 
   return (
     <View style={{ flex: 1 }}>
-      {/* 1. THE BACKGROUND (Stays fixed) */}
       <View style={StyleSheet.absoluteFill}>
         <LinearGradient style={{ flex: 1 }} colors={gradient_colors} />
         <BackgroundShapes />
       </View>
 
-      {/* 2. THE INTERACTION LAYER */}
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -33,9 +36,17 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* We pass the state directly to the form. 
-              The form now contains its own BlurView "Card" */}
           <LoginForm state={loginState} />
+
+          <Button
+            mode="text"
+            onPress={() => router.replace("/(student)")}
+            textColor="rgba(255,255,255,0.8)"
+            style={screenStyles.guestButton}
+            labelStyle={screenStyles.guestButtonLabel}
+          >
+            {lang === 1 ? "Continue as Guest" : "بەردەوامبە وەک میوان"}
+          </Button>
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
@@ -45,7 +56,14 @@ export default function LoginScreen() {
 const screenStyles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
-    justifyContent: "center", // Centers the form vertically on the screen
-    paddingHorizontal: 20, // Ensures the form doesn't touch the screen edges
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  guestButton: {
+    marginTop: 20,
+  },
+  guestButtonLabel: {
+    fontSize: 14,
+    textDecorationLine: "underline",
   },
 });

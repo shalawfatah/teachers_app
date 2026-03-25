@@ -62,7 +62,6 @@ export const useAuthGuard = (fontsLoaded: boolean) => {
     if (loading || !fontsLoaded) return;
 
     const group = segments[0];
-    const inAuthGroup = group === "(auth)";
     const inTeacherGroup = group === "(teacher)";
     const inStudentGroup = group === "(student)";
 

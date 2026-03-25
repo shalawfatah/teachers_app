@@ -112,7 +112,7 @@ export default function AccountScreen() {
                 style={{
                   textAlign: "center",
                   marginBottom: 20,
-                  color: "#333",
+                  color: "#FFF",
                   fontFamily: style_vars.PRIMARY_FONT,
                 }}
               >

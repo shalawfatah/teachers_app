@@ -11,11 +11,8 @@ export default function LoginForm({ state }: any) {
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
-  // Determine keyboard type:
-  // Default to phone-pad for students, switch to email-address if letters are detected
   const getKeyboardType = () => {
     if (!state.phone) return "phone-pad";
-    // If the first character is NOT a number, use the email/text keyboard
     const isNumber = /^\d+$/.test(state.phone.charAt(0));
     return isNumber ? "phone-pad" : "email-address";
   };
@@ -37,15 +34,13 @@ export default function LoginForm({ state }: any) {
           label={text.phone}
           value={state.phone}
           onChangeText={state.setPhone}
-          // DYNAMIC KEYBOARD LOGIC
           keyboardType={getKeyboardType()}
-          autoCapitalize="none" // Essential for emails
+          autoCapitalize="none"
           autoCorrect={false}
           mode="outlined"
           textColor="#FFF"
           style={formStyles.input}
           theme={inputTheme}
-          // Show a "search" or "go" button on keyboard instead of new line
           returnKeyType="next"
         />
 
@@ -84,9 +79,11 @@ export default function LoginForm({ state }: any) {
         </Button>
 
         <Button
-          mode="text"
+          mode="outlined"
           onPress={() => router.push("/(auth)/signup")}
-          labelStyle={{ color: "rgba(255,255,255,0.7)", marginTop: 10 }}
+          style={formStyles.secondaryBtn}
+          labelStyle={formStyles.secondaryBtnLabel}
+          contentStyle={{ height: 50 }}
         >
           {text.no_account_create}
         </Button>
@@ -121,7 +118,6 @@ const formStyles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "#FFF",
     borderRadius: 15,
-    // Add a slight glow to the white button
     shadowColor: "#FFF",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -132,6 +128,18 @@ const formStyles = StyleSheet.create({
     color: "#000",
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: style_vars.PRIMARY_FONT,
+  },
+  secondaryBtn: {
+    marginTop: 20,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#FFF",
+    backgroundColor: "transparent",
+  },
+  secondaryBtnLabel: {
+    color: "#FFF",
+    fontSize: 14,
     fontFamily: style_vars.PRIMARY_FONT,
   },
 });
