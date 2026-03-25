@@ -67,7 +67,7 @@ export const useAuthGuard = (fontsLoaded: boolean) => {
     const inStudentGroup = group === "(student)";
 
     if (!session) {
-      if (inTeacherGroup || inAuthGroup || !group) {
+      if (inTeacherGroup || !group) {
         router.replace("/(student)");
       }
       return;

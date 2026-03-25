@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { Text, Avatar } from "react-native-paper";
 import { BlurView } from "expo-blur";
+import { useRouter } from "expo-router";
 import EditProfileModal from "@/components/students/account/EditProfileModal";
 import SettingsModal from "@/components/students/account/SettingsModal";
 import { SettingsType } from "@/types/modal";
@@ -23,7 +24,10 @@ export default function AccountScreen() {
   const [activeSettingsType, setActiveSettingsType] =
     useState<SettingsType>(null);
   const { lang, isRTL } = useLanguage();
+  const router = useRouter();
+
   const text = lang === 1 ? translations.eng : translations.krd;
+  const isGuest = !profile;
 
   return (
     <View style={{ flex: 1 }}>
@@ -45,7 +49,7 @@ export default function AccountScreen() {
           <View style={accountStyles.avatarContainer}>
             <Avatar.Text
               size={90}
-              label={profile?.name?.charAt(0) || "U"}
+              label={isGuest ? "?" : profile?.name?.charAt(0) || "U"}
               style={accountStyles.avatarShadow}
               labelStyle={{
                 fontFamily: style_vars.PRIMARY_FONT,
@@ -55,52 +59,98 @@ export default function AccountScreen() {
           </View>
 
           <Text variant="headlineSmall" style={accountStyles.userName}>
-            {profile?.name}
+            {isGuest
+              ? lang === 1
+                ? "Welcome Guest"
+                : "بەخێربێیت میوان"
+              : profile?.name}
           </Text>
           <Text variant="bodyMedium" style={accountStyles.userRole}>
-            {text.student.toUpperCase()}
+            {isGuest
+              ? lang === 1
+                ? "GUEST MODE"
+                : "دۆخی میوان"
+              : text.student.toUpperCase()}
           </Text>
         </BlurView>
 
-        <View
-          style={[
-            accountStyles.settingsWrapper,
-            { direction: isRTL ? "rtl" : "ltr" },
-          ]}
-        >
-          <BlurView
-            intensity={15}
-            tint="light"
-            style={accountStyles.listGlassCard}
-          >
-            <StudentSettingsList
-              onEditPress={() => setIsModalVisible(true)}
-              onSettingsPress={setActiveSettingsType}
+        {!isGuest ? (
+          <>
+            <View
+              style={[
+                accountStyles.settingsWrapper,
+                { direction: isRTL ? "rtl" : "ltr" },
+              ]}
+            >
+              <BlurView
+                intensity={15}
+                tint="light"
+                style={accountStyles.listGlassCard}
+              >
+                <StudentSettingsList
+                  onEditPress={() => setIsModalVisible(true)}
+                  onSettingsPress={setActiveSettingsType}
+                />
+              </BlurView>
+            </View>
+            <PrimaryButton
+              text={text.logout}
+              icon="logout"
+              loading={loading}
+              disabled={loading}
+              action={handleSignOut}
             />
-          </BlurView>
-        </View>
-        <PrimaryButton
-          text={text.logout}
-          icon="logout"
-          loading={loading}
-          disabled={loading}
-          action={handleSignOut}
-        />
+          </>
+        ) : (
+          <View style={accountStyles.settingsWrapper}>
+            <BlurView
+              intensity={15}
+              tint="light"
+              style={[accountStyles.listGlassCard, { padding: 20 }]}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  marginBottom: 20,
+                  color: "#333",
+                  fontFamily: style_vars.PRIMARY_FONT,
+                }}
+              >
+                {lang === 1
+                  ? "Sign in to access your courses, track progress, and manage your profile."
+                  : "بۆ دەستگەیشتن بە کۆرسەکان، بینینی بەرەوپێشچوون و دەستکاری کردنی پڕۆفایلەکەت، تکایە بچۆ ژوورەوە."}
+              </Text>
+              <PrimaryButton
+                text={
+                  lang === 1
+                    ? "Sign In / Register"
+                    : "چوونە ژوورەوە / خۆتۆمارکردن"
+                }
+                icon="login"
+                action={() => router.push("/(auth)/login")}
+              />
+            </BlurView>
+          </View>
+        )}
 
         <View style={{ height: 100 }} />
       </ScrollView>
 
-      <EditProfileModal
-        visible={isModalVisible}
-        onDismiss={() => setIsModalVisible(false)}
-        profile={profile}
-        onProfileUpdate={refreshProfile}
-      />
-      <SettingsModal
-        type={activeSettingsType}
-        visible={activeSettingsType !== null}
-        onDismiss={() => setActiveSettingsType(null)}
-      />
+      {!isGuest && (
+        <>
+          <EditProfileModal
+            visible={isModalVisible}
+            onDismiss={() => setIsModalVisible(false)}
+            profile={profile}
+            onProfileUpdate={refreshProfile}
+          />
+          <SettingsModal
+            type={activeSettingsType}
+            visible={activeSettingsType !== null}
+            onDismiss={() => setActiveSettingsType(null)}
+          />
+        </>
+      )}
     </View>
   );
 }
