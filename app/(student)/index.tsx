@@ -16,6 +16,7 @@ type TeacherStats = {
 
 export default function StudentDashboard() {
   const [profile, setProfile] = useState<Student | null>(null);
+  const [guestTeacherId, setGuestTeacherId] = useState<string | null>(null);
   const [, setTeacherStats] = useState<TeacherStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [, setStatsLoading] = useState(false);
@@ -26,16 +27,18 @@ export default function StudentDashboard() {
   }, []);
 
   useEffect(() => {
-    if (profile?.teachers?.id) {
-      getTeacherStats(profile.teachers.id);
+    const targetTeacherId = profile?.teachers?.id || guestTeacherId;
+    if (targetTeacherId) {
+      getTeacherStats(targetTeacherId);
     }
-  }, [profile]);
+  }, [profile, guestTeacherId]);
 
   const getProfile = async () => {
     try {
       const {
         data: { user },
       } = await supabase.auth.getUser();
+
       if (user) {
         const { data, error } = await supabase
           .from("students")
@@ -44,9 +47,19 @@ export default function StudentDashboard() {
           .single();
         if (error) throw error;
         setProfile(data);
+      } else {
+        const { data: teacherData, error: teacherError } = await supabase
+          .from("teachers")
+          .select("id")
+          .limit(1)
+          .single();
+
+        if (!teacherError && teacherData) {
+          setGuestTeacherId(teacherData.id);
+        }
       }
     } catch (error) {
-      console.error("Error fetching profile:", error);
+      console.error("Error fetching profile or guest teacher:", error);
     } finally {
       setLoading(false);
     }
@@ -76,6 +89,8 @@ export default function StudentDashboard() {
   };
 
   if (loading) return <Loader />;
+
+  const activeTeacherId = profile?.teachers?.id || guestTeacherId;
 
   return (
     <>
@@ -118,9 +133,7 @@ export default function StudentDashboard() {
       </View>
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {profile?.teachers?.id && (
-          <ReklamCarousel teacherId={profile.teachers.id} />
-        )}
+        {activeTeacherId && <ReklamCarousel teacherId={activeTeacherId} />}
       </ScrollView>
 
       {profile && (

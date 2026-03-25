@@ -67,26 +67,22 @@ export const useAuthGuard = (fontsLoaded: boolean) => {
     const inStudentGroup = group === "(student)";
 
     if (!session) {
-      if (!inAuthGroup) {
-        router.replace("/(auth)/login");
+      if (inTeacherGroup || inAuthGroup || !group) {
+        router.replace("/(student)");
       }
       return;
     }
 
-    if (isTeacher || isStudent) {
-      if (inAuthGroup) {
-        if (isTeacher) {
-          router.replace("/(teacher)");
-        } else {
-          router.replace("/(student)");
-        }
-      } else if (isTeacher && !inTeacherGroup) {
+    if (isTeacher) {
+      if (!inTeacherGroup) {
         router.replace("/(teacher)");
-      } else if (!isTeacher && isStudent && !inStudentGroup) {
+      }
+    } else {
+      if (!inStudentGroup) {
         router.replace("/(student)");
       }
     }
   }, [session, isTeacher, isStudent, loading, fontsLoaded, segments]);
 
-  return { loading };
+  return { loading, session, isTeacher, isStudent };
 };
