@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
 import { BlurView } from "expo-blur";
+import { supabase } from "@/lib/supabase"; // Import supabase
 import { Reklam } from "@/types/reklam";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
@@ -10,6 +11,17 @@ import { style_vars } from "@/utils/style_vars";
 export function SlideContent({ reklam }: { reklam: Reklam }) {
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setIsLoggedIn(!!user);
+    };
+    checkAuth();
+  }, []);
 
   const getCtaLabel = () => {
     switch (reklam.link_type) {
@@ -18,7 +30,8 @@ export function SlideContent({ reklam }: { reklam: Reklam }) {
       case "video":
         return text.view_video;
       case "document":
-        return text.download;
+        // Logic: Only return the label if the user is logged in
+        return isLoggedIn ? text.download : null;
       case "external":
         return text.open;
       default:
@@ -35,14 +48,12 @@ export function SlideContent({ reklam }: { reklam: Reklam }) {
         { alignItems: isRTL ? "flex-end" : "flex-start" },
       ]}
     >
-      {/* 1. TITLE (Large & Clean) */}
       <Text
         style={[contentStyles.title, { textAlign: isRTL ? "right" : "left" }]}
       >
         {reklam.title}
       </Text>
 
-      {/* 2. DESCRIPTION (Floating Glass) */}
       {reklam.description && (
         <BlurView
           intensity={30}
@@ -55,7 +66,7 @@ export function SlideContent({ reklam }: { reklam: Reklam }) {
         </BlurView>
       )}
 
-      {/* 3. CTA BUTTON (Premium Highlight) */}
+      {/* The button only renders if reklam type is not 'none' AND we have a valid label */}
       {reklam.link_type !== "none" && ctaLabel && (
         <View style={contentStyles.ctaWrapper}>
           <View style={contentStyles.ctaButton}>
@@ -67,6 +78,7 @@ export function SlideContent({ reklam }: { reklam: Reklam }) {
   );
 }
 
+// ... styles remain the same
 const contentStyles = StyleSheet.create({
   overlay: {
     flex: 1,
