@@ -18,7 +18,7 @@ import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 export default function EditCourseScreen() {
   const { id } = useLocalSearchParams();
   const { height } = useWindowDimensions();
-  const insets = useSafeAreaInsets(); // 2. Initialize insets
+  const insets = useSafeAreaInsets(); 
   const router = useRouter();
 
   const [formData, setFormData] = useState<CourseFormData>({
@@ -82,7 +82,6 @@ export default function EditCourseScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Background Layer */}
       <LinearGradient
         colors={gradient_colors}
         style={[StyleSheet.absoluteFill, { height: height }]}
@@ -91,7 +90,6 @@ export default function EditCourseScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        // 3. Apply safe area padding to the content container
         contentContainerStyle={{
           paddingTop: insets.top + 20,
           paddingBottom: insets.bottom + 40,
