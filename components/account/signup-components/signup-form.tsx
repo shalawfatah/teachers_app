@@ -1,4 +1,3 @@
-import {style_vars} from "@/utils/style_vars";
 import { View } from "react-native";
 import { TextInput, Button, HelperText } from "react-native-paper";
 import { styles } from "@/styles/signup_styles";
@@ -125,7 +124,7 @@ export default function SignupForm({
         loading={loading}
         disabled={loading}
         style={styles.button}
-        labelStyle={{ color: "#000000", fontFamily: style_vars.PRIMARY_FONT }}
+        labelStyle={{ color: "#000000", fontFamily: "NRT-Bold" }}
       >
         {text.create_account}
       </Button>

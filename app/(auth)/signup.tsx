@@ -48,7 +48,6 @@ export default function SignupScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* BACKGROUND LAYER */}
       <View style={StyleSheet.absoluteFill}>
         <LinearGradient colors={gradient_colors} style={{ flex: 1 }} />
         <BackgroundShapes />
@@ -61,8 +60,8 @@ export default function SignupScreen() {
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
         >
-          {/* GLASS WRAPPER */}
           <BlurView intensity={30} tint="light" style={styles.glassCard}>
             <Text variant="headlineMedium" style={styles.title}>
               {text.register_student}
@@ -86,18 +85,30 @@ export default function SignupScreen() {
             />
 
             <Button
-              mode="text"
+              mode="outlined"
               onPress={() => router.back()}
               disabled={loading}
-              labelStyle={{ color: "rgba(255,255,255,0.7)", marginTop: 10 }}
+              style={styles.secondaryBtn}
+              labelStyle={styles.secondaryBtnLabel}
+              contentStyle={{ height: 50 }}
             >
               {text.have_account_sign_in}
             </Button>
           </BlurView>
+
+          {/* GUEST REDIRECT */}
+          <Button
+            mode="text"
+            onPress={() => router.replace("/(student)")}
+            textColor="rgba(255,255,255,0.8)"
+            style={styles.guestButton}
+            labelStyle={styles.guestButtonLabel}
+          >
+            {lang === 1 ? "Continue as Guest" : "بەردەوامبە وەک میوان"}
+          </Button>
         </ScrollView>
 
         <Portal>
-          {/* DIALOG ALSO NEEDS GLASS STYLE */}
           <Dialog
             visible={successDialogVisible}
             onDismiss={() => router.replace("/(auth)/login")}
@@ -134,7 +145,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
     paddingHorizontal: 20,
-    paddingVertical: 60, // Extra space for long forms
+    paddingVertical: 60,
   },
   glassCard: {
     padding: 25,
@@ -151,5 +162,26 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 25,
     fontWeight: "bold",
+  },
+  secondaryBtn: {
+    marginTop: 20,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ffffff",
+    backgroundColor: "transparent",
+  },
+  secondaryBtnLabel: {
+    color: "#ffffff",
+    fontSize: 14,
+    fontFamily: style_vars.PRIMARY_FONT,
+    fontWeight: "600",
+  },
+  guestButton: {
+    marginTop: 20,
+  },
+  guestButtonLabel: {
+    fontSize: 14,
+    textDecorationLine: "underline",
+    fontFamily: style_vars.PRIMARY_FONT,
   },
 });
