@@ -64,6 +64,8 @@ export default function EditCourseForm({
           onChangeText={(val) => onFieldChange("thumbnail", val)}
           placeholder="https://image-link.com"
           mode="outlined"
+          multiline
+          numberOfLines={6}
           style={formStyles.input}
           disabled={disabled}
           textColor="#FFF"

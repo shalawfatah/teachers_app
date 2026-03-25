@@ -4,8 +4,10 @@ import {
   useWindowDimensions,
   ActivityIndicator,
   StyleSheet,
+  View,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context"; // 1. Import insets
 import { supabase } from "@/lib/supabase";
 import EditCourseForm from "@/components/teachers/edit-course-content/EditCourseForm";
 import { CourseFormData } from "@/types/courses";
@@ -16,7 +18,9 @@ import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
 export default function EditCourseScreen() {
   const { id } = useLocalSearchParams();
   const { height } = useWindowDimensions();
+  const insets = useSafeAreaInsets(); // 2. Initialize insets
   const router = useRouter();
+
   const [formData, setFormData] = useState<CourseFormData>({
     title: "",
     description: "",
@@ -61,31 +65,55 @@ export default function EditCourseScreen() {
     const { error } = await supabase
       .from("courses")
       .update(formData)
-      .eq("id", id)
-      .select();
+      .eq("id", id);
 
     if (error) setError(error.message);
     else router.replace("/(teacher)/content");
     setSaving(false);
   };
 
-  if (loading) return <ActivityIndicator />;
+  if (loading) {
+    return (
+      <View style={[styles.centered, { backgroundColor: "#000" }]}>
+        <ActivityIndicator size="large" color="#FFF" />
+      </View>
+    );
+  }
 
   return (
-    <ScrollView>
+    <View style={{ flex: 1 }}>
+      {/* Background Layer */}
       <LinearGradient
         colors={gradient_colors}
-        style={[StyleSheet.absoluteFill, { flex: 1, height: height }]}
+        style={[StyleSheet.absoluteFill, { height: height }]}
       />
       <BackgroundShapes />
-      <EditCourseForm
-        formData={formData}
-        onFieldChange={handleFieldChange}
-        onSubmit={handleUpdate}
-        error={error}
-        disabled={loading || saving}
-        saving={saving}
-      />
-    </ScrollView>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        // 3. Apply safe area padding to the content container
+        contentContainerStyle={{
+          paddingTop: insets.top + 20,
+          paddingBottom: insets.bottom + 40,
+        }}
+      >
+        <EditCourseForm
+          formData={formData}
+          onFieldChange={handleFieldChange}
+          onSubmit={handleUpdate}
+          error={error}
+          disabled={loading || saving}
+          saving={saving}
+        />
+      </ScrollView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
