@@ -19,20 +19,18 @@ export default function EditCourseForm({
   const { lang } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
 
-  // Shared theme for glass inputs
   const inputTheme = {
     colors: {
-      primary: "rgba(255,255,255,0.5)", // The active border color
-      onSurface: "#FFF", // Text color
-      onSurfaceVariant: "rgba(255,255,255,0.6)", // Label/Placeholder color
-      outline: "rgba(255,255,255,0.15)", // Border color
-      surfaceVariant: "transparent", // Background behind the input
+      primary: "rgba(255,255,255,0.5)", 
+      onSurface: "#FFF", 
+      onSurfaceVariant: "rgba(255,255,255,0.6)", 
+      outline: "rgba(255,255,255,0.15)", 
+      surfaceVariant: "transparent", 
     },
   };
 
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-      {/* THE MAIN GLASS CONTAINER */}
       <BlurView intensity={20} tint="light" style={formStyles.glassCard}>
         <TextInput
           label={text.course_title}
@@ -51,7 +49,7 @@ export default function EditCourseForm({
           onChangeText={(val) => onFieldChange("description", val)}
           mode="outlined"
           multiline
-          numberOfLines={6} // Reduced from 12 to look better on phone screens
+          numberOfLines={6} 
           style={[formStyles.input, { minHeight: 120 }]}
           disabled={disabled}
           textColor="#FFF"
@@ -103,7 +101,6 @@ export default function EditCourseForm({
           </HelperText>
         )}
 
-        {/* THE PRIMARY ACTION BUTTON */}
         <Button
           mode="contained"
           onPress={onSubmit}
@@ -133,7 +130,7 @@ const formStyles = StyleSheet.create({
   },
   input: {
     marginBottom: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.03)", // Subtle "fill" inside the input
+    backgroundColor: "rgba(255, 255, 255, 0.03)", 
     fontSize: 15,
   },
   label: {
