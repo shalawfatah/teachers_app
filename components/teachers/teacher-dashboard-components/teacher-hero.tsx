@@ -1,21 +1,21 @@
-import {style_vars} from "@/utils/style_vars";
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { style_vars } from "@/utils/style_vars";
+import React, { useState } from "react"; // Added useState
+import { View, ImageBackground, StyleSheet, Dimensions } from "react-native";
 import { Text, IconButton } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { BackgroundShapes } from "@/components/backgrounds/BackgroundShapes";
+import { useLanguage } from "@/contexts/LanguageContext"; // To get currentLang
+import LanguageSwitcherModal from "@/components/general/language-switcher-modal-pro";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function TeacherHero({ profile, onEdit, onSignOut }: any) {
+  const [langModalVisible, setLangModalVisible] = useState(false);
+  const { lang, refreshLanguage } = useLanguage(); // Assuming your context provides these
+
   return (
     <View style={heroStyles.mainContainer}>
-      {/* 1. THE IMAGE LAYER */}
       <ImageBackground
         source={{
           uri: profile?.thumbnail || "https://via.placeholder.com/800",
@@ -23,9 +23,7 @@ export default function TeacherHero({ profile, onEdit, onSignOut }: any) {
         style={heroStyles.absoluteImage}
         resizeMode="cover"
       >
-        {/* 2. THE GLASS LAYER */}
         <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill}>
-          {/* 3. THE COLOR/VIGNETTE LAYER */}
           <LinearGradient
             colors={["rgba(0,0,0,0.5)", "transparent", "rgba(0,0,0,0.9)"]}
             style={StyleSheet.absoluteFill}
@@ -35,6 +33,14 @@ export default function TeacherHero({ profile, onEdit, onSignOut }: any) {
             {/* HEADER AREA */}
             <View style={heroStyles.topNav}>
               <View style={heroStyles.glassPill}>
+                {/* --- NEW LANGUAGE ICON --- */}
+                <IconButton
+                  icon="translate"
+                  iconColor="#99f2c8" // Subtle green to match your "check" color
+                  size={20}
+                  onPress={() => setLangModalVisible(true)}
+                />
+
                 <IconButton
                   icon="pencil"
                   iconColor="#fff"
@@ -67,6 +73,15 @@ export default function TeacherHero({ profile, onEdit, onSignOut }: any) {
           </LinearGradient>
         </BlurView>
       </ImageBackground>
+
+      {/* --- LANGUAGE MODAL --- */}
+      <LanguageSwitcherModal
+        visible={langModalVisible}
+        onDismiss={() => setLangModalVisible(false)}
+        currentLang={lang}
+        profileId={profile?.id}
+        onLanguageChange={refreshLanguage} // Trigger the context update
+      />
     </View>
   );
 }
