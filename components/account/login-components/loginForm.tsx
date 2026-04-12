@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { TextInput, Button, Text, HelperText } from "react-native-paper";
+import { Button, Text, HelperText } from "react-native-paper";
 import { router } from "expo-router";
 import { BlurView } from "expo-blur";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -11,12 +11,6 @@ import RavaInput from "@/components/general/rava-input";
 export default function LoginForm({ state }: any) {
   const { lang, isRTL } = useLanguage();
   const text = lang === 1 ? translations.eng : translations.krd;
-
-  const getKeyboardType = () => {
-    if (!state.phone) return "phone-pad";
-    const isNumber = /^\d+$/.test(state.phone.charAt(0));
-    return isNumber ? "phone-pad" : "email-address";
-  };
 
   return (
     <BlurView intensity={40} tint="light" style={formStyles.glassContainer}>
