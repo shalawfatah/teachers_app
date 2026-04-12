@@ -6,6 +6,7 @@ import { BlurView } from "expo-blur";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/utils/eng_krd";
 import { style_vars } from "@/utils/style_vars";
+import RavaInput from "@/components/general/rava-input";
 
 export default function LoginForm({ state }: any) {
   const { lang, isRTL } = useLanguage();
@@ -17,43 +18,21 @@ export default function LoginForm({ state }: any) {
     return isNumber ? "phone-pad" : "email-address";
   };
 
-  const inputTheme = {
-    colors: {
-      onSurfaceVariant: "rgba(255, 255, 255, 0.6)",
-      primary: "#ffffff",
-      outline: "rgba(255, 255, 255, 0.2)",
-    },
-  };
-
   return (
     <BlurView intensity={40} tint="light" style={formStyles.glassContainer}>
       <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
         <Text style={formStyles.title}>{text.hello}</Text>
 
-        <TextInput
-          label={text.phone}
+        <RavaInput
+          placeholder={text.phone}
           value={state.phone}
           onChangeText={state.setPhone}
-          keyboardType={getKeyboardType()}
-          autoCapitalize="none"
-          autoCorrect={false}
-          mode="outlined"
-          textColor="#FFF"
-          style={formStyles.input}
-          theme={inputTheme}
-          returnKeyType="next"
         />
-
-        <TextInput
-          label={text.password}
+        <RavaInput
+          placeholder={text.password}
           value={state.password}
           onChangeText={state.setPassword}
-          secureTextEntry
-          mode="outlined"
-          textColor="#FFF"
-          style={formStyles.input}
-          theme={inputTheme}
-          returnKeyType="done"
+          secureTextEntry={true}
         />
 
         {state.error && (
