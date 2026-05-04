@@ -1,5 +1,6 @@
 # 📚 Teaching Platform - Full-Stack Education Management System
-# Cross-platform mobile app
+
+## Cross-platform mobile app
 
 A comprehensive educational platform built with **Next.js** (web dashboard) and **React Native/Expo** (mobile app) for teachers and students. Features course management, video hosting via Bunny.net, document sharing, promotional carousels, and real-time stats.
 
@@ -8,6 +9,7 @@ A comprehensive educational platform built with **Next.js** (web dashboard) and 
 ## 🎯 Overview
 
 This platform enables teachers to:
+
 - Manage courses, videos, and documents
 - Upload content (videos to Bunny.net CDN, documents to Supabase Storage)
 - Create promotional slides (reklam) with images or videos
@@ -15,17 +17,20 @@ This platform enables teachers to:
 - Customize their profile with avatars and cover images
 
 Students get:
+
 - Full-screen promotional carousel on dashboard
 - Access to courses and video content
 - Document downloads
 - Real-time progress tracking
-- Ability to sign up to multiple teachers in the same app 
+- Ability to sign up to multiple teachers in the same app
 - Ability to know what teachers offer before they sign up
+
 ---
 
 ## 🏗️ Tech Stack
 
 ### Web Dashboard (Admin/Teacher)
+
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **UI**: React, Tailwind CSS, Shadcn/ui
@@ -35,6 +40,7 @@ Students get:
 - **Auth**: Supabase Auth
 
 ### Mobile App (Student)
+
 - **Framework**: React Native (Expo)
 - **Language**: TypeScript
 - **Navigation**: Expo Router
